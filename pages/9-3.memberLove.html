@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- favicon -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../assets/images/logo-circle-gold.png"
+    />
+    <title>GreenSheep handmade jewelry</title>
+  </head>
+
+  <body>
+    <div class="background-gradient"> 
+    <%- include('./layout/header'); -%>
+
+    <div class="container py-7 py-md-15 py lg-10 mb-20 mx-auto">
+      <div class="row">
+        <div class="col-md-3 col-12">
+          <ul
+            class="d-flex justify-content-center flex-md-column gap-6 gap-mb-0 list-unstyled h-bottom-line mb-5 mb-lg-0"
+          >
+            <li class="list-unstyled text-start fs-6 text-dark">
+              <a
+                href="9-1.memberInfo.html"
+                class="d-inline-block py-2 mb-lg-3"
+                aria-current="page"
+                >會員資料</a
+              >
+            </li>
+            <li class="list-unstyled text-start fs-6 text-dark">
+              <a href="9-2.memberOrder.html" class="d-inline-block py-2 mb-lg-3"
+                >所有訂單</a
+              >
+            </li>
+            <li class="list-unstyled text-start fs-6 text-dark">
+              <a
+                href="#"
+                class="d-inline-block py-2 mb-lg-3 position-relative active"
+                >我的收藏</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-9 col-12">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-7 mb-md-15">
+              <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+              <li class="breadcrumb-item">
+                <a href="9-1.memberInfo.html"> 會員資料</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                我的收藏
+              </li>
+            </ol>
+          </nav>
+          <h1 class="fs-3 fs-lg-2 text-start mb-6">我的收藏</h1>
+          <!-- 商品頁面 -->
+          <div class="d-flex flex-wrap mb-8">
+            <a href="#" class="d-flex flex-column product-item me-6 mb-6">
+              <div
+                class="position-relative"
+                style="width: 100%; padding-top: 100%"
+              >
+                <img
+                  src="/assets/images/product-1.JPG"
+                  class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+                  alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+                />
+              </div>
+              <div
+                class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
+              >
+                <h5 class="card-title display-8 text-dark pt-2">
+                  蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
+                </h5>
+                <p class="card-text display-8 text-primary py-2">NT$3,800</p>
+              </div>
+            </a>
+
+            <a href="#" class="d-flex flex-column product-item me-6 mb-6">
+              <div
+                class="position-relative"
+                style="width: 100%; padding-top: 100%"
+              >
+                <img
+                  src="/assets/images/product-2.JPG"
+                  class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+                  alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+                />
+                <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-secondary p-3">可 <br> 客制
+                                </span> -->
+              </div>
+              <div
+                class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
+              >
+                <h5 class="card-title display-8 text-dark pt-2">
+                  蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
+                </h5>
+                <p class="card-text display-8 text-primary py-2">NT$3,800</p>
+              </div>
+            </a>
+
+            <a href="#" class="d-flex flex-column product-item me-6 mb-6">
+              <div
+                class="position-relative"
+                style="width: 100%; padding-top: 100%"
+              >
+                <img
+                  src="/assets/images/product-3.JPG"
+                  class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+                  alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+                />
+                <span class="cus-tag">可客製</span>
+              </div>
+              <div
+                class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
+              >
+                <h5 class="card-title display-8 text-dark pt-2">
+                  蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
+                </h5>
+                <p class="card-text display-8 text-primary py-2">NT$3,800</p>
+              </div>
+            </a>
+
+            <a href="#" class="d-flex flex-column product-item me-6 mb-6">
+              <div
+                class="position-relative"
+                style="width: 100%; padding-top: 100%"
+              >
+                <img
+                  src="/assets/images/product-4.JPG"
+                  class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+                  alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+                />
+              </div>
+              <div
+                class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
+              >
+                <h5 class="card-title display-8 text-dark pt-2">
+                  蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
+                </h5>
+                <p class="card-text display-8 text-primary py-2">NT$3,800</p>
+              </div>
+            </a>
+
+            <a href="#" class="d-flex flex-column product-item me-6 mb-6">
+              <div
+                class="position-relative"
+                style="width: 100%; padding-top: 100%"
+              >
+                <img
+                  src="/assets/images/product-5.JPG"
+                  class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+                  alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+                />
+                <span class="cus-tag">可客製</span>
+              </div>
+              <div
+                class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
+              >
+                <h5 class="card-title display-8 text-dark pt-2">
+                  蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
+                </h5>
+                <p class="card-text display-8 text-primary py-2">NT$3,800</p>
+              </div>
+            </a>
+
+            <a href="#" class="d-flex flex-column product-item me-6 mb-6">
+              <div
+                class="position-relative"
+                style="width: 100%; padding-top: 100%"
+              >
+                <img
+                  src="/assets/images/product-6.JPG"
+                  class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+                  alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+                />
+              </div>
+              <div
+                class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
+              >
+                <h5 class="card-title display-8 text-dark pt-2">
+                  蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
+                </h5>
+                <p class="card-text display-8 text-primary py-2">NT$3,800</p>
+              </div>
+            </a>
+
+            <a href="#" class="d-flex flex-column product-item me-6 mb-6">
+              <div
+                class="position-relative"
+                style="width: 100%; padding-top: 100%"
+              >
+                <img
+                  src="/assets/images/product-7.JPG"
+                  class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+                  alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+                />
+              </div>
+              <div
+                class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
+              >
+                <h5 class="card-title display-8 text-dark pt-2">
+                  蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
+                </h5>
+                <p class="card-text display-8 text-primary py-2">NT$3,800</p>
+              </div>
+            </a>
+
+            <a href="#" class="d-flex flex-column product-item me-6 mb-6">
+              <div
+                class="position-relative"
+                style="width: 100%; padding-top: 100%"
+              >
+                <img
+                  src="/assets/images/product-8.JPG"
+                  class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+                  alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+                />
+              </div>
+              <div
+                class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
+              >
+                <h5 class="card-title display-8 text-dark pt-2">
+                  蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
+                </h5>
+                <p class="card-text display-8 text-primary py-2">NT$3,800</p>
+              </div>
+            </a>
+
+            <a href="#" class="d-flex flex-column product-item me-6 mb-6">
+              <div
+                class="position-relative"
+                style="width: 100%; padding-top: 100%"
+              >
+                <img
+                  src="/assets/images/product-9.JPG"
+                  class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+                  alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+                />
+              </div>
+              <div
+                class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
+              >
+                <h5 class="card-title display-8 text-dark pt-2">
+                  蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
+                </h5>
+                <p class="card-text display-8 text-primary py-2">NT$3,800</p>
+              </div>
+            </a>
+          </div>
+
+          <nav aria-label="Page navigation ">
+            <ul class="cus-pagination list-unstyled mb-20 mb-lg-25">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span class="material-icons fs-8 p-1"> navigate_before </span>
+                </a>
+              </li>
+              <li class="page-item fs-8">
+                <a class="page-link active" href="#" aria-current="page">1</a>
+              </li>
+              <li class="page-item fs-8">
+                <a class="page-link" href="#">2</a>
+              </li>
+              <li class="page-item fs-8">
+                <a class="page-link" href="#">3</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span class="material-icons fs-8 p-1"> navigate_next </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <%- include('./layout/footer'); -%>
+    </div>
+    <script type="module" src="../main.js"></script>
+  </body>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- favicon -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../assets/images/logo-circle-gold.png"
+    />
+    <title>GreenSheep handmade jewelry</title>
+  </head>
+
+  <body>
+    <%- include('./layout/header'); -%>
+
+    <div class="container py-20">
+      <!-- progress -->
+      <div class="mb-30">
+        <div class="position-relative m-4 w-75 mx-auto">
+          <div class="progress" style="height: 1px">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              style="width: 100%"
+              aria-valuenow="50"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+          <button
+            type="button"
+            class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
+            style="width: 3rem; height: 3rem"
+          >
+            1
+          </button>
+          <button
+            type="button"
+            class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
+            style="width: 3rem; height: 3rem"
+          >
+            2
+          </button>
+          <button
+            type="button"
+            class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
+            style="width: 3rem; height: 3rem"
+          >
+            3
+          </button>
+        </div>
+
+        <div class="position-relative mt-15 w-75 mx-auto">
+          <p
+            class="position-absolute top-0 start-0 translate-middle text-primary"
+          >
+            確認購買明細
+          </p>
+
+          <p
+            class="position-absolute top-0 start-50 translate-middle text-primary"
+          >
+            付款資料填寫
+          </p>
+
+          <p
+            class="position-absolute top-0 end-n7 translate-middle text-primary"
+          >
+            訂單完成
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 完成訂單 -->
+    <div class="container-fluid bg-light py-20">
+      <!-- <span
+        class="material-icons"
+        style="font-size: 80px; color: rgb(70, 135, 4)"
+      >
+        task_alt
+      </span> -->
+      <span
+        class="material-icons"
+        style="font-size: 80px; color: rgb(70, 135, 4)"
+      >
+        card_giftcard
+      </span>
+      <h2 class="fs-3 my-10">恭喜你完成訂單</h2>
+      <p class="fs-4 text-primary">訂單編號：20230725889695</p>
+    </div>
+
+    <div class="container text-primary mb-20 py-20">
+      <p class="fs-5 mb-4">
+        歡迎隨時至<a href="9-1.memberInfo.html" style="color: #990000"
+          >會員中心</a
+        >了解訂單最新狀態
+      </p>
+      <p class="fs-5">
+        有任何問題請加入<a href="#" class="underline">官方Line客服</a>
+      </p>
+    </div>
+
+    <%- include('./layout/footer'); -%>
+    <script type="module" src="../main.js"></script>
+  </body>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</html>

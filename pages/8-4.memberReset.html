@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <title>GreenSheep handmade jewelry</title>
+  </head>
+
+  <body>
+    <div class="background-gradient">
+      <%- include('./layout/header'); -%>
+      <div class="d-flex flex-column align-items-center py-15">
+        <div>
+          <h2 class="fs-2">WELCOME</h2>
+          <p class="text-primary">Discover Your Unique Elegance</p>
+        </div>
+        <div class="w-50 member-content">
+          <!-- 登入輸入內容 -->
+          <div class="d-flex flex-column align-items-center py-8">
+            <h1 class="fs-1 mb-8">忘記密碼</h1>
+            <div>
+              <!-- 表單 -->
+              <form class="member-form">
+                <!-- 驗證碼 -->
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    placeholder="驗證碼輸入"
+                    required
+                  />
+                </div>
+                <!-- 密碼 -->
+                <div class="mb-3">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Password(需超過6個字元)"
+                    required
+                  />
+                </div>
+                <!-- 再次確認密碼 -->
+                <div class="mb-3">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Reconfirm Password(需超過6個字元)"
+                    required
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  class="d-flex justify-content-center align-items-center custom-btn-submit sub-button"
+                >
+                  <div class="button-img-box me-1">
+                    <img src="../assets/images/GreenSheep.png" alt="圖像" />
+                  </div>
+                  <p>重新設定密碼</p>
+                </button>
+              </form>
+              <!-- 回到登入 -->
+              <p class="mt-1 text-end">
+                回到<a
+                  href="8-1.memLogin.html"
+                  class="text-decoration-underline"
+                  >登入</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('./layout/footer'); -%>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script type="module" src="../main.js"></script>
+  </body>
+</html>

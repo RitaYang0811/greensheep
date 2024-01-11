@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <title>GreenSheep handmade jewelry</title>
+  </head>
+
+  <body>
+    <div class="background-gradient">
+      <%- include('./layout/header'); -%>
+      <div class="d-flex flex-column align-items-center py-15">
+        <div>
+          <h2 class="fs-2">WELCOME</h2>
+          <p class="text-primary">Discover Your Unique Elegance</p>
+        </div>
+        <div class="w-50 member-content">
+          <!-- 登入輸入內容 -->
+          <div class="d-flex flex-column align-items-center py-8">
+            <h1 class="fs-1 mb-8">會員登入</h1>
+            <div>
+              <!-- google或line 帳號登入 -->
+              <ul class="list-unstyled">
+                <li class="py-3">
+                  <a href="#" class="p-3 google-account"
+                    ><img
+                      src="../assets/images/google.svg"
+                      alt="google"
+                    />Continue with Google
+                  </a>
+                </li>
+                <li class="py-3">
+                  <a href="#" class="p-3 line-account">
+                    <img src="../assets/images/line-messenger.svg" alt="line" />
+
+                    Continue with Line</a
+                  >
+                </li>
+              </ul>
+
+              <p
+                class="d-flex justify-content-center align-items-center py-6 hr-line"
+              >
+                or
+              </p>
+              <!-- 表單 -->
+              <form class="member-form">
+                <div class="mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    placeholder="E-mail"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+                <div class="mb-3 form-check d-flex justify-content-between">
+                  <div>
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="exampleCheck1"
+                    />
+                    <label class="form-check-label" for="exampleCheck1"
+                      >記住我</label
+                    >
+                  </div>
+                  <a href="8-3.memForget.html" class="display-7">忘記密碼</a>
+                </div>
+                <button
+                  type="submit"
+                  class="d-flex justify-content-center align-items-center custom-btn-submit sub-button"
+                >
+                  <div class="button-img-box me-1">
+                    <img src="../assets/images/GreenSheep.png" alt="圖像" />
+                  </div>
+                  <p>立即登入</p>
+                </button>
+              </form>
+              <p class="mt-1 text-end">
+                還沒有帳號嗎？前往<a
+                  href="8-2.memSignup.html"
+                  class="text-decoration-underline"
+                  >註冊</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('./layout/footer'); -%>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script type="module" src="../main.js"></script>
+  </body>
+</html>

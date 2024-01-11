@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- favicon -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../assets/images/logo-circle-gold.png"
+    />
+    <title>GreenSheep handmade jewelry</title>
+  </head>
+
+  <body>
+    <div class="background-gradient">
+      <%- include('./layout/header'); -%>
+      <div class="container py-7 py-md-15 py lg-10 mb-20 mx-auto ">
+        <div class="row">
+          <div class="col-md-3 col-12">
+            <ul
+              class="d-flex justify-content-center flex-md-column gap-6 gap-mb-0 list-unstyled h-bottom-line mb-5 mb-lg-0"
+            >
+              <li class="list-unstyled text-start fs-6 text-dark">
+                <a
+                  href="#"
+                  class="d-inline-block position-relative py-2 active mb-lg-3"
+                  aria-current="page"
+                  >會員資料</a
+                >
+              </li>
+              <li class="list-unstyled text-start fs-6 text-dark">
+                <a
+                  href="9-2.memberOrder.html"
+                  class="d-inline-block py-2 mb-lg-3"
+                  >所有訂單</a
+                >
+              </li>
+              <li class="list-unstyled text-start fs-6 text-dark">
+                <a
+                  href="9-3.memberLove.html"
+                  class="d-inline-block py-2 mb-lg-3"
+                  >我的收藏</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-12 col-md-9">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-7 mb-md-15">
+                <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  會員資料
+                </li>
+              </ol>
+            </nav>
+            <h1 class="fs-3 fs-lg-2 text-start mb-6">會員資料</h1>
+            <form
+              action=""
+              class="py-12 border border-1 border-primary w-100 w-lg-75 text-start"
+              style="border-radius: 60px 0"
+            >
+              <div class="d-flex w-75 mb-5 mx-auto align-items-center">
+                <label for="email" class="text-primary me-3 fs-9 fs-md-6"
+                  >信箱：</label
+                >
+                <input
+                  type="email"
+                  class="d-inline-block p-2 flex-grow-1"
+                  id="email"
+                  value="greensheep@google.com"
+                  disabled
+                />
+              </div>
+              <div class="d-flex w-75 mb-5 mx-auto align-items-center">
+                <label for="birthday" class="text-primary me-3 fs-9 fs-md-6"
+                  >生日：</label
+                >
+                <input
+                  type="date"
+                  class="d-inline-block p-2 flex-grow-1"
+                  id="birthday"
+                  value="2000-01-01"
+                  disabled
+                />
+              </div>
+              <div class="d-flex w-75 mb-5 mx-auto align-items-center">
+                <label for="nickname" class="text-primary me-3 fs-9 fs-md-6"
+                  >暱稱：</label
+                >
+                <input
+                  type="text"
+                  class="d-inline-block p-2 flex-grow-1 border-0"
+                  id="nickname"
+                  value="綠羊珠寶鐵粉"
+                />
+              </div>
+              <div class="d-flex w-75 mb-5 mx-auto align-items-center">
+                <label for="pwd" class="text-primary me-3 fs-9 fs-md-6"
+                  >密碼：</label
+                >
+                <input
+                  type="password"
+                  class="d-inline-block p-2 flex-grow-1 border-0"
+                  id="pwd"
+                  value="00000000"
+                />
+              </div>
+              <div class="w-75 px-25 mx-auto d-flex justify-content-end">
+                <button
+                  class="px-4 py-3 fs-7 fs-md-6 bg-primary border-0 text-white"
+                >
+                  修改資料
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <%- include('./layout/gotop-btn');-%>
+    </div>
+    <%- include('./layout/footer'); -%>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script type="module" src="../main.js"></script>
+  </body>
+</html>

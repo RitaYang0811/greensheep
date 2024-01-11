@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- favicon -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../assets/images/logo-circle-gold.png"
+    />
+    <title>GreenSheep handmade jewelry</title>
+  </head>
+
+  <body>
+    <div class="background-gradient">
+      <%- include('./layout/header'); -%>
+
+      <div class="container pt-20 mb-4">
+        <!-- progress -->
+        <div class="mb-30">
+          <div class="position-relative m-4 w-75 mx-auto">
+            <div class="progress">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                style="width: 0%"
+                aria-valuenow="50"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <button
+              type="button"
+              class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
+              style="width: 3rem; height: 3rem"
+            >
+              1
+            </button>
+            <button
+              type="button"
+              class="position-absolute top-0 start-50 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
+              style="width: 3rem; height: 3rem"
+            >
+              2
+            </button>
+            <button
+              type="button"
+              class="position-absolute top-0 start-100 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
+              style="width: 3rem; height: 3rem"
+            >
+              3
+            </button>
+          </div>
+
+          <div class="position-relative mt-15 w-75 mx-auto">
+            <p
+              class="position-absolute top-0 start-0 translate-middle text-primary"
+            >
+              確認購買明細
+            </p>
+
+            <p
+              class="position-absolute top-0 start-50 translate-middle text-primary"
+            >
+              付款資料填寫
+            </p>
+
+            <p
+              class="position-absolute top-0 end-n7 translate-middle text-primary"
+            >
+              訂單完成
+            </p>
+          </div>
+        </div>
+
+        <h1 class="fs-4 fs-lg-2 py-20 text-center fw-bold">購物車</h1>
+        <!-- 商品列表 -->
+        <table class="table align-middle border-primary">
+          <thead>
+            <tr>
+              <th scope="col" class="text-primary fw-medium">商品資訊</th>
+              <th scope="col" class="text-primary fw-medium">數量</th>
+              <th scope="col" class="text-primary fw-medium">價格</th>
+              <th scope="col" class="text-primary fw-medium"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="py-4 border-0">
+                <div class="card border-0" style="max-width: 540px">
+                  <div class="row g-0 align-items-center">
+                    <div class="col-md-4">
+                      <img
+                        src="/assets/images/product-3.JPG"
+                        class="img-fluid"
+                        alt="..."
+                      />
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="fs-6 card-title text-primary fw-medium">
+                          天使之愛十字架項鍊
+                        </h5>
+                        <small class="text-start fw-normal"
+                          >女生款＋16吋銀鍊</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <td class="py-4 border-0">
+                <input type="number" class="p-2 w-25" value="1" />
+              </td>
+              <td class="py-4 border-0 text-primary">NT$1,980</td>
+              <td class="py-4 border-0">
+                <button class="btn btn-primary">刪除</button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" colspan="2" class="py-4">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                  <span
+                    class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1"
+                    >加購</span
+                  >
+                  <span class="ms-sm-3 ms-0 fw-normal text-primary"
+                    >品牌絨布禮盒包裝(含品牌緞帶)</span
+                  >
+                </div>
+              </th>
+
+              <td class="py-4 text-primary">NT$200</td>
+              <td><button class="btn btn-primary">刪除</button></td>
+            </tr>
+            <tr>
+              <th scope="row" class="py-4">
+                <div class="card border-0" style="max-width: 540px">
+                  <div class="row g-0 align-items-center">
+                    <div class="col-md-4">
+                      <div class="ratio ratio-1x1">
+                        <img
+                          src="/assets/images/product_ruby.png"
+                          class="img-fluid object-fit-cover"
+                          alt="..."
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="fs-6 card-title text-primary fw-medium">
+                          璀璨生日寶石項鍊
+                        </h5>
+                        <small class="text-start fw-normal">紅寶石</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </th>
+              <td class="py-4">
+                <input type="number" class="p-2 w-25" value="1" />
+              </td>
+              <td class="py-4 text-primary">NT$5,980</td>
+              <td class="py-4">
+                <button class="btn btn-primary">刪除</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- 免運 -->
+      <div class="py-10">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2 text-primary fw-medium">已使用優惠</div>
+            <div class="col-md-10 text-start">
+              <span
+                class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4"
+                >免運優惠</span
+              >
+              <span class="fs-7 text-primary"
+                >全館滿NT$3,000，享台灣免運費</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container py-10">
+        <div class="row align-items-center">
+          <div class="col-md-2 text-primary fw-medium">優惠券折扣</div>
+
+          <div class="col-md-10">
+            <form class="text-start">
+              <input
+                type="text"
+                class="teat-start p-2 w-50"
+                placeholder="請輸入優惠代碼"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- 運送及付款方式 -->
+      <div
+        class="container py-10 py-md-15 border-top border-bottom border-primary border-2"
+      >
+        <div class="row justify-content-between">
+          <div class="col-md-6 col-12 bg-light px-8 py-8">
+            <h3 class="fs-5 fw-medium text-start mb-4">
+              選擇收件地點及運送方式
+            </h3>
+            <select class="form-select mb-5 fs-6 w-100">
+              <option selected>台灣</option>
+              <option value="1">台北</option>
+              <option value="2">台中</option>
+              <option value="3">高雄</option>
+            </select>
+            <select class="form-select fs-6 w-100">
+              <option selected>黑貓國內宅配</option>
+              <option value="1">7-11</option>
+              <option value="2">全家</option>
+              <option value="3">OK</option>
+              <option value="4">萊爾富</option>
+            </select>
+            <p class="fs-8 text-start text-grey66 mt-5">
+              出貨後約 3-7 天抵達指定門市。
+              如遇特殊檔期或急件需求，建議選擇國內宅配方式配送。
+            </p>
+
+            <h3 class="fs-5 fw-medium text-start mt-10 mb-4">選擇付款方式</h3>
+            <select class="form-select fs-6 w-100">
+              <option selected>信用卡</option>
+              <option value="1">貨到付款</option>
+              <option value="2">轉帳</option>
+              <option value="3">超商繳費</option>
+            </select>
+          </div>
+
+          <div class="col-md-6 col-12 mt-md-0 mt-5 bg-light py-8 px-8">
+            <h3 class="fs-5 fw-medium text-start mb-4">訂單資訊</h3>
+
+            <div class="p-5 bg-greyD4 text-dark">
+              <div class="d-flex justify-content-between mb-5">
+                <p class="">小計：</p>
+                <p class="">NT$8,160</p>
+              </div>
+              <div class="d-flex justify-content-between mb-5">
+                <p class="">運費：</p>
+                <p class="">免運</p>
+              </div>
+              <div class="d-flex justify-content-between mb-5">
+                <p class="">優惠券：</p>
+              </div>
+
+              <div class="border border-primary border-1 mb-5"></div>
+              <div class="d-flex justify-content-between mb-5">
+                <p class="">合計：</p>
+                <p class="fw-bold">NT$8,160</p>
+              </div>
+
+              <a
+                href="7-3.shopInfo.html"
+                class="btn btn-primary p-5 fs-5 w-100 text-white"
+                >前往結帳</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--  訂 購 前 請 詳 閱  -->
+      <div class="container my-20 text-start">
+        <h3 class="fs-5 text-start">【 訂 購 前 請 詳 閱 】</h3>
+        <ul class="mt-5 text-grey66 fw-normal lh-lg">
+          <li class="fs-7">
+            每一款首飾皆為手工訂製，請先與客服確認欲購買商品之到貨日，可接受再下訂。出貨時間依據商品製作期有所不同，並依下單順序出貨。若有特定取貨時間要求或客製作期有所不同，並依下單順序出貨。若有特定取貨時間要求或客製需求，請事先詢問再進行訂購。
+          </li>
+          <li class="fs-7 mt-4">
+            台灣含離島寄送，訂單滿 NT$3,000
+            ，即享有免運優惠。全球寄送，訂單滿NT$12,000，即享有免運優惠。
+          </li>
+          <li class="fs-7 mt-4">
+            綠羊Green Sheep
+            所採用的天然寶石、珍珠皆為自然而成，色差、紋路及生長痕跡不同皆為正常現象，請依實品為主，若辦理退貨需自付運費。
+          </li>
+          <li class="fs-7 mt-4">
+            收到商品後若須更改尺寸或其他個人化客製(如調整鍊長、變更寶石、各種變更原設計之修改),將額外收取工本費。
+          </li>
+
+          <li class="fs-7 mt-4">
+            個人客製化商品(如刻字、設計改款、特殊尺寸、個人化調整等)、活動特殊品項(如連線商品、預購商品),恕不接受退換貨。
+          </li>
+
+          <li class="fs-7 mt-4">
+            網路購物享有之 7
+            日鑑賞期非試用期，辦理退貨時請保持商品全新完整，透過line客服與我們聯繫，再自行將發票、商品、贈品以原包裝寄回指定地點，待收回檢查確認無誤後將進行退款(退回款項恕不含運費並會扣除跨行匯款手續費)。非瑕疵因素換貨者，將由買方與賣方各負擔一次運費。
+          </li>
+
+          <li class="fs-7 mt-4">
+            為保護雙方權益，拆箱全程請務必錄影，並保留出貨訂單明細、發票。如遇到瑕疵商品，請將瑕疵處拍照並回傳至
+            購物平台訊息系統
+            的歷史訂單訊息，訂單內容有任何問題或遺漏將以綠影為憑據，請於收件 7
+            日內向客服聯繫申請，超過 7 日將不受理。
+          </li>
+
+          <li class="fs-7 mt-4">
+            網站管理員於平日 10:30-19:00
+            (不含例假日、國定假日)依序回覆訂單問題，若有不及敬請見諒，我們將逐一回覆。
+          </li>
+
+          <li class="fs-7 mt-4">國內發票提供三聯式，需統編可備註留言。</li>
+        </ul>
+      </div>
+      <%- include('./layout/gotop-btn');-%>
+    </div>
+    <%- include('./layout/footer'); -%>
+    <script type="module" src="../main.js"></script>
+  </body>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</html>
