@@ -7,15 +7,15 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 //bootstrap5設定區
-@import '../../../node_modules/bootstrap/scss/functions';
+@import 'bootstrap/scss/functions';
 //bootstrap客製化區(helpers)
 @import './utils/variables';
 
 //客製化variables放在這
 @import './utils/variables';
-@import '../../../node_modules/bootstrap/scss/variables-dark';
-@import '../../../node_modules/bootstrap/scss/maps';
-@import '../../../node_modules/bootstrap/scss/mixins';
+@import 'bootstrap/scss/variables-dark'; // 修改路徑
+@import 'bootstrap/scss/maps'; // 修改路徑
+@import 'bootstrap/scss/mixins'; // 修改路徑
 
 //客製化utilites放在這
 @import './utils/utilities';
@@ -33,7 +33,7 @@
 @import './components/swiper';
 
 //bootstrap5全部內容
-// @import '../../../node_modules/bootstrap';
+@import 'bootstrap';
 
 //base 基本設定
 @import './base/base';
