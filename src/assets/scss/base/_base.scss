@@ -1,0 +1,23 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  // outline: 1px solid orange;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  height: 100%;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+//客製化樣式 我把它移到custom.scss （8/25 Rita）

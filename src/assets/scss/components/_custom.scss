@@ -1,0 +1,57 @@
+//背景米色漸層
+.background-gradient {
+  background: linear-gradient(180deg, #e5e5e5, #f4ede1, #f4f0e8, #f4f4ee);
+  max-width: 100%;
+  overflow: hidden;
+  height: auto;
+}
+
+//以下為仙貝新增
+.backdrop-blur {
+  backdrop-filter: blur(10px);
+}
+
+.text-vertical {
+  writing-mode: vertical-rl;
+}
+
+.border-radius-80 {
+  border-radius: 80px 0;
+}
+
+.border-radius-40 {
+  border-radius: 40px 0;
+}
+//以上為仙貝新增(8/18)
+
+//以下為Rita 新增（8/25)
+//在商品列表中，如果有需要選擇金色銀色就可以使用
+//如需看架構範例，可看2-1.productPage.html第260行
+
+.color-choose {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid $light;
+  background-color: $deco;
+}
+.color-gold {
+  background-color: $deco;
+}
+.color-silver {
+  background-color: $grey9F;
+}
+
+//滑鼠變手指
+.cursor-pointer {
+  cursor: pointer;
+}
+//textarea不能改變大小
+.no-resize {
+  resize: none;
+}
+
+.underline {
+  text-decoration: underline;
+}

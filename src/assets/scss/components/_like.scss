@@ -1,0 +1,14 @@
+/* 爱心图标样式 */
+.heart-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  fill: none;
+  stroke: $primary;
+  stroke-width: 2;
+  transition: fill 0.3s ease-in-out;
+}
+
+.heart-icon.active {
+  fill: $primary;
+}

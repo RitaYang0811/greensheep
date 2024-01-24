@@ -1,0 +1,39 @@
+//行銷活動內容左邊黃色直線
+.start-line::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background-color: $deco;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+}
+
+////滑鼠滑過時，下方文字會顯示下底線
+.h-bottom-line {
+  a {
+    &::after {
+      content: "";
+      display: block;
+      height: 1px;
+      width: 100%;
+      background-color: $primary;
+      transform: scalex(0); //Ｘ軸為基準，物件尺寸0
+      transform-origin: left; //起始點由左側開始
+      transition: transform 0.4s ease;
+    }
+    &:hover::after {
+      transform: scalex(1); //Ｘ軸為基準，物件尺寸100%
+    }
+    &.active::before {
+      content: "";
+      position: absolute;
+      bottom: 0.5rem;
+      display: block;
+      height: 1px;
+      width: 100%;
+      background-color: $primary;
+    }
+  }
+}

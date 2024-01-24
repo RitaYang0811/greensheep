@@ -1,0 +1,62 @@
+//hover時顯示圖案內框，hover時換照片並顯示內框
+//請在欲使用hover效果圖片上一層class中加上 h-border
+//在原圖片class中加上 show，在要hover時替換的圖片class中加上 change
+//兩張圖片請放在一起。
+
+// 先隱藏change的照片
+.change {
+  display: none;
+  opacity: 0;
+}
+//hover時隱藏show
+.h-border:hover .show {
+  display: none;
+  transition: all 0.5s ease-in-out;
+}
+//hover時顯change
+.h-border:hover .change {
+  display: block;
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
+}
+// 單純hover時
+.h-border:hover {
+  transition: all 0.3s;
+}
+
+//以下為hover時加上border的內容
+//設定定位
+.h-border {
+  position: relative;
+  overflow: hidden;
+  transition: border-radius 0.5s, transform 0.5s;
+}
+//用偽元素畫內框線
+.h-border::after {
+  //先定位
+  position: absolute;
+  content: "";
+  //內縮12PX
+  top: 3%;
+  bottom: 3%;
+  left: 3%;
+  right: 3%;
+  //畫框線
+  border: 1px solid $white;
+  border-radius: 60px 0;
+  //用透明效果隱藏畫好的框線
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+//hover時,原圖外觀圓角及放大特效
+.h-border:hover {
+  cursor: pointer;
+  border-radius: 60px 0;
+  //   overflow: hidden;
+  transform: scale(1.05);
+}
+//hover時顯示框線
+.h-border:hover::after {
+  //取消透明，框線即現
+  opacity: 1;
+}

@@ -1,0 +1,13 @@
+// 控制折疊選單icon變換
+.expand-less {
+  display: inline-block;
+}
+.expand-more {
+  display: none;
+}
+.collapsed .expand-more {
+  display: inline-block;
+}
+.collapsed .expand-less {
+  display: none;
+}

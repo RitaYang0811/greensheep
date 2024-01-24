@@ -1,0 +1,15 @@
+// 992px以上是桌機lg
+// 991.98px以下開啟平板md樣式
+@mixin pad {
+  @media (max-width: 991.98px) {
+    @content;
+  }
+}
+// 767.98px以下開啟手機sm模式
+@mixin mobile {
+  @media (max-width: 767.98px) {
+    @content;
+  }
+}
+
+// 在每個節點使用＠include pad/mobile {  }

@@ -1,0 +1,187 @@
+//首圖背景色塊
+//左側色塊
+.bg-left-stripe {
+  top: 0px;
+  left: 110px;
+  z-index: 0;
+}
+// 右側色塊
+.bg-right-stripe {
+  top: 0px;
+  right: -72px;
+  z-index: 0;
+}
+//首圖背景圖片
+//左側圖片
+.bg-left-pic {
+  top: 192px;
+  left: 0;
+}
+
+//主要圖片
+.bg-main-pic {
+  top: 100px;
+  z-index: 0;
+}
+
+//右側圖片
+.bg-right-pic {
+  top: 124px;
+  right: 0;
+  @include pad {
+    top: 520px;
+  }
+}
+
+//裝飾點點
+.banner-deco-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: $primary;
+}
+
+//標題後半圓弧型
+.bg-banner-blur {
+  border-radius: 0px 500px 0px 0px;
+  border-top: 1px solid var(--white, #fff);
+  border-right: 1px solid var(--white, #fff);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  backdrop-filter: blur(10px);
+  width: 488px;
+  height: 579px;
+  left: 0;
+  top: 368px;
+  z-index: 0;
+  @include pad {
+    width: 450px;
+    height: 480px;
+    top: 400px;
+  }
+  @include mobile {
+    width: 375px;
+    height: 400px;
+    top: 436px;
+  }
+}
+
+.bg-main-pic-mobile {
+  background: url(../images/img-banner-mobile.png);
+  width: 100%;
+  height: 820px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+// 首頁、標題
+.banner-title {
+  font-family: "Playfair Display", serif;
+  @include pad {
+    font-family: "Playfair Display SC", serif;
+  }
+}
+//首頁文字與社群icon
+.banner-content {
+  padding-top: 478px;
+  padding-bottom: 304px;
+  z-index: 1;
+  @include pad {
+    padding-top: 543px;
+    padding-bottom: 40px;
+  }
+}
+.banner-icon {
+  a {
+    background: transparent;
+    border-radius: 50%;
+    transition: background 0.5s;
+    &:hover {
+      background: $white;
+    }
+    &:active {
+      background: $white;
+    }
+  }
+  @include pad {
+    display: none;
+  }
+}
+// 品牌故事
+.about-me {
+  margin-top: -240px;
+  @include pad {
+    margin-top: 0;
+  }
+}
+//關於品牌左邊長條背景
+.bg-long-stripe {
+  background-image: url(../images/img-about-2.png);
+  width: 280px;
+  height: 540px;
+  top: 0px;
+  left: 28px;
+}
+//關於品牌右邊方形背景
+.bg-square-stripe {
+  background-image: url(../images/img-about-4.png);
+  width: 357px;
+  height: 350px;
+  right: -209px;
+  top: 70px;
+}
+//關於品牌左邊圖片
+.bg-image-left {
+  background-image: url(../images/img-about-1.png);
+  width: 196px;
+  height: 300px;
+  bottom: 100px;
+  left: 0px;
+}
+//關於品牌右邊圖片
+.bg-image-right {
+  background-image: url(../images/img-about-3.png);
+  width: 416px;
+  height: 128px;
+  top: 160px;
+  right: 0px;
+}
+//裝飾圈圈滑過抖動
+.deco-spin {
+  &:hover {
+    .deco-circle {
+      animation: headShake 1s linear infinite;
+    }
+  }
+}
+
+@keyframes headShake {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  6.5% {
+    -webkit-transform: translateX(-6px) rotateY(-9deg);
+    transform: translateX(-6px) rotateY(-9deg);
+  }
+  18.5% {
+    -webkit-transform: translateX(5px) rotateY(7deg);
+    transform: translateX(5px) rotateY(7deg);
+  }
+  31.5% {
+    -webkit-transform: translateX(-3px) rotateY(-5deg);
+    transform: translateX(-3px) rotateY(-5deg);
+  }
+  43.5% {
+    -webkit-transform: translateX(2px) rotateY(3deg);
+    transform: translateX(2px) rotateY(3deg);
+  }
+  50% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}

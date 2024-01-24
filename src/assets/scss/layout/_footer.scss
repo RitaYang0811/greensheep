@@ -1,0 +1,32 @@
+// PC
+// 社群
+.social-media-list {
+  svg {
+    // background: transparent;
+    border: 1px solid $white;
+    border-radius: 50%;
+    transition: border-color 0.3s, background-color 0.5s;
+  }
+  a:hover {
+    svg {
+      border-color: $dark;
+      background-color: $dark;
+    }
+  }
+}
+// Mobile
+@include mobile {
+  .footer-top-left {
+    width: 100%;
+    a {
+      letter-spacing: 0.28px;
+    }
+  }
+  .footer-top-right {
+    .logo-svg {
+      width: 160px;
+      height: 32px;
+      padding: 1.6px 2.72px 0px 3.2px;
+    }
+  }
+}

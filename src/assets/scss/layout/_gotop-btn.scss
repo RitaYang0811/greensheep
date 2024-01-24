@@ -1,0 +1,26 @@
+.scroll-top-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 185px;
+  z-index: 3;
+  opacity: 0;
+  transition: 0.5s;
+  a {
+    background: $primary;
+    width: 36px;
+    height: 36px;
+    padding: 0 6px;
+    border-radius: 50px;
+    pointer-events: none;
+  }
+  // 新增active動作
+  &.active {
+    opacity: 1;
+    a {
+      pointer-events: auto;
+    }
+  }
+  @include mobile {
+    bottom: 280px;
+  }
+}

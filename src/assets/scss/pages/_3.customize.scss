@@ -1,0 +1,19 @@
+//鑽石按鈕小裝置排版需求
+.d-396-none {
+  display: block;
+  @media (min-width: 396px) {
+    display: none;
+  }
+}
+
+//左邊照片高度
+.cus-pic {
+  max-height: 500px;
+  @include pad {
+    max-height: 400px;
+  }
+}
+//讓對應圖示的寶石先隱藏
+.icon {
+  display: none;
+}

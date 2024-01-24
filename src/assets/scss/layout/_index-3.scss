@@ -1,0 +1,67 @@
+.bg-image {
+  background-image: url("../images/img_diy_bg.png"); /* 背景圖片*/
+  width: 100%;
+  height: 600px;
+  border-radius: 80px 0px 80px 0px;
+  overflow: hidden;
+}
+
+.bg-image-mobile {
+  background-image: url("../images/img_diy_bg.png"); /* 手機板背景圖片*/
+  // width: 95%;
+  height: 903px;
+  border-radius: 80px 0px 80px 0px;
+  overflow: hidden;
+  background-position: center;
+}
+
+.bg-image2 {
+  background-image: url("../images/img-scroll-view-bg.jpg"); /* 背景圖片*/
+  max-width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 562px; /* 可依需求調整高度 */
+}
+
+.bg-image3 {
+  background-image: url("../images/img-scroll-view-bg.jpg"); /* 背景圖片*/
+  max-width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-image2-mobile {
+  background-image: url("../images/img-scrollView-m.png"); /* 手機板背景圖片*/
+  max-width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  /* 可依需求調整高度 */
+}
+
+#base-image {
+  position: absolute;
+  top: 120px;
+  left: 450px;
+}
+#dynamic-image {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  display: none;
+}
+
+#diy-left-image {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#diy-left-dynamic-image {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  display: none;
+}

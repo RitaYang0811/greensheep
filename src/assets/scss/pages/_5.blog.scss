@@ -1,0 +1,43 @@
+.bgCustomblog {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.text-indent {
+  text-indent: 2em;
+}
+
+.content {
+  display: none;
+}
+
+.content.active {
+  display: block;
+}
+
+.accordion-item.no-border {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.imageOverlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.imageContainer {
+  object-position: center;
+}
+
+.imageContainer:hover .imageOverlay {
+  opacity: 1;
+}
+
+.text-with-bg {
+  display: inline-block;
+  background-color: rgba(128, 128, 128, 0.5); /* 灰色背景，50% 透明度 */
+  padding: 10px; /* 內部邊距，讓背景更顯著 */
+}

@@ -1,0 +1,57 @@
+// import字型區
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Serif+TC:wght@200;300;400;500;600;700;900&family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Playfair+Display:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+//載入icon
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+//bootstrap5設定區
+@import '../../../node_modules/bootstrap/scss/functions';
+//bootstrap客製化區(helpers)
+@import './utils/variables';
+
+//客製化variables放在這
+@import './utils/variables';
+@import '../../../node_modules/bootstrap/scss/variables-dark';
+@import '../../../node_modules/bootstrap/scss/maps';
+@import '../../../node_modules/bootstrap/scss/mixins';
+
+//客製化utilites放在這
+@import './utils/utilities';
+//客製化元件components放在這
+@import './base/font';
+@import './components/custom';
+@import './components/button';
+@import './components/breadcrumb.scss';
+@import './components/hover-border';
+@import './components/pagination';
+@import './components/tag';
+@import './components/like';
+@import './components/collapse';
+@import './components/pseudoElement.scss';
+@import './components/swiper';
+
+//bootstrap5全部內容
+// @import '../../../node_modules/bootstrap';
+
+//base 基本設定
+@import './base/base';
+
+//utils 通用設定
+@import './utils/mixin';
+
+//layout css區
+@import './layout/header.scss';
+@import './layout/footer.scss';
+@import './layout/index-1';
+
+@import './layout/index-3';
+@import './layout/index-4';
+@import './layout/gotop-btn';
+//pages css區
+@import './pages/3.customize';
+@import './pages/5.blog';
+@import './pages/6.faq';
+@import './pages/8-1.memLogin';
+@import './pages/7-3.shopInfo';

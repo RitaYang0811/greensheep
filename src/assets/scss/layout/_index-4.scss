@@ -1,0 +1,269 @@
+.white-border {
+  position: relative; // 當作父層
+}
+// 偽元素創造白框
+.white-border::after {
+  content: "";
+  // 定位
+  position: absolute;
+  //白框
+  border: 1px solid $white;
+  border-radius: 40px 0px;
+  // 內縮20px
+  top: 1.25rem;
+  right: 1.25rem;
+  bottom: 1.25em;
+  left: 1.25em;
+}
+.lt-card-img-box {
+  width: auto;
+  // max-width: 400px;
+  // height: 640px;
+  .lt-card-img {
+    width: 100%;
+    height: 100%;
+  }
+  p {
+    bottom: 36px;
+  }
+}
+// bottom&right
+.article-br {
+  img {
+    width: auto;
+    // height: 400px;
+    object-fit: cover;
+  }
+  p {
+    /* R_18px_200% */
+    font-family: Noto Serif TC;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 200%; /* 36px */
+    letter-spacing: 0.36px;
+  }
+}
+.span-one {
+  display: none;
+}
+// 第四個
+.more-content {
+  border: 1px solid var(--Yellow-Light, #e9d79c);
+  min-width: 167.5px;
+  height: 100%;
+  &-bg {
+    top: 50%;
+    left: 50%;
+    min-width: 300px;
+    transform: translate(-50%, -50%);
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  &-logo {
+    z-index: 2;
+    width: 280px;
+    height: 56px;
+    padding: 2.8px 4.76px 0px 5.6px;
+  }
+  a {
+    bottom: 48px;
+  }
+}
+
+// 客戶好評
+// 客戶評價
+.custom-card {
+  position: relative;
+  width: 100%;
+  max-width: 306px;
+  height: 240px;
+  max-height: 240px;
+  transition: 0.3s;
+  &:hover {
+    width: 100%;
+    max-width: 306px;
+    height: 100%;
+    min-height: 240px;
+    background: $white;
+    border-radius: 12px;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.16);
+    .custom-img-box {
+      transform: scale(0.6) translate(-25%, -80%);
+      img {
+        border-radius: 12px;
+      }
+    }
+    .custom-content {
+      top: 60px;
+      height: auto;
+    }
+  }
+}
+.custom-img-box {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+  z-index: 2;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.custom-content {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  transition: 0.3s;
+  padding: 32px 16px 12px;
+  p {
+    font-family: Noto Serif TC;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; /* 16.8px */
+    letter-spacing: 0.28px;
+  }
+  .grey-border {
+    border-right: 1px solid $greyD4;
+  }
+}
+// 結尾logo
+.custom-footer {
+  a {
+    transition: background-color 0.5s, padding 0.5s;
+  }
+  p {
+    color: $primary;
+  }
+  a:hover {
+    opacity: 80%;
+  }
+  //因為滑動增加背景會推擊footer 的高度，所以改成其他樣式
+  //   background-color: $primary;
+  //   border-radius: 0.25rem;
+  //   padding: 0.25rem;
+  //   p {
+  //     color: $white;
+  //   }
+  // }
+  a:active {
+    p {
+      color: $secondary;
+    }
+  }
+}
+
+/* 手機版 */
+@include mobile {
+  // 文章專欄
+  // top&left
+  .lt-card-img-box {
+    width: auto;
+    max-width: 400px;
+    height: 520px;
+    .lt-card-img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  // bottom&right
+  .article-br {
+    img {
+      width: auto;
+      height: 240px;
+    }
+  }
+  .span-one {
+    display: inline;
+  }
+  .span-two {
+    display: none;
+  }
+  // 第四個
+  .more-content {
+    border: 1px solid var(--Yellow-Light, #e9d79c);
+    min-width: 167.5px;
+    height: 240px;
+    &-bg {
+      top: 50%;
+      left: 55%;
+      min-width: 167.5px;
+      transform: translate(-58%, -50%);
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    &-logo {
+      z-index: 2;
+      width: 140px;
+      height: 28px;
+      padding: 1.4px 2.38px 0px 2.8px;
+    }
+    a {
+      bottom: 48px;
+    }
+  }
+
+  // 客戶好評
+
+  .custom-title {
+    p {
+      font-family: "Noto Serif TC";
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 120%; /* 21.6px */
+      letter-spacing: 0.36px;
+    }
+  }
+
+  // 客戶評價
+  .custom-card {
+    margin: auto;
+    &:hover {
+      width: 306px;
+      height: 100%;
+    }
+
+    h2 {
+      font-family: "Playfair Display SC";
+      font-size: $h2-font-size;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 120%; /* 38.4px */
+      letter-spacing: 0.32px;
+    }
+  }
+  .custom-lists {
+    img {
+      width: 100%;
+      height: 240px;
+    }
+  }
+  // 客戶評價
+  .custom-card {
+    margin: auto;
+    &:hover {
+      width: 306px;
+      height: 100%;
+    }
+  }
+  .custom-footer {
+    img {
+      width: 280px;
+      height: 56px;
+      // padding: 2.8px 4.76px 0px 5.6px;
+    }
+  }
+}

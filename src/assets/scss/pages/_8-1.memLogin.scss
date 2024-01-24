@@ -1,0 +1,56 @@
+.google-account,
+.line-account {
+  width: 100%;
+  max-width: 416px;
+  border-radius: 1.5rem;
+  color: $primary;
+  transition: 0.5s;
+}
+.google-account {
+  border: 1px solid #0074d9;
+  &:hover {
+    background-color: #0074d9;
+    color: $white;
+  }
+}
+.line-account {
+  border: 1px solid #00c300;
+  &:hover {
+    background-color: #00c300;
+    color: $white;
+  }
+}
+
+.hr-line::before {
+  content: "";
+  display: inline-block;
+  width: 100%;
+  height: 1px;
+  background-color: black;
+  margin-right: 8px;
+}
+.hr-line::after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+  height: 1px;
+  background-color: black;
+  margin-left: 8px;
+}
+
+.member-form {
+  max-width: 500px;
+  a {
+    text-decoration: underline;
+  }
+}
+.sub-button {
+  width: 500px;
+  img {
+    width: 20px;
+    height: 20px;
+  }
+  @include mobile {
+    width: 250px;
+  }
+}

@@ -1,0 +1,185 @@
+.logo {
+  a {
+    display: block;
+    background-image: url("../images/logo-white.svg");
+    width: 12.5rem;
+    height: 2.5rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    text-indent: 101%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+// navbar 滑過時的效果
+.navbar-hover {
+  background: rgba(20, 20, 20, 0.2);
+  transition: background-color 0.3s, color 0.3s;
+  border-bottom: 1px solid transparent;
+  z-index: 2;
+  &:hover {
+    background: $light;
+    border-bottom: 1px solid $greyD4;
+    .nav-link {
+      color: #566b5a;
+    }
+    .logo {
+      a {
+        background-image: url("../images/logo-green.svg");
+      }
+    }
+    .header-white-icon {
+      display: none;
+    }
+    .header-green-icon {
+      display: block;
+    }
+    input {
+      &::placeholder {
+        content: "搜尋...";
+        color: $grey66;
+      }
+    }
+    .dropdown-icon {
+      color: $primary;
+      opacity: 1;
+    }
+    .menu-icon {
+      color: $primary;
+    }
+  }
+}
+
+//全部商品下拉選單
+.custom-dropdown-menu {
+  background: $light;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transform: translateX(-50%);
+  @include pad {
+    background: transparent;
+    box-shadow: none;
+    transform: translateX(25%);
+  }
+  a {
+    &:hover {
+      color: $primary;
+    }
+    @include pad {
+      color: $primary;
+    }
+  }
+}
+
+//中英文字轉換
+
+.nav-item {
+  position: relative;
+  &-en {
+    opacity: 1;
+    color: $white;
+    transition: opacity 0.3s ease-out;
+    @include pad {
+      opacity: 0;
+    }
+  }
+  &-ch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    @include pad {
+      opacity: 1;
+      font-family: "Montserrat", sans-serif;
+    }
+  }
+  &:hover {
+    .nav-item-en {
+      opacity: 0;
+    }
+    .nav-item-ch {
+      opacity: 1;
+      font-family: "Montserrat", sans-serif;
+      color: $primary;
+    }
+  }
+}
+
+// header icon
+.header-form {
+  .input-group {
+    border-bottom: 1px solid $greyD4;
+    @include pad {
+      border-bottom: 0px;
+    }
+  }
+  .form-control {
+    caret-color: #566b5a; //改變光標顏色
+  }
+}
+.search-box {
+  &::placeholder {
+    color: $white;
+    font-size: 14px;
+  }
+}
+.header-white-icon {
+  display: block;
+}
+.header-green-icon {
+  display: none;
+}
+.no-box-shadow {
+  box-shadow: none !important;
+}
+//menu-icon 漢堡選單
+.menu-icon {
+  color: $white;
+}
+
+// //collapse-menu-list
+// .collapse-menu {
+//   width: 100%;
+// }
+// .collapse-menu-list {
+//   a {
+//     transition: color 0.2s;
+//     &:hover {
+//       color: $primary;
+//     }
+//   }
+// }
+
+// .side-collapse-container-right {
+//   @include pad {
+//     position: relative;
+//     right: 0;
+//     transition: right 0.4s;
+//   }
+// }
+// .side-collapse-container-right.out {
+//   @include pad {
+//     right: 85%;
+//   }
+// }
+
+// .side-collapse-right {
+//   @include pad {
+//     top: 50px;
+//     bottom: 0;
+//     right: 0;
+//     width: 85%;
+//     position: fixed;
+//     overflow: hidden;
+//     transition: width 0.4s;
+//   }
+// }
+// .side-collapse-right.in {
+//   @include pad {
+//     width: 0;
+//   }
+// }
