@@ -1,7 +1,7 @@
 # greensheep_project
 
-網頁連結：https://ritayang0811.github.io/greensheep/#/
-元件樣式共筆：https://hackmd.io/6rSCMX9xQ5Cg_OaJ9WISoQ
+- 網頁連結：https://ritayang0811.github.io/greensheep/#/
+- 元件樣式共筆：https://hackmd.io/6rSCMX9xQ5Cg_OaJ9WISoQ
 
 # 版本號：
 
@@ -20,9 +20,7 @@
 
 # 資料夾配置：
 
---assets - 圖片/scss
---components - 小元件
-
+- assets - 圖片/scss
 - components - 小元件 （名稱記得大寫）
 - views - 頁面 （名稱記得後面加上View）
 - router - 路由
