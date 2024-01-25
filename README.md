@@ -1,6 +1,7 @@
 # greensheep_project
 
 網頁連結：https://ritayang0811.github.io/greensheep/#/
+元件樣式共筆：https://hackmd.io/6rSCMX9xQ5Cg_OaJ9WISoQ
 
 # 版本號：
 
@@ -15,6 +16,7 @@
 - refactor - 重構 or 優化，不屬於 bug 也不屬於新增功能等
 - test - 增加測試功能 (when adding missing tests)
 - chore - 增加或修改第三方套件(輔助工具)等 (maintain)
+  參考文件：https://israynotarray.com/git/20200914/1124442109/
 
 # 資料夾配置：
 
