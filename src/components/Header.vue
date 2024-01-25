@@ -1,4 +1,11 @@
 <template>
+  <!-- 測試link寫法 -->
+  <nav>
+    <RouterLink to="/">Home</RouterLink>
+    <RouterLink to="/about">About</RouterLink>
+  </nav>
+  <!-- 測試link寫法 結束-->
+  <div class="btn btn-primary">點我</div>
   <div class="accordion fs-8 py-1 bg-primary text-white">
     即日起，訂單達 2,000元 以上即可享免運費優惠！
   </div>
@@ -191,6 +198,8 @@
   </nav>
 </template>
 
-<script setup lang="js" name="Header"></script>
+<script setup lang="js" name="Header">
+import { RouterLink, RouterView } from 'vue-router'
+</script>
 
 <style></style>
