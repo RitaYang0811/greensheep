@@ -95,27 +95,31 @@
             >
           </li>
           <li class="nav-item" style="min-width: 81px">
-            <a class="nav-link nav-item-en py-2 py-lg-1 px-2" href="4-1.Story.html">ABOUT</a>
-            <a
+            <router-link to="/story" class="nav-link nav-item-en py-2 py-lg-1 px-2"
+              >ABOUT</router-link
+            >
+            <router-link
+              to="/story"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              href="4-1.Story.html"
-              >關於品牌</a
+              >關於品牌</router-link
             >
           </li>
           <li class="nav-item" style="min-width: 81px">
-            <a class="nav-link nav-item-en py-2 py-lg-1 px-2" href="5-1.blog.html">BLOG</a>
-            <a
+            <router-link to="/articleList" class="nav-link nav-item-en py-2 py-lg-1 px-2"
+              >BLOG</router-link
+            >
+            <router-link
+              to="/articleList"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              href="5-1.blog.html"
-              >專欄文章</a
+              >專欄文章</router-link
             >
           </li>
           <li class="nav-item" style="min-width: 81px">
-            <a class="nav-link nav-item-en py-2 py-lg-1 px-2" href="6-1.faq.html">Q&A</a>
-            <a
+            <router-link to="/faq" class="nav-link nav-item-en py-2 py-lg-1 px-2">Q&A</router-link>
+            <router-link
+              to="/faq"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              href="6-1.faq.html"
-              >常見問題</a
+              >常見問題</router-link
             >
           </li>
           <li class="nav-item d-lg-none" style="min-width: 100px">
