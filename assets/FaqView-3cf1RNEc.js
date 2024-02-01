@@ -1,0 +1,1 @@
+import{_ as o,c as s,o as a,p as c,b as t,a as _}from"./index-plG07tvG.js";const d={},n=e=>(c("data-v-a34422e6"),e=e(),t(),e),p={class:"faq"},r=n(()=>_("h1",null,"FAQ",-1)),i=[r];function f(e,h){return a(),s("div",p,i)}const u=o(d,[["render",f],["__scopeId","data-v-a34422e6"]]);export{u as default};

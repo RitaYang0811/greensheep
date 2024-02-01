@@ -1,1 +1,0 @@
-import{_ as o,c as s,o as c,p as t,b as a,a as d}from"./index-KjvY2bOT.js";const _={},n=e=>(t("data-v-df9345de"),e=e(),a(),e),p={class:"faq"},r=n(()=>d("h1",null,"FAQ",-1)),f=[r];function i(e,h){return c(),s("div",p,f)}const u=o(_,[["render",i],["__scopeId","data-v-df9345de"]]);export{u as default};
