@@ -227,4 +227,16 @@
 
 <script setup lang="js" name="Home1"></script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.bg-left-stripe {
+  top: 0px;
+  left: 110px;
+  z-index: -3;
+}
+// 右側色塊
+.bg-right-stripe {
+  top: 0px;
+  right: -72px;
+  z-index: -3;
+}
+</style>
