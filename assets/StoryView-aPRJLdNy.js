@@ -1,0 +1,1 @@
+import{_ as c,c as o,o as s,p as t,b as a,a as _}from"./index-KjvY2bOT.js";const d={},r=e=>(t("data-v-c866daec"),e=e(),a(),e),n={class:"story"},p=r(()=>_("h1",null,"品牌故事及精神",-1)),i=[p];function h(e,l){return s(),o("div",n,i)}const u=c(d,[["render",h],["__scopeId","data-v-c866daec"]]);export{u as default};
