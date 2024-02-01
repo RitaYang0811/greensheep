@@ -119,7 +119,7 @@
             <!-- <p class="text-primary position-absolute display-7 text-vertical top-60 end-2 d-lg-block d-none">@greensheep_jewelry</p> -->
             <!-- top:236px;right:21px; -->
             <div class="position-absolute top-93 start-n2 d-lg-block d-none">
-                <img src="../assets/images/World's Best Artistry.png" alt="" />
+                <img src="../assets/images/Worlds Best Artistry.png" alt="" />
             </div>
         </div>
     </div>
