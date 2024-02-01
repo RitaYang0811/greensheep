@@ -3,31 +3,32 @@
 .bg-left-stripe {
   top: 0px;
   left: 110px;
-  z-index: 0;
+  z-index: -3;
 }
 // 右側色塊
 .bg-right-stripe {
   top: 0px;
   right: -72px;
-  z-index: 0;
+  z-index: -3;
 }
 //首圖背景圖片
 //左側圖片
 .bg-left-pic {
   top: 192px;
-  left: 0;
+  left: -1;
 }
 
 //主要圖片
 .bg-main-pic {
   top: 100px;
-  z-index: 0;
+  z-index: -2;
 }
 
 //右側圖片
 .bg-right-pic {
   top: 124px;
   right: 0;
+  z-index: 2;
   @include pad {
     top: 520px;
   }
@@ -46,17 +47,13 @@
   border-radius: 0px 500px 0px 0px;
   border-top: 1px solid var(--white, #fff);
   border-right: 1px solid var(--white, #fff);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 100%);
   backdrop-filter: blur(10px);
   width: 488px;
   height: 579px;
   left: 0;
   top: 368px;
-  z-index: 0;
+  z-index: -1;
   @include pad {
     width: 450px;
     height: 480px;
@@ -66,6 +63,7 @@
     width: 375px;
     height: 400px;
     top: 436px;
+    z-index: 0;
   }
 }
 
@@ -80,16 +78,16 @@
 
 // 首頁、標題
 .banner-title {
-  font-family: "Playfair Display", serif;
+  font-family: 'Playfair Display', serif;
   @include pad {
-    font-family: "Playfair Display SC", serif;
+    font-family: 'Playfair Display SC', serif;
   }
 }
 //首頁文字與社群icon
 .banner-content {
   padding-top: 478px;
   padding-bottom: 304px;
-  z-index: 1;
+  z-index: 2;
   @include pad {
     padding-top: 543px;
     padding-bottom: 40px;
@@ -151,37 +149,37 @@
   right: 0px;
 }
 //裝飾圈圈滑過抖動
-.deco-spin {
-  &:hover {
-    .deco-circle {
-      animation: headShake 1s linear infinite;
-    }
-  }
-}
+// .deco-spin {
+//   &:hover {
+//     .deco-circle {
+//       animation: headShake 1s linear infinite;
+//     }
+//   }
+// }
 
-@keyframes headShake {
-  0% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-  6.5% {
-    -webkit-transform: translateX(-6px) rotateY(-9deg);
-    transform: translateX(-6px) rotateY(-9deg);
-  }
-  18.5% {
-    -webkit-transform: translateX(5px) rotateY(7deg);
-    transform: translateX(5px) rotateY(7deg);
-  }
-  31.5% {
-    -webkit-transform: translateX(-3px) rotateY(-5deg);
-    transform: translateX(-3px) rotateY(-5deg);
-  }
-  43.5% {
-    -webkit-transform: translateX(2px) rotateY(3deg);
-    transform: translateX(2px) rotateY(3deg);
-  }
-  50% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-}
+// @keyframes headShake {
+//   0% {
+//     -webkit-transform: translateX(0);
+//     transform: translateX(0);
+//   }
+//   6.5% {
+//     -webkit-transform: translateX(-6px) rotateY(-9deg);
+//     transform: translateX(-6px) rotateY(-9deg);
+//   }
+//   18.5% {
+//     -webkit-transform: translateX(5px) rotateY(7deg);
+//     transform: translateX(5px) rotateY(7deg);
+//   }
+//   31.5% {
+//     -webkit-transform: translateX(-3px) rotateY(-5deg);
+//     transform: translateX(-3px) rotateY(-5deg);
+//   }
+//   43.5% {
+//     -webkit-transform: translateX(2px) rotateY(3deg);
+//     transform: translateX(2px) rotateY(3deg);
+//   }
+//   50% {
+//     -webkit-transform: translateX(0);
+//     transform: translateX(0);
+//   }
+// }

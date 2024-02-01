@@ -5,7 +5,7 @@
 
 # 版本號：
 
-- Node - 18.16
+- Node - 18.16 (更新至^18.18.1)
 
 # commit 寫法：
 
@@ -32,3 +32,4 @@
 
 - npm install - 安裝套件
 - npm run deploy - 編譯及部署
+
