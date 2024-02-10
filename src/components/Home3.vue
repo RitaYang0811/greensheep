@@ -40,13 +40,13 @@ export default {
         <p class="mb-4">選擇寶石</p>
         <div class="d-flex gap-2">
           <a href="##">
-            <img src="src/assets/images/stoneBox.png" alt="寶石 1">
+            <img src="../assets/images/stoneBox.png" alt="寶石 1">
           </a>
           <a href="##">
-            <img src="src/assets/images/stoneBox1.png" alt="寶石 2">
+            <img src="../assets/images/stoneBox1.png" alt="寶石 2">
           </a>
           <a href="##">
-            <img src="src/assets/images/stoneBox2.png" alt="寶石 3">
+            <img src="../assets/images/stoneBox2.png" alt="寶石 3">
           </a>
         </div>
       </div>
@@ -58,7 +58,6 @@ export default {
 </script>
 
 <template>
-  <!-- 第一部分：Uli 製作 -->
   <!-- 客製化 -->
   <div class="container mb-16">
     <div class="row">
