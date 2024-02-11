@@ -1,56 +1,28 @@
 <script>
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js'
-let cusRingPopover
-let popoverRing
-let cusNecklacePopover
-let popoverNecklace
 
 export default {
   data() {
     return {
-      text: '文字'
+      popoverRing: '',
+      popoverNecklace: ''
+    }
+  },
+  methods: {
+    closePopover() {
+      this.popoverRing.hide()
+      this.popoverNecklace.hide()
     }
   },
   mounted() {
-    cusRingPopover = document.querySelector('.cus-ring-popover-btn')
-    popoverRing = new bootstrap.Popover(cusRingPopover, {
-      // title: '雷切刻字',
+    this.popoverRing = new bootstrap.Popover(this.$refs.ringPopoverBtn, {
       html: true,
-      sanitize: false, // 預設 ture 會擋掉部分 HTML 標籤，例如 input
-      content: `
-      <div class="p-2">
-        <p class="mb-4">雷切刻字</p>
-        <div class="border d-flex align-items-center px-2 py-1">
-          <input class="cus-popover-input border-0 ls-2" type="text" placeholder="hello world !" />
-          <a href="##">
-            <span class="material-icons text-secondary">send</span>
-          </a>
-        </div>
-      </div>
-      `,
-      placement: 'top'
+      content: this.$refs.ringPopoverContent,
+      placement: 'top',
     })
-    cusNecklacePopover = document.querySelector('.cus-necklace-popover-btn')
-    popoverNecklace = new bootstrap.Popover(cusNecklacePopover, {
-      // title: '選擇寶石',
+    this.popoverNecklace = new bootstrap.Popover(this.$refs.necklacePopoverBtn, {
       html: true,
-      sanitize: false,
-      content: `
-      <div class="p-2">
-        <p class="mb-4">選擇寶石</p>
-        <div class="d-flex gap-2">
-          <a href="##">
-            <img src="../assets/images/stoneBox.png" alt="寶石 1">
-          </a>
-          <a href="##">
-            <img src="../assets/images/stoneBox1.png" alt="寶石 2">
-          </a>
-          <a href="##">
-            <img src="../assets/images/stoneBox2.png" alt="寶石 3">
-          </a>
-        </div>
-      </div>
-      `,
+      content: this.$refs.necklacePopoverContent,
       placement: 'top'
     })
   }
@@ -67,6 +39,7 @@ export default {
             class="position-absolute w-100 top-0 start-0 cus-img-bg"
             src="../assets/images/img_diy_bg.png"
           />
+          <!-- 客製化介紹 -->
           <div class="cus-desc col-12 col-lg-4 order-lg-3 mb-6 mb-lg-0 px-12 text-lg-start">
             <h5 class="text-white fs-6 mb-1 ls-2">開始客製屬於您的產品</h5>
             <h3 class="text-white fs-2 mb-4 ls-1">CUSTOMIZE YOUR STYLE</h3>
@@ -78,6 +51,7 @@ export default {
               >Start Now</a
             >
           </div>
+          <!-- 客製化戒指 -->
           <div class="col-8 col-md-6 col-lg-4 position-relative">
             <img
               class="cus-img-font position-relative mb-7 d-none d-lg-inline-block"
@@ -92,11 +66,26 @@ export default {
             <button
               type="button"
               class="cus-popover-btn cus-ring-popover-btn bg-transparent border-0 position-absolute"
+              ref="ringPopoverBtn"
               data-bs-toggle="popover"
             >
               <img src="../assets/images/point.png" alt="雷雕客製" />
             </button>
+
+            <div class="d-none">
+              <div class="p-2" ref="ringPopoverContent">
+                <p class="mb-4">雷切刻字</p>
+                <div class="border d-flex align-items-center px-2 py-1">
+                  <input class="cus-popover-input border-0 ls-2" type="text" placeholder="hello world !" />
+                  <!-- 待修改路由，需加上 method: closePopover -->
+                  <a href="##">
+                    <span class="material-icons text-secondary">send</span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
+          <!-- 客製化項鍊 -->
           <div class="cus-img-necklace col-9 col-md-6 col-lg-4 ms-auto position-relative">
             <img
               class="base-image"
@@ -106,12 +95,29 @@ export default {
             <button
               type="button"
               class="cus-popover-btn cus-necklace-popover-btn bg-transparent border-0 position-absolute"
+              ref="necklacePopoverBtn"
               data-bs-toggle="popover"
-              data-bs-placement="top"
-              data-bs-content="這是一個 Popover 的範例"
             >
               <img src="../assets/images/point.png" alt="寶石客製化" />
             </button>
+
+            <div class="d-none">
+              <div class="p-2" ref="necklacePopoverContent">
+                <p class="mb-4">選擇寶石</p>
+                <div class="d-flex gap-2">
+                  <!-- 待修改路由，需加上 method: closePopover -->
+                  <a href="##">
+                    <img src="../assets/images/stoneBox.png" alt="寶石 1">
+                  </a>
+                  <a href="##">
+                    <img src="../assets/images/stoneBox1.png" alt="寶石 2">
+                  </a>
+                  <a href="##">
+                    <img src="../assets/images/stoneBox2.png" alt="寶石 3">
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -239,7 +245,10 @@ export default {
   &-popover-btn {
     animation: scale 1s ease-out infinite alternate-reverse;
   }
-  &-ring-popover-btn {
+  &-popover-input:focus-visible {
+  outline: 0
+  }
+  &-ring-popover-btn {  
     z-index: 2;
     top: 40%;
     left: 47%;
@@ -248,9 +257,6 @@ export default {
     top: 62%;
     left: 48%;
   }
-}
-.cus-popover-input:focus-visible {
-  outline: 1px solid red;
 }
 
 @keyframes scale {
