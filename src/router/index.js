@@ -1,42 +1,62 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    },
-    {
-      path: '/story',
-      name: 'story',
-      component: () => import('../views/StoryView.vue')
-    },
-    {
-      path: '/articleList',
-      name: 'articleList',
-      component: () => import('../views/ArticalListView.vue'),
+      name: 'UserLayout',
+      component: () => import('../views/UserLayoutView.vue'),
       children: [
         {
-          path: 'articleDetail',
-          component: () => import('../views/ArticalDetailView.vue')
-        }
+          path: '',
+          name: 'UserHome',
+          component: () => import('../views/HomeView.vue'),
+        },
+        {
+          path: 'about',
+          name: 'UserAbout',
+          component: () => import('../views/AboutView.vue')
+        },
+        {
+          path: 'story',
+          name: 'UserStory',
+          component: () => import('../views/StoryView.vue')
+        },
+        {
+          path: 'articleList',
+          name: 'UserArticleList',
+          component: () => import('../views/ArticleListView.vue'),
+          children: [
+            {
+              path: 'articleDetail',
+              name: 'UserArticleDetail',
+              component: () => import('../views/ArticleDetailView.vue')
+            }
+          ]
+        },
+        {
+          path: '/faq',
+          name: 'UserFaq',
+          component: () => import('../views/FaqView.vue')
+        },
       ]
     },
     {
-      path: '/faq',
-      name: 'faq',
-      component: () => import('../views/FaqView.vue')
+      path: '/login',
+      name: 'AdminLogin',
+      component: () => import('../views/AdLogin.vue'),
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: () => import('../views/AdDashboardView.vue'),
+      children: [
+        {
+          path: 'coupons',
+          component: () => import('../views/AdCouponsView.vue')
+        }
+      ]
     }
   ]
 })
