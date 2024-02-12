@@ -95,31 +95,31 @@
             >
           </li>
           <li class="nav-item" style="min-width: 81px">
-            <router-link to="/story" class="nav-link nav-item-en py-2 py-lg-1 px-2"
-              >ABOUT</router-link
+            <RouterLink to="/story" class="nav-link nav-item-en py-2 py-lg-1 px-2"
+              >ABOUT</RouterLink
             >
-            <router-link
+            <RouterLink
               to="/story"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              >關於品牌</router-link
+              >關於品牌</RouterLink
             >
           </li>
           <li class="nav-item" style="min-width: 81px">
-            <router-link to="/articleList" class="nav-link nav-item-en py-2 py-lg-1 px-2"
-              >BLOG</router-link
+            <RouterLink to="/articleList" class="nav-link nav-item-en py-2 py-lg-1 px-2"
+              >BLOG</RouterLink
             >
-            <router-link
+            <RouterLink
               to="/articleList"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              >專欄文章</router-link
+              >專欄文章</RouterLink
             >
           </li>
           <li class="nav-item" style="min-width: 81px">
-            <router-link to="/faq" class="nav-link nav-item-en py-2 py-lg-1 px-2">Q&A</router-link>
-            <router-link
+            <RouterLink to="/faq" class="nav-link nav-item-en py-2 py-lg-1 px-2">Q&A</RouterLink>
+            <RouterLink
               to="/faq"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              >常見問題</router-link
+              >常見問題</RouterLink
             >
           </li>
           <li class="nav-item d-lg-none" style="min-width: 100px">
