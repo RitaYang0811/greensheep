@@ -1,4 +1,4 @@
 <template>
-  <h1>後台首頁</h1>
+  <h1>後台側欄選單</h1>
   <RouterView />
 </template>

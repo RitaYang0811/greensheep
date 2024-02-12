@@ -50,10 +50,16 @@ const router = createRouter({
     {
       path: '/admin',
       name: 'Admin',
-      component: () => import('../views/AdDashboardView.vue'),
+      component: () => import('../views/AdLayoutView.vue'),
       children: [
         {
+          path: '',
+          name: 'AdminHome',
+          component: () => import('../views/AdHomePageView.vue')
+        },
+        {
           path: 'coupons',
+          name: 'AdminCoupons',
           component: () => import('../views/AdCouponsView.vue')
         }
       ]
