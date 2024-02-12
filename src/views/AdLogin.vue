@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
       <div class="row align-items-center vh-100">
-        <div class="col-4 mx-auto text-end">
+        <div class="col-3 mx-auto text-end">
           <h1 class="fs-2 mb-4 text-center">後台登入</h1>
           <RouterLink to="/" class="d-inline-block mb-3">回前台</RouterLink>
           <form @submit.prevent="login" class="text-start">

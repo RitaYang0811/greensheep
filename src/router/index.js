@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
+  linkActiveClass: 'active',
   routes: [
     {
       path: '/',
@@ -53,7 +54,7 @@ const router = createRouter({
       component: () => import('../views/AdLayoutView.vue'),
       children: [
         {
-          path: '',
+          path: 'home',
           name: 'AdminHome',
           component: () => import('../views/AdHomePageView.vue')
         },

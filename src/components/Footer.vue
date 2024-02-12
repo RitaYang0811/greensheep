@@ -2,7 +2,7 @@
   <footer class="footer">
     <div class="container-fluid bg-primary py-lg-12 py-8">
       <div class="container-lg text-start">
-        <RouterLink to="/login" class="fs-8 text-white d-inline-block mb-4">前往後台 <img src="../components/icons/open-in-new-white.svg" class="align-top" alt="前往後台"></RouterLink>
+        <RouterLink to="/login" target="_blank" class="fs-8 text-white d-inline-block mb-4">前往後台 <img src="../components/icons/open-in-new-white.svg" class="align-top" alt="前往後台" /></RouterLink>
         <!-- footer-top -->
         <div class="d-flex flex-lg-row justify-content-lg-between mb-lg-4 flex-column-reverse mb-6">
           <ul
