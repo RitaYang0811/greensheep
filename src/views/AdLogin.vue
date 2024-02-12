@@ -43,9 +43,9 @@ export default {
       this.$http.post(url, data)
         .then(res => {
           const { expired, token } = res.data
-          document.cookie = `W6Token=${token}; expires=${new Date(expired)}`
+          document.cookie = `AdminToken=${token}; expires=${new Date(expired)}`
           alert(res.data.message)
-          this.$router.push('/admin')
+          this.$router.push('/admin/home')
         })
         .catch(err => {
           alert(err.response.data.message)

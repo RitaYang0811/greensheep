@@ -21,9 +21,51 @@
         <li><a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a></li>
       </ul>
     </aside>
-    <main class="admin-main"><RouterView /></main>
+    <main class="admin-main"><RouterView v-if="checkSuccess" /></main>
   </div>
+  <VueLoading :active="isLoading" />
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      checkSuccess: false,
+      isLoading: false
+    }
+  },
+  methods: {
+    checkLogin () {
+      this.isLoading = true
+      const token = document.cookie.replace(
+        /(?:(?:^|.*;\s*)AdminToken\s*=\s*([^;]*).*$)|^.*$/,
+        '$1'
+      )
+      if (token) {
+        this.$http.defaults.headers.common.Authorization = token
+        const url = `${import.meta.env.VITE_APP_API_URL}/api/user/check`
+        this.$http.post(url)
+          .then(res => {
+            this.checkSuccess = true
+          })
+          .catch(err => {
+            alert(err.response.data.message)
+            this.$router.push('/login')
+          })
+          .finally(() => {
+            this.isLoading = false
+          })
+      } else {
+        alert('請先登入')
+        this.$router.push('/login')
+      }
+    }
+  },
+  mounted () {
+    this.checkLogin()
+  }
+}
+</script>
 
 <style scoped lang="scss">
 @import '../assets/scss/all.scss';
