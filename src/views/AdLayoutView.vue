@@ -21,7 +21,7 @@
         <li><a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a></li>
       </ul>
     </aside>
-    <main class="admin-main"><RouterView v-if="checkSuccess" /></main>
+    <main class="admin-main flex-grow-1"><RouterView v-if="checkSuccess" /></main>
   </div>
   <VueLoading :active="isLoading" />
 </template>
