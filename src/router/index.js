@@ -56,6 +56,28 @@ const router = createRouter({
           name: 'OrderSuccess',
           component: () => import('../views/OrderSuccess.vue')
         },
+        {
+          path: 'member',
+          name: 'MemberLayout',
+          component: () => import('../views/MemberLayoutView.vue'),
+          children:[
+            {
+              path: '',
+              name: 'MemberHome',
+              component: () => import('../views/MemberHomeView.vue')
+            },
+            {
+              path: 'order',
+              name: 'MemberOrder',
+              component: () => import('../views/MemberOrdersView.vue')
+            },
+            {
+              path: 'favorites',
+              name: 'MemberFavorites',
+              component: () => import('../views/MemberFavoritesView.vue')
+            },
+          ],
+        },
       ]
     },
     {
