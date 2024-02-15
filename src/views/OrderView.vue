@@ -169,7 +169,8 @@
               href="#" class="underline">隱私權政策</a></label>
         </div>
 
-        <a href="7-4.shopConfirm.html" class="btn btn-primary p-4 fs-4 w-100">提交訂單</a>
+        <!-- <a href="7-4.shopConfirm.html" class="btn btn-primary p-4 fs-4 w-100">提交訂單</a> -->
+        <router-link to="/success" class="btn btn-primary p-4 fs-4 w-100">提交訂單</router-link>
       </div>
     </div>
   </div>
