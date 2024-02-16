@@ -19,6 +19,8 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import App from './App.vue'
 import router from './router'
 
+// import 'bootstrap/dist/js/bootstrap.min.js'
+
 const app = createApp(App)
 const pinia = createPinia()
 

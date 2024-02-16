@@ -56,7 +56,9 @@
                 <a class="d-block py-3 py-lg-2 px-5" href="#">情人節禮物推薦</a>
               </li>
               <li><a class="d-block py-3 py-lg-2 px-5" href="#">優惠商品</a></li>
-              <li><hr class="dropdown-divider bg-white d-none d-lg-block" /></li>
+              <li>
+                <hr class="dropdown-divider bg-white d-none d-lg-block" />
+              </li>
               <li><a class="d-block py-3 py-lg-2 px-5" href="#">戒指 Ring</a></li>
               <li>
                 <a class="d-block py-3 py-lg-2 px-5" href="#">耳環 Earrings</a>
@@ -67,7 +69,9 @@
               <li>
                 <a class="d-block py-3 py-lg-2 px-5" href="#">項鍊 Pendant</a>
               </li>
-              <li><hr class="dropdown-divider bg-white d-none d-lg-block" /></li>
+              <li>
+                <hr class="dropdown-divider bg-white d-none d-lg-block" />
+              </li>
               <li>
                 <a class="d-block py-3 py-lg-2 px-5" href="#">925 純銀 Silver</a>
               </li>
@@ -96,8 +100,8 @@
             <RouterLink
               to="/story"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              >關於品牌</RouterLink
-            >
+              >關於品牌
+            </RouterLink>
           </li>
           <li class="nav-item" style="min-width: 81px">
             <RouterLink to="/articleList" class="nav-link nav-item-en py-2 py-lg-1 px-2"
@@ -106,16 +110,16 @@
             <RouterLink
               to="/articleList"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              >專欄文章</RouterLink
-            >
+              >專欄文章
+            </RouterLink>
           </li>
           <li class="nav-item" style="min-width: 81px">
             <RouterLink to="/faq" class="nav-link nav-item-en py-2 py-lg-1 px-2">Q&A</RouterLink>
             <RouterLink
               to="/faq"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              >常見問題</RouterLink
-            >
+              >常見問題
+            </RouterLink>
           </li>
           <li class="nav-item d-lg-none" style="min-width: 100px">
             <a class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start" href="8-1.memLogin.html"
@@ -148,7 +152,7 @@
             </div>
           </form>
           <!-- 會員中心 -->
-          <a class="me-2 d-none d-lg-block flex-grow-1" href="8-1.memLogin.html"
+          <!-- <a class="me-2 d-none d-lg-block flex-grow-1" href="8-1.memLogin.html"
             ><img
               class="header-white-icon p-xxl-2 p-xl-0"
               src="../assets/images/ic-person-white.svg"
@@ -157,7 +161,19 @@
               class="header-green-icon p-xxl-2 p-xl-0"
               src="../assets/images/ic-person-green.svg"
               alt="會員中心"
-          /></a>
+          /></a> -->
+          <router-link to="/member" class="me-2 d-none d-lg-block flex-grow-1">
+            <img
+              class="header-white-icon p-xxl-2 p-xl-0"
+              src="../assets/images/ic-person-white.svg"
+              alt="會員中心"
+            />
+            <img
+              class="header-green-icon p-xxl-2 p-xl-0"
+              src="../assets/images/ic-person-green.svg"
+              alt="會員中心"
+            />
+          </router-link>
           <!-- 購物車 -->
           <a href="7-2.shopCart.html">
             <div class="position-relative">
@@ -177,8 +193,8 @@
               >
                 <span class="visually-hidden">New alerts</span>
               </span>
-            </div></a
-          >
+            </div>
+          </a>
         </div>
         <!-- menu-icon 在md時出現-->
         <button
