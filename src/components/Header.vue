@@ -1,21 +1,16 @@
 <template>
-  <!-- 測試link寫法 -->
-  <nav>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
-  </nav>
-  <!-- 測試link寫法 結束-->
-  <div class="btn btn-primary">點我</div>
   <div class="accordion fs-8 py-1 bg-primary text-white">
     即日起，訂單達 2,000元 以上即可享免運費優惠！
   </div>
 
   <nav class="navbar navbar-expand-lg navbar-light navbar-hover py-3 flex-column">
-    <!-- logo -->
     <div class="container">
+      <!-- logo -->
+
       <h1 class="logo mb-0 me-lg-8">
-        <a class="navbar-brand" href="index.html">Green Sheep handmade jewelry</a>
+        <router-link to="/" class="navbar-brand">綠羊珠寶 Green Sheep handmade jewelry</router-link>
       </h1>
+
       <!-- menu -->
       <div
         class="collapse navbar-collapse flex-column offcanvas offcanvas-end py-16 px-12 py-lg-0 px-lg-0"
@@ -33,29 +28,29 @@
         </div>
         <ul class="navbar-nav me-auto gap-xxl-4 gap-xl-2 position-relative align-items-md-start">
           <li class="nav-item dropdown" style="min-width: 101px">
-            <a
+            <button
               class="nav-link dropdown-toggle nav-item-en py-2 py-lg-1 px-2"
-              href="#"
-              role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-              >SHOP
-            </a>
-            <a
+              @click="toProductsView"
+            >
+              SHOP
+            </button>
+            <button
               class="nav-link dropdown-toggle nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              href="#"
-              role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-              >全部商品
-            </a>
+              @click="toProductsView"
+            >
+              全部商品
+            </button>
 
             <!-- 全部商品的下拉選單 -->
             <ul
               class="dropdown-menu custom-dropdown-menu shadow-none border-0 font-noto-serif fs-8 start-50"
             >
               <li>
-                <a class="d-block py-3 py-lg-2 px-5" href="2-1.productPage.html">最新商品</a>
+                <RouterLink to="/products" class="d-block py-3 py-lg-2 px-5">最新商品</RouterLink>
               </li>
               <li>
                 <a class="d-block py-3 py-lg-2 px-5" href="#">情人節禮物推薦</a>
@@ -85,13 +80,13 @@
             </ul>
           </li>
           <li class="nav-item" style="min-width: 130px">
-            <a class="nav-link nav-item-en py-2 py-lg-1 px-2" href="3-1.cusProduct.html"
-              >CUSTOMISED</a
+            <RouterLink to="/custom" class="nav-link nav-item-en py-2 py-lg-1 px-2"
+              >CUSTOMISED</RouterLink
             >
-            <a
+            <RouterLink
+              to="/custom"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              href="3-1.cusProduct.html"
-              >客製設計</a
+              >客製設計</RouterLink
             >
           </li>
           <li class="nav-item" style="min-width: 81px">
@@ -202,8 +197,19 @@
   </nav>
 </template>
 
-<script setup lang="js" name="Header">
-import { RouterLink, RouterView } from 'vue-router'
+<script>
+export default {
+  data() {
+    return {}
+  },
+  methods: {
+    toProductsView() {
+      this.$router.push({
+        path: 'products'
+      })
+    }
+  }
+}
 </script>
 
-<style></style>
+<style scoped></style>
