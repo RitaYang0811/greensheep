@@ -1,13 +1,13 @@
 <template>
   <header class="admin-header d-flex justify-content-between align-items-center px-15 py-5">
     <RouterLink to="/admin/home">
-      <img src="../assets/images/logo-white.svg" alt="logo" />
+      <img src="@/assets/images/logo-white.svg" alt="logo" />
     </RouterLink>
     <div class="d-flex gap-6 text-white">
       <a href="##">登出</a>
       <RouterLink to="/" target="_blank">
         回前台
-        <img src="../components/icons/open-in-new-white.svg" class="align-top" alt="前往後台" />
+        <img src="@/components/icons/open-in-new-white.svg" class="align-top" alt="前往後台" />
       </RouterLink>
     </div>
   </header>
