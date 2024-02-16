@@ -67,34 +67,5 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@import '../assets/scss/all.scss';
-.admin {
-  &-header {
-    background: #bdbcbb;
-    position: fixed;
-    z-index: 1;
-    width: 100%;
-    height: 78px;
-  }
-  &-sidebar {
-    padding-top: 78px;
-    position: fixed;
-    width: 300px;
-    height: 100vh;
-    &-hover:hover {
-      background: $light;
-      color: $primary;
-    }
-    & .active{
-      background: $light;
-      color: $primary;
-    }
-  }
-  &-main {
-    margin-top: 78px;
-    margin-left: 300px;
-    min-height: calc(100vh - 78px);
-  }
-}
+<style scoped>
 </style>

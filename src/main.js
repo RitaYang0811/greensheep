@@ -9,7 +9,7 @@ import 'vue-loading-overlay/dist/css/index.css'
 import App from './App.vue'
 import router from './router'
 
-import 'bootstrap/dist/js/bootstrap.min.js'
+// import 'bootstrap/dist/js/bootstrap.min.js'
 
 const app = createApp(App)
 
