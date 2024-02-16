@@ -16,7 +16,7 @@
         <li><RouterLink to="/admin/home" class="admin-sidebar-hover d-block py-6">首頁</RouterLink></li>
         <li><a href="##" class="admin-sidebar-hover d-block py-6">商品管理</a></li>
         <li><a href="##" class="admin-sidebar-hover d-block py-6">訂單管理</a></li>
-        <li><a href="##" class="admin-sidebar-hover d-block py-6">文章管理</a></li>
+        <li><RouterLink to="/admin/articles" class="admin-sidebar-hover d-block py-6">文章管理</RouterLink></li>
         <li><RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6">優惠管理</RouterLink></li>
         <li><a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a></li>
       </ul>
