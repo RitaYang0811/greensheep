@@ -1,7 +1,7 @@
 .logo {
   a {
     display: block;
-    background-image: url("../images/logo-white.svg");
+    background-image: url('@/assets/images/logo-white.svg');
     width: 12.5rem;
     height: 2.5rem;
     background-size: contain;
@@ -16,7 +16,9 @@
 // navbar 滑過時的效果
 .navbar-hover {
   background: rgba(20, 20, 20, 0.2);
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   border-bottom: 1px solid transparent;
   z-index: 2;
   &:hover {
@@ -27,7 +29,7 @@
     }
     .logo {
       a {
-        background-image: url("../images/logo-green.svg");
+        background-image: url('../images/logo-green.svg');
       }
     }
     .header-white-icon {
@@ -38,7 +40,7 @@
     }
     input {
       &::placeholder {
-        content: "搜尋...";
+        content: '搜尋...';
         color: $grey66;
       }
     }
@@ -94,7 +96,7 @@
     transition: opacity 0.3s ease-out;
     @include pad {
       opacity: 1;
-      font-family: "Montserrat", sans-serif;
+      font-family: 'Montserrat', sans-serif;
     }
   }
   &:hover {
@@ -103,7 +105,7 @@
     }
     .nav-item-ch {
       opacity: 1;
-      font-family: "Montserrat", sans-serif;
+      font-family: 'Montserrat', sans-serif;
       color: $primary;
     }
   }

@@ -7,103 +7,116 @@ const router = createRouter({
     {
       path: '/',
       name: 'UserLayout',
-      component: () => import('../views/UserLayoutView.vue'),
+      component: () => import('../views/user/UserLayoutView.vue'),
       children: [
         {
           path: '',
           name: 'UserHome',
-          component: () => import('../views/HomeView.vue'),
+          component: () => import('../views/user/HomeView.vue'),
+          meta: {
+            title: '綠羊珠寶-Green Sheep handmade jewelry'
+          }
+        },
+        {
+          path: 'products',
+          name: 'UserProduct',
+          component: () => import('../views/user/ProductsView.vue')
+        },
+        {
+          path: 'custom',
+          name: 'UserCustom',
+          component: () => import('../views/user/CustomView.vue')
         },
         {
           path: 'about',
           name: 'UserAbout',
-          component: () => import('../views/AboutView.vue')
+          component: () => import('../views/user/AboutView.vue')
         },
         {
           path: 'story',
           name: 'UserStory',
-          component: () => import('../views/StoryView.vue')
+          component: () => import('../views/user/StoryView.vue')
         },
         {
           path: 'articleList',
           name: 'UserArticleList',
-          component: () => import('../views/ArticleListView.vue'),
+          component: () => import('../views/user/ArticleListView.vue'),
           children: [
             {
               path: 'articleDetail',
               name: 'UserArticleDetail',
-              component: () => import('../views/ArticleDetailView.vue')
+              component: () => import('../views/user/ArticleDetailView.vue')
             }
           ]
         },
         {
           path: '/faq',
           name: 'UserFaq',
-          component: () => import('../views/FaqView.vue')
+          component: () => import('../views/user/FaqView.vue')
         },
         {
           path: 'cart',
           name: 'UserCart',
-          component: () => import('../views/CartListView.vue')
+          component: () => import('../views/user/CartListView.vue')
         },
         {
           path: 'order',
           name: 'UserOrder',
-          component: () => import('../views/OrderView.vue')
+          component: () => import('../views/user/OrderView.vue')
         },
         {
           path: 'success',
           name: 'OrderSuccess',
-          component: () => import('../views/OrderSuccess.vue')
+          component: () => import('../views/user/OrderSuccess.vue')
         },
         {
           path: 'member',
           name: 'MemberLayout',
-          component: () => import('../views/MemberLayoutView.vue'),
-          children:[
+          component: () => import('../views/user/MemberLayoutView.vue'),
+          children: [
             {
               path: '',
               name: 'MemberHome',
-              component: () => import('../views/MemberHomeView.vue')
+              component: () => import('../views/user/MemberHomeView.vue')
             },
             {
               path: 'order',
               name: 'MemberOrder',
-              component: () => import('../views/MemberOrdersView.vue')
+              component: () => import('../views/user/MemberOrdersView.vue')
             },
             {
               path: 'favorites',
               name: 'MemberFavorites',
-              component: () => import('../views/MemberFavoritesView.vue')
-            },
-          ],
-        },
+              component: () => import('../views/user/MemberFavoritesView.vue')
+            }
+          ]
+        }
       ]
     },
     {
       path: '/login',
       name: 'AdminLogin',
-      component: () => import('../views/AdLogin.vue'),
+      component: () => import('../views/admin/AdLogin.vue')
     },
     {
       path: '/admin',
       name: 'Admin',
-      component: () => import('../views/AdLayoutView.vue'),
+      component: () => import('../views/admin/AdLayoutView.vue'),
       children: [
         {
           path: 'home',
           name: 'AdminHome',
-          component: () => import('../views/AdHomePageView.vue')
+          component: () => import('../views/admin/AdHomePageView.vue')
         },
         {
           path: 'coupons',
           name: 'AdminCoupons',
-          component: () => import('../views/AdCouponsView.vue')
+          component: () => import('../views/admin/AdCouponsView.vue')
         },
         {
           path: 'articles',
           name: 'AdminArticles',
-          component: () => import('../views/AdArticlesView.vue')
+          component: () => import('../views/admin/AdArticlesView.vue')
         }
       ]
     }

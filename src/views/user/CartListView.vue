@@ -1,0 +1,301 @@
+<template>
+  <h1>購物車頁面(指示用，頁面完成刪除)</h1>
+
+  <div class="container pt-20 mb-4">
+    <!-- progress -->
+    <div class="mb-30">
+      <div class="position-relative m-4 w-75 mx-auto">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0"
+            aria-valuemax="100"></div>
+        </div>
+        <button type="button"
+          class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
+          style="width: 3rem; height: 3rem">
+          1
+        </button>
+        <button type="button"
+          class="position-absolute top-0 start-50 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
+          style="width: 3rem; height: 3rem">
+          2
+        </button>
+        <button type="button"
+          class="position-absolute top-0 start-100 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
+          style="width: 3rem; height: 3rem">
+          3
+        </button>
+      </div>
+
+      <div class="position-relative mt-15 w-75 mx-auto">
+        <p class="position-absolute top-0 start-0 translate-middle text-primary">
+          確認購買明細
+        </p>
+
+        <p class="position-absolute top-0 start-50 translate-middle text-primary">
+          付款資料填寫
+        </p>
+
+        <p class="position-absolute top-0 end-n7 translate-middle text-primary">
+          訂單完成
+        </p>
+      </div>
+    </div>
+
+    <h1 class="fs-4 fs-lg-2 py-20 text-center fw-bold">購物車</h1>
+    <Loading v-model:active="isLoading"></Loading>
+    <!-- 商品列表 -->
+    <table class="table align-middle border-primary">
+      <thead>
+        <tr>
+          <th scope="col" class="text-primary fw-medium">商品資訊</th>
+          <th scope="col" class="text-primary fw-medium">數量</th>
+          <th scope="col" class="text-primary fw-medium">價格</th>
+          <th scope="col" class="text-primary fw-medium"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="cart in carts" :key="cart.id">
+          <th scope="row" class="py-4">
+            <div class="card border-0" style="max-width: 540px">
+              <div class="row g-0 align-items-center">
+                <div class="col-md-4">
+                  <div class="ratio ratio-1x1">
+                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover" alt="..." />
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="fs-6 card-title text-primary fw-medium">
+                      {{ cart.product.title }}
+                    </h5>
+                    <small class="text-start fw-normal">{{ cart.product.category }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </th>
+          <td class="py-4">
+            <input type="number" class="p-2 w-25" min="1" v-model="cart.qty" @blur="updateCart(cart)" />
+          </td>
+          <td class="py-4 text-primary">NT$ {{ cart.final_total }}</td>
+          <td class="py-4">
+            <button class="btn btn-primary" @click="deleteCart(cart.id)">刪除</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- 免運 -->
+  <div class="py-10">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2 text-primary fw-medium">已使用優惠</div>
+        <div class="col-md-10 text-start">
+          <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4">免運優惠</span>
+          <span class="fs-7 text-primary">全館滿NT$3,000，享台灣免運費</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-10">
+    <div class="row align-items-center">
+      <div class="col-md-2 text-primary fw-medium">優惠券折扣</div>
+
+      <div class="col-md-10">
+        <form class="text-start">
+          <input type="text" class="teat-start p-2 w-50" placeholder="請輸入優惠代碼" v-model="coupon" />
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- 運送及付款方式 -->
+  <div class="container py-10 py-md-15 border-top border-bottom border-primary border-2">
+    <div class="row justify-content-between">
+      <div class="col-md-6 col-12 bg-light px-8 py-8">
+        <h3 class="fs-5 fw-medium text-start mb-4">
+          選擇收件地點及運送方式
+        </h3>
+        <select class="form-select mb-5 fs-6 w-100" v-model="deliverChoose.location">
+          <option value="" disabled>請選擇地點</option>
+          <option v-for="location in locations" :value="location" :key="location">{{ location }}</option>
+        </select>
+        <select class="form-select fs-6 w-100" v-model="deliverChoose.deliver">
+          <option value="" disabled>請選擇配送方式</option>
+          <option v-for="deliver in delivers" :value="deliver" :key="deliver">{{ deliver }}</option>
+        </select>
+        <p class="fs-8 text-start text-grey66 mt-5">
+          出貨後約 3-7 天抵達指定門市。
+          如遇特殊檔期或急件需求，建議選擇國內宅配方式配送。
+        </p>
+
+        <h3 class="fs-5 fw-medium text-start mt-10 mb-4">選擇付款方式</h3>
+        <select class="form-select fs-6 w-100" v-model="deliverChoose.payWay">
+          <option value="" disabled>付款方式</option>
+          <option v-for="way in payWays" :value="way" :key="way">{{ way }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-6 col-12 mt-md-0 mt-5 bg-light py-8 px-8">
+        <h3 class="fs-5 fw-medium text-start mb-4">訂單資訊</h3>
+
+        <div class="p-5 bg-greyD4 text-dark">
+          <div class="d-flex justify-content-between mb-5">
+            <p class="">小計：</p>
+            <p class="">NT$ {{ total }}</p>
+          </div>
+          <div class="d-flex justify-content-between mb-5">
+            <p class="">運費：</p>
+            <p class="">免運</p>
+          </div>
+          <div class="d-flex justify-content-between mb-5">
+            <p class="">優惠券：</p>
+          </div>
+
+          <div class="border border-primary border-1 mb-5"></div>
+          <div class="d-flex justify-content-between mb-5">
+            <p class="">合計：</p>
+            <p class="fw-bold">NT$8,160</p>
+          </div>
+          <router-link to="/order" class="btn btn-primary p-5 fs-5 w-100 text-white">前往結帳</router-link>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  訂 購 前 請 詳 閱  -->
+  <OrderRules></OrderRules>
+</template>
+
+<script>
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
+import axios from "axios";
+import OrderRules from "../../components/OrderRules.vue"
+export default {
+  components: {
+    OrderRules,
+    Loading,
+  },
+
+  data() {
+    return {
+      isLoading: false,
+      carts: [], //pinia
+      cart: {},
+      coupon: "",
+      payWay: ["信用卡", "貨到付款", "轉帳", "超商繳費"],
+      payWays: [],
+      select: [
+        { location: "台灣", deliver: ["黑貓宅急便", "7-11", "全家", "OK", "萊爾富"] },
+        { location: "外島", deliver: ["中華郵政", "黑貓宅急便", "宅配通"] },
+        { location: "海外", deliver: ["中華郵政", "DHL", "UPS"] }
+      ],
+      locations: [],
+      delivers: [],
+      deliverChoose: {
+        location: "",
+        deliver: "",
+        payWay: "",
+      },//pinia
+    }
+  },
+  methods: {
+    getCarts() {
+      this.isLoading = true;
+      const getCartUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/cart`;
+      axios.get(getCartUrl)
+        .then((res) => {
+          this.carts = res.data.data.carts;
+          this.isLoading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    },
+    updateCart(cart) {
+      this.isLoading = true;
+      const updateCartUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/cart/${cart.id}`;
+      const cartData = {
+        data: {
+          product_id: cart.id,
+          qty: cart.qty,
+        }
+      };
+      axios.put(updateCartUrl, cartData)
+        .then(() => {
+          this.getCarts();
+          this.isLoading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    },
+    deleteCart(id) {
+      this.isLoading = true;
+      const deleteCartUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/cart/${id}`;
+      axios.delete(deleteCartUrl)
+        .then(() => {
+          this.getCarts();
+          this.isLoading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  },
+
+  watch: {
+    //監聽location選擇，產生deliver方式
+    'deliverChoose.location'(location) {
+      // console.log(location)      
+      this.delivers = []; //洗掉deliver內容，避免重新點擊location造成累加。     
+      this.deliverChoose.deliver = "";  //洗掉紀錄，讓選擇location時deliver都能回到預設值。
+      this.select.forEach((item) => {
+        if (item.location == location) {
+          item.deliver.forEach((item2) => {
+            this.delivers.push(item2)
+          })
+        }
+      })
+    },
+    //監聽付款內容，查看deliverChoose內容(debug用，最後會刪除。)
+    'deliverChoose.payWay'() {
+      console.log(this.deliverChoose)
+    },
+    //監聽coupon(先預留function，之後確定了再補內容)
+    coupon(value) {
+      console.log(value)
+      if (value == "") {
+        return ""
+      }
+    },
+  },
+
+  computed: {
+    //計算總價
+    total() {
+      let total = 0
+      this.carts.forEach((item) => {
+        total += item.final_total
+      })
+      return total
+    },
+  },
+
+  mounted() {
+    //產生地點select
+    this.select.forEach((item) => {
+      this.locations.push(item.location)
+    })
+    //產生付款方式select
+    this.payWay.forEach((item) => {
+      this.payWays.push(item)
+    })
+    this.getCarts();
+  },
+
+}
+</script>
+
+<style lang="scss"></style>
