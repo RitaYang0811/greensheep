@@ -1,0 +1,1 @@
+import{_ as o,c,o as s,E as t,G as a,a as _}from"./index-PFnB1WTL.js";const d={},r=e=>(t("data-v-23df7c6b"),e=e(),a(),e),n={class:"story"},p=r(()=>_("h1",null,"品牌故事及精神",-1)),i=[p];function f(e,h){return s(),c("div",n,i)}const u=o(d,[["render",f],["__scopeId","data-v-23df7c6b"]]);export{u as default};

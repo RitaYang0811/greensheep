@@ -1,1 +1,0 @@
-import{_ as o,c as s,o as t,p as c,b as a,a as _}from"./index-plG07tvG.js";const d={},r=e=>(c("data-v-7b03206b"),e=e(),a(),e),n={class:"story"},p=r(()=>_("h1",null,"品牌故事及精神",-1)),i=[p];function h(e,l){return t(),s("div",n,i)}const b=o(d,[["render",h],["__scopeId","data-v-7b03206b"]]);export{b as default};
