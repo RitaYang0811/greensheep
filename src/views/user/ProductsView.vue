@@ -79,59 +79,48 @@
           </ol>
         </nav>
         <!-- 商品列表 -->
-        <div class="row row-cols-2 row-cols-md-4 g-4 mb-10 mb-lg-20">
-          <li class="col list-unstyled">
+        <div class="row row-cols-2 row-cols-md-4 gx-4 gy-6 mb-10 mb-lg-20">
+          <li class="col list-unstyled" v-for="product in products" :key="product.id">
             <div class="card border-0">
               <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
                 <img
-                  src="@/assets/images/product-1-2.jpg"
-                  class="card-img-top show position-absolute top-0 start-0 object-fit-cover"
+                  :src="product.imageUrl"
+                  class="show position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
                 />
                 <img
                   src="@/assets/images/product-1.JPG"
-                  class="card-img-top change position-absolute top-0 start-0 object-fit-cover"
+                  class="change position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
                 />
               </div>
               <div class="card-body text-start">
-                <h5 class="card-title display-8 text-dark my-2">蔚藍海洋 - 拉利瑪海紋石純銀項鍊</h5>
+                <h5 class="card-title display-8 text-dark my-2">{{ product.title }}</h5>
                 <!-- v-if 無折扣 -->
-                <!-- <span class="card-text display-8 text-primary my-2">NT$3,800</span> -->
-                <!-- v-else 打折 -->
-                <p class="card-text my-2">
-                  <span class="card-text display-8 text-primary text-decoration-line-through">
-                    NT$3,800</span
-                  ><span class="ms-2 display-7 text-dark fw-medium"> NT$3,500</span>
+                <p
+                  v-if="product.origin_price === product.price"
+                  class="card-text display-8 text-primary my-2"
+                >
+                  NT$ {{ product.origin_price }}
                 </p>
-                <a href="#" class="btn btn-outline-primary w-100 border-1">加入購物車</a>
+                <!-- v-else 打折 -->
+                <p v-else class="card-text my-2">
+                  <span class="card-text display-8 text-primary text-decoration-line-through">
+                    NT$ {{ product.origin_price }}</span
+                  ><span class="ms-2 display-7 text-dark fw-medium"> NT$ {{ product.price }}</span>
+                </p>
+                <button
+                  href="#"
+                  class="custom-btn custom-btn-toGreen text-center w-100 border-1 add-to-cart"
+                  @click.prevent="addToCart(product.id)"
+                >
+                  <img src="@/assets/images/ic-cart-green.svg" alt="購物袋" />
+                </button>
               </div>
             </div>
           </li>
         </div>
 
         <!-- 分頁 -->
-        <nav aria-label="Page navigation ">
-          <ul class="cus-pagination list-unstyled mb-20 mb-lg-25">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span class="material-icons fs-8 p-1"> navigate_before </span>
-              </a>
-            </li>
-            <li class="page-item fs-8">
-              <a class="page-link active" href="#" aria-current="page">1</a>
-            </li>
-            <li class="page-item fs-8">
-              <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item fs-8">
-              <a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span class="material-icons fs-8 p-1"> navigate_next </span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <Pagi-Nation :pagination="pagination" @update-page="updatePage"></Pagi-Nation>
       </div>
     </div>
   </main>
@@ -140,7 +129,10 @@
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation, Autoplay, Pagination } from 'swiper/modules'
-
+import productStore from '@/stores/productStore'
+import cartStore from '@/stores/cartStore'
+import PagiNation from '@/components/PagiNation.vue'
+import { mapState, mapActions } from 'pinia'
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -154,7 +146,20 @@ export default {
   },
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    PagiNation
+  },
+  computed: { ...mapState(productStore, ['products', 'pagination']) },
+  methods: {
+    ...mapActions(productStore, ['getProducts']),
+    ...mapActions(cartStore, ['addToCart']),
+    updatePage(page) {
+      console.log(page)
+      this.getProducts(page)
+    }
+  },
+  mounted() {
+    this.getProducts()
   }
 }
 </script>
@@ -162,11 +167,9 @@ export default {
 <style scoped lang="scss">
 @import '@/assets/scss/utils/_mixin.scss';
 .card-title {
-  height: 30px;
-  @include pad {
-    height: 50px;
-  }
+  height: 15px;
 }
+
 .mySwiper {
   height: 400px;
   max-width: calc(100vw - 1rem);

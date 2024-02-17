@@ -74,7 +74,9 @@
                   data-aos-duration="1500"
                   data-aos-offset="50"
                 >
-                  <a class="custom-btn custom-btn-primary" href="2-1.productPage.html">SHOP NOW</a>
+                  <a class="custom-btn custom-btn-primary shop-now" href="2-1.productPage.html"
+                    >SHOP NOW</a
+                  >
                 </button>
               </div>
             </div>
@@ -109,7 +111,9 @@
             data-aos-delay="500"
             data-aos-offset="50"
           >
-            <a class="custom-btn custom-btn-primary" href="2-1.productPage.html">SHOP NOW</a>
+            <a class="custom-btn custom-btn-primary shop-now" href="2-1.productPage.html"
+              >SHOP NOW</a
+            >
           </button>
         </div>
         <!-- 社群icon -->
@@ -238,5 +242,12 @@
   top: 0px;
   right: -72px;
   z-index: -3;
+}
+
+.shop-now::after {
+  content: 'SHOP NOW';
+}
+.shop-now:hover::after {
+  color: #566b5a;
 }
 </style>
