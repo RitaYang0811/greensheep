@@ -68,13 +68,13 @@
             <td>{{ unixToDate(coupon.due_date) }}</td>
             <td>
               <span v-if="dateToUnix() > coupon.start_date && dateToUnix() < coupon.due_date" class="text-success">
-                有效 <img src="../components/icons/check_circle_success_18dp.svg" alt="有效" class="align-top">
+                有效 <img src="@/components/icons/check_circle_success_18dp.svg" alt="有效" class="align-top">
               </span>
               <span v-if="dateToUnix() > coupon.due_date" class="text-danger">
-                已失效 <img src="../components/icons/cancel_danger_18dp.svg" alt="已失效" class="align-top">
+                已失效 <img src="@/components/icons/cancel_danger_18dp.svg" alt="已失效" class="align-top">
               </span>
               <span v-if="dateToUnix() < coupon.start_date">
-                尚未生效 <img src="../components/icons/remove_circle_black_18dp.svg" alt="已失效" class="align-top">
+                尚未生效 <img src="@/components/icons/remove_circle_black_18dp.svg" alt="已失效" class="align-top">
               </span>
             </td>
             <td>
