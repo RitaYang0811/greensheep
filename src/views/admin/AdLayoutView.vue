@@ -18,17 +18,25 @@
           <RouterLink to="/admin/home" class="admin-sidebar-hover d-block py-6">首頁</RouterLink>
         </li>
         <li><a href="##" class="admin-sidebar-hover d-block py-6">商品管理</a></li>
-        <li><a href="##" class="admin-sidebar-hover d-block py-6">訂單管理</a></li>
+        <li>
+          <RouterLink to="/admin/orders" class="admin-sidebar-hover d-block py-6">訂單管理</RouterLink>
+        </li>
         <li><a href="##" class="admin-sidebar-hover d-block py-6">文章管理</a></li>
         <li>
+<<<<<<< HEAD:src/views/admin/AdLayoutView.vue
           <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6"
             >優惠管理</RouterLink
           >
+=======
+          <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6">優惠管理</RouterLink>
+>>>>>>> feature/adminOrder:src/views/AdLayoutView.vue
         </li>
         <li><a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a></li>
       </ul>
     </aside>
-    <main class="admin-main flex-grow-1"><RouterView v-if="checkSuccess" /></main>
+    <main class="admin-main flex-grow-1">
+      <RouterView v-if="checkSuccess" />
+    </main>
   </div>
   <VueLoading :active="isLoading" />
 </template>
@@ -76,7 +84,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+<<<<<<< HEAD:src/views/admin/AdLayoutView.vue
 @import '@/assets/scss/all.scss';
+=======
+@import '../assets/scss/all.scss';
+
+>>>>>>> feature/adminOrder:src/views/AdLayoutView.vue
 .admin {
   &-header {
     background: #bdbcbb;
@@ -85,20 +98,27 @@ export default {
     width: 100%;
     height: 78px;
   }
+
   &-sidebar {
     padding-top: 78px;
     position: fixed;
     width: 300px;
     height: 100vh;
+
     &-hover:hover {
       background: $light;
       color: $primary;
     }
+<<<<<<< HEAD:src/views/admin/AdLayoutView.vue
+=======
+
+>>>>>>> feature/adminOrder:src/views/AdLayoutView.vue
     & .active {
       background: $light;
       color: $primary;
     }
   }
+
   &-main {
     margin-top: 78px;
     margin-left: 300px;

@@ -111,12 +111,21 @@ const router = createRouter({
         {
           path: 'coupons',
           name: 'AdminCoupons',
+<<<<<<< HEAD
           component: () => import('../views/admin/AdCouponsView.vue')
         },
         {
           path: 'articles',
           name: 'AdminArticles',
           component: () => import('../views/admin/AdArticlesView.vue')
+=======
+          component: () => import('../views/AdCouponsView.vue')
+        },
+        {
+          path: 'orders',
+          name: 'AdminOrders',
+          component: () => import('../views/AdOrdersView.vue')
+>>>>>>> feature/adminOrder
         }
       ]
     }
