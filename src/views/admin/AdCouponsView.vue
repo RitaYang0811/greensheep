@@ -38,7 +38,7 @@
         </a>
       </li>
     </ul>
-    <a href="#" class="btn btn-primary mb-4" @click.prevent="openModal">新增優惠券</a>
+    <a href="#" class="btn btn-primary mb-4" @click.prevent="openModal('new')">新增優惠券</a>
     <div class="table-container overflow-auto">
       <table class="table align-middle">
         <thead class="table-head sticky-top">
@@ -78,7 +78,7 @@
               </span>
             </td>
             <td>
-              <a href="#" class="svg-hover-primary">
+              <a href="#" class="svg-hover-primary" @click.prevent="openModal('edit', coupon.id)">
                 <svg class="" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#9f9f9f"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
               </a>
             </td>
@@ -100,7 +100,7 @@
 
   </div>
   <VueLoading :active="isLoading" />
-  <AdCouponModal ref="adCouponModal" />
+  <AdCouponModal ref="adCouponModal" :coupon="coupon" :isNew="isNew" :loadingStatus="loadingStatus" />
 </template>
 
 <script>
@@ -113,9 +113,12 @@ export default {
     return {
       currentTab: '所有優惠券',
       coupons: [],
+      coupon: {},
+      isNew: true,
       isLoading: false,
       loadingStatus: {
-        loadingGetCoupons: false
+        loadingGetCoupons: false,
+        loadingGetCoupon: false
       },
     }
   },
@@ -160,7 +163,33 @@ export default {
           this.loadingStatus.loadingGetCoupons = false
         })
     },
-    openModal() {
+    getCoupon(id){
+      this.loadingStatus.loadingGetCoupon = true
+
+      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupons`
+      
+      this.$http.get(url)
+        .then(res => {
+          this.coupon = res.data.coupons.find(coupon => coupon.id === id)
+        })
+        .catch(err => {
+          alert(err.response.data.message)
+        })
+        .finally(() => {
+          this.loadingStatus.loadingGetCoupon = false
+        })
+    },
+    openModal(type, id) {
+      this.coupon = {}
+      switch(type) {
+        case 'new':
+          this.isNew = true
+          break
+        case 'edit':
+          this.isNew = false
+          this.getCoupon(id)
+          break
+      }
       this.$refs.adCouponModal.openModal()
     },
     unixToDate(unix) {
