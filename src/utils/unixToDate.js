@@ -1,11 +1,9 @@
+import { dateFormat } from "./dateFormat.js";
+
+// unix 參數需為以秒為單位 (10 位數)
 export function unixToDate(unix) {
-  const date = new Date(unix * 1000);
-
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-
-  const resultDate = `${year}-${month}-${day}`;
+  const date = new Date(unix * 1000); // 轉為毫秒
+  const dateFormatted = dateFormat(date)
  
-  return resultDate;
+  return dateFormatted;
 }

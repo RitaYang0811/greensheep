@@ -54,6 +54,7 @@
           <div class="mb-3">
             <label for="couponCode" class="form-label fs-6 mb-3">開始日期</label>
             <input type="text" class="form-control" id="couponCode" placeholder="選擇日期">
+            <VueDatePicker v-model="date" :enable-time-picker="false" :format="format" />
           </div>
           <div class="mb-3">
             <label for="couponCode" class="form-label fs-6 mb-3">結束日期</label>
@@ -74,12 +75,15 @@
 
 <script>
 import Modal from 'bootstrap/js/dist/modal'
+import { dateFormat } from '@/utils/dateFormat.js'
+
 export default {
   props: ['coupon', 'isNew', 'loadingStatus'],
   data() {
     return {
       modal: '',
-      couponData: ''
+      couponData: '',
+      date: dateFormat(new Date)
     }
   },
   methods: {
@@ -88,11 +92,16 @@ export default {
     },
     closeModal() {
       this.modal.hide()
-    }
+    },
+    format(date) {
+      return dateFormat(date)
+    },
   },
   computed: {
+    // 折扣 option
     discountsOption() {
       const discounts = []
+      // 95 折 ~ 1 折
       for(let i = 95; i > 5; i-=5) {
         i % 10 ? discounts.push(i) : discounts.push(i / 10)
       }
@@ -104,7 +113,7 @@ export default {
       backdrop: false
     })
     this.couponData = this.coupon
-    console.log(this.couponData,this.coupon)
+    // console.log(this.couponData,this.coupon)
   }
 }
 </script>
