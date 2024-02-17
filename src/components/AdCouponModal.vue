@@ -19,7 +19,7 @@
           <h3 class="fs-5 mb-3">折扣內容</h3>
           <div class="mb-3">
             <label for="couponCode" class="form-label fs-6 mb-3">優惠碼</label>
-            <input type="text" class="form-control" id="couponCode" placeholder="設定 12 個字元以內的英文字母和數字">
+            <input type="text" class="form-control" id="couponCode" placeholder="設定 12 個字元以內的英文字母和數字" v-model="couponData.code">
           </div>
           <div class="mb-3">
             <p class="mb-3 fs-6">優惠方式</p>
@@ -53,15 +53,15 @@
           </div>
           <div class="mb-3">
             <label for="couponCode" class="form-label fs-6 mb-3">開始日期</label>
-            <input type="text" class="form-control" id="couponCode" placeholder="選擇日期">
-            <VueDatePicker v-model="date" :enable-time-picker="false" :format="format" />
+            <VueDatePicker v-if="isNew" v-model="nowDate" :enable-time-picker="false" :format="format" model-type="timestamp" />
+            <VueDatePicker v-else v-model="couponData.start_date" :enable-time-picker="false" :format="format" model-type="timestamp" />
           </div>
           <div class="mb-3">
             <label for="couponCode" class="form-label fs-6 mb-3">結束日期</label>
             <input type="text" class="form-control" id="couponCode" placeholder="選擇日期">
           </div>
         </form>
-        {{ coupon }}
+        {{ couponData }}
         {{ isNew }}
       </div>
       <div class="modal-footer py-4 px-6">
@@ -76,6 +76,7 @@
 <script>
 import Modal from 'bootstrap/js/dist/modal'
 import { dateFormat } from '@/utils/dateFormat.js'
+import { unixToDate } from '@/utils/unixToDate.js'
 
 export default {
   props: ['coupon', 'isNew', 'loadingStatus'],
@@ -83,7 +84,7 @@ export default {
     return {
       modal: '',
       couponData: '',
-      date: dateFormat(new Date)
+      nowDate: new Date()
     }
   },
   methods: {
@@ -93,9 +94,22 @@ export default {
     closeModal() {
       this.modal.hide()
     },
+    unixToDate(unix) {
+      const unixMs = unix * 1000
+      return unixToDate(unixMs)
+    },
     format(date) {
       return dateFormat(date)
     },
+  },
+  watch: {
+    date() {
+      console.log(this.date)
+    },
+    coupon() {
+      this.couponData = { ...this.coupon }
+      this.couponData.start_date *= 1000 
+    }
   },
   computed: {
     // 折扣 option
@@ -106,14 +120,12 @@ export default {
         i % 10 ? discounts.push(i) : discounts.push(i / 10)
       }
       return discounts
-    }
+    },
   },
   mounted() {
     this.modal = new Modal(this.$refs.adCouponCompModal,{
       backdrop: false
     })
-    this.couponData = this.coupon
-    // console.log(this.couponData,this.coupon)
   }
 }
 </script>

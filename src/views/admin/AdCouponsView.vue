@@ -193,7 +193,8 @@ export default {
       this.$refs.adCouponModal.openModal()
     },
     unixToDate(unix) {
-      return unixToDate(unix)
+      const unixMs = unix * 1000
+      return unixToDate(unixMs)
     },
     dateToUnix(date = 'now') {
       return dateToUnix(date)
