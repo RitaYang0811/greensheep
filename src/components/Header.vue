@@ -115,7 +115,8 @@
               <img class="header-green-icon p-xxl-2 p-xl-0" src="../assets/images/ic-cart-green.svg" alt="購物袋" />
 
               <span
-                class="position-absolute top-0 top-xxl-25 start-95 start-xxl-75 translate-middle p-1 bg-primary rounded-circle text-white">
+                class="position-absolute top-0 top-xxl-25 start-95 start-xxl-75 translate-middle p-1 bg-primary rounded-circle text-white"
+                v-if="carts.length">
                 <span class="visually-hidden">New alerts</span>
               </span>
             </div>
@@ -133,6 +134,8 @@
 </template>
 
 <script>
+import { mapState } from 'pinia';
+import cartStore from '@/stores/cartStore';
 export default {
   data() {
     return {}
@@ -143,6 +146,9 @@ export default {
         path: 'products'
       })
     }
+  },
+  computed: {
+    ...mapState(cartStore, ['carts'])
   }
 }
 </script>

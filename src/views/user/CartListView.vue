@@ -155,7 +155,7 @@
           <div class="border border-primary border-1 mb-5"></div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">合計：</p>
-            <p class="fw-bold">NT$8,160</p>
+            <p class="fw-bold">NT$ {{ total }}</p>
           </div>
           <router-link to="/order" class="btn btn-primary p-5 fs-5 w-100 text-white">前往結帳</router-link>
         </div>
@@ -168,10 +168,15 @@
 </template>
 
 <script>
+//pinia
+import { mapActions, mapState } from 'pinia';
+import cartStore from '@/stores/cartStore';
+//loading overlay
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
-import axios from "axios";
+
 import OrderRules from "../../components/OrderRules.vue"
+
 export default {
   components: {
     OrderRules,
@@ -181,18 +186,15 @@ export default {
   data() {
     return {
       isLoading: false,
-      carts: [], //pinia
-      cart: {},
       coupon: "",
-      payWay: ["信用卡", "貨到付款", "轉帳", "超商繳費"],
-      payWays: [],
       select: [
-        { location: "台灣", deliver: ["黑貓宅急便", "7-11", "全家", "OK", "萊爾富"] },
-        { location: "外島", deliver: ["中華郵政", "黑貓宅急便", "宅配通"] },
-        { location: "海外", deliver: ["中華郵政", "DHL", "UPS"] }
+        { location: "台灣", deliver: ["黑貓宅急便", "7-11", "全家", "OK", "萊爾富"], payWay: ["信用卡", "貨到付款", "轉帳", "超商繳費"] },
+        { location: "外島", deliver: ["中華郵政", "黑貓宅急便", "宅配通"], payWay: ["信用卡", "轉帳"] },
+        { location: "海外", deliver: ["中華郵政", "DHL", "UPS"], payWay: ["信用卡"] }
       ],
       locations: [],
       delivers: [],
+      payWays: [],
       deliverChoose: {
         location: "",
         deliver: "",
@@ -200,61 +202,27 @@ export default {
       },//pinia
     }
   },
+  
   methods: {
-    getCarts() {
-      this.isLoading = true;
-      const getCartUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/cart`;
-      axios.get(getCartUrl)
-        .then((res) => {
-          this.carts = res.data.data.carts;
-          this.isLoading = false;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    },
-    updateCart(cart) {
-      this.isLoading = true;
-      const updateCartUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/cart/${cart.id}`;
-      const cartData = {
-        data: {
-          product_id: cart.id,
-          qty: cart.qty,
-        }
-      };
-      axios.put(updateCartUrl, cartData)
-        .then(() => {
-          this.getCarts();
-          this.isLoading = false;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    },
-    deleteCart(id) {
-      this.isLoading = true;
-      const deleteCartUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/cart/${id}`;
-      axios.delete(deleteCartUrl)
-        .then(() => {
-          this.getCarts();
-          this.isLoading = false;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
+    ...mapActions(cartStore, ['getCarts', 'updateCart', 'deleteCart'])
   },
 
   watch: {
     //監聽location選擇，產生deliver方式
     'deliverChoose.location'(location) {
-      // console.log(location)      
-      this.delivers = []; //洗掉deliver內容，避免重新點擊location造成累加。     
+      console.log(location)
+      this.delivers = []; //洗掉deliver內容，避免重新點擊location造成累加。 
+      this.payWays = [];  //洗掉payWay內容，避免重新點擊location造成累加。     
       this.deliverChoose.deliver = "";  //洗掉紀錄，讓選擇location時deliver都能回到預設值。
+      this.deliverChoose.payWay = "";   //洗掉紀錄，讓選擇location時payWay都能回到預設值。
       this.select.forEach((item) => {
         if (item.location == location) {
           item.deliver.forEach((item2) => {
             this.delivers.push(item2)
+          })
+          //產生付款方式array
+          item.payWay.forEach((item3) => {
+            this.payWays.push(item3)
           })
         }
       })
@@ -273,24 +241,13 @@ export default {
   },
 
   computed: {
-    //計算總價
-    total() {
-      let total = 0
-      this.carts.forEach((item) => {
-        total += item.final_total
-      })
-      return total
-    },
+    ...mapState(cartStore, ['carts', 'total']),
   },
 
   mounted() {
     //產生地點select
     this.select.forEach((item) => {
       this.locations.push(item.location)
-    })
-    //產生付款方式select
-    this.payWay.forEach((item) => {
-      this.payWays.push(item)
     })
     this.getCarts();
   },
