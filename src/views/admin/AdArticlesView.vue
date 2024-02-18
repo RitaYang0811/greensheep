@@ -1,7 +1,7 @@
 <template>
   <div class="px-7 pt-10 text-start">
     <div class="container-fluid">
-      <h1 class="fs-3 mb-6">文章管理</h1>
+      <h1 class="fs-3 mb-4">文章管理</h1>
       <ul class="nav border-bottom border-primary mb-4">
         <li class="nav-item">
           <a
