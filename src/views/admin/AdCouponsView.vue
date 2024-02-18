@@ -153,12 +153,12 @@ export default {
               break
             case '尚未生效':
               this.coupons = res.data.coupons.filter(coupon => {
-                return this.dateToUnix() > coupon.due_date
+                return this.dateToUnix() < coupon.start_date
               })
               break
             case '已失效':
               this.coupons = res.data.coupons.filter(coupon => {
-                return this.dateToUnix() < coupon.start_date
+                return this.dateToUnix() > coupon.due_date
               })
               break
           }
@@ -244,6 +244,7 @@ export default {
           })
       }
     },
+    // 刪除優惠券
     deleteCoupon(id){
       this.loadingStatus.loadingDelCoupon = id
       const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupon/${id}`
@@ -298,9 +299,5 @@ export default {
   &::-webkit-scrollbar{
   display:none;
   }
-}
-.disabled-link {
-  pointer-events: none;
-  color: gray;
 }
 </style>

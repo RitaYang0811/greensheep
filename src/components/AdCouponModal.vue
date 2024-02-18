@@ -89,12 +89,11 @@ import { dateFormat } from '@/utils/dateFormat.js'
 import { unixToDate } from '@/utils/unixToDate.js'
 
 export default {
-  props: ['coupon', 'isNew', 'loadingStatus', 'getCoupons'],
+  props: ['coupon', 'isNew', 'loadingStatus'],
   data() {
     return {
       modal: '',
       couponData: '',
-      nowDate: new Date()
     }
   },
   methods: {
