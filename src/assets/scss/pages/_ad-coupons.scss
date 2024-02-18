@@ -10,3 +10,10 @@
     background: $grey9F;
   }
 }
+
+.disabled-link {
+  pointer-events: none;
+  svg {
+    fill: $greyD4;
+  }
+}

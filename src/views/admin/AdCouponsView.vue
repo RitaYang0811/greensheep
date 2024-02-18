@@ -78,14 +78,19 @@
               </span>
             </td>
             <td>
-              <a href="#" class="svg-hover-primary" @click.prevent="openModal('edit', coupon.id)">
-                <svg class="" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#9f9f9f"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+              <a href="#" class="svg-hover-primary" :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }" @click.prevent="openModal('edit', coupon.id)" >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#9f9f9f"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
               </a>
             </td>
             <td>
-              <a href="#" class="svg-hover-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#9f9f9f"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-              </a>
+              <div class="d-flex align-items-center">
+                <a href="#" class="svg-hover-primary" @click.prevent="deleteCoupon(coupon.id)">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#9f9f9f"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                </a>
+                <div v-if="loadingStatus.loadingDelCoupon === coupon.id" class="spinner-border spinner-border-sm" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -118,7 +123,8 @@ export default {
       isLoading: false,
       loadingStatus: {
         loadingGetCoupons: false,
-        loadingGetCoupon: false
+        loadingGetCoupon: false,
+        loadingDelCoupon: ''
       },
     }
   },
@@ -238,6 +244,22 @@ export default {
           })
       }
     },
+    deleteCoupon(id){
+      this.loadingStatus.loadingDelCoupon = id
+      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupon/${id}`
+
+      this.$http.delete(url)
+        .then(res => {
+          alert(res.data.message)
+          this.getCoupons(this.currentTab)
+        })
+        .catch(err => {
+          alert(err.response.data.message)
+        })
+        .finally(() => {
+          this.loadingStatus.loadingDelCoupon = ''
+        })
+    },
     // 開啟新增/編輯優惠券的 modal
     openModal(type, id) {
       switch(type) {
@@ -276,5 +298,9 @@ export default {
   &::-webkit-scrollbar{
   display:none;
   }
+}
+.disabled-link {
+  pointer-events: none;
+  color: gray;
 }
 </style>
