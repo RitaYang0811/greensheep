@@ -67,7 +67,7 @@
             <td>{{ coupon.start_date ? unixToDate(coupon.start_date) : '-' }}</td>
             <td>{{ unixToDate(coupon.due_date) }}</td>
             <td>
-              <span v-if="dateToUnix() > coupon.start_date && dateToUnix() < coupon.due_date" class="text-success">
+              <span v-if="(dateToUnix() > coupon.start_date || !coupon.start_date) && dateToUnix() < coupon.due_date" class="text-success">
                 有效 <img src="@/components/icons/check_circle_success_18dp.svg" alt="有效" class="align-top">
               </span>
               <span v-if="dateToUnix() > coupon.due_date" class="text-danger">
@@ -145,6 +145,7 @@ export default {
           switch(tab) {
             case '所有優惠券':
               this.coupons = res.data.coupons
+              console.log(this.coupons)
               break
             case '有效':
               this.coupons = res.data.coupons.filter(coupon => {
@@ -208,7 +209,6 @@ export default {
       } else if (couponData.title === '訂單折扣') {
         data.min_buy_price_by_discount = couponData.min_buy_price_by_discount
       }
-      console.log(data)
 
       // 判斷是新增或編輯
       if(this.isNew) { // 新增優惠券
