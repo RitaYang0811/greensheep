@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
@@ -17,8 +18,14 @@ export default defineStore('cartStore', {
       axios
         .post(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart`, { data: data })
         .then(() => {
-
           this.getCarts();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "加入購物車成功",
+            showConfirmButton: false,
+            timer: 1500
+          });          
         })
         .catch((err) => {
           console.log(err)
@@ -27,12 +34,10 @@ export default defineStore('cartStore', {
 
     //取得購物車資料
     getCarts() {
-      // this.isLoading = true;
       const getCartUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart`;
       axios.get(getCartUrl)
         .then((res) => {
           this.carts = res.data.data.carts;
-          // this.isLoading = false;
         })
         .catch((err) => {
           console.log(err);
@@ -40,7 +45,6 @@ export default defineStore('cartStore', {
     },
     //修改購物車(修改數量)
     updateCart(cart) {
-      // this.isLoading = true;
       const updateCartUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/cart/${cart.id}`;
       const cartData = {
         data: {
@@ -51,7 +55,13 @@ export default defineStore('cartStore', {
       axios.put(updateCartUrl, cartData)
         .then(() => {
           this.getCarts();
-          // this.isLoading = false;
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "修改數量成功",
+            showConfirmButton: false,
+            timer: 1500
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -61,17 +71,33 @@ export default defineStore('cartStore', {
     deleteCart(id) {
       this.isLoading = true;
       const deleteCartUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/cart/${id}`;
-      axios.delete(deleteCartUrl)
-        .then(() => {
-          this.getCarts();
-          // this.isLoading = false;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    },
-  
+      //加入sweetalert
+      Swal.fire({
+        title: "是否刪除該商品?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "  否  ",
+        confirmButtonText: "  是  "
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(deleteCartUrl)
+            .then(() => {
+              Swal.fire({
+                title: "刪除成功!",
+                icon: "success"
+              });
+              this.getCarts();
+            })
+            .catch((err) => {
+              console.log(err);
+            })         
+        }
+      });
+    }, 
   },
+
   getters:{
     //計算總價
     total() {
@@ -82,6 +108,5 @@ export default defineStore('cartStore', {
       return total
     },
   },
-
 
 })
