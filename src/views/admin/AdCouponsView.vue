@@ -58,10 +58,10 @@
             <td class="py-5">
               <p class="fw-bold mb-4">{{ coupon.title }}</p>
               <p v-if="coupon.title==='金額折抵'">
-                消費滿 NT$ {{ coupon.min_buy_price }}，享 NT$ {{ coupon.discount_price }} 折扣
+                消費滿 NT$ {{ coupon.min_buy_price_by_price }}，享 NT$ {{ coupon.discount_price }} 折扣
               </p>
               <p v-if="coupon.title==='訂單折扣'">
-                消費滿 NT$ {{ coupon.min_buy_price }}，享 {{ coupon.percent % 10 ? coupon.percent : coupon.percent / 10 }} 折
+                消費滿 NT$ {{ coupon.min_buy_price_by_discount }}，享 {{ coupon.percent % 10 ? coupon.percent : coupon.percent / 10 }} 折
               </p>
             </td>
             <td>{{ coupon.start_date ? unixToDate(coupon.start_date) : '-' }}</td>
@@ -100,7 +100,7 @@
 
   </div>
   <VueLoading :active="isLoading" />
-  <AdCouponModal ref="adCouponModal" :coupon="coupon" :isNew="isNew" :loadingStatus="loadingStatus" />
+  <AdCouponModal ref="adCouponModal" :coupon="coupon" :isNew="isNew" :loadingStatus="loadingStatus" @update-coupon="updateCoupon" />
 </template>
 
 <script>
@@ -126,6 +126,7 @@ export default {
     AdCouponModal,
   },
   methods: {
+    // 依頁面取得優惠券列表
     getCoupons(tab) {
       this.currentTab = tab
       this.loadingStatus.loadingGetCoupons = true
@@ -163,6 +164,7 @@ export default {
           this.loadingStatus.loadingGetCoupons = false
         })
     },
+    // 取得單一優惠券
     getCoupon(id){
       this.loadingStatus.loadingGetCoupon = true
 
@@ -179,11 +181,71 @@ export default {
           this.loadingStatus.loadingGetCoupon = false
         })
     },
+    // 新增/編輯優惠券
+    updateCoupon(couponData){
+      this.loadingStatus.loadingGetCoupon = true
+
+      // 先定義兩種折扣模式共用的資料欄位
+      const data = {
+        title: couponData.title,
+        is_enabled: 1,
+        percent: couponData.title === '金額折抵' ? 100 : couponData.percent,
+        start_date: couponData.start_date / 1000, // 時間戳改成秒單位
+        due_date: couponData.due_date / 1000,
+        code: couponData.code
+      }
+
+      // 再加入該類型所需的欄位
+      if(couponData.title === '金額折抵') {
+        data.min_buy_price_by_price = couponData.min_buy_price_by_price 
+        data.discount_price = couponData.discount_price
+      } else if (couponData.title === '訂單折扣') {
+        data.min_buy_price_by_discount = couponData.min_buy_price_by_discount
+      }
+      console.log(data)
+
+      // 判斷是新增或編輯
+      if(this.isNew) { // 新增優惠券
+        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupon`
+
+        this.$http.post(url, {data: data})
+          .then(res => {
+            alert(res.data.message)
+            this.$refs.adCouponModal.closeModal()
+            this.getCoupons(this.currentTab)
+          })
+          .catch(err => {
+            alert(err.response.data.message)
+          })
+          .finally(() => {
+            this.loadingStatus.loadingGetCoupon = false
+          })
+      } else if(!this.isNew) { // 編輯優惠券
+        const id = couponData.id
+        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupon/${id}`
+         
+        this.$http.put(url, { data: data })
+          .then(res => {
+            alert(res.data.message)
+            this.$refs.adCouponModal.closeModal()
+            this.getCoupons(this.currentTab)
+          })
+          .catch(err => {
+            alert(err.response.data.message)
+          })
+          .finally(() => {
+            this.loadingStatus.loadingGetCoupon = false
+          })
+      }
+    },
+    // 開啟新增/編輯優惠券的 modal
     openModal(type, id) {
-      this.coupon = {}
       switch(type) {
         case 'new':
           this.isNew = true
+          this.coupon = {
+            title: '金額折抵' // 預設值給 :checked 判斷
+          }
           break
         case 'edit':
           this.isNew = false
@@ -192,10 +254,12 @@ export default {
       }
       this.$refs.adCouponModal.openModal()
     },
+    // unix 時間戳轉成 ${year}-${month}-${day} 格式
     unixToDate(unix) {
       const unixMs = unix * 1000
       return unixToDate(unixMs)
     },
+    // 取得現在(或其他)時間的 unix 時間戳
     dateToUnix(date = 'now') {
       return dateToUnix(date)
     }
