@@ -13,6 +13,10 @@ import VueAxios from 'vue-axios'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 
+//vue-datepicker
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 //bootstrap
 import 'bootstrap/dist/js/bootstrap.min.js'
 
@@ -33,5 +37,6 @@ app.use(router)
 app.use(VueAxios, axios)
 
 app.component('VueLoading', Loading)
+app.component('VueDatePicker', VueDatePicker);
 
 app.mount('#app')
