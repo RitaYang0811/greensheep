@@ -189,6 +189,7 @@ export default {
     },
     // 新增/編輯優惠券
     updateCoupon(couponData){
+      console.log(111)
       this.loadingStatus.loadingGetCoupon = true
 
       // 先定義兩種折扣模式共用的資料欄位
