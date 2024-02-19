@@ -145,7 +145,6 @@ export default {
           switch(tab) {
             case '所有優惠券':
               this.coupons = res.data.coupons
-              console.log(this.coupons)
               break
             case '有效':
               this.coupons = res.data.coupons.filter(coupon => {
