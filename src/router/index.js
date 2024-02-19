@@ -90,6 +90,12 @@ const router = createRouter({
               component: () => import('../views/user/MemberFavoritesView.vue')
             }
           ]
+        },
+        // 會員登入
+        {
+          path: 'memberLogin',
+          name: 'MemberLogin',
+          component: () => import('../views/user/MemberLogin.vue')
         }
       ]
     },
