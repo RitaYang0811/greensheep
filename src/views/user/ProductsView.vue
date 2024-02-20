@@ -1,69 +1,34 @@
 <template>
-  <div>
-    <swiper
-      :slides-per-view="1"
-      :modules="modules"
-      :centeredSlides="true"
-      :navigation="true"
-      :pagination="{
-        clickable: true
-      }"
-      :loop="true"
-      :spaceBetween="30"
-      :autoplay="{
-        delay: 3000,
-        disableOnInteraction: true
-      }"
-      class="mySwiper"
-    >
-      <swiper-slide>
-        <img
-          src="https://images.unsplash.com/photo-1512163143273-bde0e3cc7407?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-        />
-      </swiper-slide>
-      <swiper-slide>
-        <img
-          src="https://images.unsplash.com/photo-1653903414969-0df006d9b6fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-      /></swiper-slide>
-      <swiper-slide>
-        <img
-          src="https://images.unsplash.com/photo-1514927465065-bbdc86c7a76c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-        />
-      </swiper-slide>
-    </swiper>
-  </div>
+  <!-- swiper -->
+  <Swiper-All-Products></Swiper-All-Products>
   <main class="container">
     <div class="row py-7 py-lg-10">
       <!-- 側邊目錄 -->
       <aside class="d-none d-lg-block col-lg-3 h-bottom-line">
         <ul class="d-none d-md-block list-unstyled text-dark text-start">
           <li>
-            <a class="d-inline-block py-2 mx-3 position-relative active" href="#"
+            <a
+              class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
+              :class="{ active: category === '全部商品' }"
+              @click.prevent="changeCategory('全部商品')"
               >全部商品 All products</a
             >
           </li>
-          <li>
-            <a class="d-inline-block py-2 mx-3" href="#">戒指 Rings</a>
+          <!-- categoryList -->
+          <li v-for="category in categoryList" :key="category + 123">
+            <a
+              class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
+              :class="{ active: category === this.category }"
+              @click.prevent="changeCategory(category)"
+              >{{ category }}
+            </a>
           </li>
-          <li>
-            <a class="d-inline-block py-2 mx-3" href="#">耳環 Earrings</a>
-          </li>
-          <li>
-            <a class="d-inline-block py-2 mx-3" href="#">手環 Bracelet</a>
-          </li>
-          <li>
-            <a class="d-inline-block py-2 mx-3" href="#">項鍊 Necklace</a>
-          </li>
-          <li class="d-inline-block py-2 mx-3"></li>
-          <li>
-            <a class="d-inline-block py-2 mx-3" href="#">925純銀 Silver</a>
-          </li>
-          <li>
-            <a class="d-inline-block py-2 mx-3" href="#">14K金 14K-Gold</a>
-          </li>
-          <li>
-            <a class="d-inline-block py-2 mx-3" href="#">18K金 18K-Gold</a>
-          </li>
+          <!-- materialList -->
+          <!-- <li class="d-inline-block py-2 mx-3"></li>
+          <li v-for="material in materialList" :key="material + 123">
+            <a class="d-inline-block py-2 mx-3" href="#">{{ material }}</a>
+          </li> -->
+
           <li class="d-inline-block py-2 mx-3"></li>
           <li>
             <a class="d-inline-block py-2 mx-3" href="3-1.cusProduct.html">客製設計</a>
@@ -74,14 +39,26 @@
         <!-- 麵包屑導航 -->
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-            <li class="breadcrumb-item active" aria-current="page">全部商品</li>
+            <li class="breadcrumb-item"><router-link :to="`/`">首頁</router-link></li>
+            <li class="breadcrumb-item">
+              <a class="cursor-pointer" @click.prevent="changeCategory('全部商品')">商品</a>
+            </li>
+            <!-- <li class="breadcrumb-item">
+              <router-link
+                :to="{
+                  path: './products',
+                  query: { category: products.category }
+                }"
+                >{{ products.category }}</router-link
+              >
+            </li>  -->
+            <li class="breadcrumb-item active">{{ category }}</li>
           </ol>
         </nav>
         <!-- 商品列表 -->
         <div class="row row-cols-2 row-cols-md-4 gx-4 gy-6 mb-10 mb-lg-20">
           <li class="col list-unstyled" v-for="product in products" :key="product.id">
-            <div class="card border-0">
+            <router-link :to="`/products/${product.id}`" class="card border-0">
               <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
                 <img
                   :src="product.imageUrl"
@@ -115,7 +92,7 @@
                   <img src="@/assets/images/ic-cart-green.svg" alt="購物袋" />
                 </button>
               </div>
-            </div>
+            </router-link>
           </li>
         </div>
 
@@ -127,39 +104,46 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation, Autoplay, Pagination } from 'swiper/modules'
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
+import SwiperAllProducts from '@/components/SwiperAllProducts.vue'
 import PagiNation from '@/components/PagiNation.vue'
 import { mapState, mapActions } from 'pinia'
-// Import Swiper styles
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
 
 export default {
   data() {
-    return {
-      modules: [Navigation, Autoplay, Pagination]
-    }
+    return {}
   },
   components: {
-    Swiper,
-    SwiperSlide,
+    SwiperAllProducts,
     PagiNation
   },
-  computed: { ...mapState(productStore, ['products', 'pagination']) },
+  computed: {
+    ...mapState(productStore, [
+      'products',
+      'pagination',
+      'category',
+      'categoryList',
+      'materialList'
+    ])
+  },
   methods: {
-    ...mapActions(productStore, ['getProducts']),
+    ...mapActions(productStore, ['getAllProducts', 'getProducts']),
     ...mapActions(cartStore, ['addToCart']),
+    //pagiNation 傳值更新頁面
     updatePage(page) {
-      console.log(page)
       this.getProducts(page)
+    },
+    //分類列表 更新種類
+    changeCategory(newCategory) {
+      const categoryStore = productStore()
+      categoryStore.updateCategory(newCategory)
+      console.log('changeCategory被觸發', newCategory)
     }
   },
   mounted() {
-    this.getProducts()
+    //一開始取得產品
+    this.getAllProducts()
   }
 }
 </script>
@@ -168,16 +152,5 @@ export default {
 @import '@/assets/scss/utils/_mixin.scss';
 .card-title {
   height: 15px;
-}
-
-.mySwiper {
-  height: 400px;
-  max-width: calc(100vw - 1rem);
-}
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 </style>

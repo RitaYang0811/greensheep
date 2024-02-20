@@ -22,6 +22,19 @@ const router = createRouter({
           name: 'UserProduct',
           component: () => import('../views/user/ProductsView.vue')
         },
+        // {
+        //   path: 'products/:category?/:page',
+        //   name: 'UserProductCategory',
+        //   component: () => import('../views/user/ProductsView.vue'),
+        //   props: (route) => {
+        //     console.log('route', route)
+        //   }
+        // },
+        {
+          path: 'products/:id',
+          name: 'UserProductDetail',
+          component: () => import('../views/user/ProductDetailView.vue')
+        },
         {
           path: 'custom',
           name: 'UserCustom',
