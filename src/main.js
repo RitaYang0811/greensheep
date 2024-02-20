@@ -35,6 +35,21 @@ import router from './router'
 Object.keys(AllRules).forEach((rule) => {
   defineRule(rule, AllRules[rule])
 });
+
+// defineRule('ruleTest1', (value, [target]) => {
+//   if(typeof value === 'number' && typeof target === 'number') {
+//     return value >= target ? true : '折抵金額不可大於訂單金額'
+//   }
+//   return true
+// });
+
+// defineRule('ruleTest2', (value, [target]) => {
+//   if(typeof value === 'number' && typeof target === 'number') {
+//     return value <= target ? true : '折抵金額不可大於訂單金額'
+//   }
+//   return true
+// });
+
 configure({
   generateMessage: localize({ zh_TW: zhTW }),
   validateOnInput: true
