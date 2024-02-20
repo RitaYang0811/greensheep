@@ -22,7 +22,7 @@
             <VField
               type="text"
               name="優惠碼"
-              rules="required"
+              rules="required|alpha_num|max:12"
               class="form-control"
               :class="{ 'is-invalid': errors['優惠碼'] }"
               id="couponCode"
@@ -40,13 +40,10 @@
               <div class="d-flex flex-column gap-2 mb-3">
                 <p class="fs-8">消費滿 NT$</p>
                 <div>
-                  <!-- rules="ruleTest1:@折抵金額" -->
-                  <!-- :rules="ruleTest3" -->
-                  <!-- :rules="{ required: couponData.title === '金額折抵' }" -->
                   <VField
                     type="number"
                     name="金額"
-                    :rules="{ required: couponData.title === '金額折抵' }"
+                    :rules="couponData.title === '金額折抵' ? 'required|ruleTest1:@折抵金額' : ''"
                     class="form-control"
                     :class="{ 'is-invalid': errors['金額'] }"
                     placeholder="設定金額"
@@ -56,13 +53,10 @@
                 </div>
                 <p class="fs-8">折抵金額 NT$</p>
                 <div>
-                  <!-- rules="ruleTest2:@金額" -->
-                  <!-- :rules="ruleTest3" -->
-                  <!-- :rules="{ required: couponData.title === '金額折抵' }" -->
                   <VField
                     type="number"
                     name="折抵金額"
-                    :rules="{ required: couponData.title === '金額折抵' }"
+                    :rules="couponData.title === '金額折抵' ? 'required|ruleTest2:@金額' : ''"
                     class="form-control"
                     :class="{ 'is-invalid': errors['折抵金額'] }"
                     placeholder="設定金額"
