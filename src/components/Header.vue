@@ -122,8 +122,11 @@
             </RouterLink>
           </li>
           <li class="nav-item d-lg-none" style="min-width: 100px">
-            <a class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start" href="8-1.memLogin.html"
-              >登入/註冊</a
+            <RouterLink
+              to="/memberLogin"
+              class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start"
+              href="8-1.memLogin.html"
+              >登入/註冊</RouterLink
             >
           </li>
         </ul>
