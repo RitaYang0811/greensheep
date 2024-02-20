@@ -145,7 +145,6 @@ export default {
           switch(tab) {
             case '所有優惠券':
               this.coupons = res.data.coupons
-              console.log(this.coupons)
               break
             case '有效':
               this.coupons = res.data.coupons.filter(coupon => {
@@ -197,8 +196,8 @@ export default {
         title: couponData.title,
         is_enabled: 1,
         percent: couponData.title === '金額折抵' ? 100 : couponData.percent,
-        start_date: couponData.start_date / 1000, // 時間戳改成秒單位
-        due_date: couponData.due_date / 1000,
+        start_date: couponData.dates[0] / 1000, // 時間戳改成秒單位
+        due_date: couponData.dates[1] / 1000,
         code: couponData.code
       }
 
@@ -234,6 +233,7 @@ export default {
           .then(res => {
             alert(res.data.message)
             this.$refs.adCouponModal.closeModal()
+            this.$refs.couponForm.resetForm()
             this.getCoupons(this.currentTab)
           })
           .catch(err => {
@@ -267,7 +267,7 @@ export default {
         case 'new':
           this.isNew = true
           this.coupon = {
-            title: '金額折抵' // 預設值給 :checked 判斷
+            title: '金額折抵', // 預設值給 :checked 判斷
           }
           break
         case 'edit':
