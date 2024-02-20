@@ -16,7 +16,7 @@
             <img src="@/components/icons/open-in-new-white.svg" class="align-top" alt="前往後台" />
         </RouterLink>
         <div class="d-none d-lg-flex gap-6 text-white">
-          <a href="##">登出</a>
+          <a href="##" @click.prevent="signout">登出</a>
           <RouterLink to="/" target="_blank">
             回前台
             <img src="@/components/icons/open-in-new-white.svg" class="align-top" alt="前往後台" />
@@ -49,13 +49,13 @@
     </div>
   </div>
   <div class="offcanvas offcanvas-start bg-primary text-white" tabindex="-1" id="mobileAdminMenu" aria-labelledby="mobileAdminMenuLabel">
-  <div class="offcanvas-header px-4 py-2">
-    <img class="pt-2" src="@/assets/images/logo-white.svg" alt="">
-    <a data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-      <img src="@/assets/images/close_white_24dp.svg" alt="關閉">
-    </a>
-  </div>
-  <div class="offcanvas-body px-0">
+    <div class="offcanvas-header px-4 py-2">
+      <img class="pt-2" src="@/assets/images/logo-white.svg" alt="">
+      <a data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+        <img src="@/assets/images/close_white_24dp.svg" alt="關閉">
+      </a>
+    </div>
+    <div class="offcanvas-body px-0">
     <ul class="list-unstyled">
       <li>
         <RouterLink to="/admin/home" class="admin-sidebar-hover d-block py-6">首頁</RouterLink>
@@ -71,7 +71,7 @@
         <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6">優惠管理</RouterLink>
       </li>
       <li><a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a></li>
-      <li><a href="##" class="admin-sidebar-hover d-block py-6">登出</a></li>
+      <li><a href="##" class="admin-sidebar-hover d-block py-6" @click.prevent="signout">登出</a></li>
     </ul>
   </div>
 </div>
@@ -113,6 +113,11 @@ export default {
         alert('請先登入')
         this.$router.push('/login')
       }
+    },
+    signout () {
+      document.cookie = 'AdminToken=;expires=;'
+      alert('已登出')
+      this.$router.push('/login')
     }
   },
   mounted() {
