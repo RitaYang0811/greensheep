@@ -17,12 +17,20 @@
         <li>
           <RouterLink to="/admin/home" class="admin-sidebar-hover d-block py-6">首頁</RouterLink>
         </li>
-        <li><a href="##" class="admin-sidebar-hover d-block py-6">商品管理</a></li>
         <li>
-          <RouterLink to="/admin/orders" class="admin-sidebar-hover d-block py-6">訂單管理</RouterLink>
+          <RouterLink to="/admin/products" class="admin-sidebar-hover d-block py-6"
+            >商品管理</RouterLink
+          >
         </li>
         <li>
-          <RouterLink to="/admin/articles" class="admin-sidebar-hover d-block py-6">文章管理</RouterLink>
+          <RouterLink to="/admin/orders" class="admin-sidebar-hover d-block py-6"
+            >訂單管理</RouterLink
+          >
+        </li>
+        <li>
+          <RouterLink to="/admin/articles" class="admin-sidebar-hover d-block py-6"
+            >文章管理</RouterLink
+          >
         </li>
         <li>
           <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6"
@@ -89,18 +97,19 @@ export default {
     position: fixed;
     z-index: 1;
     width: 100%;
-    height: 78px;
+    height: 70px;
   }
 
   &-sidebar {
-    padding-top: 78px;
+    padding-top: 70px;
     position: fixed;
-    width: 300px;
+    width: 200px;
     height: 100vh;
 
     &-hover:hover {
       background: $light;
       color: $primary;
+      transition: 0.3s ease-in-out;
     }
     & .active {
       background: $light;
@@ -109,9 +118,9 @@ export default {
   }
 
   &-main {
-    margin-top: 78px;
-    margin-left: 300px;
-    min-height: calc(100vh - 78px);
+    margin-top: 70px;
+    margin-left: 200px;
+    min-height: calc(100vh - 70px);
   }
 }
 </style>
