@@ -128,6 +128,11 @@ const router = createRouter({
           component: () => import('../views/admin/AdHomePageView.vue')
         },
         {
+          path: 'products',
+          name: 'AdminProducts',
+          component: () => import('../views/admin/AdProductView.vue')
+        },
+        {
           path: 'coupons',
           name: 'AdminCoupons',
           component: () => import('../views/admin/AdCouponsView.vue')
