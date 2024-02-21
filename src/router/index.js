@@ -109,6 +109,12 @@ const router = createRouter({
           path: 'memberLogin',
           name: 'MemberLogin',
           component: () => import('../views/user/MemberLogin.vue')
+        },
+        //會員註冊
+        {
+          path: 'memberSignUp',
+          name: 'MemberSignUp',
+          component: () => import('../views/user/MemberSignUp.vue')
         }
       ]
     },
