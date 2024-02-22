@@ -127,9 +127,21 @@ const router = createRouter({
         },
         {
           path: 'articles',
-          name: 'AdminArticles',
-          component: () => import('../views/admin/AdArticlesView.vue')
-        }
+          name: 'AdminArticlesLayout',
+          component: () => import('../views/admin/AdArticlesLayoutView.vue'),
+          children: [
+            {
+              path: '',
+              name: 'AdminArticles',
+              component: () => import('../views/admin/AdArticlesView.vue')
+            },
+            {
+              path: 'articleCreate',
+              name: 'AdminArticleCreate',
+              component: () => import('../views/admin/AdArticlesCreateView.vue')
+            }
+          ]
+        },
       ]
     }
   ]

@@ -25,7 +25,7 @@
       </header>
     </div>
     <div class="row">
-      <aside class="admin-sidebar d-none d-lg-block col-lg-2 px-0 position-fixed bg-primary text-white text-center">
+      <aside class="admin-sidebar d-none d-lg-block col-lg-1 px-0 position-fixed bg-primary text-white text-center">
         <ul class="list-unstyled">
           <li>
             <RouterLink to="/admin/home" class="admin-sidebar-hover d-block py-6">首頁</RouterLink>
@@ -43,12 +43,12 @@
           <li><a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a></li>
         </ul>
       </aside>
-      <main class="col-lg-10 admin-main">
+      <main class="col-lg-11 admin-main">
         <RouterView v-if="checkSuccess" />
       </main>
     </div>
   </div>
-  <div class="offcanvas offcanvas-start bg-primary text-white" tabindex="-1" id="mobileAdminMenu" aria-labelledby="mobileAdminMenuLabel">
+  <div class="admin-offcanvas offcanvas offcanvas-start bg-primary text-white" tabindex="-1" id="mobileAdminMenu" aria-labelledby="mobileAdminMenuLabel">
     <div class="offcanvas-header px-4 py-2">
       <img class="pt-2" src="@/assets/images/logo-white.svg" alt="">
       <a data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
