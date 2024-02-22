@@ -25,30 +25,21 @@ import * as AllRules from '@vee-validate/rules'
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 
+//CKEditor5
+import CKEditor from '@ckeditor/ckeditor5-vue';
+import '@ckeditor/ckeditor5-build-classic/build/translations/zh'; // 語言
+
 //bootstrap
 import 'bootstrap/dist/js/bootstrap.min.js'
 
 import App from './App.vue'
 import router from './router'
 
-//VeeValidate 設定
+//VeeValidate 驗證規則設定
 Object.keys(AllRules).forEach((rule) => {
   defineRule(rule, AllRules[rule])
 });
 
-// defineRule('ruleTest1', (value, [target]) => {
-//   if(typeof value === 'number' && typeof target === 'number') {
-//     return value >= target ? true : '折抵金額不可大於訂單金額'
-//   }
-//   return true
-// });
-
-// defineRule('ruleTest2', (value, [target]) => {
-//   if(typeof value === 'number' && typeof target === 'number') {
-//     return value <= target ? true : '折抵金額不可大於訂單金額'
-//   }
-//   return true
-// });
 
 configure({
   generateMessage: localize({ zh_TW: zhTW }),
@@ -66,6 +57,7 @@ pinia.use(({ store }) => {
 })
 app.use(router)
 app.use(VueAxios, axios)
+app.use(CKEditor)
 
 app.component('VueLoading', Loading)
 app.component('VueDatePicker', VueDatePicker)
