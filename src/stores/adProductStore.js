@@ -6,6 +6,7 @@ export default defineStore('adProductStore', {
   state: () => ({
     allProducts: []
   }),
+  getters: {},
   actions: {
     getProducts() {
       axios

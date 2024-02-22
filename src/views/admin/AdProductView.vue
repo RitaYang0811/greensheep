@@ -172,6 +172,7 @@ export default {
         // 將當前點擊的商品資料傳入 tempProduct
         this.allProducts = this.tempProduct
         this.isNew = false
+      } else if (status === 'delete') {
       }
     },
     closeModal(status) {

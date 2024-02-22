@@ -79,11 +79,7 @@
                   NT$ {{ product.origin_price }}
                 </p>
                 <!-- v-else 打折 -->
-                <p v-else class="card-text my-2">
-                  <span class="card-text display-8 text-primary text-decoration-line-through">
-                    NT$ {{ product.origin_price }}</span
-                  ><span class="ms-2 display-7 text-dark fw-medium"> NT$ {{ product.price }}</span>
-                </p>
+                ==
                 <button
                   href="#"
                   class="custom-btn custom-btn-toGreen text-center w-100 border-1 add-to-cart"
