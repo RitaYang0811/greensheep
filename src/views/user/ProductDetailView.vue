@@ -1,5 +1,6 @@
 <template>
   <div class="container py-7 py-lg-10">
+
     <!-- breadcrumb -->
     <div class="row">
       <nav aria-label="breadcrumb">
@@ -14,18 +15,22 @@
           <li class="breadcrumb-item" aria-current="page">天使之愛十字架</li>
         </ol>
       </nav>
+
       <div class="row justify-content-between">
         <div class="col-12 col-lg-6">
           <!-- Swiper -->
           <ProductSwiper :product-info="productInfo"></ProductSwiper>
+
         </div>
         <!-- 商品資訊 -->
         <div class="col-12 col-lg-5 text-start d-flex flex-column">
           <div class="d-flex align-items-center mb-2">
             <h1 class="fw-bold fs-3 fs-lg-2 me-5">{{ productInfo.title }}</h1>
             <!-- 愛心收藏 -->
+
             <i class="bi bi-heart fs-4 text-primary"></i>
             <i class="bi bi-heart-fill fs-4 text-primary"></i>
+
           </div>
           <!-- v-if 無折扣 -->
           <p
@@ -35,6 +40,7 @@
             NT$ {{ productInfo.origin_price }}
           </p>
           <!-- v-else 打折 -->
+
           <p v-else class="mb-4 mb-lg-5">
             <span class="text-primary fs-6 fs-lg-5 fw-medium me-4">
               NT$ {{ productInfo.price }}</span
@@ -42,6 +48,7 @@
             <span class="text-grey9F fs-6 fs-lg-5 fw-medium text-decoration-line-through">
               NT$ {{ productInfo.origin_price }}
             </span>
+
           </p>
           <!-- 行銷活動 -->
           <div class="position-relative start-line">
@@ -161,7 +168,9 @@
           <div class="col justify-content-center align-items-center flex-grow-1">
             <!-- 尺寸選擇 -->
             <select
+
               class="mb-4 form-select size-select"
+
               aria-label="Default select example"
               style="height: 55px"
             >
@@ -172,6 +181,7 @@
 
             <div class="d-flex flex-nowrap justify-content-between">
               <!-- 數量選擇 -->
+
               <div class="d-flex border border-primary">
                 <button type="button" class="btn">
                   <i class="bi bi-dash-lg fs-4 text-primary"></i>
@@ -187,6 +197,7 @@
                   <i class="bi bi-plus-lg fs-4 text-primary"></i>
                 </button>
               </div>
+
               <button
                 type="button"
                 class="custom-btn custom-btn-next2 bg-primary text-white fw-medium py-4 px-10"
@@ -203,10 +214,12 @@
 
   <!-- 下半部 -->
   <div class="container py-10">
+
     <!-- <div data-aos="fade-up" data-aos-duration="1000" data-aos-offset="50" class="mb-5">
       <h2 class="fs-lg-2 fw-medium">{{ productInfo.title }}</h2>
       <p class="text-primary">The Angel Love Cross</p>
     </div> -->
+
     <p
       class="mb-5 text-primary lh-lg"
       data-aos="fade-up"
@@ -445,6 +458,7 @@
 </template>
 
 <script>
+
 import ProductSwiper from '@/components/ProductSwiper.vue'
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
@@ -455,6 +469,7 @@ export default {
     return {}
   },
   components: { ProductSwiper },
+
   computed: {
     ...mapState(productStore, ['productInfo'])
   },
@@ -470,3 +485,4 @@ export default {
 </script>
 
 <style scoped></style>
+
