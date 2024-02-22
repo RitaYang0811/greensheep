@@ -12,6 +12,8 @@
     "deploy": "vite build && gh-pages -d dist"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^41.1.0",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
     "@vee-validate/i18n": "^4.12.5",
     "@vee-validate/rules": "^4.12.5",
     "@vuepic/vue-datepicker": "^8.1.1",
