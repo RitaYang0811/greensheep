@@ -12,17 +12,17 @@
       background: $light;
       color: $primary;
     }
-    & .active{
+    & .active {
       background: $light;
       color: $primary;
     }
   }
   &-main {
     min-height: 100vh;
-    .nav-link{
+    .nav-link {
       background-color: transparent;
       color: $primary;
-      &.active{
+      &.active {
         background-color: $primary;
         color: #fff;
       }
@@ -38,4 +38,8 @@
       color: $primary;
     }
   }
+}
+.offcanvas-body .active {
+  background: $light;
+  color: $primary;
 }

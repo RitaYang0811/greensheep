@@ -27,6 +27,48 @@
 
           <p class="d-flex justify-content-center align-items-center py-6 hr-line">or</p>
           <!-- 表單 -->
+<<<<<<< HEAD
+          <form class="member-form">
+            <!-- 信箱 -->
+            <div class="mb-3">
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="E-mail"
+                required
+              />
+            </div>
+            <!-- 密碼 -->
+            <div class="mb-3">
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder="Password(需超過6個字元)"
+                required
+              />
+            </div>
+            <!-- 再次確認密碼 -->
+            <div class="mb-3">
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder="Reconfirm Password(需超過6個字元)"
+                required
+              />
+            </div>
+            <!-- 生日 -->
+            <div class="mb-3">
+              <p class="mb-1">生日(生日當月贈送消費金，確認後不可更改)</p>
+              <input
+                type="text"
+                class="form-control"
+                id="datepicker"
+                placeholder="請選擇正確出生日期"
+=======
           <v-form ref="form" class="member-form" v-slot="{ errors }">
             <!-- 暱稱 -->
             <div class="mb-3">
@@ -99,11 +141,24 @@
                 :enable-time-picker="false"
                 year-first
                 required
+>>>>>>> 469e250b76837bb6f3f3d7c458323dfab7f9d2c6
               />
             </div>
             <div class="mb-3 form-check">
               <!-- 訂閱最新消息 -->
               <div class="d-flex">
+<<<<<<< HEAD
+                <input type="checkbox" class="form-check-input me-1" id="exampleCheck1" checked />
+                <label class="form-check-label" for="exampleCheck1">訂閱最新消息</label>
+              </div>
+              <!-- 確認使用條款和隱私權政策 -->
+              <div class="d-flex">
+                <input type="checkbox" class="form-check-input me-1" id="exampleCheck1" />
+                <label class="form-check-label" for="exampleCheck1">
+                  本人同意<a href="#" class="text-decoration-underline">網站服務條款</a>及<a
+                    href="#"
+                    class="text-decoration-underline"
+=======
                 <input type="checkbox" class="form-check-input me-1" id="subNews" checked />
                 <label class="form-check-label" for="subNews">訂閱最新消息</label>
               </div>
@@ -117,12 +172,17 @@
                   >
                   及
                   <a href="#" class="text-decoration-underline" @click.prevent="openModal('政策')"
+>>>>>>> 469e250b76837bb6f3f3d7c458323dfab7f9d2c6
                     >隱私權政策</a
                   ></label
                 >
               </div>
             </div>
+<<<<<<< HEAD
+            <button
+=======
             <!-- <button
+>>>>>>> 469e250b76837bb6f3f3d7c458323dfab7f9d2c6
               type="button"
               class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
             >
@@ -130,8 +190,13 @@
                 <img src="../../assets/images/GreenSheep.png" alt="圖像" />
               </div>
               <p>立即註冊</p>
+<<<<<<< HEAD
+            </button>
+          </form>
+=======
             </button> -->
           </v-form>
+>>>>>>> 469e250b76837bb6f3f3d7c458323dfab7f9d2c6
           <!-- 回到登入 -->
           <p class="mt-1 text-end">
             已經有帳號了嗎？前往<router-link to="/memberLogin" class="text-decoration-underline"
@@ -142,6 +207,11 @@
       </div>
     </div>
   </div>
+<<<<<<< HEAD
+</template>
+
+<style scoped></style>
+=======
   <!-- 網站服務條款與政策Modal -->
   <div
     class="modal fade"
@@ -268,3 +338,4 @@ export default {
   }
 }
 </script>
+>>>>>>> 469e250b76837bb6f3f3d7c458323dfab7f9d2c6
