@@ -7,39 +7,26 @@
     height: 48px;
   }
   &-sidebar {
-<<<<<<< HEAD
-    padding-top: 78px;
-=======
->>>>>>> 469e250b76837bb6f3f3d7c458323dfab7f9d2c6
     height: 100vh;
     &-hover:hover {
       background: $light;
       color: $primary;
     }
-    & .active{
+    & .active {
       background: $light;
       color: $primary;
     }
   }
   &-main {
-<<<<<<< HEAD
-    margin-top: 78px;
-    min-height: calc(100vh - 78px);
-=======
     min-height: 100vh;
->>>>>>> 469e250b76837bb6f3f3d7c458323dfab7f9d2c6
-    .nav-link{
+    .nav-link {
       background-color: transparent;
       color: $primary;
-      &.active{
+      &.active {
         background-color: $primary;
         color: #fff;
       }
     }
-<<<<<<< HEAD
-    @include media-breakpoint-up(lg) {
-      margin-left: calc(2 / 12 * 100vw);
-=======
     // position: fixed 會離開原本層級
     @include media-breakpoint-up(lg) {
       margin-left: calc(1 / 12 * 100vw);
@@ -49,7 +36,6 @@
     .offcanvas-body .active {
       background: $light;
       color: $primary;
->>>>>>> 469e250b76837bb6f3f3d7c458323dfab7f9d2c6
     }
   }
 }

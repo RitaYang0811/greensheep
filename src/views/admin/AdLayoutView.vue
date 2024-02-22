@@ -32,7 +32,11 @@
           <li>
             <RouterLink to="/admin/home" class="admin-sidebar-hover d-block py-6">首頁</RouterLink>
           </li>
-          <li><a href="##" class="admin-sidebar-hover d-block py-6">商品管理</a></li>
+          <li>
+            <RouterLink to="/admin/products" class="admin-sidebar-hover d-block py-6"
+              >商品管理</RouterLink
+            >
+          </li>
           <li>
             <RouterLink to="/admin/orders" class="admin-sidebar-hover d-block py-6"
               >訂單管理</RouterLink
