@@ -13,12 +13,12 @@
           <ul class="list-unstyled">
             <li class="py-3">
               <a href="#" class="p-3 google-account"
-                ><img src="../assets/images/google.svg" alt="google" />Continue with Google
+                ><img src="../../assets/images/google.svg" alt="google" />Continue with Google
               </a>
             </li>
             <li class="py-3">
               <a href="#" class="p-3 line-account">
-                <img src="../assets/images/line-messenger.svg" alt="line" />
+                <img src="../../assets/images/line-messenger.svg" alt="line" />
 
                 Continue with Line</a
               >
@@ -55,18 +55,18 @@
               <a href="8-3.memForget.html" class="display-7">忘記密碼</a>
             </div>
             <button
-              type="submit"
-              class="d-flex justify-content-center align-items-center custom-btn-submit sub-button"
+              type="button"
+              class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
             >
               <div class="button-img-box me-1">
-                <img src="../assets/images/GreenSheep.png" alt="圖像" />
+                <img src="../../assets/images/GreenSheep.png" alt="圖像" />
               </div>
               <p>立即登入</p>
             </button>
           </form>
           <p class="mt-1 text-end">
-            還沒有帳號嗎？前往<a href="8-2.memSignup.html" class="text-decoration-underline"
-              >註冊</a
+            還沒有帳號嗎？前往<router-link to="/memberSignUp" class="text-decoration-underline"
+              >註冊</router-link
             >
           </p>
         </div>

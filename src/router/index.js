@@ -109,6 +109,12 @@ const router = createRouter({
           path: 'memberLogin',
           name: 'MemberLogin',
           component: () => import('../views/user/MemberLogin.vue')
+        },
+        //會員註冊
+        {
+          path: 'memberSignUp',
+          name: 'MemberSignUp',
+          component: () => import('../views/user/MemberSignUp.vue')
         }
       ]
     },
@@ -134,9 +140,21 @@ const router = createRouter({
         },
         {
           path: 'articles',
-          name: 'AdminArticles',
-          component: () => import('../views/admin/AdArticlesView.vue')
-        }
+          name: 'AdminArticlesLayout',
+          component: () => import('../views/admin/AdArticlesLayoutView.vue'),
+          children: [
+            {
+              path: '',
+              name: 'AdminArticles',
+              component: () => import('../views/admin/AdArticlesView.vue')
+            },
+            {
+              path: 'articleCreate',
+              name: 'AdminArticleCreate',
+              component: () => import('../views/admin/AdArticlesCreateView.vue')
+            }
+          ]
+        },
       ]
     }
   ]

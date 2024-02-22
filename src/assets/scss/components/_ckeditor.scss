@@ -1,0 +1,16 @@
+:root {
+  --ck-color-focus-border-coordinates: 131, 11%, 38% !important; // $primary
+  --ck-color-button-on-color: #566b5a !important; // $primary
+  --ck-color-button-on-background: #e6e6e1 !important; // $light
+  --ck-color-button-on-hover-background: #e6e6e1 !important; // $light
+  --ck-color-button-on-active-background:  #e6e6e1 !important; // $light
+  --ck-focus-outer-shadow-geometry: 0 0 0 0 !important;
+}
+
+.ck-content {
+  height: calc(100vh - 78px - 260px);
+}
+
+.ck.ck-editor__editable > .ck-placeholder::before {
+  color: $grey9F;
+}
