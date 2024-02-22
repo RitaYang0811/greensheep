@@ -1,17 +1,19 @@
 <template>
-  <div class="accordion fs-8 py-1 bg-primary text-white">
+  <div
+    to="/products"
+    class="accordion fs-8 py-1 bg-primary text-white cursor-pointer"
+    @click="toProductsView"
+  >
     即日起，訂單達 2,000元 以上即可享免運費優惠！
   </div>
 
-  <nav class="navbar navbar-expand-lg navbar-light navbar-hover py-3 flex-column">
+  <nav class="navbar navbar-expand-lg navbar-light navbar-hover py-3 flex-column sticky-top">
     <div class="container">
       <!-- logo -->
-
       <h1 class="logo mb-0 me-lg-8">
         <router-link to="/" class="navbar-brand">綠羊珠寶 Green Sheep handmade jewelry</router-link>
       </h1>
-
-      <!-- menu -->
+      <!-- menu  -->
       <div
         class="collapse navbar-collapse flex-column offcanvas offcanvas-end py-16 px-12 py-lg-0 px-lg-0"
         id="offcanvasExample"
@@ -222,7 +224,7 @@ export default {
   methods: {
     toProductsView() {
       this.$router.push({
-        path: 'products'
+        path: '/products'
       })
     }
   },

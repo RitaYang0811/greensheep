@@ -2,19 +2,27 @@
   <div class="container-fluid">
     <div class="row">
       <header class="d-lg-none admin-header d-flex justify-content-between align-items-center">
-        <a class="d-lg-none" data-bs-toggle="offcanvas" href="#mobileAdminMenu" role="button" aria-controls="mobileAdminMenu">
+        <a
+          class="d-lg-none"
+          data-bs-toggle="offcanvas"
+          href="#mobileAdminMenu"
+          role="button"
+          aria-controls="mobileAdminMenu"
+        >
           <i class="bi bi-list fs-2 text-white"></i>
         </a>
-        <RouterLink to="/admin/home" >
-          <img src="@/assets/images/logo-white.svg" alt="logo" style="width: 150px;" />
+        <RouterLink to="/admin/home">
+          <img src="@/assets/images/logo-white.svg" alt="logo" style="width: 150px" />
         </RouterLink>
         <RouterLink to="/" target="_blank" class="d-lg-none" title="回前台">
-            <i class="bi bi-house-door fs-2 text-white"></i> 
+          <i class="bi bi-house-door fs-2 text-white"></i>
         </RouterLink>
       </header>
     </div>
     <div class="row">
-      <aside class="admin-sidebar d-none d-lg-flex flex-column justify-content-between col-lg-1 px-0 position-fixed bg-primary text-white text-center">
+      <aside
+        class="admin-sidebar d-none d-lg-flex flex-column justify-content-between col-lg-1 px-0 position-fixed bg-primary text-white text-center"
+      >
         <ul class="list-unstyled">
           <li class="px-4 py-4">
             <RouterLink to="/admin/home" class="d-none d-lg-block bg-transparent">
@@ -24,15 +32,25 @@
           <li>
             <RouterLink to="/admin/home" class="admin-sidebar-hover d-block py-6">首頁</RouterLink>
           </li>
-          <li><a href="##" class="admin-sidebar-hover d-block py-6">商品管理</a></li>
           <li>
-            <RouterLink to="/admin/orders" class="admin-sidebar-hover d-block py-6">訂單管理</RouterLink>
+            <RouterLink to="/admin/products" class="admin-sidebar-hover d-block py-6"
+              >商品管理</RouterLink
+            >
           </li>
           <li>
-            <RouterLink to="/admin/articles" class="admin-sidebar-hover d-block py-6">文章管理</RouterLink>
+            <RouterLink to="/admin/orders" class="admin-sidebar-hover d-block py-6"
+              >訂單管理</RouterLink
+            >
           </li>
           <li>
-            <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6">優惠管理</RouterLink>
+            <RouterLink to="/admin/articles" class="admin-sidebar-hover d-block py-6"
+              >文章管理</RouterLink
+            >
+          </li>
+          <li>
+            <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6"
+              >優惠管理</RouterLink
+            >
           </li>
           <li class=""><a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a></li>
         </ul>
@@ -54,11 +72,27 @@
       </main>
     </div>
   </div>
-  <div class="admin-offcanvas offcanvas offcanvas-start bg-primary text-white" tabindex="-1" id="mobileAdminMenu" aria-labelledby="mobileAdminMenuLabel">
+  <div
+    class="admin-offcanvas offcanvas offcanvas-start bg-primary text-white"
+    tabindex="-1"
+    id="mobileAdminMenu"
+    aria-labelledby="mobileAdminMenuLabel"
+  >
     <div class="offcanvas-header px-4 py-4 position-relative">
-      <img class="position-absolute start-50 translate-middle-x" src="@/assets/images/logo-white.svg" alt="greensheep" style="top: 12px">
-      <a class="ms-auto" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-        <img src="@/assets/images/close_white_24dp.svg" alt="關閉">
+      <img
+        class="position-absolute start-50 translate-middle-x"
+        src="@/assets/images/logo-white.svg"
+        alt="greensheep"
+        style="top: 12px"
+      />
+      <a
+        class="ms-auto"
+        data-bs-toggle="offcanvas"
+        href="#offcanvasExample"
+        role="button"
+        aria-controls="offcanvasExample"
+      >
+        <img src="@/assets/images/close_white_24dp.svg" alt="關閉" />
       </a>
     </div>
     <div class="offcanvas-body px-0 d-flex flex-column justify-content-between">
@@ -66,15 +100,25 @@
         <li>
           <RouterLink to="/admin/home" class="admin-sidebar-hover d-block py-6">首頁</RouterLink>
         </li>
-        <li><a href="##" class="admin-sidebar-hover d-block py-6">商品管理</a></li>
         <li>
-          <RouterLink to="/admin/orders" class="admin-sidebar-hover d-block py-6">訂單管理</RouterLink>
+          <RouterLink to="/admin/products" class="admin-sidebar-hover d-block py-6"
+            >商品管理</RouterLink
+          >
         </li>
         <li>
-          <RouterLink to="/admin/articles" class="admin-sidebar-hover d-block py-6">文章管理</RouterLink>
+          <RouterLink to="/admin/orders" class="admin-sidebar-hover d-block py-6"
+            >訂單管理</RouterLink
+          >
         </li>
         <li>
-          <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6">優惠管理</RouterLink>
+          <RouterLink to="/admin/articles" class="admin-sidebar-hover d-block py-6"
+            >文章管理</RouterLink
+          >
+        </li>
+        <li>
+          <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6"
+            >優惠管理</RouterLink
+          >
         </li>
         <li>
           <a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a>
@@ -84,8 +128,8 @@
         登出
         <i class="bi bi-box-arrow-right ms-1 fs-2 align-middle"></i>
       </a>
+    </div>
   </div>
-</div>
 
   <VueLoading :active="isLoading" />
 </template>
@@ -125,7 +169,7 @@ export default {
         this.$router.push('/login')
       }
     },
-    signout () {
+    signout() {
       document.cookie = 'AdminToken=;expires=;'
       alert('已登出')
       this.$router.push('/login')

@@ -1,25 +1,6 @@
 <template>
   <div class="container py-7 py-lg-10">
-    <!-- <swiper
-      :slides-per-view="1"
-      :modules="modules"
-      :centeredSlides="true"
-      :navigation="true"
-      :pagination="{
-        clickable: true
-      }"
-      :loop="true"
-      :spaceBetween="30"
-      :autoplay="{
-        delay: 3000,
-        disableOnInteraction: true
-      }"
-      class="mySwiper"
-    >
-      <swiper-slide v-for="img in productInfo.imagesUrl" :key="img + 123">
-        <img :src="img" />
-      </swiper-slide>
-    </swiper> -->
+
     <!-- breadcrumb -->
     <div class="row">
       <nav aria-label="breadcrumb">
@@ -34,49 +15,22 @@
           <li class="breadcrumb-item" aria-current="page">天使之愛十字架</li>
         </ol>
       </nav>
-      <div class="row justify-content-space-between">
-        <div class="col-12 col-lg-5">
-          <!-- Swiper -->
-          <div class="swiper cusSwiper mb-3">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide" v-for="imgUrl in productInfo.imagesUrl" :key="imgUrl + 123">
-                <img
-                  :src="imgUrl"
-                  :alt="productInfo.title"
-                  class="product-top-img w-100 h-100 object-fit-cover"
-                />
-              </div>
-              <!-- <div class="swiper-slide">
-              <img
-                src="../assets/images/product-3-1.JPG"
-                alt="天使之愛十字架照片"
-                class="w-100 img-fluid object-fit-cover"
-                style="height: 500px"
-              />
-            </div>
-          </div> -->
-              <div class="swiper-button-next"></div>
-              <div class="swiper-button-prev"></div>
-            </div>
-          </div>
 
-          <p class="font-montserrat fs-9 text-grey9F text-end text-lg-start mb-1">
-            每顆寶石均為天然寶石，有些許色差及天然內含物，均為正常現象。
-          </p>
-          <p class="font-montserrat fs-9 text-grey9F text-end text-lg-start mb-1">
-            即時照片預覽為參考，設計師會依照實際狀況及美感做些許位置及尺寸大小調整。
-          </p>
+      <div class="row justify-content-between">
+        <div class="col-12 col-lg-6">
+          <!-- Swiper -->
+          <ProductSwiper :product-info="productInfo"></ProductSwiper>
+
         </div>
         <!-- 商品資訊 -->
         <div class="col-12 col-lg-5 text-start d-flex flex-column">
           <div class="d-flex align-items-center mb-2">
             <h1 class="fw-bold fs-3 fs-lg-2 me-5">{{ productInfo.title }}</h1>
             <!-- 愛心收藏 -->
-            <svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path
-                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-              />
-            </svg>
+
+            <i class="bi bi-heart fs-4 text-primary"></i>
+            <i class="bi bi-heart-fill fs-4 text-primary"></i>
+
           </div>
           <!-- v-if 無折扣 -->
           <p
@@ -86,12 +40,15 @@
             NT$ {{ productInfo.origin_price }}
           </p>
           <!-- v-else 打折 -->
-          <p v-else>
-            <span class="text-grey9F fs-4 fs-lg-3 fw-medium mb-4 mb-lg-5">
-              NT$ {{ productInfo.origin_price }}</span
-            ><span class="text-secondary fs-4 fs-lg-3 fw-medium mb-4 mb-lg-5">
+
+          <p v-else class="mb-4 mb-lg-5">
+            <span class="text-primary fs-6 fs-lg-5 fw-medium me-4">
               NT$ {{ productInfo.price }}</span
             >
+            <span class="text-grey9F fs-6 fs-lg-5 fw-medium text-decoration-line-through">
+              NT$ {{ productInfo.origin_price }}
+            </span>
+
           </p>
           <!-- 行銷活動 -->
           <div class="position-relative start-line">
@@ -211,7 +168,9 @@
           <div class="col justify-content-center align-items-center flex-grow-1">
             <!-- 尺寸選擇 -->
             <select
-              class="mb-2 form-select size-select"
+
+              class="mb-4 form-select size-select"
+
               aria-label="Default select example"
               style="height: 55px"
             >
@@ -222,13 +181,22 @@
 
             <div class="d-flex flex-nowrap justify-content-between">
               <!-- 數量選擇 -->
-              <input
-                type="number"
-                class="border-0 text-center number-select"
-                style="width: 30%"
-                min="1"
-                placeholder="數量"
-              />
+
+              <div class="d-flex border border-primary">
+                <button type="button" class="btn">
+                  <i class="bi bi-dash-lg fs-4 text-primary"></i>
+                </button>
+                <input
+                  type="number"
+                  class="border-0 text-center number-select"
+                  min="1"
+                  value="1"
+                  readonly
+                />
+                <button type="button" class="btn">
+                  <i class="bi bi-plus-lg fs-4 text-primary"></i>
+                </button>
+              </div>
 
               <button
                 type="button"
@@ -246,10 +214,12 @@
 
   <!-- 下半部 -->
   <div class="container py-10">
-    <div data-aos="fade-up" data-aos-duration="1000" data-aos-offset="50" class="mb-5">
+
+    <!-- <div data-aos="fade-up" data-aos-duration="1000" data-aos-offset="50" class="mb-5">
       <h2 class="fs-lg-2 fw-medium">{{ productInfo.title }}</h2>
       <p class="text-primary">The Angel Love Cross</p>
-    </div>
+    </div> -->
+
     <p
       class="mb-5 text-primary lh-lg"
       data-aos="fade-up"
@@ -488,18 +458,18 @@
 </template>
 
 <script>
-// import { Swiper, SwiperSlide } from 'swiper/vue'
-// import { Navigation, Autoplay, Pagination } from 'swiper/modules'
+
+import ProductSwiper from '@/components/ProductSwiper.vue'
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
 import { mapState, mapActions } from 'pinia'
-// import 'swiper/css'
-// import 'swiper/css/navigation'
-// import 'swiper/css/pagination'
+
 export default {
   data() {
-    // return { modules: [Navigation, Autoplay, Pagination] }
+    return {}
   },
+  components: { ProductSwiper },
+
   computed: {
     ...mapState(productStore, ['productInfo'])
   },
@@ -514,7 +484,5 @@ export default {
 }
 </script>
 
-<style scoped>
-.product-top-img {
-}
-</style>
+<style scoped></style>
+
