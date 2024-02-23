@@ -40,10 +40,10 @@
               <div class="card-body">
                 <h5 class="card-title my-2 fs-7">{{ article.title }}</h5>
                 <div class="d-flex">
-                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1" @click.prevent="articleActivity('edit',article.id)">
+                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1" :class="{ 'disabled-link': loadingStatusData.loadingDelete}" @click.prevent="articleActivity('edit', article.id)">
                     <img src="@/assets/images/edit_green.svg" alt="編輯">
                   </a>
-                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1">
+                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1" @click.prevent="articleActivity('delete', article.id)">
                     <img src="@/assets/images/highlight_off_green.svg" alt="刪除">
                   </a>
                 </div>
@@ -103,9 +103,11 @@ export default {
   },
   mounted() {
     this.getArticles();
-    console.log('mounted')
   }
 }
 </script>
 <style scoped>
+.disabled-link {
+  pointer-events: none;
+}
 </style>

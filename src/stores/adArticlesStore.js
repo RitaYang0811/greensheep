@@ -16,7 +16,8 @@ export default defineStore('adminArticles',{
     isNew: false,
     isLoading: false,
     loadingStatus: {
-      loadingItem: true
+      loadingItem: true,
+      loadingDelete: false
     }
 	}),
   actions: {
@@ -41,6 +42,9 @@ export default defineStore('adminArticles',{
     // 文章行為(新增、編輯、刪除)
     articleActivity(type, id) {
       switch(type) {
+        case 'delete':
+          this.deleteArticle(id)
+          break
         case 'new':
           this.article = {
             title: '',
@@ -62,7 +66,6 @@ export default defineStore('adminArticles',{
         default:
           console.log('default')
       }
-
     },
     // 取得單一文章
     getArticle(id) {
@@ -82,7 +85,7 @@ export default defineStore('adminArticles',{
     },
     // 新增/編輯文章
 		updateArticle(articleData, isPublic) {
-      // this.isLoading = true
+      this.isLoading = true
 
       let url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article`
       let http = 'post'
@@ -133,6 +136,23 @@ export default defineStore('adminArticles',{
         })
       }
 		},
+    deleteArticle(id) {
+      this.loadingStatus.loadingDelete = true
+      console.log('delete', `${id}`)
+      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article/${id}`
+
+      axios.delete(url)
+        .then(res => {
+          alert(res.data.message)
+          this.getArticles()
+        })
+        .catch(err => {
+          alert(err.response.data.message)
+        })
+        .finally(() => {
+          this.loadingStatus.loadingDelete = false
+        })
+    }
   },
   getters: {
     articleData: ({article}) => {
