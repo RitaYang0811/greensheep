@@ -13,11 +13,15 @@ export default defineStore('adminArticles',{
       author: '',
       content: ''
     },
-    isNew: false,
+    isNew: true,
     isLoading: false,
     loadingStatus: {
-      loadingItem: true,
+      loadingItem: false,
       loadingDelete: false
+    },
+    formStatus: {
+      hasFormImage: true,
+      hasFormContent: true
     }
 	}),
   actions: {
@@ -77,7 +81,7 @@ export default defineStore('adminArticles',{
           this.article = res.data.article
         })
         .catch(err => {
-          console.log(err)
+          alert(err.response.data.message)
         })
         .finally(() => {
           this.loadingStatusData.loadingItem = false
@@ -85,16 +89,26 @@ export default defineStore('adminArticles',{
     },
     // 新增/編輯文章
 		updateArticle(articleData, isPublic) {
+      // 驗證圖片 & ckeditor 內容
+      if(!articleData.image || !articleData.content) {
+        articleData.image ? this.formStatus.hasFormImage = true : this.formStatus.hasFormImage = false
+        articleData.content ? this.formStatus.hasFormContent = true : this.formStatus.hasFormContent = false
+        return
+      }
+
       this.isLoading = true
 
+      // 新增產品 API
       let url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article`
       let http = 'post'
 
-      if(!this.isNew) { // 編輯產品 api
+      // 編輯產品 api
+      if(!this.isNew) { 
         url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article/${articleData.id}`
         http = 'put'
       }
 
+      // 新增產品
       if(this.isNew) {
         const { title, image, tag, author, content } = articleData;
         const data = { 
@@ -118,7 +132,7 @@ export default defineStore('adminArticles',{
           .finally(() => {
             this.isLoading = false
           })
-      } else {
+      } else { // 編輯產品
         // 文章狀態 radio
         articleData.isPublic === "public" ? articleData.isPublic = true : articleData.isPublic = false
 
@@ -136,9 +150,10 @@ export default defineStore('adminArticles',{
         })
       }
 		},
+    // 刪除文章
     deleteArticle(id) {
       this.loadingStatus.loadingDelete = true
-      console.log('delete', `${id}`)
+
       const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article/${id}`
 
       axios.delete(url)
@@ -169,6 +184,9 @@ export default defineStore('adminArticles',{
     },
     loadingStatusData: ({loadingStatus}) => {
       return loadingStatus
+    },
+    formStatusData: ({formStatus}) => {
+      return formStatus
     }
   }
 })
