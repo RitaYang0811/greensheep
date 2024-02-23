@@ -7,7 +7,9 @@
     即日起，訂單達 2,000元 以上即可享免運費優惠！
   </div>
 
-  <nav class="navbar navbar-expand-lg navbar-light navbar-hover py-3 flex-column sticky-top">
+  <nav
+    class="navbar navbar-expand-lg navbar-light navbar-hover py-3 flex-column sticky-top position-relative"
+  >
     <div class="container">
       <!-- logo -->
       <h1 class="logo mb-0 me-lg-8">
