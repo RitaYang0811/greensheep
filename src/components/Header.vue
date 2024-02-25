@@ -1,17 +1,21 @@
 <template>
-  <div class="accordion fs-8 py-1 bg-primary text-white">
+  <div
+    to="/products"
+    class="accordion fs-8 py-1 bg-primary text-white cursor-pointer"
+    @click="toProductsView"
+  >
     即日起，訂單達 2,000元 以上即可享免運費優惠！
   </div>
 
-  <nav class="navbar navbar-expand-lg navbar-light navbar-hover py-3 flex-column">
+  <nav
+    class="navbar navbar-expand-lg navbar-light navbar-hover py-3 flex-column sticky-top position-relative"
+  >
     <div class="container">
       <!-- logo -->
-
       <h1 class="logo mb-0 me-lg-8">
         <router-link to="/" class="navbar-brand">綠羊珠寶 Green Sheep handmade jewelry</router-link>
       </h1>
-
-      <!-- menu -->
+      <!-- menu  -->
       <div
         class="collapse navbar-collapse flex-column offcanvas offcanvas-end py-16 px-12 py-lg-0 px-lg-0"
         id="offcanvasExample"
@@ -90,8 +94,8 @@
             <RouterLink
               to="/custom"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              >客製設計</RouterLink
-            >
+              >客製設計
+            </RouterLink>
           </li>
           <li class="nav-item" style="min-width: 81px">
             <RouterLink to="/story" class="nav-link nav-item-en py-2 py-lg-1 px-2"
@@ -122,8 +126,11 @@
             </RouterLink>
           </li>
           <li class="nav-item d-lg-none" style="min-width: 100px">
-            <a class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start" href="8-1.memLogin.html"
-              >登入/註冊</a
+            <RouterLink
+              to="/memberLogin"
+              class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start"
+              href="8-1.memLogin.html"
+              >登入/註冊</RouterLink
             >
           </li>
         </ul>
@@ -152,17 +159,7 @@
             </div>
           </form>
           <!-- 會員中心 -->
-          <!-- <a class="me-2 d-none d-lg-block flex-grow-1" href="8-1.memLogin.html"
-            ><img
-              class="header-white-icon p-xxl-2 p-xl-0"
-              src="../assets/images/ic-person-white.svg"
-              alt="會員中心" />
-            <img
-              class="header-green-icon p-xxl-2 p-xl-0"
-              src="../assets/images/ic-person-green.svg"
-              alt="會員中心"
-          /></a> -->
-          <router-link to="/member" class="me-2 d-none d-lg-block flex-grow-1">
+          <router-link to="/memberLogin" class="me-2 d-none d-lg-block flex-grow-1">
             <img
               class="header-white-icon p-xxl-2 p-xl-0"
               src="../assets/images/ic-person-white.svg"
@@ -175,7 +172,12 @@
             />
           </router-link>
           <!-- 購物車 -->
-          <a href="7-2.shopCart.html">
+          <a
+            href="#"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#cartOffcanvasRight"
+            aria-controls="offcanvasRight"
+          >
             <div class="position-relative">
               <img
                 class="header-white-icon p-xxl-2 p-xl-0"
@@ -190,6 +192,7 @@
 
               <span
                 class="position-absolute top-0 top-xxl-25 start-95 start-xxl-75 translate-middle p-1 bg-primary rounded-circle text-white"
+                v-if="carts.length"
               >
                 <span class="visually-hidden">New alerts</span>
               </span>
@@ -214,6 +217,8 @@
 </template>
 
 <script>
+import { mapState } from 'pinia'
+import cartStore from '@/stores/cartStore'
 export default {
   data() {
     return {}
@@ -221,9 +226,12 @@ export default {
   methods: {
     toProductsView() {
       this.$router.push({
-        path: 'products'
+        path: '/products'
       })
     }
+  },
+  computed: {
+    ...mapState(cartStore, ['carts'])
   }
 }
 </script>

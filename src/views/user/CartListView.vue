@@ -42,6 +42,7 @@
     </div>
 
     <h1 class="fs-4 fs-lg-2 py-20 text-center fw-bold">購物車</h1>
+    <Loading v-model:active="isLoading"></Loading>
     <!-- 商品列表 -->
     <table class="table align-middle border-primary">
       <thead>
@@ -53,70 +54,32 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row" class="py-4 border-0">
-            <div class="card border-0" style="max-width: 540px">
-              <div class="row g-0 align-items-center">
-                <div class="col-md-4">
-                  <img src="" class="img-fluid" alt="..." />
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="fs-6 card-title text-primary fw-medium">
-                      天使之愛十字架項鍊
-                    </h5>
-                    <small class="text-start fw-normal">女生款＋16吋銀鍊</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </th>
-          <td class="py-4 border-0">
-            <input type="number" class="p-2 w-25" value="1" />
-          </td>
-          <td class="py-4 border-0 text-primary">NT$1,980</td>
-          <td class="py-4 border-0">
-            <button class="btn btn-primary">刪除</button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row" colspan="2" class="py-4">
-            <div class="col-md-4"></div>
-            <div class="col-md-8">
-              <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1">加購</span>
-              <span class="ms-sm-3 ms-0 fw-normal text-primary">品牌絨布禮盒包裝(含品牌緞帶)</span>
-            </div>
-          </th>
-
-          <td class="py-4 text-primary">NT$200</td>
-          <td><button class="btn btn-primary">刪除</button></td>
-        </tr>
-        <tr>
+        <tr v-for="cart in carts" :key="cart.id">
           <th scope="row" class="py-4">
             <div class="card border-0" style="max-width: 540px">
               <div class="row g-0 align-items-center">
                 <div class="col-md-4">
                   <div class="ratio ratio-1x1">
-                    <img src="" class="img-fluid object-fit-cover" alt="..." />
+                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover" alt="..." />
                   </div>
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="fs-6 card-title text-primary fw-medium">
-                      璀璨生日寶石項鍊
+                      {{ cart.product.title }}
                     </h5>
-                    <small class="text-start fw-normal">紅寶石</small>
+                    <small class="text-start fw-normal">{{ cart.product.category }}</small>
                   </div>
                 </div>
               </div>
             </div>
           </th>
           <td class="py-4">
-            <input type="number" class="p-2 w-25" value="1" />
+            <input type="number" class="p-2 w-25" min="1" v-model="cart.qty" @blur="updateCart(cart)" />
           </td>
-          <td class="py-4 text-primary">NT$5,980</td>
+          <td class="py-4 text-primary">NT$ {{ cart.final_total }}</td>
           <td class="py-4">
-            <button class="btn btn-primary">刪除</button>
+            <button class="btn btn-primary" @click="deleteCart(cart.id)">刪除</button>
           </td>
         </tr>
       </tbody>
@@ -141,7 +104,7 @@
 
       <div class="col-md-10">
         <form class="text-start">
-          <input type="text" class="teat-start p-2 w-50" placeholder="請輸入優惠代碼" />
+          <input type="text" class="teat-start p-2 w-50" placeholder="請輸入優惠代碼" v-model="coupon" />
         </form>
       </div>
     </div>
@@ -153,18 +116,13 @@
         <h3 class="fs-5 fw-medium text-start mb-4">
           選擇收件地點及運送方式
         </h3>
-        <select class="form-select mb-5 fs-6 w-100">
-          <option selected>台灣</option>
-          <option value="1">台北</option>
-          <option value="2">台中</option>
-          <option value="3">高雄</option>
+        <select class="form-select mb-5 fs-6 w-100" v-model="deliverChoose.location">
+          <option value="" disabled>請選擇地點</option>
+          <option v-for="location in locations" :value="location" :key="location">{{ location }}</option>
         </select>
-        <select class="form-select fs-6 w-100">
-          <option selected>黑貓國內宅配</option>
-          <option value="1">7-11</option>
-          <option value="2">全家</option>
-          <option value="3">OK</option>
-          <option value="4">萊爾富</option>
+        <select class="form-select fs-6 w-100" v-model="deliverChoose.deliver">
+          <option value="" disabled>請選擇配送方式</option>
+          <option v-for="deliver in delivers" :value="deliver" :key="deliver">{{ deliver }}</option>
         </select>
         <p class="fs-8 text-start text-grey66 mt-5">
           出貨後約 3-7 天抵達指定門市。
@@ -172,11 +130,9 @@
         </p>
 
         <h3 class="fs-5 fw-medium text-start mt-10 mb-4">選擇付款方式</h3>
-        <select class="form-select fs-6 w-100">
-          <option selected>信用卡</option>
-          <option value="1">貨到付款</option>
-          <option value="2">轉帳</option>
-          <option value="3">超商繳費</option>
+        <select class="form-select fs-6 w-100" v-model="deliverChoose.payWay">
+          <option value="" disabled>付款方式</option>
+          <option v-for="way in payWays" :value="way" :key="way">{{ way }}</option>
         </select>
       </div>
 
@@ -186,7 +142,7 @@
         <div class="p-5 bg-greyD4 text-dark">
           <div class="d-flex justify-content-between mb-5">
             <p class="">小計：</p>
-            <p class="">NT$8,160</p>
+            <p class="">NT$ {{ total }}</p>
           </div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">運費：</p>
@@ -199,10 +155,8 @@
           <div class="border border-primary border-1 mb-5"></div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">合計：</p>
-            <p class="fw-bold">NT$8,160</p>
+            <p class="fw-bold">NT$ {{ total }}</p>
           </div>
-
-          <!-- <a href="7-3.shopInfo.html" class="btn btn-primary p-5 fs-5 w-100 text-white">前往結帳</a> -->
           <router-link to="/order" class="btn btn-primary p-5 fs-5 w-100 text-white">前往結帳</router-link>
         </div>
       </div>
@@ -210,61 +164,93 @@
   </div>
 
   <!--  訂 購 前 請 詳 閱  -->
-  <div class="container my-20 text-start">
-    <h3 class="fs-5 text-start">【 訂 購 前 請 詳 閱 】</h3>
-    <ul class="mt-5 text-grey66 fw-normal lh-lg">
-      <li class="fs-7">
-        每一款首飾皆為手工訂製，請先與客服確認欲購買商品之到貨日，可接受再下訂。出貨時間依據商品製作期有所不同，並依下單順序出貨。若有特定取貨時間要求或客製作期有所不同，並依下單順序出貨。若有特定取貨時間要求或客製需求，請事先詢問再進行訂購。
-      </li>
-      <li class="fs-7 mt-4">
-        台灣含離島寄送，訂單滿 NT$3,000
-        ，即享有免運優惠。全球寄送，訂單滿NT$12,000，即享有免運優惠。
-      </li>
-      <li class="fs-7 mt-4">
-        綠羊Green Sheep
-        所採用的天然寶石、珍珠皆為自然而成，色差、紋路及生長痕跡不同皆為正常現象，請依實品為主，若辦理退貨需自付運費。
-      </li>
-      <li class="fs-7 mt-4">
-        收到商品後若須更改尺寸或其他個人化客製(如調整鍊長、變更寶石、各種變更原設計之修改),將額外收取工本費。
-      </li>
-
-      <li class="fs-7 mt-4">
-        個人客製化商品(如刻字、設計改款、特殊尺寸、個人化調整等)、活動特殊品項(如連線商品、預購商品),恕不接受退換貨。
-      </li>
-
-      <li class="fs-7 mt-4">
-        網路購物享有之 7
-        日鑑賞期非試用期，辦理退貨時請保持商品全新完整，透過line客服與我們聯繫，再自行將發票、商品、贈品以原包裝寄回指定地點，待收回檢查確認無誤後將進行退款(退回款項恕不含運費並會扣除跨行匯款手續費)。非瑕疵因素換貨者，將由買方與賣方各負擔一次運費。
-      </li>
-
-      <li class="fs-7 mt-4">
-        為保護雙方權益，拆箱全程請務必錄影，並保留出貨訂單明細、發票。如遇到瑕疵商品，請將瑕疵處拍照並回傳至
-        購物平台訊息系統
-        的歷史訂單訊息，訂單內容有任何問題或遺漏將以綠影為憑據，請於收件 7
-        日內向客服聯繫申請，超過 7 日將不受理。
-      </li>
-
-      <li class="fs-7 mt-4">
-        網站管理員於平日 10:30-19:00
-        (不含例假日、國定假日)依序回覆訂單問題，若有不及敬請見諒，我們將逐一回覆。
-      </li>
-
-      <li class="fs-7 mt-4">國內發票提供三聯式，需統編可備註留言。</li>
-    </ul>
-  </div>
+  <OrderRules></OrderRules>
 </template>
 
 <script>
+//pinia
+import { mapActions, mapState } from 'pinia';
+import cartStore from '@/stores/cartStore';
+//loading overlay
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
+
+import OrderRules from "../../components/OrderRules.vue"
+
 export default {
+  components: {
+    OrderRules,
+    Loading,
+  },
 
   data() {
     return {
-      cart: [],
+      isLoading: false,
+      coupon: "",
+      select: [
+        { location: "台灣", deliver: ["黑貓宅急便", "7-11", "全家", "OK", "萊爾富"], payWay: ["信用卡", "貨到付款", "轉帳", "超商繳費"] },
+        { location: "外島", deliver: ["中華郵政", "黑貓宅急便", "宅配通"], payWay: ["信用卡", "轉帳"] },
+        { location: "海外", deliver: ["中華郵政", "DHL", "UPS"], payWay: ["信用卡"] }
+      ],
+      locations: [],
+      delivers: [],
+      payWays: [],
+      deliverChoose: {
+        location: "",
+        deliver: "",
+        payWay: "",
+      },//pinia
     }
   },
-  methods: {},
+  
+  methods: {
+    ...mapActions(cartStore, ['getCarts', 'updateCart', 'deleteCart'])
+  },
 
-  mounted() { },
+  watch: {
+    //監聽location選擇，產生deliver方式
+    'deliverChoose.location'(location) {
+      console.log(location)
+      this.delivers = []; //洗掉deliver內容，避免重新點擊location造成累加。 
+      this.payWays = [];  //洗掉payWay內容，避免重新點擊location造成累加。     
+      this.deliverChoose.deliver = "";  //洗掉紀錄，讓選擇location時deliver都能回到預設值。
+      this.deliverChoose.payWay = "";   //洗掉紀錄，讓選擇location時payWay都能回到預設值。
+      this.select.forEach((item) => {
+        if (item.location == location) {
+          item.deliver.forEach((item2) => {
+            this.delivers.push(item2)
+          })
+          //產生付款方式array
+          item.payWay.forEach((item3) => {
+            this.payWays.push(item3)
+          })
+        }
+      })
+    },
+    //監聽付款內容，查看deliverChoose內容(debug用，最後會刪除。)
+    'deliverChoose.payWay'() {
+      console.log(this.deliverChoose)
+    },
+    //監聽coupon(先預留function，之後確定了再補內容)
+    coupon(value) {
+      console.log(value)
+      if (value == "") {
+        return ""
+      }
+    },
+  },
+
+  computed: {
+    ...mapState(cartStore, ['carts', 'total']),
+  },
+
+  mounted() {
+    //產生地點select
+    this.select.forEach((item) => {
+      this.locations.push(item.location)
+    })
+    this.getCarts();
+  },
 
 }
 </script>

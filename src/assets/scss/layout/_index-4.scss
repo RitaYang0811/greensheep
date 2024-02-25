@@ -1,15 +1,16 @@
 .white-border {
-  position: relative; // 當作父層
+  /* 當作父層 */
+  position: relative;
 }
-// 偽元素創造白框
+/* 偽元素創造白框 */
 .white-border::after {
-  content: "";
-  // 定位
+  content: '';
+  /* 定位 */
   position: absolute;
-  //白框
+  /* 白框 */
   border: 1px solid $white;
   border-radius: 40px 0px;
-  // 內縮20px
+  /* 內縮20px */
   top: 1.25rem;
   right: 1.25rem;
   bottom: 1.25em;
@@ -17,8 +18,6 @@
 }
 .lt-card-img-box {
   width: auto;
-  // max-width: 400px;
-  // height: 640px;
   .lt-card-img {
     width: 100%;
     height: 100%;
@@ -27,7 +26,6 @@
     bottom: 36px;
   }
 }
-// bottom&right
 .article-br {
   img {
     width: auto;
@@ -82,7 +80,6 @@
   max-width: 306px;
   height: 240px;
   max-height: 240px;
-  transition: 0.3s;
   &:hover {
     width: 100%;
     max-width: 306px;
@@ -138,7 +135,9 @@
 // 結尾logo
 .custom-footer {
   a {
-    transition: background-color 0.5s, padding 0.5s;
+    transition:
+      background-color 0.5s,
+      padding 0.5s;
   }
   p {
     color: $primary;
@@ -146,14 +145,6 @@
   a:hover {
     opacity: 80%;
   }
-  //因為滑動增加背景會推擊footer 的高度，所以改成其他樣式
-  //   background-color: $primary;
-  //   border-radius: 0.25rem;
-  //   padding: 0.25rem;
-  //   p {
-  //     color: $white;
-  //   }
-  // }
   a:active {
     p {
       color: $secondary;
@@ -219,7 +210,7 @@
 
   .custom-title {
     p {
-      font-family: "Noto Serif TC";
+      font-family: 'Noto Serif TC';
       font-size: 18px;
       font-style: normal;
       font-weight: 700;
@@ -229,15 +220,11 @@
   }
 
   // 客戶評價
+
   .custom-card {
     margin: auto;
-    &:hover {
-      width: 306px;
-      height: 100%;
-    }
-
     h2 {
-      font-family: "Playfair Display SC";
+      font-family: 'Playfair Display SC';
       font-size: $h2-font-size;
       font-style: normal;
       font-weight: 400;
@@ -245,19 +232,12 @@
       letter-spacing: 0.32px;
     }
   }
-  .custom-lists {
-    img {
-      width: 100%;
-      height: 240px;
-    }
+  .custom-img-box {
+    display: none;
   }
-  // 客戶評價
-  .custom-card {
-    margin: auto;
-    &:hover {
-      width: 306px;
-      height: 100%;
-    }
+  .custom-content {
+    overflow: visible;
+    padding: 5px 16px 12px;
   }
   .custom-footer {
     img {

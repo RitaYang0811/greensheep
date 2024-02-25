@@ -4,8 +4,6 @@
   min-width: 100%;
   overflow: hidden;
   height: auto;
-  position: absolute;
-  z-index: -999;
 }
 
 //以下為仙貝新增
@@ -67,5 +65,10 @@
 }
 .vh-100 {
   height: 100vh;
+}
+.svg-hover-primary:hover {
+  svg {
+    fill: $primary;
+  }
 }
 // 以上為 Uli 新增

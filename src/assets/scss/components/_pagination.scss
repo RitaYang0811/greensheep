@@ -2,13 +2,11 @@
   color: $primary;
   display: flex;
   justify-content: center;
-
   gap: 16px;
   a {
     width: 24px;
     height: 24px;
     line-height: 24px;
-
     border-radius: 50%;
     background-color: transparent;
 
@@ -21,7 +19,8 @@
   }
 }
 .page-item {
-  & .active {
+  &.active {
+    border-radius: 50%;
     background-color: $white !important;
   }
 }
