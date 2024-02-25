@@ -24,6 +24,7 @@ export default defineStore('cartStore', {
             icon: "success",
             title: "加入購物車成功",
             showConfirmButton: false,
+            toast: true,
             timer: 1500
           });          
         })
@@ -60,6 +61,7 @@ export default defineStore('cartStore', {
             icon: "success",
             title: "修改數量成功",
             showConfirmButton: false,
+            toast: true,
             timer: 1500
           });
         })
