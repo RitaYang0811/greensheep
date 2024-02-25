@@ -22,6 +22,19 @@ const router = createRouter({
           name: 'UserProduct',
           component: () => import('../views/user/ProductsView.vue')
         },
+        // {
+        //   path: 'products/:category?/:page',
+        //   name: 'UserProductCategory',
+        //   component: () => import('../views/user/ProductsView.vue'),
+        //   props: (route) => {
+        //     console.log('route', route)
+        //   }
+        // },
+        {
+          path: 'products/:id',
+          name: 'UserProductDetail',
+          component: () => import('../views/user/ProductDetailView.vue')
+        },
         {
           path: 'custom',
           name: 'UserCustom',
@@ -90,6 +103,18 @@ const router = createRouter({
               component: () => import('../views/user/MemberFavoritesView.vue')
             }
           ]
+        },
+        // 會員登入
+        {
+          path: 'memberLogin',
+          name: 'MemberLogin',
+          component: () => import('../views/user/MemberLogin.vue')
+        },
+        //會員註冊
+        {
+          path: 'memberSignUp',
+          name: 'MemberSignUp',
+          component: () => import('../views/user/MemberSignUp.vue')
         }
       ]
     },
@@ -109,15 +134,37 @@ const router = createRouter({
           component: () => import('../views/admin/AdHomePageView.vue')
         },
         {
+          path: 'products',
+          name: 'AdminProducts',
+          component: () => import('../views/admin/AdProductView.vue')
+        },
+        {
           path: 'coupons',
           name: 'AdminCoupons',
           component: () => import('../views/admin/AdCouponsView.vue')
         },
         {
           path: 'articles',
-          name: 'AdminArticles',
-          component: () => import('../views/admin/AdArticlesView.vue')
-        }
+          name: 'AdminArticlesLayout',
+          component: () => import('../views/admin/AdArticlesLayoutView.vue'),
+          children: [
+            {
+              path: '',
+              name: 'AdminArticles',
+              component: () => import('../views/admin/AdArticlesView.vue')
+            },
+            {
+              path: ':id',
+              name: 'AdminEditArticle',
+              component: () => import('../views/admin/AdArticleView.vue')
+            },
+            {
+              path: 'articleCreate',
+              name: 'AdminCreateArticle',
+              component: () => import('../views/admin/AdArticleView.vue')
+            }
+          ]
+        },
       ]
     }
   ]

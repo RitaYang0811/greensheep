@@ -39,17 +39,17 @@
       </li>
     </ul>
     <a href="#" class="btn btn-primary mb-4" @click.prevent="openModal('new')">新增優惠券</a>
-    <div class="table-container overflow-auto">
-      <table class="table align-middle">
+    <div class="table-container table-responsive">
+      <table class="table align-middle text-nowrap">
         <thead class="table-head sticky-top">
           <tr>
-            <th style="width: 15%;">優惠碼</th>
-            <th style="width: 30%;">優惠型式</th>
-            <th style="width: 15%;">開始日期</th>
-            <th style="width: 15%;">結束日期</th>
-            <th style="width: 15%;">狀態</th>
-            <th style="width: 5%;"></th>
-            <th style="width: 5%;"></th>
+            <th>優惠碼</th>
+            <th>優惠型式</th>
+            <th>開始日期</th>
+            <th>結束日期</th>
+            <th>狀態</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -101,8 +101,6 @@
         </div>
       </div>
     </div>
-
-
   </div>
   <VueLoading :active="isLoading" />
   <AdCouponModal ref="adCouponModal" :coupon="coupon" :isNew="isNew" :loadingStatus="loadingStatus" @update-coupon="updateCoupon" />
@@ -145,7 +143,6 @@ export default {
           switch(tab) {
             case '所有優惠券':
               this.coupons = res.data.coupons
-              console.log(this.coupons)
               break
             case '有效':
               this.coupons = res.data.coupons.filter(coupon => {
@@ -197,8 +194,8 @@ export default {
         title: couponData.title,
         is_enabled: 1,
         percent: couponData.title === '金額折抵' ? 100 : couponData.percent,
-        start_date: couponData.start_date / 1000, // 時間戳改成秒單位
-        due_date: couponData.due_date / 1000,
+        start_date: couponData.dates[0] / 1000, // 時間戳改成秒單位
+        due_date: couponData.dates[1] / 1000,
         code: couponData.code
       }
 
@@ -234,6 +231,7 @@ export default {
           .then(res => {
             alert(res.data.message)
             this.$refs.adCouponModal.closeModal()
+            this.$refs.couponForm.resetForm()
             this.getCoupons(this.currentTab)
           })
           .catch(err => {
@@ -267,7 +265,7 @@ export default {
         case 'new':
           this.isNew = true
           this.coupon = {
-            title: '金額折抵' // 預設值給 :checked 判斷
+            title: '金額折抵', // 預設值給 :checked 判斷
           }
           break
         case 'edit':

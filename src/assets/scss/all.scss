@@ -4,6 +4,7 @@
 
 //載入icon
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css');
 
 //bootstrap5設定區
 @import 'bootstrap/scss/functions';
@@ -30,6 +31,8 @@
 @import './components/collapse';
 @import './components/pseudoElement.scss';
 @import './components/swiper';
+@import './components/datepicker';
+@import './components/ckeditor';
 
 //bootstrap5全部內容
 @import 'bootstrap';
@@ -56,4 +59,4 @@
 @import './pages/6.faq';
 @import './pages/8-1.memLogin';
 @import './pages/7-3.shopInfo';
-@import './pages/ad-coupons'
+@import './pages/ad-coupons';

@@ -76,6 +76,7 @@
 }
 
 //透明按鈕：從下方長出綠色按鈕
+
 .custom-btn-toGreen {
   background: none;
   color: $primary;
@@ -98,11 +99,13 @@
   transition: height 0.3s;
   z-index: -1;
 }
+
 .custom-btn-toGreen:hover::before {
   height: 100%;
 }
+
 .custom-btn-toGreen:hover {
-  background-image: '@/assets/images/ic-cart-white.svg';
+  color: $white;
 }
 //透明按鈕：從下方長出白色按鈕
 .custom-btn-white {

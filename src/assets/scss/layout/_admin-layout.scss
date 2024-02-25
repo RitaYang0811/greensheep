@@ -1,37 +1,45 @@
-
 .admin {
   &-header {
     background: #bdbcbb;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     width: 100%;
-    height: 78px;
+    height: 48px;
   }
   &-sidebar {
-    padding-top: 78px;
-    position: fixed;
-    width: 300px;
     height: 100vh;
     &-hover:hover {
       background: $light;
       color: $primary;
     }
-    & .active{
+    & .active {
       background: $light;
       color: $primary;
     }
   }
   &-main {
-    margin-top: 78px;
-    margin-left: 300px;
-    min-height: calc(100vh - 78px);
-    .nav-link{
+    min-height: 100vh;
+    .nav-link {
       background-color: transparent;
       color: $primary;
-      &.active{
+      &.active {
         background-color: $primary;
         color: #fff;
       }
     }
+    // position: fixed 會離開原本層級
+    @include media-breakpoint-up(lg) {
+      margin-left: calc(1 / 12 * 100vw);
+    }
   }
+  &-offcanvas {
+    .offcanvas-body .active {
+      background: $light;
+      color: $primary;
+    }
+  }
+}
+.offcanvas-body .active {
+  background: $light;
+  color: $primary;
 }
