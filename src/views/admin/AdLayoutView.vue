@@ -116,9 +116,7 @@
           >
         </li>
         <li>
-          <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6"
-            >優惠管理</RouterLink
-          >
+          <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6">優惠管理</RouterLink>
         </li>
         <li>
           <a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a>
