@@ -27,23 +27,23 @@
       </li>
     </ul>
     <div class="d-flex gap-4">
-      <RouterLink to="/admin/articles/articleCreate" class="btn btn-primary mb-4">建立文章</RouterLink>
+      <a href="#" class="btn btn-primary mb-4" @click.prevent="articleActivity('new')">建立文章</a>
       <a href="#" class="btn btn-primary mb-4">置頂文章管理</a>
     </div>
-    <ul class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 ps-0" style="row-gap: 24px;">
+    <ul class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 ps-0 list-unstyled" style="row-gap: 24px;">
       <li class="col" v-for="article in articlesData" :key="article.id">
         <div class="form-check position-relative ps-0">
           <input class="form-check-input position-absolute" type="checkbox" value="" id="flexCheckDefault" style="z-index: 1; top:12px; right: 12px;">
-          <label class="form-check-label" for="flexCheckDefault">
+          <label class="form-check-label w-100" for="flexCheckDefault">
             <div class="card border-0">
               <img :src="article.image" :alt="article.title">
               <div class="card-body">
                 <h5 class="card-title my-2 fs-7">{{ article.title }}</h5>
                 <div class="d-flex">
-                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1">
+                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1" :class="{ 'disabled-link': loadingStatusData.loadingDelete}" @click.prevent="articleActivity('edit', article.id)">
                     <img src="@/assets/images/edit_green.svg" alt="編輯">
                   </a>
-                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1">
+                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1" @click.prevent="articleActivity('delete', article.id)">
                     <img src="@/assets/images/highlight_off_green.svg" alt="刪除">
                   </a>
                 </div>
@@ -73,44 +73,15 @@
           </label>
         </div>
       </div> -->
-      <!-- <div class="col">
-        <div class="bg-primary" style="height: 200px;"></div>
-      </div>
-<<<<<<< HEAD
-      <h1 class="fs-3 mb-4">文章管理</h1>
-      <h1 class="fs-3 mb-4">文章管理</h1>
-      <h1 class="fs-3 mb-4">文章管理</h1>
-      <h1 class="fs-3 mb-4">文章管理</h1>
-      <h1 class="fs-3 mb-4">文章管理</h1>
-      <h1 class="fs-3 mb-4">文章管理</h1>
-      <h1 class="fs-3 mb-4">文章管理</h1>
-      <h1 class="fs-3 mb-4">文章管理</h1>
-      <h1 class="fs-3 mb-4">文章管理</h1>
-      <h1 class="fs-3 mb-4">文章管理</h1>
-    </div>
-  </div>
-=======
-      <div class="col">
-        <div class="bg-primary" style="height: 200px;"></div>
-      </div>
-      <div class="col">
-        <div class="bg-primary" style="height: 200px;"></div>
-      </div>
-      <div class="col">
-        <div class="bg-primary" style="height: 200px;"></div>
-      </div>
-      <div class="col">
-        <div class="bg-primary" style="height: 200px;"></div>
-      </div>
-      <div class="col">
-        <div class="bg-primary" style="height: 200px;"></div>
-      </div> -->
     </ul>
->>>>>>> 469e250b76837bb6f3f3d7c458323dfab7f9d2c6
-  <VueLoading :active="isLoading" />
+    <div v-if="loadingStatusData.loadingItem" class="d-flex justify-content-center align-items-center" style="min-height: 360px;">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 </template>
 <script>
-import adminArticlesStore from "@/stores/adminArticlesStore.js";
+import adArticlesStore from "@/stores/adArticlesStore.js";
 import { mapActions, mapState } from 'pinia';
 import PagiNation from '@/components/PagiNation.vue'
 
@@ -125,10 +96,10 @@ export default {
     PagiNation
   },
   methods: {
-    ...mapActions(adminArticlesStore, ['getArticles'])
+    ...mapActions(adArticlesStore, ['getArticles','articleActivity'])
   },
   computed: {
-    ...mapState(adminArticlesStore, ['articlesData'])
+    ...mapState(adArticlesStore, ['articlesData', 'loadingStatusData'])
   },
   mounted() {
     this.getArticles();
@@ -136,4 +107,7 @@ export default {
 }
 </script>
 <style scoped>
+.disabled-link {
+  pointer-events: none;
+}
 </style>

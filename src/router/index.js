@@ -154,11 +154,21 @@ const router = createRouter({
               component: () => import('../views/admin/AdArticlesView.vue')
             },
             {
+              path: ':id',
+              name: 'AdminEditArticle',
+              component: () => import('../views/admin/AdArticleView.vue')
+            },
+            {
               path: 'articleCreate',
-              name: 'AdminArticleCreate',
-              component: () => import('../views/admin/AdArticlesCreateView.vue')
+              name: 'AdminCreateArticle',
+              component: () => import('../views/admin/AdArticleView.vue')
             }
           ]
+        },
+        {
+          path: 'orders',
+          name: 'AdminOrders',
+          component: () => import('../views/admin/AdOrdersView.vue')
         },
       ]
     }
