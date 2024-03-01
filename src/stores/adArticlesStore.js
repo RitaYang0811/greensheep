@@ -4,7 +4,10 @@ import { dateToUnix } from '@/utils/dateToUnix.js'
 
 export default defineStore('adminArticles',{
   state: () => ({
-    articles:[],
+    currentTab: '公開文章',
+    articles: [],
+    publicArticles: [],
+    privateArticles: [],
     article: {
       title: '',
       image: '',
@@ -25,23 +28,53 @@ export default defineStore('adminArticles',{
     }
 	}),
   actions: {
-    // 取得所有文章
-    getArticles() {
+    // 取得全部文章資料
+    async getArticles() {
       this.articles = []
+      this.publicArticles = []
+      this.privateArticles = []
+
       this.loadingStatus.loadingItem = true
+
+      // 第一次 get 文章回傳的頁碼資料
+      let currentPageNum
+      let totalPagesNum
 
       const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/articles`
 
-      axios.get(url)
-        .then(res => {
-          this.articles = res.data.articles
-        })
-        .catch(err => {
-          alert(err.response.data.message)
-        })
-        .finally(() => {
-          this.loadingStatus.loadingItem = false
-        })
+      try {
+        // get 第一頁資料
+        const resFirstPage = await axios.get(url)
+        this.articles = resFirstPage.data.articles // 第一頁的 data
+        currentPageNum = resFirstPage.data.pagination.current_page + 1 // +1 給下段的 while 判斷需不需要繼續打 API
+        totalPagesNum = resFirstPage.data.pagination.total_pages
+
+        // 若有 2 頁以上，繼續 get 後續頁碼的資料
+        while(currentPageNum <= totalPagesNum) {
+          const resOtherPages = await axios.get(`${url}?page=${currentPageNum}`)
+          this.articles = [...this.articles, ...resOtherPages.data.articles]
+          currentPageNum++;
+        }
+      } catch (err) {
+        alert(err.response.data.message)
+      }
+
+      this.loadingStatus.loadingItem = false
+      this.filterArticles()
+    },
+    // 分為公開文章 / 草稿文章
+    filterArticles() {
+      // console.log('2',this.publicArticles, this.privateArticles)
+      this.articles.forEach(article => {
+        article.isPublic ? this.publicArticles.push(article) : this.privateArticles.push(article)
+      })
+    },
+    // 切換 tab
+    changeTab(tab) {
+      this.currentTab = tab
+      // // 回到第一頁並取得該 tab 的第一頁資料
+      // this.currentPage = 1
+      // this.changePage(this.currentPage)
     },
     // 文章行為(新增、編輯、刪除)
     articleActivity(type, id) {
@@ -88,7 +121,7 @@ export default defineStore('adminArticles',{
         })
     },
     // 新增/編輯文章
-		updateArticle(articleData, isPublic) {
+		updateArticle(articleData, isPublic, editIsPublic) {
       // 驗證圖片 & ckeditor 內容
       if(!articleData.image || !articleData.content) {
         articleData.image ? this.formStatus.hasFormImage = true : this.formStatus.hasFormImage = false
@@ -124,7 +157,6 @@ export default defineStore('adminArticles',{
           .then(res => {
             alert(res.data.message)
             this.$router.push('/admin/articles')
-            this.getArticles()
           })
           .catch(err => {
             alert(err.response.data.message)
@@ -134,13 +166,12 @@ export default defineStore('adminArticles',{
           })
       } else { // 編輯產品
         // 文章狀態 radio
-        articleData.isPublic === "public" ? articleData.isPublic = true : articleData.isPublic = false
+        editIsPublic === "public" ? articleData.isPublic = true : articleData.isPublic = false
 
         axios[http](url, { data: articleData })
         .then(res => {
           alert(res.data.message)
           this.$router.push('/admin/articles')
-          this.getArticles()
         })
         .catch(err => {
           alert(err.response.data.message)
@@ -187,6 +218,15 @@ export default defineStore('adminArticles',{
     },
     formStatusData: ({formStatus}) => {
       return formStatus
+    },
+    currentTabData: ({currentTab}) => {
+      return currentTab
+    },
+    publicArticlesData: ({publicArticles}) => {
+      return publicArticles
+    },
+    privateArticlesData: ({privateArticles}) => {
+      return privateArticles
     }
   }
 })
