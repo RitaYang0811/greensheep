@@ -26,6 +26,7 @@
     "swiper": "^10.3.1",
     "vee-validate": "^4.12.5",
     "vue": "^3.3.11",
+    "vue-awesome-paginate": "^1.1.46",
     "vue-axios": "^3.5.2",
     "vue-loading-overlay": "6.0",
     "vue-router": "^4.2.5"
