@@ -26,8 +26,12 @@ import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 
 //CKEditor5
-import CKEditor from '@ckeditor/ckeditor5-vue';
-import '@ckeditor/ckeditor5-build-classic/build/translations/zh'; // 語言
+import CKEditor from '@ckeditor/ckeditor5-vue'
+import '@ckeditor/ckeditor5-build-classic/build/translations/zh' // 語言
+
+//vue-awesome-paginate
+import VueAwesomePaginate from "vue-awesome-paginate"
+import "vue-awesome-paginate/dist/style.css"
 
 //bootstrap
 import 'bootstrap/dist/js/bootstrap.min.js'
@@ -58,6 +62,7 @@ pinia.use(({ store }) => {
 app.use(router)
 app.use(VueAxios, axios)
 app.use(CKEditor)
+app.use(VueAwesomePaginate)
 
 app.component('VueLoading', Loading)
 app.component('VueDatePicker', VueDatePicker)

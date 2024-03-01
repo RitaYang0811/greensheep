@@ -1,7 +1,7 @@
 <template>
-<div class="modal fade" ref="adCouponCompModal" role="dialog">
+<div class="modal fade ad-coupon" ref="adCouponCompModal" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
-    <VForm class="modal-content custom-form" @submit="updateCoupon" v-slot="{ errors }">
+    <VForm class="modal-content custom-form" ref="couponForm" @submit="updateCoupon" v-slot="{ errors }">
       <div class="modal-header py-4 px-6">
         <h2 class="modal-title fs-4">
           <template v-if="isNew">建立優惠券</template>
@@ -133,7 +133,6 @@
             </div>
             <span role="alert" class="invalid-feedback" :class="{ 'd-block': !dateSelected }">請選擇開始 / 結束日期</span>
           </div>
-          {{ couponData }}
         </div>
       </div>
       <div class="modal-footer py-4 px-6">
