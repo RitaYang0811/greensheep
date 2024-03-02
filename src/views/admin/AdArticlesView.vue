@@ -1,6 +1,7 @@
 <template>
   <div class="ad-article">
-    {{ selectedPinnedPost }}
+    {{ selectedPinnedArticle }}
+    {{ pinnedArticlesData }}
     <h1 class="fs-3 mb-4">文章管理</h1>
     <div class="input-group mb-4 bg-white d-flex align-items-center">
       <input type="search" class="form-control">
@@ -32,54 +33,38 @@
       <a href="#" class="btn btn-primary" @click.prevent="articleActivity('new')">建立文章</a>
       <template v-if="currentTabData === '公開文章'">
         <a
-          v-if="!isSelectPinnedPost"
+          v-if="!isSelectPinnedArticle"
           href="#"
           class="btn btn-primary"
-          @click.prevent="isSelectPinnedPost = true">
+          @click.prevent="isSelectPinnedArticle = true">
           置頂文章管理
         </a>
         <template v-else>
-          <a href="#" class="btn btn-primary" @click.prevent="updatePinnedPost">儲存置頂文章</a>
-          <a href="#" class="btn btn-sm btn-danger" @click.prevent="selectedPinnedPost = []; isSelectPinnedPost = false">取消</a>
-          <p>已選擇: {{ selectedPinnedPost.length }} 篇</p>
+          <a href="#" class="btn btn-primary" @click.prevent="updatePinnedArticle">儲存置頂文章</a>
+          <a
+            href="#"
+            class="btn btn-sm btn-danger"
+            @click.prevent="selectedPinnedArticle = [ ...pinnedArticlesData ]; isSelectPinnedArticle = false">
+            取消
+          </a>
+          <p>已選擇: {{ selectedPinnedArticle.length }} 篇</p>
           <a
             href="#"
             class="text-decoration-underline link-underline-grey9F link-offset-1"
-            @click.prevent="selectedPinnedPost = []">清空已選擇文章
+            @click.prevent="selectedPinnedArticle = []">清空已選擇文章
           </a>
           <p>*最多可選擇 3 篇文章</p>
         </template>
       </template>
     </div>
-    <ul class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 ps-0 list-unstyled" style="row-gap: 24px;">
-      <!-- <li class="col" v-for="article in articlesData" :key="article.id">
-        <div class="form-check position-relative ps-0">
-          <input class="form-check-input position-absolute" type="checkbox" value="" id="flexCheckDefault" style="z-index: 1; top:12px; right: 12px;">
-          <label class="form-check-label w-100" for="flexCheckDefault">
-            <div class="card border-0">
-              <img :src="article.image" :alt="article.title">
-              <div class="card-body">
-                <h5 class="card-title my-2 fs-7">{{ article.title }}</h5>
-                <div class="d-flex">
-                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1" :class="{ 'disabled-link': loadingStatusData.loadingDelete}" @click.prevent="articleActivity('edit', article.id)">
-                    <img src="@/assets/images/edit_green.svg" alt="編輯">
-                  </a>
-                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1" @click.prevent="articleActivity('delete', article.id)">
-                    <img src="@/assets/images/highlight_off_green.svg" alt="刪除">
-                  </a>
-                </div>
-              </div>
-            </div>
-          </label>
-        </div>
-      </li> -->
+    <ul v-if="!loadingStatusData.loadingItem" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 ps-0 list-unstyled" style="row-gap: 24px;">
       <li v-if="currentTabData === '公開文章'" class="col" v-for="article in publicArticlesData" :key="article.id">
         <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
-          <span class="check-box" v-if="isSelectPinnedPost">
+          <span class="check-box" v-if="isSelectPinnedArticle">
             <input
               class="form-check-input"
               type="checkbox"
-              v-model="selectedPinnedPost"
+              v-model="selectedPinnedArticle"
               :value="article.id"
               :id="article.id"
             />
@@ -100,13 +85,13 @@
             >
               <a
                 href="#"
-                :class="{ 'disabled-link': loadingStatusData.loadingDelete || isSelectPinnedPost }"
+                :class="{ 'disabled-link': loadingStatusData.loadingDelete || isSelectPinnedArticle }"
                 @click.prevent="articleActivity('edit', article.id)">
                 <i class="bi bi-pencil-fill text-dark fs-6"></i>
               </a>
               <a
                 href="#"
-                :class="{ 'disabled-link': isSelectPinnedPost }"
+                :class="{ 'disabled-link': isSelectPinnedArticle }"
                 @click.prevent="articleActivity('delete', article.id)">
                 <i class="bi bi-trash3-fill text-dark fs-6"></i>
               </a>
@@ -116,11 +101,11 @@
       </li>
       <li v-if="currentTabData === '草稿文章'" class="col" v-for="article in privateArticlesData" :key="article.id">
         <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
-          <span class="check-box" v-if="isSelectPinnedPost">
+          <span class="check-box" v-if="isSelectPinnedArticle">
             <input
               class="form-check-input"
               type="checkbox"
-              v-model="selectedPinnedPost"
+              v-model="selectedPinnedArticle"
               :value="article.id"
               :id="article.id"
             />
@@ -141,13 +126,13 @@
             >
               <a
                 href="#"
-                :class="{ 'disabled-link': loadingStatusData.loadingDelete || isSelectPinnedPost }"
+                :class="{ 'disabled-link': loadingStatusData.loadingDelete || isSelectPinnedArticle }"
                 @click.prevent="articleActivity('edit', article.id)">
                 <i class="bi bi-pencil-fill text-dark fs-6"></i>
               </a>
               <a
                 href="#"
-                :class="{ 'disabled-link': isSelectPinnedPost }"
+                :class="{ 'disabled-link': isSelectPinnedArticle }"
                 @click.prevent="articleActivity('delete', article.id)">
                 <i class="bi bi-trash3-fill text-dark fs-6"></i>
               </a>
@@ -169,24 +154,83 @@
 <script>
 import adArticlesStore from "@/stores/adArticlesStore.js";
 import { mapActions, mapState } from 'pinia';
-import PagiNation from '@/components/PagiNation.vue'
 
 export default {
   data() {
     return {
-      isSelectPinnedPost: false,
-      selectedPinnedPost: []
+      isSelectPinnedArticle: false,
+      selectedPinnedArticle: []
     }
   },
   methods: {
     ...mapActions(adArticlesStore, ['getArticles','articleActivity', 'changeTab']),
     // 儲存置頂文章
-    updatePinnedPost() {
-      this.isSelectPinnedPost = false
+    async updatePinnedArticle() {
+      try {
+        this.isSelectPinnedArticle = false
+        this.loadingStatusData.loadingItem = true
+
+        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article`
+
+        // ----- 取消置頂 -----
+        // 原置頂文章若不在當次選取的文章中則取消置頂狀態
+        const cancelPinnedArticles = this.pinnedArticlesData.filter(id => {
+          return !this.selectedPinnedArticle.includes(id)
+        })
+
+        // 取得欲取消的文章的 data (含content) 
+        const apiUrlsGetCancelArticle = cancelPinnedArticles.map(id => {
+          return this.$http.get(`${url}/${id}`)
+        })
+        const resGetCancelArticle = await Promise.all(apiUrlsGetCancelArticle)
+
+        // 取消置頂狀態，isPinned 設為 false
+        const apiUrlsPutCancelArticle = resGetCancelArticle.map(article => {
+          const id = article?.data?.article?.id
+          const data = { ...article?.data?.article, isPinned: false }
+          return this.$http.put(`${url}/${id}`, { data: data })
+        })
+        const resPutCancelArticle = await Promise.all(apiUrlsPutCancelArticle)
+
+        // ----- 新增置頂 -----
+        // 當次選取的文章中若不在原置頂文章中則需要去取得資料
+        const addPinnedArticle = this.selectedPinnedArticle.filter(id => {
+          return !this.pinnedArticlesData.includes(id)
+        })
+
+        // 取得欲置頂文章的 content 資料給 put 使用 (因為 get/articles 不包含 content 欄位)
+        const apiUrlsGetArticle = addPinnedArticle.map(id => {
+          return this.$http.get(`${url}/${id}`)
+        })
+        const resGetArticle = await Promise.all(apiUrlsGetArticle)
+
+        // 增加置頂狀態，isPinned 設為 true
+        const apiUrlsPutArticle = resGetArticle.map(article => {
+          const id = article?.data?.article?.id
+          const data = { ...article?.data?.article, isPinned: true }
+          return this.$http.put(`${url}/${id}`, { data: data })
+        })
+        const resPutArticle = await Promise.all(apiUrlsPutArticle)
+
+        alert('置頂文章已更新')
+        this.getArticles();
+      } catch (err) {
+        console.log(err)
+        this.loadingStatusData.loadingItem = false
+      }
+    }
+  },
+  watch: {
+    pinnedArticlesData() {
+      this.selectedPinnedArticle = [ ...this.pinnedArticlesData ]
     }
   },
   computed: {
-    ...mapState(adArticlesStore, ['articlesData', 'loadingStatusData', 'currentTabData', 'publicArticlesData', 'privateArticlesData'])
+    ...mapState(adArticlesStore, [
+      'articlesData', 'loadingStatusData',
+      'currentTabData', 'publicArticlesData',
+      'privateArticlesData', 'pinnedArticlesData'
+    ])
   },
   mounted() {
     this.getArticles();

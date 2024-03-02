@@ -8,6 +8,7 @@ export default defineStore('adminArticles',{
     articles: [],
     publicArticles: [],
     privateArticles: [],
+    pinnedArticles: [],
     article: {
       title: '',
       image: '',
@@ -64,10 +65,15 @@ export default defineStore('adminArticles',{
     },
     // 分為公開文章 / 草稿文章
     filterArticles() {
-      // console.log('2',this.publicArticles, this.privateArticles)
+      // AdArticlesView.vue 中的　watch 監聽無法監聽到陣列 push 的變化，所以宣告新陣列並賦值到 this.pinnedArticles 觸發監聽
+      const filterPinnedArticles = [] 
+
       this.articles.forEach(article => {
         article.isPublic ? this.publicArticles.push(article) : this.privateArticles.push(article)
+        article.isPinned ? filterPinnedArticles.push(article.id) : ''
       })
+
+      this.pinnedArticles = filterPinnedArticles
     },
     // 切換 tab
     changeTab(tab) {
@@ -171,6 +177,7 @@ export default defineStore('adminArticles',{
         axios[http](url, { data: articleData })
         .then(res => {
           alert(res.data.message)
+          // push 會觸發該 view 頁面的 mounted，mounted 會執行 getArticles，所以不需再此行後在重新執行 getArticles
           this.$router.push('/admin/articles')
         })
         .catch(err => {
@@ -227,6 +234,9 @@ export default defineStore('adminArticles',{
     },
     privateArticlesData: ({privateArticles}) => {
       return privateArticles
+    },
+    pinnedArticlesData: ({pinnedArticles}) => {
+      return pinnedArticles
     }
   }
 })
