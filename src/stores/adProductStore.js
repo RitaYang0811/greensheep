@@ -4,11 +4,14 @@ import axios from 'axios'
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default defineStore('adProductStore', {
   state: () => ({
-    allProducts: []
+    allProducts: [],
+    isShowList: false,
+    loadingStatus: false
   }),
   getters: {},
   actions: {
     getProducts() {
+      this.loadingStatus = true
       axios
         .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/products`)
         .then((res) => {
@@ -17,6 +20,9 @@ export default defineStore('adProductStore', {
         })
         .catch((err) => {
           console.log(err)
+        })
+        .finally(() => {
+          this.loadingStatus = false
         })
     }
   }

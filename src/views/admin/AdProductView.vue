@@ -1,5 +1,5 @@
 <template>
-  <div class="container text-start px-10 pt-10">
+  <div class="container text-start px-3 px-lg-10 mt-20 mt-lg-10">
     <h1 class="display-3 fw-bold mb-4">所有商品</h1>
 
     <!-- search bar -->
@@ -8,61 +8,82 @@
     </div>
     <!-- tab bar -->
 
-    <ul class="tab-bar nav border-bottom border-primary mb-4">
+    <ul
+      class="tab-bar nav border-bottom border-primary mb-4 justify-content-center justify-content-lg-start"
+    >
       <li class="nav-item">
-        <a class="nav-link px-6 py-4" :class="{ active: currentTab === '所有優惠券' }" href="#">
-          所有商品
-        </a>
+        <a class="nav-link px-3 px-md-6 py-2 py-lg-4" href="#"> 所有商品 </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link px-6 py-4" :class="{ active: currentTab === '有效' }" href="#">
-          已售完
-        </a>
+        <a class="nav-link px-3 px-md-6 py-2 py-lg-4" href="#"> 已售完 </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link px-6 py-4" :class="{ active: currentTab === '尚未生效' }" href="#">
-          未啟用
-        </a>
+        <a class="nav-link px-3 px-md-6 py-2 py-lg-4" href="#"> 未啟用 </a>
       </li>
     </ul>
-    <!-- button -->
-    <div class="mb-5">
-      <a
-        href="#"
-        class="btn btn-deco btn-md border border-1 border-primary text-primary me-4 py-3 px-6 rounded-3"
-        @click.prevent="openModal('new')"
-        >建 立 商 品</a
-      >
-      <a
-        href="#"
-        class="btn border border-1 border-primary btn-md text-primary py-3 px-5 rounded-3"
-        @click.prevent="openModal('highlight')"
-        >主打商品管理</a
-      >
 
-      <a
-        href="#"
-        class="btn border border-1 border-primary btn-md text-primary p-3 rounded-3 float-end align-middle"
-        @click.prevent="openModal('new')"
-        >排序</a
-      >
-      <a
-        href="#"
-        class="btn border border-1 border-primary btn-md text-primary me-4 p-2 rounded-3 float-end"
-        @click.prevent="openModal('new')"
-        ><i class="bi bi-ui-checks fs-5"></i
-      ></a>
-      <a
-        href="#"
-        class="btn border border-1 border-primary btn-md text-primary me-4 p-2 rounded-3 float-end"
-        @click.prevent="openModal('new')"
-        ><i class="bi bi-ui-checks-grid fs-5"></i
-      ></a>
+    <!-- button -->
+    <div class="d-flex flex-column flex-md-row justify-content-md-between">
+      <div class="mb-3 mb-lg-5">
+        <a
+          href="#"
+          class="btn btn-deco btn-md border border-1 border-primary text-primary me-4 py-3 px-6 rounded-3"
+          @click.prevent="openModal('new')"
+          >建 立 商 品</a
+        >
+        <a
+          href="#"
+          class="btn border border-1 border-primary btn-md text-primary py-3 px-5 rounded-3"
+          @click.prevent="openModal('highlight')"
+          >主打商品管理</a
+        >
+      </div>
+      <div class="mb-3 position-relative">
+        <a
+          href="#"
+          class="btn border border-1 border-primary btn-md text-primary p-3 rounded-3 float-end align-middle"
+          @click.prevent="isShow = !isShow"
+          >排序</a
+        >
+        <!-- 排序選單 -->
+        <ul
+          v-if="isShow === true"
+          class="sort-list border border-primary bg-white rounded-2 text-primary list-unstyled position-absolute top-100 end-0 z-3"
+          style="width: 150px"
+        >
+          <li class="px-4 py-2 border-bottom border-primary" @click.prevent="sort('new')">
+            最近更新
+          </li>
+          <li class="px-4 py-2 border-bottom border-primary" @click.prevent="sort('priceL2H')">
+            價格 由低至高
+          </li>
+          <li class="px-4 py-2 border-bottom border-primary" @click.prevent="sort('priceH2L')">
+            價格 由高至低
+          </li>
+          <li class="px-4 py-2 border-bottom border-primary" @click.prevent="sort('timeN2O')">
+            時間 由新到舊
+          </li>
+          <li class="px-4 py-2" @click.prevent="sort('timeO2N')">時間 由舊到新</li>
+        </ul>
+        <a
+          href="#"
+          class="btn border border-1 border-primary btn-md text-primary me-2 me-md-4 p-2 rounded-3 float-end"
+          @click.prevent="toggleDisplay('isList')"
+          ><i class="bi bi-ui-checks fs-5"></i
+        ></a>
+        <a
+          href="#"
+          class="btn border border-1 border-primary btn-md text-primary me-2 me-md-4 p-2 rounded-3 float-end"
+          @click.prevent="toggleDisplay('isBlock')"
+          ><i class="bi bi-ui-checks-grid fs-5"></i
+        ></a>
+      </div>
     </div>
+
     <!-- 排序方式 -->
-    <div class="text-primary mb-2 text-end">排序：最近更新</div>
+    <div class="text-primary mb-2 text-start">排序：{{ showTitle }}</div>
     <!-- 商品列表 - 卡片 -->
-    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+    <div v-if="isBlock === true" class="row row-cols-2 row-cols-lg-5 g-2 g-md-3">
       <div class="col" v-for="item in allProducts" :key="item.id">
         <div class="card h-100 border border-1 border-primary position-relative">
           <span class="check-box">
@@ -71,32 +92,26 @@
 
           <img
             :src="item.imageUrl"
-            class="card-img-top h-100 w-100 object-fit-cover"
+            class="block-img card-img-top h-100 w-100 object-fit-cover"
             :alt="item.title"
-            style="height: 250px"
           />
           <div class="card-body p-0 px-2 pt-2">
-            <h5 class="card-title display-6 text-dark mb-2" style="height: 40px">
-              <span class="float-end bg-primary text-white py-1 px-2 fs-8">主打</span
+            <h5 class="card-title block-title text-dark mb-1" style="height: 45px">
+              <span class="float-end block-highlight bg-primary text-white py-1 px-2 rounded-pill"
+                >主打</span
               >{{ item.title }}
             </h5>
-            <p class="card-text fs-7 text-dark mb-2">5 件商品</p>
+            <p class="card-text fs-8 text-dark mb-1">{{ item.stockNum }} {{ item.unit }} 商品</p>
 
-            <p v-if="item.origin_price === item.price" class="card-text fs-7 text-dark mb-2">
-              NT$ {{ item.origin_price }}
-            </p>
-            <p v-else class="card-text my-2">
-              <span class="card-text fs-7 text-grey66 mb-2 text-decoration-line-through">
-                NT$ {{ item.origin_price }}</span
-              ><span class="card-text fs-7 text-dark mb-2"> NT$ {{ item.price }}</span>
-            </p>
+            <p class="card-text fs-7 text-dark mb-2">NT$ {{ item.origin_price }}</p>
+
             <div
               class="card-foot d-flex justify-content-evenly border-top border-1 border-primary py-2"
             >
-              <a class="cursor-pointer" @click="openModal('edit')"
+              <a class="cursor-pointer" @click="openModal('edit', item)"
                 ><i class="bi bi-pencil-fill text-dark fs-6"></i
               ></a>
-              <a class="cursor-pointer" @click="openModal('delete')"
+              <a class="cursor-pointer" @click="openModal('delete', item)"
                 ><i class="bi bi-trash3-fill text-dark fs-6"></i
               ></a>
             </div>
@@ -105,55 +120,74 @@
       </div>
     </div>
     <!-- 商品列表 - 列表 -->
-    <table class="table table-hover align-middle">
-      <thead>
-        <tr>
-          <th style="width: 10%"></th>
-          <th style="width: 35%">商品名</th>
-          <th style="width: 10%">庫存</th>
-          <th style="width: 10%">價格</th>
-          <th style="width: 10%"></th>
-        </tr>
-      </thead>
+    <table v-if="isList === true" class="table">
       <tbody>
-        <tr>
-          <th scope="row">
-            <img
-              src="@/assets/images/product-12.jpg"
-              class="img-fluid rounded object-fit-cover"
-              alt="..."
-              style="width: 98px; height: 98px"
-            />
-          </th>
-          <td>
-            <h5 class="card-title display-6 text-dark">
-              <span class="bg-primary text-white py-1 px-2 fs-8 me-4">主打商品</span>經典鑽戒
-            </h5>
-          </td>
-          <td><p class="card-text fs-7 text-dark">5 件商品</p></td>
-          <td><p class="card-text fs-7 text-dark">NT $2580</p></td>
-          <td>
-            <a class="cursor-pointer mx-6"><i class="bi bi-pencil-fill fs-6"></i></a>
-            <a class="cursor-pointer mx-6"><i class="bi bi-trash3-fill fs-6"></i></a>
-          </td>
-        </tr>
+        <template v-for="item in allProducts" :key="item.id">
+          <tr class="product-item row mb-3 bg-white rounded-3 align-content-center">
+            <th class="col-4 col-md-2 my-auto px-4 py-4 border-bottom-0">
+              <img
+                :src="item.imageUrl"
+                class="img-fluid rounded object-fit-cover"
+                :alt="item.title"
+                style="width: 98px; height: 98px"
+              />
+            </th>
+            <div class="col-8 col-md-10 row flex-wrap justify-content-between">
+              <td class="col-12 col-md-6 my-auto">
+                <span class="bg-primary text-white py-1 px-2 rounded-pill fs-9 float-end"
+                  >主打</span
+                >
+                <h5 class="card-title display-6 text-dark">
+                  {{ item.title }}
+                </h5>
+              </td>
+              <td class="col-12 col-md-auto my-auto">
+                <p class="card-text fs-7 text-dark">5 件</p>
+              </td>
+              <td class="col-12 col-md-auto my-auto">
+                <p class="card-text fs-7 text-dark">NT ${{ item.origin_price }}</p>
+              </td>
+              <td class="col-12 col-md-auto my-auto">
+                <a class="d-inline-block cursor-pointer mx-2 py-2"
+                  ><i class="bi bi-pencil-fill fs-7"></i
+                ></a>
+                <a class="d-inline-block cursor-pointer mx-2 py-2"
+                  ><i class="bi bi-trash3-fill fs-7"></i
+                ></a>
+              </td>
+            </div>
+          </tr>
+        </template>
       </tbody>
     </table>
     <!-- add new modal -->
-    <addProductModal ref="addModal" :temp-product="tempProduct" :is-New="isNew"></addProductModal>
+    <addProductModal
+      ref="addModal"
+      :temp-product="tempProduct"
+      :is-New="isNew"
+      @confirm-update="confirmUpdate"
+    ></addProductModal>
+
+    <VueLoading v-model:active="isLoading" />
   </div>
 </template>
 
 <script>
 import adProductStore from '@/stores/adProductStore.js'
 import addProductModal from '@/components/addProductModal.vue'
-
+import axios from 'axios'
 import { mapState, mapActions } from 'pinia'
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default {
   data() {
     return {
       isNew: true,
-      tempProduct: { imagesUrl: [] }
+      isShow: false,
+      showTitle: '最近更新',
+      isBlock: true,
+      isList: false,
+      isLoading: false,
+      tempProduct: { imagesUrl: [], gifts: [] }
     }
   },
   components: {
@@ -163,15 +197,16 @@ export default {
     ...mapState(adProductStore, ['allProducts'])
   },
   methods: {
-    ...mapActions(adProductStore, ['getProducts']),
-    openModal(status) {
+    ...mapActions(adProductStore, ['getProducts', 'sort']),
+    openModal(status, item) {
       if (status === 'new') {
         this.$refs.addModal.open()
       } else if (status === 'edit') {
         this.$refs.addModal.open()
         // 將當前點擊的商品資料傳入 tempProduct
-        this.allProducts = this.tempProduct
+        this.tempProduct = item
         this.isNew = false
+        console.log('點擊商品tempProduct內容', this.tempProduct)
       } else if (status === 'delete') {
       }
     },
@@ -179,7 +214,96 @@ export default {
       if (status === 'new') {
         this.addModal.hide()
       }
+    },
+    //切換卡片、條列顯示
+    toggleDisplay(status) {
+      if (status === 'isBlock') {
+        this.isBlock = true
+        this.isList = false
+      } else if (status === 'isList') {
+        this.isBlock = false
+        this.isList = true
+      }
+    },
+    //排列順序切換(時間及最新仍未完成)
+    sort(status) {
+      this.isShow = false
+      if (status === 'new') {
+        this.showTitle = '最近更新'
+        return this.allProducts
+      } else if (status === 'priceH2L') {
+        this.showTitle = '價格 - 由高到低'
+        return this.allProducts.sort((a, b) => b.price - a.price)
+      } else if (status === 'priceL2H') {
+        this.showTitle = '價格 - 由低到高'
+        return this.allProducts.sort((a, b) => a.price - b.price)
+      } else if (status === 'timeN2O') {
+        this.showTitle = '時間 - 由新到舊'
+      } else if (status === 'timeO2N') {
+        this.showTitle = '時間 - 由舊到新'
+      }
+    },
+    confirmUpdate(isNew) {
+      console.log('confirmUpdate', isNew, this.tempProduct)
+      const apiUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/product`
+      const apiMethod = 'post'
+
+      if (isNew === true) {
+        const createTime = new Date().getTime()
+        this.tempProduct.createTime = createTime
+        console.log('新增', this.apiUrl, this.apiMethod)
+        this.tempProduct = { imagesUrl: [], gifts: [] }
+      } else if (isNew === false) {
+        this.apiUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/product/${this.tempProduct.id}`
+        this.apiMethod = 'put'
+        console.log('編輯', this.apiUrl, this.apiMethod)
+      }
+
+      axios[apiMethod](apiUrl, {
+        data: this.tempProduct
+      })
+        .then((res) => {
+          console.log(res.data)
+          console.log(this.tempProduct)
+          this.getProducts()
+          this.$refs.addModal.close()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      // let apiUrl = `https://vue3-course-api.hexschool.io/v2/api/${VITE_APP_API_NAME}/admin/product`
+      // let apiMethod = 'post'
+      // if (isNew === true) {
+      //   const ID = new Date().getTime()
+      //   this.tempProduct.id = ID
+      // } else if (isNew === false) {
+      //   apiUrl = `https://vue3-course-api.hexschool.io/v2/api/${VITE_APP_API_NAME}/admin/product/${this.tempProduct.id}`
+      //   apiMethod = 'put'
+      // }
+      // axios[apiMethod](apiUrl, { data: this.tempProduct })
+      //   .then((res) => {
+      //     console.log(res.data)
+      //     this.getProducts()
+      //     this.$refs.addModal.close()
+      //   })
+      //   .catch((err) => {
+      //     console.log(err.data)
+      //   })
+      //   .finally(() => {
+      //     this.tempProduct = {
+      //       imagesUrl: []
+      //     }
+      //   })
     }
+    // getProduct(item) {
+    //   this.tempProduct = { ...item }
+    // },
+    // updateProduct(item) {
+    //   this.tempProduct = { ...item }
+    // },
+    // deleteProduct(item) {
+    //   this.tempProduct = { ...item }
+    // }
   },
   mounted() {
     this.getProducts()
@@ -187,4 +311,36 @@ export default {
 }
 </script>
 
-<style scope lang="scss"></style>
+<style scope lang="scss">
+@import '@/assets/scss/utils/mixin.scss';
+.block {
+  &-img {
+    height: 250px;
+    @include pad {
+      height: 200px;
+    }
+  }
+  &-title {
+    font-size: 20px;
+    @include mobile {
+      font-size: 16px;
+    }
+  }
+  &-highlight {
+    font-size: 14px;
+  }
+}
+.sort-list {
+  overflow: hidden;
+  li:hover {
+    background-color: #e6e6e1;
+    cursor: pointer;
+  }
+}
+.product-item {
+  cursor: pointer;
+  &:hover {
+    background: red;
+  }
+}
+</style>
