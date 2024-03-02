@@ -171,8 +171,13 @@ export default defineStore('adminArticles',{
             this.isLoading = false
           })
       } else { // 編輯產品
-        // 文章狀態 radio
-        editIsPublic === "public" ? articleData.isPublic = true : articleData.isPublic = false
+        // 文章狀態為 公開 或 草稿(取消置頂)
+        if (editIsPublic === "public") {
+          articleData.isPublic = true
+        } else if (editIsPublic === "private") {
+          articleData.isPinned = false
+          articleData.isPublic = false
+        }
 
         axios[http](url, { data: articleData })
         .then(res => {

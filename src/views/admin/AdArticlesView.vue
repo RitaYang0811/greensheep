@@ -1,7 +1,5 @@
 <template>
   <div class="ad-article">
-    {{ selectedPinnedArticle }}
-    {{ pinnedArticlesData }}
     <h1 class="fs-3 mb-4">文章管理</h1>
     <div class="input-group mb-4 bg-white d-flex align-items-center">
       <input type="search" class="form-control">
@@ -30,13 +28,22 @@
       </li>
     </ul>
     <div class="d-flex gap-4 align-items-center mb-4">
-      <a href="#" class="btn btn-primary" @click.prevent="articleActivity('new')">建立文章</a>
+      <a
+        href="#"
+        class="btn btn-primary"
+        :class="{ disabled: loadingStatusData.loadingItem }"
+        @click.prevent="articleActivity('new')"
+      >
+        建立文章
+      </a>
       <template v-if="currentTabData === '公開文章'">
         <a
           v-if="!isSelectPinnedArticle"
           href="#"
           class="btn btn-primary"
-          @click.prevent="isSelectPinnedArticle = true">
+          :class="{ disabled: loadingStatusData.loadingItem }"
+          @click.prevent="isSelectPinnedArticle = true"
+        >
           置頂文章管理
         </a>
         <template v-else>
@@ -51,9 +58,10 @@
           <a
             href="#"
             class="text-decoration-underline link-underline-grey9F link-offset-1"
-            @click.prevent="selectedPinnedArticle = []">清空已選擇文章
+            @click.prevent="selectedPinnedArticle = []">
+            清除選擇
           </a>
-          <p>*最多可選擇 3 篇文章</p>
+          <p class="text-danger fs-8">*最多可選擇 3 篇文章</p>
         </template>
       </template>
     </div>
@@ -67,6 +75,7 @@
               v-model="selectedPinnedArticle"
               :value="article.id"
               :id="article.id"
+              :disabled="selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)"
             />
           </span>
           <img
@@ -149,6 +158,7 @@
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
+    <VueLoading :active="isLoading" />
   </div>
 </template>
 <script>
@@ -159,7 +169,8 @@ export default {
   data() {
     return {
       isSelectPinnedArticle: false,
-      selectedPinnedArticle: []
+      selectedPinnedArticle: [],
+      isLoading: false
     }
   },
   methods: {
@@ -168,7 +179,8 @@ export default {
     async updatePinnedArticle() {
       try {
         this.isSelectPinnedArticle = false
-        this.loadingStatusData.loadingItem = true
+        // this.loadingStatusData.loadingItem = true
+        this.isLoading = true
 
         const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article`
 
@@ -213,10 +225,11 @@ export default {
         const resPutArticle = await Promise.all(apiUrlsPutArticle)
 
         alert('置頂文章已更新')
+        this.isLoading = false
         this.getArticles();
       } catch (err) {
-        console.log(err)
-        this.loadingStatusData.loadingItem = false
+        alert(err.response.data.message)
+        this.isLoading = false
       }
     }
   },
