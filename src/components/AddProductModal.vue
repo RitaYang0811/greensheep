@@ -55,25 +55,36 @@
                     </div>
                   </div>
                 </div>
-                <h6 class="mb-4">商品相簿</h6>
+                <h6 class="mb-1">商品相簿</h6>
+                <div class="mb-1">可拖曳改變照片順序</div>
+                <input
+                  class="form-control mb-2"
+                  type="file"
+                  id="formFile"
+                  @change="uploadImage('album', $event)"
+                />
+                <!--使用draggable组件-->
 
-                <div class="row row-cols-2 row-cols-md-4 row-cols-lg-8 g-2">
-                  <input
-                    class="form-control mb-2"
-                    type="file"
-                    id="formFile"
-                    @change="uploadImage('album', $event)"
-                  />
-                  <div
-                    class="col"
-                    v-for="(image, index) in tempProduct.imagesUrl"
-                    :key="index + 123"
-                  >
-                    <img :src="image" alt="" class="add-images object-fit-cover" />
-                  </div>
-                </div>
-                <!-- <button type="button" class="btn btn-primary">新增圖片</button>
-                <button type="button" class="btn btn-primary">刪除圖片</button> -->
+                <draggable
+                  v-model="tempProduct.imagesUrl"
+                  item-key="id"
+                  class="row row-cols-2 row-cols-md-4 row-cols-lg-8 g-2 mb-4"
+                  ghost-class="ghost"
+                  @start="drag = true"
+                  @end="drag = false"
+                >
+                  <template v-slot:item="{ element, index }">
+                    <div class="col position-relative">
+                      <img :src="element" alt="" class="add-images object-fit-cover" />
+                      <button
+                        @click="deleteImage(index)"
+                        class="btn rounded-circle btn-sm btn-light position-absolute top-0 end-0 z-3"
+                      >
+                        X
+                      </button>
+                    </div>
+                  </template>
+                </draggable>
               </div>
             </div>
             <hr />
@@ -109,7 +120,7 @@
                 </div>
                 <div class="mb-9">
                   <label for="form-label" class="h6 mb-2">商品購買方式</label>
-                  {{ tempProduct.purchaseWay }}
+
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -217,7 +228,7 @@
 
                 <div class="mb-9">
                   <label for="form-label" class="h6 mb-2">贈品</label>
-                  {{ tempProduct.gifts }}
+
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -273,6 +284,22 @@
                     </label>
                   </div>
                 </div>
+                <div class="mb-9">
+                  <label for="form-label" class="h6 mb-2">是否啟用</label>
+                  {{ tempProduct.purchaseWay }}
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="purchaseWayRadio"
+                      id="inStockProduct"
+                      v-model="tempProduct.is_enabled"
+                    />
+                    <label class="form-check-label text-grey66" for="inStockProduct">
+                      {{ tempProduct.is_enabled ? '已啟用' : '未啟用' }}
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
             <hr />
@@ -323,6 +350,12 @@ export default {
   data() {
     return {
       drag: false,
+      myArray: [
+        { people: 'cn', id: 1, name: 'www.itxst.com' },
+        { people: 'cn', id: 2, name: 'www.baidu.com' },
+        { people: 'cn', id: 3, name: 'www.taobao.com' },
+        { people: 'us', id: 4, name: 'www.google.com' }
+      ],
       addModal: null,
       materials: [
         '925銀 925-Silver',
@@ -380,6 +413,9 @@ export default {
     close() {
       this.addModal.hide()
     },
+    deleteImage(index) {
+      this.tempProduct.imagesUrl.splice(index, 1)
+    },
     uploadImage(status, e) {
       const file = e.target.files[0]
       const formData = new FormData()
@@ -413,7 +449,7 @@ export default {
   mounted() {
     this.addModal = new Modal(this.$refs.addModal, {
       keyboard: false,
-      backdrop: false
+      backdrop: 'static'
     })
   }
 }
@@ -421,13 +457,18 @@ export default {
 
 <style scope lang="scss">
 @import '@/assets/scss/utils/mixin.scss';
+/*被拖拽对象的样式*/
 
 .add-images {
   width: 100%;
   height: 150px;
   @include mobile {
-    width: 100%;
     height: 100px;
+  }
+  &:hover {
+    border: solid 1px #eee;
+    opacity: 50%;
+    cursor: move;
   }
 }
 .check-box {

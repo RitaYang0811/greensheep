@@ -42,12 +42,12 @@
         <a
           href="#"
           class="btn border border-1 border-primary btn-md text-primary p-3 rounded-3 float-end align-middle"
-          @click.prevent="isShow = !isShow"
+          @click.prevent="newIsShow = !newIsShow"
           >排序</a
         >
         <!-- 排序選單 -->
         <ul
-          v-if="isShow === true"
+          v-if="newIsShow === true"
           class="sort-list border border-primary bg-white rounded-2 text-primary list-unstyled position-absolute top-100 end-0 z-3"
           style="width: 150px"
         >
@@ -161,20 +161,27 @@
       </tbody>
     </table>
     <!-- add new modal -->
-    <addProductModal
+    <AddProductModal
       ref="addModal"
       :temp-product="tempProduct"
       :is-New="isNew"
       @confirm-update="confirmUpdate"
-    ></addProductModal>
-
+    ></AddProductModal>
+    <!-- delete modal -->
+    <DeleteProductModal
+      ref="deleteModal"
+      :temp-product="tempProduct"
+      @confirm-delete="confirmDelete"
+    ></DeleteProductModal>
     <VueLoading v-model:active="isLoading" />
   </div>
 </template>
 
 <script>
 import adProductStore from '@/stores/adProductStore.js'
-import addProductModal from '@/components/addProductModal.vue'
+import AddProductModal from '@/components/AddProductModal.vue'
+import DeleteProductModal from '@/components/DeleteProductModal.vue'
+//import { adProductStore } from 'pinia'
 import axios from 'axios'
 import { mapState, mapActions } from 'pinia'
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
@@ -182,8 +189,8 @@ export default {
   data() {
     return {
       isNew: true,
-      isShow: false,
-      showTitle: '最近更新',
+      newIsShow: this.isShow,
+
       isBlock: true,
       isList: false,
       isLoading: false,
@@ -191,23 +198,26 @@ export default {
     }
   },
   components: {
-    addProductModal
+    AddProductModal,
+    DeleteProductModal
   },
   computed: {
-    ...mapState(adProductStore, ['allProducts'])
+    ...mapState(adProductStore, ['allProducts', 'isShow', 'showTitle'])
   },
   methods: {
     ...mapActions(adProductStore, ['getProducts', 'sort']),
     openModal(status, item) {
       if (status === 'new') {
         this.$refs.addModal.open()
+        console.log('點擊建立tempProduct', this.tempProduct)
       } else if (status === 'edit') {
         this.$refs.addModal.open()
-        // 將當前點擊的商品資料傳入 tempProduct
         this.tempProduct = item
         this.isNew = false
-        console.log('點擊商品tempProduct內容', this.tempProduct)
+        console.log('點擊編輯tempProduct', this.tempProduct)
       } else if (status === 'delete') {
+        this.$refs.deleteModal.open()
+        this.tempProduct = item
       }
     },
     closeModal(status) {
@@ -225,85 +235,51 @@ export default {
         this.isList = true
       }
     },
-    //排列順序切換(時間及最新仍未完成)
     sort(status) {
-      this.isShow = false
-      if (status === 'new') {
-        this.showTitle = '最近更新'
-        return this.allProducts
-      } else if (status === 'priceH2L') {
-        this.showTitle = '價格 - 由高到低'
-        return this.allProducts.sort((a, b) => b.price - a.price)
-      } else if (status === 'priceL2H') {
-        this.showTitle = '價格 - 由低到高'
-        return this.allProducts.sort((a, b) => a.price - b.price)
-      } else if (status === 'timeN2O') {
-        this.showTitle = '時間 - 由新到舊'
-      } else if (status === 'timeO2N') {
-        this.showTitle = '時間 - 由舊到新'
-      }
+      const { sort } = adProductStore()
+      this.newIsShow = false
+      sort(status)
     },
     confirmUpdate(isNew) {
       console.log('confirmUpdate', isNew, this.tempProduct)
-      const apiUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/product`
-      const apiMethod = 'post'
-
-      if (isNew === true) {
-        const createTime = new Date().getTime()
+      const apiUrl = isNew
+        ? `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/product`
+        : `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/product/${this.tempProduct.id}`
+      const axiosMethod = isNew ? axios.post : axios.put
+      if (isNew) {
+        const createTime = Date.now()
         this.tempProduct.createTime = createTime
-        console.log('新增', this.apiUrl, this.apiMethod)
-        this.tempProduct = { imagesUrl: [], gifts: [] }
-      } else if (isNew === false) {
-        this.apiUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/product/${this.tempProduct.id}`
-        this.apiMethod = 'put'
-        console.log('編輯', this.apiUrl, this.apiMethod)
+        console.log('建立的商品', this.tempProduct)
+      } else {
+        const updateTime = Date.now()
+        this.tempProduct.updateTime = updateTime
+        console.log(this.tempProduct)
       }
-
-      axios[apiMethod](apiUrl, {
+      axiosMethod(apiUrl, {
         data: this.tempProduct
       })
         .then((res) => {
           console.log(res.data)
-          console.log(this.tempProduct)
           this.getProducts()
           this.$refs.addModal.close()
+          this.tempProduct = { imagesUrl: [], gifts: [] }
         })
         .catch((err) => {
           console.log(err)
         })
-      // let apiUrl = `https://vue3-course-api.hexschool.io/v2/api/${VITE_APP_API_NAME}/admin/product`
-      // let apiMethod = 'post'
-      // if (isNew === true) {
-      //   const ID = new Date().getTime()
-      //   this.tempProduct.id = ID
-      // } else if (isNew === false) {
-      //   apiUrl = `https://vue3-course-api.hexschool.io/v2/api/${VITE_APP_API_NAME}/admin/product/${this.tempProduct.id}`
-      //   apiMethod = 'put'
-      // }
-      // axios[apiMethod](apiUrl, { data: this.tempProduct })
-      //   .then((res) => {
-      //     console.log(res.data)
-      //     this.getProducts()
-      //     this.$refs.addModal.close()
-      //   })
-      //   .catch((err) => {
-      //     console.log(err.data)
-      //   })
-      //   .finally(() => {
-      //     this.tempProduct = {
-      //       imagesUrl: []
-      //     }
-      //   })
+    },
+    confirmDelete(id) {
+      axios
+        .delete(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/product/${id}`)
+        .then((res) => {
+          console.log(res)
+          this.getProducts()
+          this.$refs.deleteModal.close()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
-    // getProduct(item) {
-    //   this.tempProduct = { ...item }
-    // },
-    // updateProduct(item) {
-    //   this.tempProduct = { ...item }
-    // },
-    // deleteProduct(item) {
-    //   this.tempProduct = { ...item }
-    // }
   },
   mounted() {
     this.getProducts()
