@@ -5,6 +5,8 @@ import { dateToUnix } from '@/utils/dateToUnix.js'
 export default defineStore('adminArticles',{
   state: () => ({
     currentTab: '公開文章',
+    currentPage: 1,
+    currentPageArticles: [],
     articles: [],
     publicArticles: [],
     privateArticles: [],
@@ -60,27 +62,54 @@ export default defineStore('adminArticles',{
         alert(err.response.data.message)
       }
 
-      this.loadingStatus.loadingItem = false
+      // 文章分類
       this.filterArticles()
+      // 依當前 tab 取得該 tab 的當前頁資料
+      this.getCurrentPageArticles(this.currentPage)
+
+      this.loadingStatus.loadingItem = false
     },
     // 分為公開文章 / 草稿文章
     filterArticles() {
-      // AdArticlesView.vue 中的　watch 監聽無法監聽到陣列 push 的變化，所以宣告新陣列並賦值到 this.pinnedArticles 觸發監聽
+      // 取得置頂文章 id 陣列
       const filterPinnedArticles = [] 
 
+      // 整理成 公開文章、草稿文章、已置頂文章 陣列
       this.articles.forEach(article => {
         article.isPublic ? this.publicArticles.push(article) : this.privateArticles.push(article)
         article.isPinned ? filterPinnedArticles.push(article.id) : ''
       })
 
+      // 排序公開文章，置頂優先
+      this.publicArticles.sort((a, b) => {
+        const aNum = a.isPinned === undefined ? 0 : Number(a.isPinned)
+        const bNum = b.isPinned === undefined ? 0 : Number(b.isPinned)
+
+        return bNum - aNum
+      })
+
+      // AdArticlesView.vue 中的　watch 監聽無法監聽到陣列 push 的變化，所以宣告新陣列並賦值到 this.pinnedArticles 觸發監聽
       this.pinnedArticles = filterPinnedArticles
     },
     // 切換 tab
     changeTab(tab) {
       this.currentTab = tab
-      // // 回到第一頁並取得該 tab 的第一頁資料
-      // this.currentPage = 1
-      // this.changePage(this.currentPage)
+      // 回到第一頁並取得該 tab 的第一頁資料
+      this.currentPage = 1
+      this.getCurrentPageArticles(this.currentPage)
+    },
+    getCurrentPageArticles(page) {
+      switch(this.currentTab) {
+        case '公開文章':
+          this.currentPageArticles = this.publicArticles.slice((page - 1) * 10, page * 10) // 10: 一頁顯示幾筆資料
+          // page  articlesSliceIndex
+          //  1         0 ~ 9
+          //  2        10 ~ 19
+          break
+        case '草稿文章':
+          this.currentPageArticles = this.privateArticles.slice((page - 1) * 10, page * 10)
+          break
+      }
     },
     // 文章行為(新增、編輯、刪除)
     articleActivity(type, id) {
@@ -210,6 +239,9 @@ export default defineStore('adminArticles',{
         .finally(() => {
           this.loadingStatus.loadingDelete = false
         })
+    },
+    updateCurrentPage(page) {
+      this.currentPage = page
     }
   },
   getters: {
@@ -233,6 +265,12 @@ export default defineStore('adminArticles',{
     },
     currentTabData: ({currentTab}) => {
       return currentTab
+    },
+    currentPageData: ({currentPage}) => {
+      return currentPage
+    },
+    currentPageArticlesData: ({currentPageArticles}) => {
+      return currentPageArticles
     },
     publicArticlesData: ({publicArticles}) => {
       return publicArticles

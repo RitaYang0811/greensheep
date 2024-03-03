@@ -66,7 +66,7 @@
       </template>
     </div>
     <ul v-if="!loadingStatusData.loadingItem" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 ps-0 list-unstyled" style="row-gap: 24px;">
-      <li v-if="currentTabData === '公開文章'" class="col" v-for="article in publicArticlesData" :key="article.id">
+      <li class="col" v-for="article in currentPageArticlesData" :key="article.id">
         <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
           <span class="check-box" v-if="isSelectPinnedArticle">
             <input
@@ -108,48 +108,50 @@
           </div>
         </label>
       </li>
-      <li v-if="currentTabData === '草稿文章'" class="col" v-for="article in privateArticlesData" :key="article.id">
-        <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
-          <span class="check-box" v-if="isSelectPinnedArticle">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              v-model="selectedPinnedArticle"
-              :value="article.id"
-              :id="article.id"
-            />
-          </span>
-          <img
-            :src="article.image"
-            class="card-img-top h-100 w-100 object-fit-cover"
-            :alt="article.title"
-            style="height: 250px"
-          />
-          <div class="card-body p-0 px-2 pt-2">
-            <h5 class="card-title display-6 text-dark mb-2" style="height: 40px">
-              <span v-if="article.isPinned" class="float-end bg-primary text-white py-1 px-2 fs-8">置頂</span
-              >{{ article.title }} {{ article.isPublic }}
-            </h5>
-            <div
-              class="card-foot d-flex justify-content-evenly border-top border-1 border-primary py-2"
-            >
-              <a
-                href="#"
-                :class="{ 'disabled-link': loadingStatusData.loadingDelete || isSelectPinnedArticle }"
-                @click.prevent="articleActivity('edit', article.id)">
-                <i class="bi bi-pencil-fill text-dark fs-6"></i>
-              </a>
-              <a
-                href="#"
-                :class="{ 'disabled-link': isSelectPinnedArticle }"
-                @click.prevent="articleActivity('delete', article.id)">
-                <i class="bi bi-trash3-fill text-dark fs-6"></i>
-              </a>
-            </div>
-          </div>
-        </label>
-      </li>
     </ul>
+    <!-- pagination -->
+    <div v-if="!loadingStatusData.loadingItem" class="text-center va-pagination">
+      <template v-if="currentTabData === '公開文章'">
+        <vue-awesome-paginate
+          :total-items="publicArticlesData.length"
+          :items-per-page="10"
+          :max-pages-shown="3"
+          v-model="currentPage"
+          @click="getCurrentPageArticles"
+          pagination-container-class="cus-pagination"
+          paginate-buttons-class="page-link"
+          number-buttons-class="fs-8"
+          active-page-class="active"
+        >
+          <template #prev-button>
+            <span class="material-icons fs-8 p-1"> navigate_before </span>
+          </template>
+          <template #next-button>
+            <span class="material-icons fs-8 p-1"> navigate_next </span>
+          </template>
+        </vue-awesome-paginate>
+      </template>
+      <template v-else-if="currentTabData === '草稿文章'">
+        <vue-awesome-paginate
+          :total-items="privateArticlesData.length"
+          :items-per-page="10"
+          :max-pages-shown="3"
+          v-model="currentPage"
+          @click="getCurrentPageArticles"
+          pagination-container-class="cus-pagination"
+          paginate-buttons-class="page-link"
+          number-buttons-class="fs-8"
+          active-page-class="active"
+        >
+          <template #prev-button>
+            <span class="material-icons fs-8 p-1"> navigate_before </span>
+          </template>
+          <template #next-button>
+            <span class="material-icons fs-8 p-1"> navigate_next </span>
+          </template>
+        </vue-awesome-paginate>
+      </template>
+    </div>
     <div v-if="loadingStatusData.loadingItem"
       class="d-flex justify-content-center align-items-center"
       style="min-height: 360px;"
@@ -170,11 +172,12 @@ export default {
     return {
       isSelectPinnedArticle: false,
       selectedPinnedArticle: [],
-      isLoading: false
+      currentPage: 1,
+      isLoading: false,
     }
   },
   methods: {
-    ...mapActions(adArticlesStore, ['getArticles','articleActivity', 'changeTab']),
+    ...mapActions(adArticlesStore, ['getArticles','articleActivity', 'changeTab', 'getCurrentPageArticles', 'updateCurrentPage']),
     // 儲存置頂文章
     async updatePinnedArticle() {
       try {
@@ -225,10 +228,10 @@ export default {
         const resPutArticle = await Promise.all(apiUrlsPutArticle)
 
         alert('置頂文章已更新')
-        this.isLoading = false
         this.getArticles();
       } catch (err) {
         alert(err.response.data.message)
+      } finally {
         this.isLoading = false
       }
     }
@@ -236,13 +239,20 @@ export default {
   watch: {
     pinnedArticlesData() {
       this.selectedPinnedArticle = [ ...this.pinnedArticlesData ]
+    },
+    currentPage() {
+      this.updateCurrentPage(this.currentPage)
+    },
+    currentPageData() {
+      this.currentPage = this.currentPageData
     }
   },
   computed: {
     ...mapState(adArticlesStore, [
       'articlesData', 'loadingStatusData',
       'currentTabData', 'publicArticlesData',
-      'privateArticlesData', 'pinnedArticlesData'
+      'privateArticlesData', 'pinnedArticlesData',
+      'currentPageData', 'currentPageArticlesData'
     ])
   },
   mounted() {
