@@ -5,20 +5,36 @@ const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default defineStore('adProductStore', {
   state: () => ({
     allProducts: [],
-    isShow: false,
-    loadingStatus: false,
-    showTitle: '最近更新'
+    allPagination: {},
+    currentTab: '所有商品',
+    loadingStatus: false
   }),
   getters: {},
   actions: {
-    getProducts() {
+    getProducts(tab, page = 1) {
+      this.currentTab = tab
       this.loadingStatus = true
+
       axios
-        .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/products`)
+        .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/products?page=${page}`)
         .then((res) => {
-          this.allProducts = res.data.products
-          console.log(this.allProducts)
-          this.sort('new')
+          switch (tab) {
+            case '所有商品':
+              this.allProducts = res.data.products
+              this.allPagination = res.data.pagination
+
+              break
+
+            case '已售完':
+              this.allProducts = res.data.products.filter((product) => product.stockNum === 0)
+
+              break
+
+            case '未上架':
+              this.allProducts = res.data.products.filter((product) => product.is_enabled === false)
+
+              break
+          }
         })
         .catch((err) => {
           console.log(err)
@@ -26,26 +42,6 @@ export default defineStore('adProductStore', {
         .finally(() => {
           this.loadingStatus = false
         })
-    },
-    //排列順序切換
-    sort(status) {
-      if (status === 'new') {
-        this.showTitle = '最近更新'
-        console.log('sortNew', status, this.isShow)
-        return this.allProducts.sort((a, b) => b.updateTime - a.updateTime)
-      } else if (status === 'priceH2L') {
-        this.showTitle = '價格 - 由高到低'
-        return this.allProducts.sort((a, b) => b.price - a.price)
-      } else if (status === 'priceL2H') {
-        this.showTitle = '價格 - 由低到高'
-        return this.allProducts.sort((a, b) => a.price - b.price)
-      } else if (status === 'timeN2O') {
-        this.showTitle = '上架時間 - 由新到舊'
-        return this.allProducts.sort((a, b) => b.createTime - a.createTime)
-      } else if (status === 'timeO2N') {
-        this.showTitle = '上架時間 - 由舊到新'
-        return this.allProducts.sort((a, b) => a.createTime - b.createTime)
-      }
     }
   }
 })

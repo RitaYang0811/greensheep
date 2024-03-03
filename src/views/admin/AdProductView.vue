@@ -1,24 +1,54 @@
 <template>
-  <div class="container text-start px-3 px-lg-10 mt-20 mt-lg-10">
+  <div class="container text-start px-3 px-lg-10 mt-20 mt-lg-10 mb-7 mb-lg-10">
     <h1 class="display-3 fw-bold mb-4">所有商品</h1>
 
     <!-- search bar -->
-    <div class="border border-1 border-primary rounded-3 mb-4" style="height: 40px">
-      <i class="bi bi-search float-end fs-5 text-primary pe-2 mt-2"></i>
+    <div class="position-relative">
+      <input
+        class="form-control mb-4 rounded-3 border border-primary bg-transparent"
+        type="text"
+        placeholder="請輸入要搜尋的商品"
+        v-model="searchWords"
+      />
+      <i
+        class="bi bi-search float-end fs-5 text-primary pe-2 mt-2 position-absolute top-0 end-0"
+      ></i>
     </div>
+
     <!-- tab bar -->
 
     <ul
       class="tab-bar nav border-bottom border-primary mb-4 justify-content-center justify-content-lg-start"
     >
       <li class="nav-item">
-        <a class="nav-link px-3 px-md-6 py-2 py-lg-4" href="#"> 所有商品 </a>
+        <a
+          class="nav-link px-3 px-md-6 py-2 py-lg-4"
+          :class="{ active: currentTab === '所有商品' }"
+          href="#"
+          @click.prevent="getProducts('所有商品')"
+        >
+          所有商品
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link px-3 px-md-6 py-2 py-lg-4" href="#"> 已售完 </a>
+        <a
+          class="nav-link px-3 px-md-6 py-2 py-lg-4"
+          :class="{ active: currentTab === '已售完' }"
+          href="#"
+          @click.prevent="getProducts('已售完')"
+        >
+          已售完
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link px-3 px-md-6 py-2 py-lg-4" href="#"> 未啟用 </a>
+        <a
+          class="nav-link px-3 px-md-6 py-2 py-lg-4"
+          :class="{ active: currentTab === '未上架' }"
+          href="#"
+          @click.prevent="getProducts('未上架')"
+        >
+          未上架
+        </a>
       </li>
     </ul>
 
@@ -34,20 +64,20 @@
         <a
           href="#"
           class="btn border border-1 border-primary btn-md text-primary py-3 px-5 rounded-3"
-          @click.prevent="openModal('highlight')"
-          >主打商品管理</a
+          @click.prevent="highLight"
+          >編輯主打商品</a
         >
       </div>
       <div class="mb-3 position-relative">
         <a
           href="#"
           class="btn border border-1 border-primary btn-md text-primary p-3 rounded-3 float-end align-middle"
-          @click.prevent="newIsShow = !newIsShow"
+          @click.prevent="isShow = !isShow"
           >排序</a
         >
         <!-- 排序選單 -->
         <ul
-          v-if="newIsShow === true"
+          v-if="isShow === true"
           class="sort-list border border-primary bg-white rounded-2 text-primary list-unstyled position-absolute top-100 end-0 z-3"
           style="width: 150px"
         >
@@ -61,9 +91,9 @@
             價格 由高至低
           </li>
           <li class="px-4 py-2 border-bottom border-primary" @click.prevent="sort('timeN2O')">
-            時間 由新到舊
+            上架時間 由新到舊
           </li>
-          <li class="px-4 py-2" @click.prevent="sort('timeO2N')">時間 由舊到新</li>
+          <li class="px-4 py-2" @click.prevent="sort('timeO2N')">上架時間 由舊到新</li>
         </ul>
         <a
           href="#"
@@ -83,12 +113,17 @@
     <!-- 排序方式 -->
     <div class="text-primary mb-2 text-start">排序：{{ showTitle }}</div>
     <!-- 商品列表 - 卡片 -->
-    <div v-if="isBlock === true" class="row row-cols-2 row-cols-lg-5 g-2 g-md-3">
-      <div class="col" v-for="item in allProducts" :key="item.id">
+    <div v-if="isBlock === true" class="row row-cols-2 row-cols-lg-5 g-2 g-md-3 mb-10 mb-lg-15">
+      <div class="col" v-for="item in filterAllProducts" :key="item.id">
         <div class="card h-100 border border-1 border-primary position-relative">
-          <span class="check-box">
-            <input class="form-check-input" type="checkbox" value="" id=""
-          /></span>
+          <input
+            v-if="highLightInput"
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id=""
+            v-model="item.highLight"
+          />
 
           <img
             :src="item.imageUrl"
@@ -97,7 +132,9 @@
           />
           <div class="card-body p-0 px-2 pt-2">
             <h5 class="card-title block-title text-dark mb-1" style="height: 45px">
-              <span class="float-end block-highlight bg-primary text-white py-1 px-2 rounded-pill"
+              <span
+                v-if="item.highLight"
+                class="float-end block-highlight bg-primary text-white py-1 px-2 rounded-pill"
                 >主打</span
               >{{ item.title }}
             </h5>
@@ -120,9 +157,9 @@
       </div>
     </div>
     <!-- 商品列表 - 列表 -->
-    <table v-if="isList === true" class="table">
+    <table v-if="isList === true" class="table mb-10 mb-lg-15">
       <tbody>
-        <template v-for="item in allProducts" :key="item.id">
+        <template v-for="item in filterAllProducts" :key="item.id">
           <tr class="product-item row mb-3 bg-white rounded-3 align-content-center">
             <th class="col-4 col-md-2 my-auto px-4 py-4 border-bottom-0">
               <img
@@ -148,10 +185,12 @@
                 <p class="card-text fs-7 text-dark">NT ${{ item.origin_price }}</p>
               </td>
               <td class="col-12 col-md-auto my-auto">
-                <a class="d-inline-block cursor-pointer mx-2 py-2"
+                <a class="d-inline-block cursor-pointer mx-2 py-2" @click="openModal('edit', item)"
                   ><i class="bi bi-pencil-fill fs-7"></i
                 ></a>
-                <a class="d-inline-block cursor-pointer mx-2 py-2"
+                <a
+                  class="d-inline-block cursor-pointer mx-2 py-2"
+                  @click="openModal('delete', item)"
                   ><i class="bi bi-trash3-fill fs-7"></i
                 ></a>
               </td>
@@ -173,6 +212,8 @@
       :temp-product="tempProduct"
       @confirm-delete="confirmDelete"
     ></DeleteProductModal>
+    <!-- pagiNation -->
+    <PagiNation :pagination="allPagination" @update-page="updatePage" />
     <VueLoading v-model:active="isLoading" />
   </div>
 </template>
@@ -181,40 +222,46 @@
 import adProductStore from '@/stores/adProductStore.js'
 import AddProductModal from '@/components/AddProductModal.vue'
 import DeleteProductModal from '@/components/DeleteProductModal.vue'
-//import { adProductStore } from 'pinia'
+import PagiNation from '@/components/PagiNation.vue'
+
 import axios from 'axios'
 import { mapState, mapActions } from 'pinia'
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default {
   data() {
     return {
+      searchWords: '',
       isNew: true,
-      newIsShow: this.isShow,
-
+      isShow: false,
+      showTitle: '',
       isBlock: true,
       isList: false,
       isLoading: false,
-      tempProduct: { imagesUrl: [], gifts: [] }
+      tempProduct: { imagesUrl: [], gifts: [] },
+      highLightInput: false,
+      currentPage: null
     }
   },
   components: {
     AddProductModal,
-    DeleteProductModal
+    DeleteProductModal,
+    PagiNation
   },
   computed: {
-    ...mapState(adProductStore, ['allProducts', 'isShow', 'showTitle'])
+    ...mapState(adProductStore, ['allProducts', 'currentTab', 'allPagination']),
+    filterAllProducts() {
+      return this.allProducts.filter((product) => product.title.match(this.searchWords))
+    }
   },
   methods: {
-    ...mapActions(adProductStore, ['getProducts', 'sort']),
+    ...mapActions(adProductStore, ['getProducts']),
     openModal(status, item) {
       if (status === 'new') {
         this.$refs.addModal.open()
-        console.log('點擊建立tempProduct', this.tempProduct)
       } else if (status === 'edit') {
         this.$refs.addModal.open()
         this.tempProduct = item
         this.isNew = false
-        console.log('點擊編輯tempProduct', this.tempProduct)
       } else if (status === 'delete') {
         this.$refs.deleteModal.open()
         this.tempProduct = item
@@ -235,11 +282,34 @@ export default {
         this.isList = true
       }
     },
+    //排列順序切換
     sort(status) {
-      const { sort } = adProductStore()
-      this.newIsShow = false
-      sort(status)
+      this.isShow = false
+      if (status === 'new') {
+        this.showTitle = '最近更新'
+        console.log('sortNew', status, this.isShow)
+        return this.allProducts.sort((a, b) => b.updateTime - a.updateTime)
+      } else if (status === 'priceH2L') {
+        this.showTitle = '價格 - 由高到低'
+        return this.allProducts.sort((a, b) => b.price - a.price)
+      } else if (status === 'priceL2H') {
+        this.showTitle = '價格 - 由低到高'
+        return this.allProducts.sort((a, b) => a.price - b.price)
+      } else if (status === 'timeN2O') {
+        this.showTitle = '上架時間 - 由新到舊'
+        return this.allProducts.sort((a, b) => b.createTime - a.createTime)
+      } else if (status === 'timeO2N') {
+        this.showTitle = '上架時間 - 由舊到新'
+        return this.allProducts.sort((a, b) => a.createTime - b.createTime)
+      }
     },
+
+    //編輯主打商品
+    highLight() {
+      this.hightLightInput = true
+      console.log(this.hightLightInput)
+    },
+    //確認編輯
     confirmUpdate(isNew) {
       console.log('confirmUpdate', isNew, this.tempProduct)
       const apiUrl = isNew
@@ -253,14 +323,14 @@ export default {
       } else {
         const updateTime = Date.now()
         this.tempProduct.updateTime = updateTime
-        console.log(this.tempProduct)
+        console.log('已編輯的商品', this.tempProduct)
       }
       axiosMethod(apiUrl, {
         data: this.tempProduct
       })
         .then((res) => {
           console.log(res.data)
-          this.getProducts()
+          this.getProducts(this.currentTab, this.currentPage)
           this.$refs.addModal.close()
           this.tempProduct = { imagesUrl: [], gifts: [] }
         })
@@ -268,21 +338,28 @@ export default {
           console.log(err)
         })
     },
+    //確認刪除
     confirmDelete(id) {
       axios
         .delete(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/product/${id}`)
         .then((res) => {
           console.log(res)
-          this.getProducts()
+          this.getProducts(this.currentTab)
           this.$refs.deleteModal.close()
         })
         .catch((err) => {
           console.log(err)
         })
+    },
+    //點擊分頁
+    updatePage(page) {
+      this.currentPage = page
+      console.log('點分頁', this.currentTab, page)
+      this.getProducts(this.currentTab, page)
     }
   },
   mounted() {
-    this.getProducts()
+    this.getProducts('所有商品')
   }
 }
 </script>

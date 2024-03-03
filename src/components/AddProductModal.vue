@@ -286,17 +286,17 @@
                 </div>
                 <div class="mb-9">
                   <label for="form-label" class="h6 mb-2">是否啟用</label>
-                  {{ tempProduct.purchaseWay }}
+
                   <div class="form-check">
                     <input
                       class="form-check-input"
                       type="checkbox"
                       name="purchaseWayRadio"
-                      id="inStockProduct"
+                      id="isEnabled"
                       v-model="tempProduct.is_enabled"
                     />
-                    <label class="form-check-label text-grey66" for="inStockProduct">
-                      {{ tempProduct.is_enabled ? '已啟用' : '未啟用' }}
+                    <label class="form-check-label text-grey66" for="isEnabled">
+                      {{ tempProduct.is_enabled ? '上架' : '未上架' }}
                     </label>
                   </div>
                 </div>
