@@ -117,7 +117,7 @@
       <div class="col" v-for="item in filterAllProducts" :key="item.id">
         <div class="card h-100 border border-1 border-primary position-relative">
           <input
-            v-if="highLightInput"
+            v-if="item.highLight"
             class="form-check-input"
             type="checkbox"
             value=""

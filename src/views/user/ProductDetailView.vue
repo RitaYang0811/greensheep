@@ -1,6 +1,5 @@
 <template>
   <div class="container py-7 py-lg-10">
-
     <!-- breadcrumb -->
     <div class="row">
       <nav aria-label="breadcrumb">
@@ -12,7 +11,7 @@
             <router-link to="/products">全部商品</router-link>
           </li>
           <li class="breadcrumb-item" aria-current="page">項鍊</li>
-          <li class="breadcrumb-item" aria-current="page">天使之愛十字架</li>
+          <li class="breadcrumb-item" aria-current="page">{{ productInfo.title }}</li>
         </ol>
       </nav>
 
@@ -20,7 +19,6 @@
         <div class="col-12 col-lg-6">
           <!-- Swiper -->
           <ProductSwiper :product-info="productInfo"></ProductSwiper>
-
         </div>
         <!-- 商品資訊 -->
         <div class="col-12 col-lg-5 text-start d-flex flex-column">
@@ -30,7 +28,6 @@
 
             <i class="bi bi-heart fs-4 text-primary"></i>
             <i class="bi bi-heart-fill fs-4 text-primary"></i>
-
           </div>
           <!-- v-if 無折扣 -->
           <p
@@ -48,7 +45,6 @@
             <span class="text-grey9F fs-6 fs-lg-5 fw-medium text-decoration-line-through">
               NT$ {{ productInfo.origin_price }}
             </span>
-
           </p>
           <!-- 行銷活動 -->
           <div class="position-relative start-line">
@@ -168,9 +164,7 @@
           <div class="col justify-content-center align-items-center flex-grow-1">
             <!-- 尺寸選擇 -->
             <select
-
               class="mb-4 form-select size-select"
-
               aria-label="Default select example"
               style="height: 55px"
             >
@@ -214,7 +208,6 @@
 
   <!-- 下半部 -->
   <div class="container py-10">
-
     <!-- <div data-aos="fade-up" data-aos-duration="1000" data-aos-offset="50" class="mb-5">
       <h2 class="fs-lg-2 fw-medium">{{ productInfo.title }}</h2>
       <p class="text-primary">The Angel Love Cross</p>
@@ -458,7 +451,6 @@
 </template>
 
 <script>
-
 import ProductSwiper from '@/components/ProductSwiper.vue'
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
@@ -485,4 +477,3 @@ export default {
 </script>
 
 <style scoped></style>
-
