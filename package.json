@@ -32,11 +32,8 @@
     "vue-axios": "^3.5.2",
     "vue-loading-overlay": "6.0",
     "vue-router": "^4.2.5",
-<<<<<<< HEAD
-    "vue3-google-login": "^2.0.25"
-=======
+    "vue3-google-login": "^2.0.25",
     "vuedraggable": "^4.1.0"
->>>>>>> 03174548df3dec0f6c89d64c1a4d30b84df74fce
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.3",
