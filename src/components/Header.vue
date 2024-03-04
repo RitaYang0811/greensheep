@@ -108,11 +108,11 @@
             </RouterLink>
           </li>
           <li class="nav-item" style="min-width: 81px">
-            <RouterLink to="/articleList" class="nav-link nav-item-en py-2 py-lg-1 px-2"
+            <RouterLink to="/articles" class="nav-link nav-item-en py-2 py-lg-1 px-2"
               >BLOG</RouterLink
             >
             <RouterLink
-              to="/articleList"
+              to="/articles"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
               >專欄文章
             </RouterLink>

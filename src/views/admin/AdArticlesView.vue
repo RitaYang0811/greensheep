@@ -1,4 +1,5 @@
 <template>
+  <div class="ad-article">
     <h1 class="fs-3 mb-4">文章管理</h1>
     <div class="input-group mb-4 bg-white d-flex align-items-center">
       <input type="search" class="form-control">
@@ -10,104 +11,252 @@
       <li class="nav-item">
         <a
           class="nav-link px-6 py-4"
-          :class="{ active: currentTab === '所有文章'}"
+          :class="{ active: currentTabData === '公開文章'}"
           href="#"
-          @click.prevent="getArticles('所有文章')">
-          所有文章
+          @click.prevent="changeTab('公開文章')">
+          公開文章
         </a>
       </li>
       <li class="nav-item">
         <a
           class="nav-link px-6 py-4"
-          :class="{ active: currentTab === '草稿文章'}" 
+          :class="{ active: currentTabData === '草稿文章'}"
           href="#"
-          @click.prevent="getArticles('草稿文章')">
+          @click.prevent="changeTab('草稿文章')">
           草稿文章
         </a>
       </li>
     </ul>
-    <div class="d-flex gap-4">
-      <a href="#" class="btn btn-primary mb-4" @click.prevent="articleActivity('new')">建立文章</a>
-      <a href="#" class="btn btn-primary mb-4">置頂文章管理</a>
+    <div class="d-flex gap-4 align-items-center mb-4">
+      <a
+        href="#"
+        class="btn btn-primary"
+        :class="{ disabled: loadingStatusData.loadingItem }"
+        @click.prevent="articleActivity('new')"
+      >
+        建立文章
+      </a>
+      <template v-if="currentTabData === '公開文章'">
+        <a
+          v-if="!isSelectPinnedArticle"
+          href="#"
+          class="btn btn-primary"
+          :class="{ disabled: loadingStatusData.loadingItem }"
+          @click.prevent="isSelectPinnedArticle = true"
+        >
+          置頂文章管理
+        </a>
+        <template v-else>
+          <a href="#" class="btn btn-primary" @click.prevent="updatePinnedArticle">儲存置頂文章</a>
+          <a
+            href="#"
+            class="btn btn-sm btn-danger"
+            @click.prevent="selectedPinnedArticle = [ ...pinnedArticlesData ]; isSelectPinnedArticle = false">
+            取消
+          </a>
+          <p>已選擇: {{ selectedPinnedArticle.length }} 篇</p>
+          <a
+            href="#"
+            class="text-decoration-underline link-underline-grey9F link-offset-1"
+            @click.prevent="selectedPinnedArticle = []">
+            清除選擇
+          </a>
+          <p class="text-danger fs-8">*最多可選擇 3 篇文章</p>
+        </template>
+      </template>
     </div>
-    <ul class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 ps-0 list-unstyled" style="row-gap: 24px;">
-      <li class="col" v-for="article in articlesData" :key="article.id">
-        <div class="form-check position-relative ps-0">
-          <input class="form-check-input position-absolute" type="checkbox" value="" id="flexCheckDefault" style="z-index: 1; top:12px; right: 12px;">
-          <label class="form-check-label w-100" for="flexCheckDefault">
-            <div class="card border-0">
-              <img :src="article.image" :alt="article.title">
-              <div class="card-body">
-                <h5 class="card-title my-2 fs-7">{{ article.title }}</h5>
-                <div class="d-flex">
-                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1" :class="{ 'disabled-link': loadingStatusData.loadingDelete}" @click.prevent="articleActivity('edit', article.id)">
-                    <img src="@/assets/images/edit_green.svg" alt="編輯">
-                  </a>
-                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1" @click.prevent="articleActivity('delete', article.id)">
-                    <img src="@/assets/images/highlight_off_green.svg" alt="刪除">
-                  </a>
-                </div>
-              </div>
+    <ul v-if="!loadingStatusData.loadingItem" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 ps-0 list-unstyled" style="row-gap: 24px;">
+      <li class="col" v-for="article in currentPageArticlesData" :key="article.id">
+        <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
+          <span class="check-box" v-if="isSelectPinnedArticle">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="selectedPinnedArticle"
+              :value="article.id"
+              :id="article.id"
+              :disabled="selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)"
+            />
+          </span>
+          <img
+            :src="article.image"
+            class="card-img-top h-100 w-100 object-fit-cover"
+            :alt="article.title"
+            style="height: 250px"
+          />
+          <div class="card-body p-0 px-2 pt-2">
+            <h5 class="card-title display-6 text-dark mb-2" style="height: 40px">
+              <span v-if="article.isPinned" class="float-end bg-primary text-white py-1 px-2 fs-8">置頂</span
+              >{{ article.title }}
+            </h5>
+            <div
+              class="card-foot d-flex justify-content-evenly border-top border-1 border-primary py-2"
+            >
+              <a
+                href="#"
+                :class="{ 'disabled-link': loadingStatusData.loadingDelete || isSelectPinnedArticle }"
+                @click.prevent="articleActivity('edit', article.id)">
+                <i class="bi bi-pencil-fill text-dark fs-6"></i>
+              </a>
+              <a
+                href="#"
+                :class="{ 'disabled-link': isSelectPinnedArticle }"
+                @click.prevent="articleActivity('delete', article.id)">
+                <i class="bi bi-trash3-fill text-dark fs-6"></i>
+              </a>
             </div>
-          </label>
-        </div>
+          </div>
+        </label>
       </li>
-      <!-- <div class="col">
-        <div class="form-check position-relative ps-0">
-          <input class="form-check-input position-absolute" type="checkbox" value="" id="flexCheckDefault" style="z-index: 1; top:12px; right: 12px;">
-          <label class="form-check-label" for="flexCheckDefault">
-            <div class="card border-0">
-              <img src="https://images.unsplash.com/photo-1707655096635-89387f83f189?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8" class="w-100 object-fit-cover" style="aspect-ratio: 1/1" alt="...">
-              <div class="card-body">
-                <h5 class="card-title my-2">Card title</h5>
-                <div class="d-flex">
-                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1">
-                    <img src="@/assets/images/edit_green.svg" alt="編輯">
-                  </a>
-                  <a href="#" class="custom-btn custom-btn-toGreen text-center w-100 border-1">
-                    <img src="@/assets/images/highlight_off_green.svg" alt="刪除">
-                  </a>
-                </div>
-              </div>
-            </div>
-          </label>
-        </div>
-      </div> -->
     </ul>
-    <div v-if="loadingStatusData.loadingItem" class="d-flex justify-content-center align-items-center" style="min-height: 360px;">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+    <!-- pagination -->
+    <div v-if="!loadingStatusData.loadingItem" class="text-center va-pagination">
+      <template v-if="currentTabData === '公開文章'">
+        <vue-awesome-paginate
+          :total-items="publicArticlesData.length"
+          :items-per-page="10"
+          :max-pages-shown="3"
+          v-model="currentPage"
+          @click="getCurrentPageArticles"
+          pagination-container-class="cus-pagination"
+          paginate-buttons-class="page-link"
+          number-buttons-class="fs-8"
+          active-page-class="active"
+        >
+          <template #prev-button>
+            <span class="material-icons fs-8 p-1"> navigate_before </span>
+          </template>
+          <template #next-button>
+            <span class="material-icons fs-8 p-1"> navigate_next </span>
+          </template>
+        </vue-awesome-paginate>
+      </template>
+      <template v-else-if="currentTabData === '草稿文章'">
+        <vue-awesome-paginate
+          :total-items="privateArticlesData.length"
+          :items-per-page="10"
+          :max-pages-shown="3"
+          v-model="currentPage"
+          @click="getCurrentPageArticles"
+          pagination-container-class="cus-pagination"
+          paginate-buttons-class="page-link"
+          number-buttons-class="fs-8"
+          active-page-class="active"
+        >
+          <template #prev-button>
+            <span class="material-icons fs-8 p-1"> navigate_before </span>
+          </template>
+          <template #next-button>
+            <span class="material-icons fs-8 p-1"> navigate_next </span>
+          </template>
+        </vue-awesome-paginate>
+      </template>
     </div>
+    <div v-if="loadingStatusData.loadingItem"
+      class="d-flex justify-content-center align-items-center"
+      style="min-height: 360px;"
+    >
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <VueLoading :active="isLoading" />
+  </div>
 </template>
 <script>
 import adArticlesStore from "@/stores/adArticlesStore.js";
 import { mapActions, mapState } from 'pinia';
-import PagiNation from '@/components/PagiNation.vue'
 
 export default {
   data() {
     return {
-      currentTab: '所有文章',
+      isSelectPinnedArticle: false,
+      selectedPinnedArticle: [],
+      currentPage: 1,
       isLoading: false,
     }
   },
-  components: {
-    PagiNation
-  },
   methods: {
-    ...mapActions(adArticlesStore, ['getArticles','articleActivity'])
+    ...mapActions(adArticlesStore, ['getArticles','articleActivity', 'changeTab', 'getCurrentPageArticles', 'updateCurrentPage']),
+    // 儲存置頂文章
+    async updatePinnedArticle() {
+      try {
+        this.isSelectPinnedArticle = false
+        this.isLoading = true
+
+        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article`
+
+        // ----- 取消置頂 -----
+        // 原置頂文章若不在當次選取的文章中則取消置頂狀態
+        const cancelPinnedArticles = this.pinnedArticlesData.filter(id => {
+          return !this.selectedPinnedArticle.includes(id)
+        })
+
+        // 取得欲取消的文章的 data (含content) 
+        const apiUrlsGetCancelArticle = cancelPinnedArticles.map(id => {
+          return this.$http.get(`${url}/${id}`)
+        })
+        const resGetCancelArticle = await Promise.all(apiUrlsGetCancelArticle)
+
+        // 取消置頂狀態，isPinned 設為 false
+        const apiUrlsPutCancelArticle = resGetCancelArticle.map(article => {
+          const id = article?.data?.article?.id
+          const data = { ...article?.data?.article, isPinned: false }
+          return this.$http.put(`${url}/${id}`, { data: data })
+        })
+        const resPutCancelArticle = await Promise.all(apiUrlsPutCancelArticle)
+
+        // ----- 新增置頂 -----
+        // 當次選取的文章中若不在原置頂文章中則需要去取得資料
+        const addPinnedArticle = this.selectedPinnedArticle.filter(id => {
+          return !this.pinnedArticlesData.includes(id)
+        })
+
+        // 取得欲置頂文章的 content 資料給 put 使用 (因為 get/articles 不包含 content 欄位)
+        const apiUrlsGetArticle = addPinnedArticle.map(id => {
+          return this.$http.get(`${url}/${id}`)
+        })
+        const resGetArticle = await Promise.all(apiUrlsGetArticle)
+
+        // 增加置頂狀態，isPinned 設為 true
+        const apiUrlsPutArticle = resGetArticle.map(article => {
+          const id = article?.data?.article?.id
+          const data = { ...article?.data?.article, isPinned: true }
+          return this.$http.put(`${url}/${id}`, { data: data })
+        })
+        const resPutArticle = await Promise.all(apiUrlsPutArticle)
+
+        alert('置頂文章已更新')
+        this.getArticles();
+      } catch (err) {
+        alert(err.response.data.message)
+      } finally {
+        this.isLoading = false
+      }
+    }
+  },
+  watch: {
+    pinnedArticlesData() {
+      this.selectedPinnedArticle = [ ...this.pinnedArticlesData ]
+    },
+    currentPage() {
+      this.updateCurrentPage(this.currentPage)
+    },
+    currentPageData() {
+      this.currentPage = this.currentPageData
+    }
   },
   computed: {
-    ...mapState(adArticlesStore, ['articlesData', 'loadingStatusData'])
+    ...mapState(adArticlesStore, [
+      'articlesData', 'loadingStatusData',
+      'currentTabData', 'publicArticlesData',
+      'privateArticlesData', 'pinnedArticlesData',
+      'currentPageData', 'currentPageArticlesData'
+    ])
   },
   mounted() {
     this.getArticles();
   }
 }
 </script>
-<style scoped>
-.disabled-link {
-  pointer-events: none;
-}
-</style>
+<style scoped></style>
