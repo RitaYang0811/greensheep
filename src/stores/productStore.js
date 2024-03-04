@@ -5,21 +5,20 @@ const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
 export default defineStore('productStore', {
   state: () => ({
-    //產品列表
     products: [],
-
-    //點擊的產品類別
-    //
     category: '全部商品 ALL',
     categories: ['項鍊 PENDANT', '戒指 RING', '耳環 EARRINGS', '手鍊 BRACELET'],
     productInfo: {},
-    pagination: {}
+    pagination: {},
+    loadingStatus: false
   }),
   actions: {
     //初始化取得產品
     getProducts(route, page = 1) {
+      this.loadingStatus = true
+      console.log(this.loadingStatus)
       const { category = '' } = route.query
-      console.log('分類', this.category)
+
       this.category = category
 
       const apiUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products?category=${category}&page=${page}`
@@ -27,8 +26,6 @@ export default defineStore('productStore', {
       axios
         .get(apiUrl)
         .then((res) => {
-          console.log('getProducts被觸發', apiUrl)
-
           this.products = res.data.products
           console.log('所有商品', this.products)
 
@@ -36,6 +33,9 @@ export default defineStore('productStore', {
         })
         .catch((err) => {
           console.log(err.data.message)
+        })
+        .finally(() => {
+          this.loadingStatus = false
         })
     },
     // getProducts(page = 1) {
@@ -64,11 +64,15 @@ export default defineStore('productStore', {
       axios
         .get(url)
         .then((res) => {
+          this.loadingStatus = true
           console.log(res.data)
           this.productInfo = res.data.product
         })
         .catch((err) => {
           console.log(err)
+        })
+        .finally(() => {
+          this.loadingStatus = false
         })
     }
   }

@@ -350,12 +350,7 @@ export default {
   data() {
     return {
       drag: false,
-      myArray: [
-        { people: 'cn', id: 1, name: 'www.itxst.com' },
-        { people: 'cn', id: 2, name: 'www.baidu.com' },
-        { people: 'cn', id: 3, name: 'www.taobao.com' },
-        { people: 'us', id: 4, name: 'www.google.com' }
-      ],
+
       addModal: null,
       materials: [
         '925銀 925-Silver',

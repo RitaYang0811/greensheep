@@ -4,7 +4,7 @@
   <main class="container">
     <div class="row py-7 py-lg-10">
       <!-- 側邊目錄 -->
-      <aside class="d-none d-lg-block col-lg-3 h-bottom-line">
+      <aside class="d-none d-lg-block col-lg-2 h-bottom-line">
         <ul class="d-none d-md-block list-unstyled text-dark text-start">
           <li>
             <routerLink
@@ -28,7 +28,7 @@
           </li>
         </ul>
       </aside>
-      <div class="col-lg-9 py-2">
+      <div class="col-lg-10 py-2">
         <!-- 麵包屑導航 -->
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
@@ -42,10 +42,15 @@
           </ol>
         </nav>
         <!-- 商品列表 -->
-        <div class="row row-cols-2 row-cols-md-4 gx-4 gy-6 mb-10 mb-lg-20">
-          <li class="col list-unstyled" v-for="product in products" :key="product.id">
+        <div class="row row-cols-2 row-cols-lg-5 gx-4 gy-6 mb-10 mb-lg-20">
+          <li class="col list-unstyled h-100 column" v-for="product in products" :key="product.id">
             <router-link :to="`/products/${product.id}`" class="card border-0">
               <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
+                <span
+                  v-if="product.discount !== 10"
+                  class="position-absolute start-0 bottom-0 z-3 bg-deco p-1 text-dark fs-8"
+                  >{{ product.discount }}折</span
+                >
                 <img
                   :src="product.imageUrl"
                   class="show position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
@@ -56,23 +61,23 @@
                 />
               </div>
               <div class="card-body text-start">
-                <h5 class="card-title display-8 text-dark my-2">{{ product.title }}</h5>
+                <h5 class="card-title display-7 text-dark my-2">{{ product.title }}</h5>
                 <!-- v-if 無折扣 -->
                 <p
                   v-if="product.origin_price === product.price"
-                  class="card-text display-8 text-primary my-3"
+                  class="card-text display-8 text-primary mt-3 mb-6"
                 >
                   NT$ {{ product.origin_price }}
                 </p>
-                <!-- v-else 打折 -->
-                <div v-else class="my-3">
-                  <span class="card-text display-8 text-grey9F me-2 text-decoration-line-through">
-                    NT$ {{ product.price }}
-                  </span>
 
-                  <span class="card-text display-8 text-primary my-2"
+                <!-- v-else 打折 -->
+                <div v-else class="mt-3 mb-1">
+                  <span class="card-text display-8 text-primary my-2 me-2"
                     >NT$ {{ product.origin_price }}</span
                   >
+                  <br /><span class="card-text display-8 text-grey9F text-decoration-line-through">
+                    NT$ {{ product.price }}
+                  </span>
                 </div>
                 <button
                   href="#"
@@ -88,6 +93,8 @@
 
         <!-- 分頁 -->
         <Pagi-Nation :pagination="pagination" @update-page="updatePage"></Pagi-Nation>
+        <!-- loading -->
+        <VueLoading v-model:active="isLoading" />
       </div>
     </div>
   </main>
@@ -104,6 +111,7 @@ import { useRoute } from 'vue-router'
 export default {
   data() {
     return {
+      isLoading: false,
       currentCategory: null,
       routeData: {
         route: null
@@ -119,9 +127,8 @@ export default {
   },
   watch: {
     routeData: {
-      handler(newVal) {
+      handler() {
         this.getProducts(this.routeData.route)
-        console.log(1)
       },
       deep: true
     }
@@ -131,15 +138,13 @@ export default {
     ...mapActions(cartStore, ['addToCart']),
     //pagiNation 傳值更新頁面
     updatePage(page) {
-      this.getProducts(page)
+      this.getProducts(this.routeData.route, page)
     }
   },
   mounted() {
     //一開始取得產品
     const route = useRoute()
     this.routeData.route = route
-    this.currentCategory = route.query.category
-    console.log(this.currentCategory)
     this.getProducts(this.routeData.route)
   }
 }
@@ -148,6 +153,6 @@ export default {
 <style scoped lang="scss">
 @import '@/assets/scss/utils/_mixin.scss';
 .card-title {
-  height: 15px;
+  height: 16px;
 }
 </style>
