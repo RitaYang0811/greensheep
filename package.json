@@ -12,11 +12,14 @@
     "deploy": "vite build && gh-pages -d dist"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^41.1.0",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
     "@vee-validate/i18n": "^4.12.5",
     "@vee-validate/rules": "^4.12.5",
     "@vuepic/vue-datepicker": "^8.1.1",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
+    "bootstrap-icons": "^1.11.3",
     "gh-pages": "^6.1.1",
     "jwt-decode": "^4.0.0",
     "pinia": "^2.1.7",
@@ -25,10 +28,15 @@
     "swiper": "^10.3.1",
     "vee-validate": "^4.12.5",
     "vue": "^3.3.11",
+    "vue-awesome-paginate": "^1.1.46",
     "vue-axios": "^3.5.2",
     "vue-loading-overlay": "6.0",
     "vue-router": "^4.2.5",
+<<<<<<< HEAD
     "vue3-google-login": "^2.0.25"
+=======
+    "vuedraggable": "^4.1.0"
+>>>>>>> 03174548df3dec0f6c89d64c1a4d30b84df74fce
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.3",

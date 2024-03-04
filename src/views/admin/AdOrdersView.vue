@@ -1,0 +1,313 @@
+<template>
+  <div class="container px-10 pt-10 text-start">
+    <h1 class="fs-3 mb-4">訂單管理</h1>
+
+    <nav>
+      <div class="nav nav-tabs border-button border-3" id="nav-tab" role="tablist">
+        <button class="nav-link active w-10" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#allOrders"
+          type="button" role="tab" aria-controls="nav-home" aria-selected="true">全部訂單</button>
+        <button class="nav-link w-10" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#unpaid" type="button"
+          role="tab" aria-controls="nav-profile" aria-selected="false">未付款</button>
+        <button class="nav-link w-10" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#paid" type="button"
+          role="tab" aria-controls="nav-contact" aria-selected="false">已付款</button>
+        <button class="nav-link w-10" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#delete" type="button"
+          role="tab" aria-controls="nav-contact" aria-selected="false">已刪除</button>
+        <button class="nav-link w-10" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#done" type="button"
+          role="tab" aria-controls="nav-contact" aria-selected="false">已完成</button>
+      </div>
+    </nav>
+
+    <div class="tab-content m-3" id="nav-tabContent">
+      <!-- tabs 全部訂單 -->
+      <div class="tab-pane fade show active" id="allOrders" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+          <!-- Accordion -->
+          <Accordion :orders="allOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+          <!-- Accordion -->
+        </div>
+
+      </div>
+      <!-- tabs 未付款 -->
+      <div class="tab-pane fade" id="unpaid" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+          <!-- Accordion -->
+          <Accordion :orders="unpaidOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+          <!-- Accordion -->
+        </div>
+      </div>
+      <!-- tabs 已付款 -->
+      <div class="tab-pane fade" id="paid" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+          <!-- Accordion -->
+          <Accordion :orders="paidOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+          <!-- Accordion -->
+        </div>
+      </div>
+      <!-- tab 已刪除 -->
+      <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+        <!-- <h2>已刪除頁面</h2> -->
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+          <!-- Accordion -->
+          <Accordion :orders="deletedOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+          <!-- Accordion -->
+        </div>
+      </div>
+      <!-- tab 已完成 -->
+      <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+        <!-- <h2>已完成頁面</h2> -->
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+          <!-- Accordion -->
+          <Accordion :orders="doneOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+          <!-- Accordion -->
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade rounded-2" id="adOrderModal" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-4 ms-2" id="staticBackdropLabel">訂單詳細資料</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- checkbox -->
+          <div class="">
+            <div class="p-10 d-flex justify-content-center " style="z-index: 10;">
+              <div class="">
+                <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" checked disabled>
+                <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck1"><i
+                    class="bi bi-check-lg fs-2 text-light"></i></label>
+                <p class="mt-3 fs-5">收到訂單</p>
+              </div>
+              <div :class="orderStatus?.making ? `bg-primary` : `bg-light`" class="mt-5" style="height: 10px;width: 20%;">
+              </div>
+              <div class="">
+                <!-- disabled綁定後一個checkbox，如果後一個checkbox勾選，前一個就不能取消。 -->
+                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" v-model="orderStatus.making"
+                  :disabled="orderStatus.sendProduct">
+                <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck2"><i
+                    class="bi bi-check-lg fs-2 text-light"></i></label>
+                <p class="mt-3 fs-4">製作中</p>
+              </div>
+              <div class="mt-5" :class="orderStatus.sendProduct ? `bg-primary` : `bg-light`"
+                style="height: 10px;width: 20%;"></div>
+              <div class="">
+                <!-- disabled綁定後一個checkbox，如果後一個checkbox勾選，前一個就不能取消。 -->
+                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off"
+                  v-model="orderStatus.sendProduct" :disabled="orderStatus.done">
+                <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck3"><i
+                    class="bi bi-check-lg fs-2 text-light"></i></label>
+                <p class="mt-3 fs-4">已出貨</p>
+              </div>
+              <div class="mt-5" :class="orderStatus.done ? `bg-primary` : `bg-light`" style="height: 10px;width: 20%;">
+              </div>
+              <div class="">
+                <!-- disabled綁定是否付款，未付款則不能完成訂單。 -->
+                <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" v-model="orderStatus.done"
+                  :disabled="!modalData.is_paid">
+                <label class="btn  border-2 rounded-circle"
+                  :class="modalData.is_paid ? 'btn-outline-primary' : 'btn-outline-light'" for="btncheck4"><i
+                    class="bi bi-check-lg fs-2 text-light"></i></label>
+                <p class="mt-3 fs-4">已完成</p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="">
+            <h3 class="text-center">客戶資料</h3>
+            <div class="border border-light text-start w-75 mx-auto">
+              <h5 class="m-2">客戶姓名：{{ modalData?.user?.name }}</h5>
+              <h5 class="m-2">客戶地址：{{ modalData?.user?.address }}</h5>
+              <h5 class="m-2">客戶Email：{{ modalData?.user?.email }}</h5>
+              <h5 class="m-2">客戶電話：{{ modalData?.user?.tel }}</h5>
+              <label for="payState" class="fs-5 text-primary m-2">付款狀態：</label>
+              <select class="form-select d-inline w-25 fs-5" id="payState" aria-label="付款狀態" v-model="modalData.is_paid">
+                <option :value=false>未付款</option>
+                <option :value=true>已付款</option>
+              </select>
+              <button type="button" class="d-flex mx-1 my-1 btn btn-danger" data-bs-target="#adOrderModal"
+                data-bs-dismiss="modal" v-if="modalData?.is_deleted" @click="recoverDelete(modalData)">
+                回復刪除
+              </button>
+            </div>
+
+          </div>
+          <h3 class="mb-3 mt-6">訂單商品</h3>
+          <table class="table align-middle border-primary">
+            <thead>
+              <tr>
+                <th scope="col" class="text-primary fw-medium">商品資訊</th>
+                <th scope="col" class="text-primary fw-medium">數量</th>
+                <th scope="col" class="text-primary fw-medium">價格</th>
+                <th scope="col" class="text-primary fw-medium"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="product in modalProducts" :key="product.id">
+                <th scope="row" class="py-4">
+                  <div class="card border-0 h-10" style="max-width: 540px">
+                    <div class="row g-0 align-items-center">
+                      <div class="col-md-4">
+                        <div class="ratio ratio-1x1">
+                          <img :src="product.product.imageUrl" class="img-fluid object-fit-cover" alt="..." />
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="fs-6 card-title text-primary fw-medium">
+                            {{ product.product.title }}
+                          </h5>
+                          <small class="text-start fw-normal">{{ product.product.category }}</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+                <td class="py-4">
+                  <input type="number" class="p-2 w-25" min="1" v-model="product.qty" disabled />
+                </td>
+                <td class="py-4 text-primary">NT$ {{ product.total }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-between mx-4 my-5">
+            <p class="fs-4">優惠券：{{}}</p>
+            <p class="fs-4 me-4">總金額：{{ modalData?.total }}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+            @click="updateOrder(modalData)">確認修改</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<script>
+import axios from 'axios';
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
+import Accordion from '@/components/AdOrderAccordion.vue';
+
+export default {
+  components: {
+    Accordion,
+  },
+  data() {
+    return {
+      allOrders: [],
+      unpaidOrders: [],
+      paidOrders: [],
+      deletedOrders: [],
+      doneOrders: [],
+      modalData: {},
+      modalProducts: [],
+      orderStatus: {
+        getOrder: true,
+        making: false,
+        sendProduct: false,
+        done: false,
+      },
+    }
+  },
+
+  methods: {
+    getAllOrders() {
+      this.allOrders = []
+      this.unpaidOrders = []
+      this.paidOrders = []
+      const getOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders`;
+      axios.get(getOrdersUrl)
+        .then((res) => {
+          this.allOrders = res.data.orders;
+          this.allOrders.forEach((item) => {
+            //先篩出刪除訂單
+            if (item.is_deleted) {
+              this.deletedOrders.push(item)
+            } else {
+              //未刪除訂單中篩出付款和未付款
+              if (item.is_paid) {
+                this.paidOrders.push(item)
+              } else {
+                this.unpaidOrders.push(item)
+              }
+            }
+            //篩出完成訂單
+            if (item.orderStatus.done) {
+              this.doneOrders.push(item)
+            }
+
+          })
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    },
+    updateOrder(data) {
+      const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`;
+      //更新訂單中塞入訂單狀態，用以處理訂單狀態
+      data.orderStatus = this.orderStatus;
+      axios.put(updateOrdersUrl, { data })
+        .then(() => {
+          location.reload()
+          // this.getAllOrders();
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    deleteOrder(data) {
+      const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`;
+      data.is_deleted = true;
+      axios.put(updateOrdersUrl, { data })
+        .then((res) => {
+          console.log(res)
+          location.reload()
+          // this.getAllOrders();
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+      console.log(data)
+    },
+    recoverDelete(data) {
+      const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`;
+      data.is_deleted = false;
+      axios.put(updateOrdersUrl, { data })
+        .then((res) => {
+          console.log(res)
+          location.reload()
+          // this.getAllOrders();
+          console.log("Rocover Delete")
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
+    openModal(order) {
+      this.modalData = {...order}
+      this.modalProducts = Object.values(order.products)
+      //將訂單狀態塞入
+      this.orderStatus = order.orderStatus
+      console.log(this.modalData)
+    },
+  },
+
+  mounted() {
+    this.getAllOrders();
+  },
+
+}
+</script>
+
+<style lang="scss"></style>

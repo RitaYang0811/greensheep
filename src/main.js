@@ -23,8 +23,18 @@ import * as AllRules from '@vee-validate/rules'
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 
+<<<<<<< HEAD
 //  google第三方登入
 import vue3GoogleLogin from 'vue3-google-login'
+=======
+//CKEditor5
+import CKEditor from '@ckeditor/ckeditor5-vue'
+import '@ckeditor/ckeditor5-build-classic/build/translations/zh' // 語言
+
+//vue-awesome-paginate
+import VueAwesomePaginate from "vue-awesome-paginate"
+import "vue-awesome-paginate/dist/style.css"
+>>>>>>> 03174548df3dec0f6c89d64c1a4d30b84df74fce
 
 //bootstrap
 import 'bootstrap/dist/js/bootstrap.min.js'
@@ -32,24 +42,11 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import App from './App.vue'
 import router from './router'
 
-//VeeValidate 設定
+//VeeValidate 驗證規則設定
 Object.keys(AllRules).forEach((rule) => {
   defineRule(rule, AllRules[rule])
 })
 
-// defineRule('ruleTest1', (value, [target]) => {
-//   if(typeof value === 'number' && typeof target === 'number') {
-//     return value >= target ? true : '折抵金額不可大於訂單金額'
-//   }
-//   return true
-// });
-
-// defineRule('ruleTest2', (value, [target]) => {
-//   if(typeof value === 'number' && typeof target === 'number') {
-//     return value <= target ? true : '折抵金額不可大於訂單金額'
-//   }
-//   return true
-// });
 
 configure({
   generateMessage: localize({ zh_TW: zhTW }),
@@ -67,6 +64,8 @@ pinia.use(({ store }) => {
 })
 app.use(router)
 app.use(VueAxios, axios)
+app.use(CKEditor)
+app.use(VueAwesomePaginate)
 
 app.component('VueLoading', Loading)
 app.component('VueDatePicker', VueDatePicker)

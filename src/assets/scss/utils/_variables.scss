@@ -471,6 +471,7 @@ $spacers: (
   24: $spacer * 24,
   30: $spacer * 30,
   40: $spacer * 40,
+  45: $spacer * 45,
   50: $spacer * 50,
   100: $spacer * 100,
   -2: $spacer * -2,
@@ -838,7 +839,7 @@ $table-cell-padding-x-sm: 0.25rem !default;
 
 $table-cell-vertical-align: top !default;
 
-$table-color: var(--#{$prefix}body-color) !default;
+$table-color: $primary; // var(--#{$prefix}body-color) !default;custom
 $table-bg: transparent; //var(--#{$prefix}body-bg) !default;
 $table-accent-bg: transparent !default;
 
