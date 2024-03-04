@@ -101,7 +101,13 @@ const router = createRouter({
         {
           path: 'memberSignUp',
           name: 'MemberSignUp',
-          component: () => import('../views/user/MemberSignUp.vue')
+          component: () => import('../views/user/MemberSignUpView.vue')
+        },
+        // Google和Line 登入後填寫生日
+        {
+          path: 'OtherLogin',
+          name: 'OtherLogin',
+          component: () => import('../views/user/OtherLoginView.vue')
         }
       ]
     },
