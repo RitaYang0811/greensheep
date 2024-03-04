@@ -7,7 +7,8 @@ const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default defineStore('cartStore', {
   state: () => ({
     carts: [],
-    cart: {}
+    cart: {},
+    deliverData:{},
   }),
   actions: {
     addToCart(id, qty = 1) {
@@ -101,6 +102,11 @@ export default defineStore('cartStore', {
             })
         }
       })
+    },
+    getDeliverData(data){
+      this.deliverData = data;
+
+      console.log(this.deliverData)
     }
   },
 

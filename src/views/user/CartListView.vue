@@ -75,9 +75,17 @@
             </div>
           </th>
           <td class="py-4">
-            <input type="number" class="p-2 w-25" min="1" v-model="cart.qty" @blur="updateCart(cart)" />
+            <div class="d-flex justify-content-center ">
+              <button class="btn btn-link text-primary" @click.prevent="cart.qty++" @click="updateCart(cart)"><i
+                  class="bi bi-plus-circle fs-3"></i></button>
+              <input type="number" class="p-2 w-10" min="1" v-model="cart.qty" disabled />
+              <button class="btn btn-link text-primary" @click.prevent="cart.qty--" @click="updateCart(cart)" :disabled="cart.qty<=1"><i
+                  class="bi bi-dash-circle fs-3"></i></button>
+            </div>
+
+
           </td>
-          <td class="py-4 text-primary">NT$ {{ cart.final_total }}</td>
+          <td class="py-4 text-primary">NT$ {{ parseInt(cart.total) }}</td>
           <td class="py-4">
             <button class="btn btn-primary" @click="deleteCart(cart.id)">刪除</button>
           </td>
@@ -90,9 +98,9 @@
     <div class="container">
       <div class="row">
         <div class="col-md-2 text-primary fw-medium">已使用優惠</div>
-        <div class="col-md-10 text-start">
-          <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4">免運優惠</span>
-          <span class="fs-7 text-primary">全館滿NT$3,000，享台灣免運費</span>
+        <div class="col-md-10 text-start" v-if="carts[0]?.coupon">
+          <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4">{{ carts[0].coupon.title }}</span>
+          <span class="fs-7 text-primary">{{ `消費滿 NT$ ${carts[0].coupon.min_buy_price_by_discount}，享 ${carts[0].coupon.percent /10} 折` }}</span>
         </div>
       </div>
     </div>
@@ -105,6 +113,7 @@
       <div class="col-md-10">
         <form class="text-start">
           <input type="text" class="teat-start p-2 w-50" placeholder="請輸入優惠代碼" v-model="coupon" />
+          <button type="button" class="btn btn-primary p-3" @click="sendCoupon(coupon)">送出優惠券</button>
         </form>
       </div>
     </div>
@@ -142,22 +151,24 @@
         <div class="p-5 bg-greyD4 text-dark">
           <div class="d-flex justify-content-between mb-5">
             <p class="">小計：</p>
-            <p class="">NT$ {{ total }}</p>
+            <p class="">NT$ {{ rawTotal }}</p>
           </div>
-          <div class="d-flex justify-content-between mb-5">
+          <!-- <div class="d-flex justify-content-between mb-5">
             <p class="">運費：</p>
             <p class="">免運</p>
-          </div>
+          </div> -->
           <div class="d-flex justify-content-between mb-5">
-            <p class="">優惠券：</p>
+            <p class="">優惠券： </p>
+            <span v-if="carts[0]?.coupon">{{ `消費滿 NT$ ${carts[0].coupon.min_buy_price_by_discount}，享 ${carts[0].coupon.percent /10} 折` }}</span>
           </div>
 
           <div class="border border-primary border-1 mb-5"></div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">合計：</p>
-            <p class="fw-bold">NT$ {{ total }}</p>
+            <p class="fw-bold">NT$ {{ parseInt(total) }}</p>
           </div>
-          <router-link to="/order" class="btn btn-primary p-5 fs-5 w-100 text-white">前往結帳</router-link>
+          <button class="btn btn-primary p-5 fs-5 w-100 text-white"
+            @click="goCheckout">前往結帳</button>
         </div>
       </div>
     </div>
@@ -176,6 +187,7 @@ import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 
 import OrderRules from "../../components/OrderRules.vue"
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
 export default {
   components: {
@@ -202,15 +214,42 @@ export default {
       },//pinia
     }
   },
-  
+
   methods: {
-    ...mapActions(cartStore, ['getCarts', 'updateCart', 'deleteCart'])
+    ...mapActions(cartStore, ['getCarts', 'updateCart', 'deleteCart', 'getDeliverData']),
+
+    sendCoupon(coupon) {
+      const sendCouponUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/coupon`
+      const sendData={
+        data:{
+          code:coupon
+        }
+      }
+      this.axios.post(sendCouponUrl, sendData)
+      .then(()=>{
+        this.coupon = ""
+        this.getCarts()
+      })
+      .catch((err)=>{
+        console.log(err)
+      })    
+    },
+    goCheckout(){
+      // this.$router.push('/order')
+      if(this.deliverChoose.payWay.length >0 && this.deliverChoose.deliver.length >0){
+        this.$router.push('/order')
+        this.getDeliverData(this.deliverChoose)
+      }else{
+        alert('付款方式必填')
+      }
+
+    },
+
   },
 
   watch: {
     //監聽location選擇，產生deliver方式
     'deliverChoose.location'(location) {
-      console.log(location)
       this.delivers = []; //洗掉deliver內容，避免重新點擊location造成累加。 
       this.payWays = [];  //洗掉payWay內容，避免重新點擊location造成累加。     
       this.deliverChoose.deliver = "";  //洗掉紀錄，讓選擇location時deliver都能回到預設值。
@@ -228,20 +267,27 @@ export default {
       })
     },
     //監聽付款內容，查看deliverChoose內容(debug用，最後會刪除。)
-    'deliverChoose.payWay'() {
-      console.log(this.deliverChoose)
-    },
+    // 'deliverChoose.payWay'() {
+    //   console.log(this.deliverChoose)
+    // },
     //監聽coupon(先預留function，之後確定了再補內容)
-    coupon(value) {
-      console.log(value)
-      if (value == "") {
-        return ""
-      }
-    },
+    // coupon(value) {
+    //   console.log(value)
+    //   if (value == "") {
+    //     return ""
+    //   }
+    // },
   },
 
   computed: {
     ...mapState(cartStore, ['carts', 'total']),
+    rawTotal(){
+      let total = 0;
+      this.carts.forEach((item)=>{
+        total += item.total
+      })
+      return total
+    },
   },
 
   mounted() {
@@ -250,6 +296,7 @@ export default {
       this.locations.push(item.location)
     })
     this.getCarts();
+    
   },
 
 }
