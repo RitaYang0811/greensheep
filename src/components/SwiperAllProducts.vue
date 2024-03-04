@@ -1,5 +1,9 @@
 <template>
   <swiper
+    :style="{
+      '--swiper-navigation-color': '#fff',
+      '--swiper-pagination-color': '#fff'
+    }"
     :slides-per-view="1"
     :modules="modules"
     :centeredSlides="true"
