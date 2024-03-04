@@ -87,7 +87,7 @@
           <div class="card-body p-0 px-2 pt-2">
             <h5 class="card-title display-6 text-dark mb-2" style="height: 40px">
               <span v-if="article.isPinned" class="float-end bg-primary text-white py-1 px-2 fs-8">置頂</span
-              >{{ article.title }} {{ article.isPublic }}
+              >{{ article.title }}
             </h5>
             <div
               class="card-foot d-flex justify-content-evenly border-top border-1 border-primary py-2"
@@ -182,7 +182,6 @@ export default {
     async updatePinnedArticle() {
       try {
         this.isSelectPinnedArticle = false
-        // this.loadingStatusData.loadingItem = true
         this.isLoading = true
 
         const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article`
