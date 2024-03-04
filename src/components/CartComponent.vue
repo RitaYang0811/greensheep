@@ -26,8 +26,16 @@
                         <br>
                         <span class="badge rounded-pill text-bg-primary">{{ cart.product.category }} </span>
                       </h5>
+                      <div class="">
+                        <button class="btn btn-link text-primary" @click.prevent="cart.qty++" @click="updateCart(cart)"><i
+                  class="bi bi-plus-circle fs-3"></i></button>
+                        <input type="number" min="1" class="w-25 my-2 fs-5" v-model="cart.qty" disabled>
+                        <button class="btn btn-link text-primary" @click.prevent="cart.qty--" @click="updateCart(cart)" :disabled="cart.qty<=1"><i
+                  class="bi bi-dash-circle fs-3"></i></button>
+                      </div>
 
-                      <input type="number" min="1" class="w-50 my-2 fs-5" v-model="cart.qty" @blur="updateCart(cart)">
+                      
+
                       <p class="card-text text-small text-dark">$NT {{ cart.total }}</p>
                     </div>
                   </div>
@@ -43,7 +51,7 @@
       </div>
 
       <div class="my-2">
-        <p class="text-success text-end fs-4 p-4 text-dark border-top">總計：$ <span>{{ total }}</span> 元</p>
+        <p class="text-success text-end fs-4 p-4 text-dark border-top">總計：$ <span>{{ parseInt(total) }}</span> 元</p>
 
         <router-link to="/cart" class="btn btn-primary w-100 fs-4 p-4" @click="closeOffcanvas"> 立即結帳
         </router-link>
