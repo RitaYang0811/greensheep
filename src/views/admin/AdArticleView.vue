@@ -3,7 +3,7 @@
     <template v-if="isNewData">建立文章</template>
     <template v-else>編輯文章</template>
   </h1>
-  <VForm @submit="updateArticle(article, activityIsPublic)" v-slot="{ errors }">
+  <VForm @submit="updateArticle(article, activityIsPublic, editIsPublic)" v-slot="{ errors }">
     <div v-if="loadingStatusData.loadingItem" class="d-flex justify-content-center align-items-center" style="min-height: 360px;">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -56,13 +56,13 @@
               <p class="mb-2">文章狀態</p>
               <div class="d-flex gap-4">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" v-model="article.isPublic" value="private" id="private" :checked="!article.isPublic">
+                  <input class="form-check-input" type="radio" v-model="editIsPublic" value="private" id="private" :checked="!article.isPublic">
                   <label class="form-check-label" for="private">
                     非公開草稿
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" v-model="article.isPublic" value="public" id="public" :checked="article.isPublic">
+                  <input class="form-check-input" type="radio" v-model="editIsPublic" value="public" id="public" :checked="article.isPublic">
                   <label class="form-check-label" for="public">
                     公開文章
                   </label>
@@ -118,6 +118,7 @@ export default {
         author: '',
         content: ''
       },
+      editIsPublic: '',
       editor: ClassicEditor,
       editorConfig: {
         placeholder: '輸入文字',
@@ -153,13 +154,15 @@ export default {
   watch: {
     articleData() {
       this.article = { ...this.articleData }
+      if(!this.isNewData) {
+        this.article.isPublic ? this.editIsPublic = "public" : this.editIsPublic = "private"
+      }
     },
     'article.image'() {
       this.formStatusData.hasFormImage = true
     },
     'article.content'() {
       this.article.content ? this.formStatusData.hasFormContent = true : this.formStatusData.hasFormContent = false
-      
     },
   },
   computed: {

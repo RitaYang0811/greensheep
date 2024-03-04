@@ -454,8 +454,7 @@ export default {
           .finally(() => {
             this.loadingStatus.loadingGetCoupon = false
           })
-      } else if (!this.isNew) {
-        // 編輯優惠券
+      } else if (!this.isNew) { // 編輯優惠券
         const id = couponData.id
         const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupon/${id}`
 
