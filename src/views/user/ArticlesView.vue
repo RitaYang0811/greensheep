@@ -1,5 +1,5 @@
 <template>
-  <div class="articles container-lg">
+  <div class="articles container-md">
     <div class="pt-7 pt-lg-20">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-20">
