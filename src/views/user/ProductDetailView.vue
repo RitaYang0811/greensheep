@@ -1,6 +1,5 @@
 <template>
   <div class="container py-7 py-lg-10">
-
     <!-- breadcrumb -->
     <div class="row">
       <nav aria-label="breadcrumb">
@@ -11,8 +10,12 @@
           <li class="breadcrumb-item" aria-current="page">
             <router-link to="/products">全部商品</router-link>
           </li>
-          <li class="breadcrumb-item" aria-current="page">項鍊</li>
-          <li class="breadcrumb-item" aria-current="page">天使之愛十字架</li>
+          <li class="breadcrumb-item" aria-current="page">
+            <routerLink :to="`/products?category=${productInfo.category}`"
+              >{{ productInfo.category }}
+            </routerLink>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">{{ productInfo.title }}</li>
         </ol>
       </nav>
 
@@ -20,7 +23,6 @@
         <div class="col-12 col-lg-6">
           <!-- Swiper -->
           <ProductSwiper :product-info="productInfo"></ProductSwiper>
-
         </div>
         <!-- 商品資訊 -->
         <div class="col-12 col-lg-5 text-start d-flex flex-column">
@@ -30,7 +32,6 @@
 
             <i class="bi bi-heart fs-4 text-primary"></i>
             <i class="bi bi-heart-fill fs-4 text-primary"></i>
-
           </div>
           <!-- v-if 無折扣 -->
           <p
@@ -41,20 +42,20 @@
           </p>
           <!-- v-else 打折 -->
 
-          <p v-else class="mb-4 mb-lg-5">
-            <span class="text-primary fs-6 fs-lg-5 fw-medium me-4">
-              NT$ {{ productInfo.price }}</span
-            >
-            <span class="text-grey9F fs-6 fs-lg-5 fw-medium text-decoration-line-through">
+          <p v-else class="mb-4 mb-lg-5 d-flex align-item-center gap-4">
+            <span class="text-primary fs-4 fs-lg-3 fw-medium"> NT$ {{ productInfo.price }}</span>
+            <span class="text-grey9F fs-6 fs-lg-5 fw-medium text-decoration-line-through my-1">
               NT$ {{ productInfo.origin_price }}
             </span>
-
+            <span v-if="productInfo.discount !== 10" class="bg-deco p-1 text-dark fs-8 my-1"
+              >{{ productInfo.discount }}折</span
+            >
           </p>
           <!-- 行銷活動 -->
           <div class="position-relative start-line">
             <div class="d-flex align-items-bottom text-grey66 fs-9 text-start ms-7">
               <div class="d-inline-block border-grey66 me-6">
-                <p class="mb-2">全館滿NT$3,000，享台灣免運優惠</p>
+                <p class="mb-2">全館滿NT$2,000，享台灣免運優惠</p>
                 <p class="mb-2">全館滿NT$12,000，享國際免運優惠</p>
                 <p class="mb-2">凡購買指定商品，免費升級品牌絨布禮盒包裝(含品牌緞帶)</p>
               </div>
@@ -81,20 +82,29 @@
             <p class="d-flex align-items-center text-primary mb-2 fs-8 fs-lg-7">
               <span class="material-icons me-1 fs-8 fs-lg-7"> check_circle </span>
 
-              材質：925純銀 原創設計 手工製作
+              材質：{{ productInfo.material }}
             </p>
             <p class="d-flex align-items-center text-primary mb-2 fs-8 fs-lg-7">
               <span class="material-icons me-1 fs-8 fs-lg-7"> check_circle </span>
-              現貨商品：接單後3日內出貨
+              {{ productInfo.purchaseWay }}：接單後{{ productInfo.makingDays }}日內出貨
+            </p>
+            <p
+              v-if="Array.isArray(productInfo.gifts)"
+              class="d-flex align-items-center text-primary mb-2 fs-8 fs-lg-7"
+            >
+              <span class="material-icons me-1 fs-8 fs-lg-7"> check_circle </span>
+
+              贈：{{ productInfo.gifts.join('、') }}
             </p>
             <p class="d-flex align-items-center text-primary mb-2 fs-8 fs-lg-7">
               <span class="material-icons me-1 fs-8 fs-lg-7"> check_circle </span>
 
-              贈：進口拭銀布 防潮袋 品牌經典紙盒包裝
+              包裝：{{ productInfo.wrap }}
             </p>
           </div>
           <!-- 優惠加購 -->
           <div
+            v-if="productInfo.wrap === '品牌經典紙盒包裝'"
             class="d-flex align-items-center justify-content-between bg-light rounded-2 px-6 py-3 gap-5 mb-4"
           >
             <!-- checkbox -->
@@ -125,7 +135,7 @@
                 <span class="text-dark fs-9">(原價500元)</span>
               </div>
               <img
-                src="../assets/images/package-sm.jpg"
+                src="@/assets/images/package-sm.jpg"
                 alt=""
                 data-bs-toggle="modal"
                 data-bs-target="#packageModal"
@@ -165,47 +175,36 @@
               </div>
             </div>
           </div>
-          <div class="col justify-content-center align-items-center flex-grow-1">
-            <!-- 尺寸選擇 -->
-            <select
+          <div class="d-flex gap-5 my-5">
+            <!-- 數量選擇 -->
 
-              class="mb-4 form-select size-select"
-
-              aria-label="Default select example"
-              style="height: 55px"
-            >
-              <option selected>請選擇商品規格</option>
-              <option value="1">女生款(小)</option>
-              <option value="2">男生款(大)</option>
-            </select>
-
-            <div class="d-flex flex-nowrap justify-content-between">
-              <!-- 數量選擇 -->
-
-              <div class="d-flex border border-primary">
-                <button type="button" class="btn">
-                  <i class="bi bi-dash-lg fs-4 text-primary"></i>
-                </button>
-                <input
-                  type="number"
-                  class="border-0 text-center number-select"
-                  min="1"
-                  value="1"
-                  readonly
-                />
-                <button type="button" class="btn">
-                  <i class="bi bi-plus-lg fs-4 text-primary"></i>
-                </button>
-              </div>
-
+            <div class="d-flex gap-4 align-content-center">
               <button
                 type="button"
-                class="custom-btn custom-btn-next2 bg-primary text-white fw-medium py-4 px-10"
-                @click="addToCart(productInfo.id, productInfo.qty)"
+                class="btn qty-btn rounded-circle border-primary p-0"
+                :disabled="qty === 1"
+                @click.prevent="qty--"
               >
-                下一步：加入購物車
+                <i class="bi bi-dash-lg text- fs-3"></i>
+              </button>
+              <input
+                v-model="qty"
+                type="number"
+                class="border-0 text-center number-select"
+                min="1"
+                value="1"
+                readonly
+              />
+              <button class="btn qty-btn rounded-circle p-0 border-primary" @click.prevent="qty++">
+                <i class="bi bi-plus-lg text-primary fs-3"></i>
               </button>
             </div>
+
+            <button
+              href="#"
+              class="custom-btn custom-btn-primary text-center border-1 add-to-cart fw-bold w-100"
+              @click.prevent="addToCart(productInfo.id, qty)"
+            ></button>
           </div>
         </div>
       </div>
@@ -214,7 +213,6 @@
 
   <!-- 下半部 -->
   <div class="container py-10">
-
     <!-- <div data-aos="fade-up" data-aos-duration="1000" data-aos-offset="50" class="mb-5">
       <h2 class="fs-lg-2 fw-medium">{{ productInfo.title }}</h2>
       <p class="text-primary">The Angel Love Cross</p>
@@ -237,30 +235,14 @@
         data-aos-delay="200"
       >
         <p class="mb-1 px-1 display-6 border-start border-end border-1 border-dark lh-1">材質</p>
-        <p class="lh-lg">925純銀</p>
+        <p class="lh-lg">{{ productInfo.material }}</p>
       </div>
+
       <div
         class="d-flex flex-column align-items-center mb-5"
         data-aos="fade-up"
         data-aos-duration="1000"
-      >
-        <p class="mb-1 px-1 display-6 border-start border-end border-1 border-dark lh-1">尺寸</p>
-        <p class="lh-lg">女生款 - 長1.5 寬1.15 厚0.3 公分</p>
-        <p class="lh-lg">男生款 - 長2.0 寬1.4 厚0.35公分</p>
-      </div>
-      <div
-        class="d-flex flex-column align-items-center mb-5"
-        data-aos="fade-up"
-        data-aos-duration="1000"
-      >
-        <p class="mb-1 px-1 display-6 border-start border-end border-1 border-dark lh-1">鍊長</p>
-        <p class="lh-lg">女生款-16吋(約40公分)</p>
-        <p class="lh-lg">男生款-18吋 (約45公分)</p>
-      </div>
-      <div
-        class="d-flex flex-column align-items-center mb-5"
-        data-aos="fade-up"
-        data-aos-duration="1000"
+        data-aos-once="true"
       >
         <p class="mb-1 px-1 display-6 border-start border-end border-1 border-dark lh-1">
           台灣原創設計 & 手工製作
@@ -278,44 +260,15 @@
       <!-- 圖片區 -->
       <div class="row py-10 mb-30 w-lg-80 mx-auto">
         <template v-for="imgUrl in productInfo.imagesUrl" :key="productInfo.id">
-          <div
-            class="mb-3 col-md-6"
-            data-aos="zoom-in"
-            data-aos-duration="1000"
-            data-aos-delay="200"
-          >
-            <img :src="imgUrl" alt="商品圖片" />
+          <div class="mb-3 col-6" data-aos="zoom-in" data-aos-duration="1000" data-aos-once="true">
+            <img
+              :src="imgUrl"
+              alt="商品圖片"
+              class="object-fit-cover"
+              style="width: 500px; height: 500px"
+            />
           </div>
         </template>
-        <!-- <div class="mb-3 col-md-6" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="300">
-          <img src="../assets/images/product-3-2.jpg" alt="商品圖片" />
-        </div>
-        <div
-          class="mb-3 col-md-6 col-lg-4"
-          data-aos="zoom-in"
-          data-aos-duration="1000"
-          data-aos-delay="300"
-        >
-          <div class="ratio ratio-1x1">
-            <img src="../assets/images/product-3-4.jpg" class="object-fit-cover" alt="商品圖片" />
-          </div>
-        </div>
-        <div
-          class="mb-3 col-md-6 col-lg-4"
-          data-aos="zoom-in"
-          data-aos-duration="1000"
-          data-aos-delay="400"
-        >
-          <div class="ratio ratio-1x1">
-            <img src="../assets/images/product-3-6.jpg" class="object-fit-cover" alt="商品圖片" />
-          </div>
-        </div>
-
-        <div class="mb-3 col-lg-4" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="500">
-          <div class="ratio ratio-1x1">
-            <img src="../assets/images/product-3-1.jpg" class="object-fit-cover" alt="商品圖片" />
-          </div>
-        </div> -->
       </div>
 
       <hr />
@@ -455,10 +408,10 @@
       </ul>
     </div>
   </div>
+  <VueLoading v-model:active="isLoading" />
 </template>
 
 <script>
-
 import ProductSwiper from '@/components/ProductSwiper.vue'
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
@@ -466,7 +419,10 @@ import { mapState, mapActions } from 'pinia'
 
 export default {
   data() {
-    return {}
+    return {
+      isLoading: false,
+      qty: 1
+    }
   },
   components: { ProductSwiper },
 
@@ -484,5 +440,23 @@ export default {
 }
 </script>
 
-<style scoped></style>
-
+<style scoped lang="scss">
+.qty-btn {
+  width: 40px;
+  height: 40px;
+  &:hover {
+    background: white;
+  }
+}
+.add-to-cart {
+  &::after {
+    content: '加入購物車';
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%);
+  }
+  &:hover::after {
+    color: #566b5a;
+  }
+}
+</style>

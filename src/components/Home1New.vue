@@ -18,8 +18,21 @@
       <div class="banner-content row justify-content-between align-items-end">
         <div class="d-flex flex-column justify-content-start align-items-start gap-5">
           <h2 class="banner-title h1 text-start text-dark z-1">
-            <div data-aos="fade-right" data-aos-duration="2000">Discover your</div>
-            <div data-aos="fade-right" data-aos-duration="2000" data-aos-delay="400">
+            <div
+              data-aos-delay="300"
+              data-aos="fade-right"
+              data-aos-duration="2000"
+              data-aos-once="true"
+            >
+              Discover your
+            </div>
+            <div
+              data-aos="fade-right"
+              data-aos-duration="2000"
+              data-aos-delay="300"
+              data-aos-once="true"
+              data-aos-easing="ease"
+            >
               Unique Elegance
             </div>
           </h2>
@@ -29,6 +42,7 @@
             data-aos="fade-right"
             data-aos-duration="1500"
             data-aos-offset="50"
+            data-aos-once="true"
           >
             <a class="custom-btn custom-btn-primary shop-now" href="2-1.productPage.html"
               >SHOP NOW</a

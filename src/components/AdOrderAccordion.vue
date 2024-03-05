@@ -7,8 +7,8 @@
         {{ order.create_at }} | {{ order.id }}
         <span :class="order.is_paid ? 'text-bg-primary' : 'text-bg-danger'"
           class="ms-10 badge rounded-pill text-bg-primary fs-7">{{ order.is_paid ? "已付款" : "未付款" }}</span>
-        <span class="ms-10 badge rounded-pill text-bg-primary fs-7" v-if="order.orderStatus.done">已完成</span>
-        <span class="ms-10 badge rounded-pill text-bg-danger fs-7" v-if="order.is_deleted">已刪除</span>
+        <span class="ms-10 badge rounded-pill text-bg-primary fs-7" v-if="order?.orderStatus?.done">已完成</span>
+        <span class="ms-10 badge rounded-pill text-bg-danger fs-7" v-if="order?.is_deleted">已刪除</span>
       </button>
     </h2>
     <!-- id要記得改，綁定order.id -->
@@ -33,15 +33,17 @@
         </div>
         <div class="my-4 border border-1"></div>
         <div class="d-flex justify-content-between mx-4">
-          <p class="">優惠券：{{}}</p>
-          <p class="">總金額：{{ order.total }}</p>
+          <p class="">優惠券：<span class="ms-2 fs-6 badge rounded-pill text-bg-secondary">{{
+    Object.values(order.products)[0]?.coupon?.code }}</span></p>
+          <p class="">總金額：{{ parseInt(order.total) }}</p>
+
         </div>
         <div class="my-4 border border-3 "></div>
         <!-- 用戶資料渲染處 -->
         <div class="mt-4">
           <div class="fs-4">
             <!-- <h3>{{ order.user.name }}</h3> -->
-            <p class="m-2">配送方式：黑貓宅配</p>
+            <!-- <p class="m-2">配送方式：黑貓宅配</p> -->
             <p class="m-2">客戶姓名：{{ order.user.name }}</p>
             <p class="m-2">客戶電話：{{ order.user.tel }}</p>
             <p class="m-2">客戶地址：{{ order.user.address }}</p>
@@ -56,6 +58,8 @@
               v-if="!order.is_deleted">
               刪除訂單
             </button>
+            <button class="btn btn-danger mx-4" v-if="order.is_deleted"
+              @click.prevent="confirmDelete(order.id)">確認永久刪除訂單</button>
           </div>
         </div>
       </div>
@@ -65,7 +69,7 @@
 
 <script>
 export default {
-  props: ['orders', 'openModal', 'deleteOrder',],
+  props: ['orders', 'openModal', 'deleteOrder','confirmDelete'],
 
 
 
