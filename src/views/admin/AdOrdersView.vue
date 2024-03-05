@@ -82,24 +82,25 @@
                 <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" checked disabled>
                 <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck1"><i
                     class="bi bi-check-lg fs-2 text-light"></i></label>
-                <p class="mt-3 fs-5">收到訂單</p>
+                <p class="mt-3 fs-4">收到訂單</p>
               </div>
-              <div :class="orderStatus?.making ? `bg-primary` : `bg-light`" class="mt-5" style="height: 10px;width: 20%;">
+              <div :class="orderStatus?.making ? `bg-primary` : `bg-light`" class="mt-5"
+                style="height: 10px;width: 20%;">
               </div>
               <div class="">
                 <!-- disabled綁定後一個checkbox，如果後一個checkbox勾選，前一個就不能取消。 -->
                 <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" v-model="orderStatus.making"
-                  :disabled="orderStatus.sendProduct">
+                  :disabled="orderStatus?.sendProduct">
                 <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck2"><i
                     class="bi bi-check-lg fs-2 text-light"></i></label>
                 <p class="mt-3 fs-4">製作中</p>
               </div>
-              <div class="mt-5" :class="orderStatus.sendProduct ? `bg-primary` : `bg-light`"
+              <div class="mt-5" :class="orderStatus?.sendProduct ? `bg-primary` : `bg-light`"
                 style="height: 10px;width: 20%;"></div>
               <div class="">
                 <!-- disabled綁定後一個checkbox，如果後一個checkbox勾選，前一個就不能取消。 -->
                 <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off"
-                  v-model="orderStatus.sendProduct" :disabled="orderStatus.done">
+                  v-model="orderStatus.sendProduct" :disabled="orderStatus?.done">
                 <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck3"><i
                     class="bi bi-check-lg fs-2 text-light"></i></label>
                 <p class="mt-3 fs-4">已出貨</p>
@@ -127,7 +128,8 @@
               <h5 class="m-2">客戶Email：{{ modalData?.user?.email }}</h5>
               <h5 class="m-2">客戶電話：{{ modalData?.user?.tel }}</h5>
               <label for="payState" class="fs-5 text-primary m-2">付款狀態：</label>
-              <select class="form-select d-inline w-25 fs-5" id="payState" aria-label="付款狀態" v-model="modalData.is_paid">
+              <select class="form-select d-inline w-25 fs-5" id="payState" aria-label="付款狀態"
+                v-model="modalData.is_paid">
                 <option :value=false>未付款</option>
                 <option :value=true>已付款</option>
               </select>
@@ -177,14 +179,18 @@
             </tbody>
           </table>
           <div class="d-flex justify-content-between mx-4 my-5">
-            <p class="fs-4">優惠券：{{}}</p>
-            <p class="fs-4 me-4">總金額：{{ modalData?.total }}</p>
+            <p class="fs-4">優惠券：
+              <span class="ms-2 fs-5 badge rounded-pill text-bg-warning" v-if="modalData?.products">{{
+                Object.values(modalData?.products)[0]?.coupon?.code }}</span>
+                <!-- {{ console.log(modalData.products) }} -->
+            </p>
+            <p class="fs-4 me-4">總金額：{{ parseInt(modalData?.total) }}</p>
           </div>
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
             @click="updateOrder(modalData)">確認修改</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
         </div>
       </div>
     </div>
@@ -229,6 +235,14 @@ export default {
         .then((res) => {
           this.allOrders = res.data.orders;
           this.allOrders.forEach((item) => {
+            if (!item.orderStatus) {
+              item.orderStatus = {
+                getOrder: true,
+                making: false,
+                sendProduct: false,
+                done: false,
+              }
+            }
             //先篩出刪除訂單
             if (item.is_deleted) {
               this.deletedOrders.push(item)
@@ -240,11 +254,10 @@ export default {
                 this.unpaidOrders.push(item)
               }
             }
-            //篩出完成訂單
+            //篩出完成訂單  
             if (item.orderStatus.done) {
               this.doneOrders.push(item)
             }
-
           })
         })
         .catch((err) => {
@@ -295,11 +308,11 @@ export default {
     },
 
     openModal(order) {
-      this.modalData = {...order}
+      this.modalData = { ...order }
       this.modalProducts = Object.values(order.products)
       //將訂單狀態塞入
       this.orderStatus = order.orderStatus
-      console.log(this.modalData)
+      // console.log(this.modalData)
     },
   },
 
