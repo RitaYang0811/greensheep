@@ -33,9 +33,10 @@
         </div>
         <div class="my-4 border border-1"></div>
         <div class="d-flex justify-content-between mx-4">
-          <p class="">優惠券：<span class="ms-2 fs-6 badge rounded-pill text-bg-warning">{{ Object.values(order.products)[0]?.coupon?.code }}</span></p>
+          <p class="">優惠券：<span class="ms-2 fs-6 badge rounded-pill text-bg-secondary">{{
+    Object.values(order.products)[0]?.coupon?.code }}</span></p>
           <p class="">總金額：{{ parseInt(order.total) }}</p>
-          
+
         </div>
         <div class="my-4 border border-3 "></div>
         <!-- 用戶資料渲染處 -->
@@ -57,6 +58,8 @@
               v-if="!order.is_deleted">
               刪除訂單
             </button>
+            <button class="btn btn-danger mx-4" v-if="order.is_deleted"
+              @click.prevent="confirmDelete(order.id)">確認永久刪除訂單</button>
           </div>
         </div>
       </div>
@@ -66,7 +69,7 @@
 
 <script>
 export default {
-  props: ['orders', 'openModal', 'deleteOrder',],
+  props: ['orders', 'openModal', 'deleteOrder','confirmDelete'],
 
 
 
