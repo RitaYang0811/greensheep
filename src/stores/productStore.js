@@ -6,6 +6,7 @@ const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default defineStore('productStore', {
   state: () => ({
     products: [],
+    recommendProducts: [],
     category: '全部商品 ALL',
     categories: ['項鍊 PENDANT', '戒指 RING', '耳環 EARRINGS', '手鍊 BRACELET'],
     productInfo: {},
@@ -38,26 +39,6 @@ export default defineStore('productStore', {
           this.loadingStatus = false
         })
     },
-    // getProducts(page = 1) {
-    //   console.log(this.$route)
-    //   let url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products`
-    //   if (this.category === '全部商品') {
-    //     url += `?page=${page}`
-    //   } else {
-    //     url += `?category=${this.category}&page=${page}`
-    //   }
-    //   axios
-    //     .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products?category=`)
-    //     .then((res) => {
-    //       console.log('getProducts被觸發')
-
-    //       this.products = res.data.products
-    //       this.pagination = res.data.pagination
-    //     })
-    //     .catch((err) => {
-    //       console.log(err.data.message)
-    //     })
-    // },
 
     getProductInfo(id) {
       let url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/product/${id}`
@@ -74,6 +55,17 @@ export default defineStore('productStore', {
         .finally(() => {
           this.loadingStatus = false
         })
+    },
+    getRecommendProducts(id) {
+      this.recommendProducts = []
+      while (this.recommendProducts.length < 4) {
+        const randomProduct = this.products[Math.floor(Math.random() * this.products.length)]
+
+        if (!this.recommendProducts.includes(randomProduct) || id === this.recommendProducts.id) {
+          this.recommendProducts.push(randomProduct)
+        }
+      }
+      console.log('推薦商品', this.recommendProducts)
     }
   }
 })

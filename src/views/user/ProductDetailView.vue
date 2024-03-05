@@ -1,7 +1,7 @@
 <template>
-  <div class="container py-7 py-lg-10">
+  <div class="container pt-7 pt-lg-10">
     <!-- breadcrumb -->
-    <div class="row">
+    <div class="row justify-content-center">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb col-12">
           <li class="breadcrumb-item">
@@ -175,10 +175,10 @@
               </div>
             </div>
           </div>
-          <div class="d-flex gap-5 my-5">
+          <div class="d-flex gap-5 my-5 flex-column justify-content-center">
             <!-- 數量選擇 -->
 
-            <div class="d-flex gap-4 align-content-center">
+            <div class="d-flex gap-4 align-content-center justify-content-center">
               <button
                 type="button"
                 class="btn qty-btn rounded-circle border-primary p-0"
@@ -202,7 +202,8 @@
 
             <button
               href="#"
-              class="custom-btn custom-btn-primary text-center border-1 add-to-cart fw-bold w-100"
+              class="custom-btn custom-btn-primary text-center border-1 add-to-cart fw-bold w-80 mx-auto"
+              style="height: 40px"
               @click.prevent="addToCart(productInfo.id, qty)"
             ></button>
           </div>
@@ -210,9 +211,26 @@
       </div>
     </div>
   </div>
-
+  <!-- <a href="" @click.prevent="scrollTo">查看更多</a> -->
+  <div
+    class="position-relative m-auto cursor-pointer my-10 my-lg-0 mb-lg-20"
+    @click.prevent="scrollTo"
+    style="width: 100px; height: 100px"
+  >
+    <svg class="overflow-visible self-rotate" viewBox="0 0 100 100">
+      <path d="M 0,50 a 50,50 0 1,1 0,1 z" id="circle" fill="none" />
+      <text class="letter-spacing" fill="#859c89">
+        <textPath xlink:href="#circle" class="text-primary">
+          * Green Sheep * handmade jewelry *
+        </textPath>
+      </text>
+    </svg>
+    <span class="position-absolute top-50 start-50 translate-middle text-nowrap">
+      <i class="arrow-more bi bi-arrow-down"></i>
+    </span>
+  </div>
   <!-- 下半部 -->
-  <div class="container py-10">
+  <div class="container py-10" ref="productContent">
     <!-- <div data-aos="fade-up" data-aos-duration="1000" data-aos-offset="50" class="mb-5">
       <h2 class="fs-lg-2 fw-medium">{{ productInfo.title }}</h2>
       <p class="text-primary">The Angel Love Cross</p>
@@ -258,15 +276,15 @@
         ></iframe>
       </div> -->
       <!-- 圖片區 -->
-      <div class="row py-10 mb-30 w-lg-80 mx-auto">
-        <template v-for="imgUrl in productInfo.imagesUrl" :key="productInfo.id">
-          <div class="mb-3 col-6" data-aos="zoom-in" data-aos-duration="1000" data-aos-once="true">
-            <img
-              :src="imgUrl"
-              alt="商品圖片"
-              class="object-fit-cover"
-              style="width: 500px; height: 500px"
-            />
+      <div class="row py-10 mb-20 mb-lg-25 w-lg-80 mx-auto justify-content-center">
+        <template v-for="imgUrl in productInfo.imagesUrl" :key="imgUrl">
+          <div
+            class="mb-3 col-6 col-md-4 col-lg-6"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+            data-aos-once="true"
+          >
+            <img :src="imgUrl" alt="商品圖片" class="product-content-img object-fit-cover" />
           </div>
         </template>
       </div>
@@ -275,135 +293,57 @@
     </div>
     <div class="container mb-20">
       <h2 class="h4 text-primary mb-10 fw-bold">猜你也喜歡</h2>
-      <ul class="row row-cols-2 row-cols-md-4 g-4 mb-20">
+      <ul class="row row-cols-2 row-cols-md-4 g-4 mb-20 ps-0">
         <!-- 放相同分類隨機商品 -->
-        <li class="col list-unstyled">
-          <a
-            href="#"
-            class="d-flex flex-column product-item"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-          >
-            <div class="product h-border position-relative" style="width: 100%; padding-top: 100%">
+        <li
+          class="col list-unstyled h-100 column"
+          v-for="product in recommendProducts"
+          :key="product.id"
+        >
+          <router-link :to="`/products/${product.id}`" class="card border-0">
+            <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
+              <span
+                v-if="product.discount !== 10"
+                class="position-absolute start-0 bottom-0 z-3 bg-deco p-1 text-dark fs-8"
+                >{{ product.discount }}折</span
+              >
               <img
-                src="../assets/images/product-2.jpg"
-                class="card-img-top show position-absolute top-0 start-0 object-fit-cover"
-                alt="鯨湛 - Brave | 拉利瑪海紋石純銀項鍊"
+                :src="product.imageUrl"
+                class="show position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
               />
               <img
-                src="../assets/images/product-2-1.jpg"
-                class="card-img-top change position-absolute top-0 start-0 object-fit-cover"
-                alt="鯨湛 - Brave | 拉利瑪海紋石純銀項鍊"
-              />
-            </div>
-            <div
-              class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
-            >
-              <h5 class="card-title display-8 text-dark pt-2">
-                鯨湛 - Brave | 拉利瑪海紋石純銀項鍊
-              </h5>
-              <p class="card-text display-8 text-primary py-2">NT$3,800</p>
-            </div>
-          </a>
-        </li>
-        <li class="col list-unstyled">
-          <a
-            href="#"
-            class="d-flex flex-column product-item"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-          >
-            <div class="product h-border position-relative" style="width: 100%; padding-top: 100%">
-              <img
-                src="../assets/images/product-3.jpg"
-                class="card-img-top show position-absolute top-0 start-0 object-fit-cover"
-                alt="天使之愛十字架|純銀＋可刻字"
-              />
-              <img
-                src="../assets/images/product-3-1.jpg"
-                class="card-img-top change position-absolute top-0 start-0 object-fit-cover"
-                style="width: 100%; height: 100%"
-                alt="天使之愛十字架|純銀＋可刻字"
+                :src="product.imageUrl2"
+                class="change position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
               />
             </div>
-            <span class="cus-tag">可客製</span>
-            <div
-              class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
-            >
-              <h5 class="card-title flex-grow-1 display-8 text-dark pt-2">
-                天使之愛十字架項鍊 | 925純銀 / 可刻字
-              </h5>
-              <p class="card-text display-8 text-primary py-2">
-                NT$1,980
-                <span class="display-8 text-grey9F py-2 text-decoration-line-through">
-                  NT$2,200
-                </span>
+            <div class="card-body text-start">
+              <h5 class="card-title display-7 text-dark my-2">{{ product.title }}</h5>
+              <!-- v-if 無折扣 -->
+              <p
+                v-if="product.origin_price === product.price"
+                class="card-text display-8 text-primary mt-3 mb-6"
+              >
+                NT$ {{ product.origin_price }}
               </p>
-            </div>
-          </a>
-        </li>
 
-        <li class="col list-unstyled">
-          <a
-            href="#"
-            class="d-flex flex-column product-item"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-          >
-            <div class="product h-border position-relative" style="width: 100%; padding-top: 100%">
-              <img
-                src="../assets/images/product-5.jpg"
-                class="card-img-top show position-absolute top-0 start-0 object-fit-cover"
-                alt="拿鐵｜拉花造型純銀項鍊"
-              />
-              <img
-                src="../assets/images/product-5-1.jpg"
-                class="card-img-top change position-absolute top-0 start-0 object-fit-cover"
-                style="width: 100%; height: 100%"
-                alt="拿鐵｜拉花造型純銀項鍊"
-              />
+              <!-- v-else 打折 -->
+              <div v-else class="mt-3 mb-1">
+                <span class="card-text display-8 text-primary my-2 me-2"
+                  >NT$ {{ product.origin_price }}</span
+                >
+                <br /><span class="card-text display-8 text-grey9F text-decoration-line-through">
+                  NT$ {{ product.price }}
+                </span>
+              </div>
+              <button
+                href="#"
+                class="custom-btn custom-btn-toGreen text-center w-100 border-1"
+                @click.prevent="addToCart(product.id)"
+              >
+                <i class="bi bi-bag-check fs-6"></i>
+              </button>
             </div>
-            <div
-              class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
-            >
-              <h5 class="card-title flex-grow-1 display-8 text-dark pt-2">
-                拿鐵拉花項鍊 | 925純銀 + 太陽石
-              </h5>
-              <p class="card-text display-8 text-primary py-2">NT$6,880</p>
-            </div>
-          </a>
-        </li>
-        <li class="col list-unstyled">
-          <a
-            href="#"
-            class="d-flex flex-column product-item"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-            data-aos-delay="200"
-          >
-            <div class="product h-border position-relative" style="width: 100%; padding-top: 100%">
-              <img
-                src="../assets/images/product-6.jpg"
-                class="card-img-top show position-absolute top-0 start-0 object-fit-cover"
-                alt="日出訂製｜18K金鑽石男戒"
-              />
-              <img
-                src="../assets/images/product-6-1.jpg"
-                class="card-img-top change position-absolute top-0 start-0 object-fit-cover"
-                style="width: 100%; height: 100%"
-                alt="日出訂製｜18K金鑽石男戒"
-              />
-            </div>
-            <span class="cus-tag">可客製</span>
-            <div
-              class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
-            >
-              <h5 class="card-title flex-grow-1 display-8 text-dark pt-2">
-                日出訂製雙色鑽石男戒 | 18K金 + 鑽石 / 可刻字
-              </h5>
-              <p class="card-text display-8 text-primary py-2">NT$39,800</p>
-            </div>
-          </a>
+          </router-link>
         </li>
       </ul>
     </div>
@@ -427,20 +367,44 @@ export default {
   components: { ProductSwiper },
 
   computed: {
-    ...mapState(productStore, ['productInfo'])
+    ...mapState(productStore, ['productInfo', 'recommendProducts'])
+  },
+  watch: {
+    routeData: {
+      handler() {
+        this.getProductInfo(this.$route.params.id)
+      },
+      deep: true
+    }
   },
   methods: {
-    ...mapActions(productStore, ['getProductInfo']),
-    ...mapActions(cartStore, ['addToCart'])
+    ...mapActions(productStore, ['getProductInfo', 'getRecommendProducts']),
+    ...mapActions(cartStore, ['addToCart']),
+    scrollTo() {
+      const productContent = this.$refs.productContent
+      if (productContent) {
+        productContent.scrollIntoView({ behavior: 'smooth' }) // 使用平滑滾動到元素
+      }
+    }
   },
   mounted() {
     console.log(this.$route)
     this.getProductInfo(this.$route.params.id)
+    this.getRecommendProducts(this.$route.params.id)
+  },
+  beforeRouteUpdate(to, from) {
+    this.getProductInfo(to.params.id)
+    this.getRecommendProducts(to.params.id)
+
+    this.$nextTick(() => {
+      window.scrollTo(0, 0)
+    })
   }
 }
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/scss/utils/mixin.scss';
 .qty-btn {
   width: 40px;
   height: 40px;
@@ -457,6 +421,39 @@ export default {
   }
   &:hover::after {
     color: #566b5a;
+  }
+}
+//圈圈箭頭
+.arrow-more {
+  font-size: 40px;
+  color: #859c89;
+}
+
+.letter-spacing {
+  letter-spacing: 1px;
+}
+
+.self-rotate {
+  animation: self-rotate360 10s infinite linear;
+}
+
+@keyframes self-rotate360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.product-content-img {
+  width: 100%;
+  height: 500px;
+  @include pad {
+    height: 250px;
+  }
+  @include mobile {
+    height: 200px;
   }
 }
 </style>
