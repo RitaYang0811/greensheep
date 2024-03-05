@@ -20,6 +20,7 @@
     <div class="tab-content m-3" id="nav-tabContent">
       <!-- tabs 全部訂單 -->
       <div class="tab-pane fade show active" id="allOrders" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+        <button type="button" class="btn btn-danger" @click="deleteAllOrders">刪除全部訂單</button>
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
           <Accordion :orders="allOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
@@ -48,7 +49,8 @@
         <!-- <h2>已刪除頁面</h2> -->
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
-          <Accordion :orders="deletedOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+          <Accordion :orders="deletedOrders" :openModal="openModal" :deleteOrder="deleteOrder"
+            :confirmDelete="confirmDelete"></Accordion>
           <!-- Accordion -->
         </div>
       </div>
@@ -100,8 +102,9 @@
               <div class="">
                 <!-- disabled綁定後一個checkbox，如果後一個checkbox勾選，前一個就不能取消。 -->
                 <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off"
-                  v-model="orderStatus.sendProduct" :disabled="orderStatus?.done">
-                <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck3"><i
+                  v-model="orderStatus.sendProduct" :disabled="(!orderStatus?.making || orderStatus?.done)">
+                <label class="btn btn-outline-primary border-2 rounded-circle"
+                  :class="orderStatus.making ? '' : 'btn-outline-light'" for="btncheck3"><i
                     class="bi bi-check-lg fs-2 text-light"></i></label>
                 <p class="mt-3 fs-4">已出貨</p>
               </div>
@@ -110,10 +113,10 @@
               <div class="">
                 <!-- disabled綁定是否付款，未付款則不能完成訂單。 -->
                 <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" v-model="orderStatus.done"
-                  :disabled="!modalData.is_paid">
+                  :disabled="(!modalData.is_paid || !orderStatus.sendProduct)">
                 <label class="btn  border-2 rounded-circle"
-                  :class="modalData.is_paid ? 'btn-outline-primary' : 'btn-outline-light'" for="btncheck4"><i
-                    class="bi bi-check-lg fs-2 text-light"></i></label>
+                  :class="[(modalData.is_paid && orderStatus.sendProduct) ? 'btn-outline-primary' : 'btn-outline-light',]"
+                  for="btncheck4"><i class="bi bi-check-lg fs-2 text-light"></i></label>
                 <p class="mt-3 fs-4">已完成</p>
               </div>
             </div>
@@ -128,8 +131,8 @@
               <h5 class="m-2">客戶Email：{{ modalData?.user?.email }}</h5>
               <h5 class="m-2">客戶電話：{{ modalData?.user?.tel }}</h5>
               <label for="payState" class="fs-5 text-primary m-2">付款狀態：</label>
-              <select class="form-select d-inline w-25 fs-5" id="payState" aria-label="付款狀態"
-                v-model="modalData.is_paid">
+              <select class="form-select d-inline w-25 fs-5" id="payState" aria-label="付款狀態" v-model="modalData.is_paid"
+                :disabled="orderStatus.done">
                 <option :value=false>未付款</option>
                 <option :value=true>已付款</option>
               </select>
@@ -181,8 +184,8 @@
           <div class="d-flex justify-content-between mx-4 my-5">
             <p class="fs-4">優惠券：
               <span class="ms-2 fs-5 badge rounded-pill text-bg-warning" v-if="modalData?.products">{{
-                Object.values(modalData?.products)[0]?.coupon?.code }}</span>
-                <!-- {{ console.log(modalData.products) }} -->
+          Object.values(modalData?.products)[0]?.coupon?.code }}</span>
+              <!-- {{ console.log(modalData.products) }} -->
             </p>
             <p class="fs-4 me-4">總金額：{{ parseInt(modalData?.total) }}</p>
           </div>
@@ -202,6 +205,7 @@
 import axios from 'axios';
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 import Accordion from '@/components/AdOrderAccordion.vue';
+import Swal from 'sweetalert2'
 
 export default {
   components: {
@@ -216,6 +220,7 @@ export default {
       doneOrders: [],
       modalData: {},
       modalProducts: [],
+      //訂單狀態資料
       orderStatus: {
         getOrder: true,
         making: false,
@@ -235,6 +240,7 @@ export default {
         .then((res) => {
           this.allOrders = res.data.orders;
           this.allOrders.forEach((item) => {
+            //若該訂單沒有orderStatus時，代表為新訂單，加入orderStatus。
             if (!item.orderStatus) {
               item.orderStatus = {
                 getOrder: true,
@@ -270,6 +276,14 @@ export default {
       data.orderStatus = this.orderStatus;
       axios.put(updateOrdersUrl, { data })
         .then(() => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '訂單修改成功',
+            showConfirmButton: false,
+            toast: true,
+            timer: 1500
+          });
           location.reload()
           // this.getAllOrders();
         })
@@ -279,17 +293,29 @@ export default {
     },
     deleteOrder(data) {
       const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`;
-      data.is_deleted = true;
-      axios.put(updateOrdersUrl, { data })
-        .then((res) => {
-          console.log(res)
-          location.reload()
-          // this.getAllOrders();
-        })
-        .catch((err) => {
-          console.log(err)
-        })
 
+      Swal.fire({
+        title: '是否刪除該訂單?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#566b5a',
+        cancelButtonText: '  否  ',
+        confirmButtonText: '  是  '
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log("delete")
+          data.is_deleted = true;
+          axios.put(updateOrdersUrl, { data })
+            .then((res) => {
+              console.log(res)
+              location.reload()
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }
+      })
       console.log(data)
     },
     recoverDelete(data) {
@@ -305,6 +331,60 @@ export default {
         .catch((err) => {
           console.log(err)
         })
+    },
+    confirmDelete(data) {
+      const deleteOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data}`;
+      console.log(data)
+
+      Swal.fire({
+        title: '確認永久刪除該訂單?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#566b5a',
+        cancelButtonText: '  否  ',
+        confirmButtonText: '  是  '
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(deleteOrdersUrl)
+            .then(() => {
+              location.reload()
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }
+      })
+
+    },
+    deleteAllOrders() {
+      // const deleteAllOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders/all`;
+
+      Swal.fire({
+        title: '確認永久刪除全部訂單?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#566b5a',
+        cancelButtonText: '  否  ',
+        confirmButtonText: '  是  '
+      }).then((result) => {
+
+        if (result.isConfirmed) {
+          console.log("刪除全部訂單")
+
+          // axios.delete(deleteAllOrdersUrl)
+          //   .then(() => {
+          //     location.reload()
+          //   })
+          //   .catch((err) => {
+          //     console.log(err)
+          //   })
+        }
+      })
+
+
+
     },
 
     openModal(order) {
