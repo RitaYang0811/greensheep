@@ -15,8 +15,6 @@
       <label for="securityCode">請輸入驗證碼</label>
       <error-message name="驗證碼" class="invalid-feedback text-start"></error-message>
     </div>
-    ser:{{ codeUpdate }} <br />
-    user: {{ userInfo }}
 
     <button
       type="button"
@@ -33,12 +31,15 @@
 </template>
 
 <script>
+// json-server網址
+const serverUrl = 'https://greensheep-json-server.onrender.com'
 export default {
   props: ['verificationCode', 'userInfo'],
   data() {
     return {
       securityCode: null,
-      securityInput: null
+      securityInput: null,
+      user: {}
     }
   },
   computed: {
@@ -50,10 +51,31 @@ export default {
     checkCode() {
       if (this.securityInput === this.securityCode) {
         alert('驗證成功')
-        this.$router.push({ name: 'MemberLogin' })
+        this.onSubmit()
         return
       }
       alert('驗證碼輸入錯誤')
+    },
+    onSubmit() {
+      this.user = {
+        nickName: this.userInfo.name,
+        email: this.userInfo.email,
+        password: this.userInfo.password,
+        birthday: this.userInfo.birthday,
+        favorites: [],
+        location: '',
+        phone: ''
+      }
+
+      this.$http
+        .post(`${serverUrl}/users`, this.user)
+        .then((res) => {
+          alert('註冊成功囉!')
+          this.$router.push({ name: 'MemberLogin' })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 }

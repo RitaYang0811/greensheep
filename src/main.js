@@ -23,18 +23,15 @@ import * as AllRules from '@vee-validate/rules'
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 
-<<<<<<< HEAD
 //  google第三方登入
 import vue3GoogleLogin from 'vue3-google-login'
-=======
 //CKEditor5
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import '@ckeditor/ckeditor5-build-classic/build/translations/zh' // 語言
 
 //vue-awesome-paginate
-import VueAwesomePaginate from "vue-awesome-paginate"
-import "vue-awesome-paginate/dist/style.css"
->>>>>>> 03174548df3dec0f6c89d64c1a4d30b84df74fce
+import VueAwesomePaginate from 'vue-awesome-paginate'
+import 'vue-awesome-paginate/dist/style.css'
 
 //bootstrap
 import 'bootstrap/dist/js/bootstrap.min.js'
@@ -46,7 +43,6 @@ import router from './router'
 Object.keys(AllRules).forEach((rule) => {
   defineRule(rule, AllRules[rule])
 })
-
 
 configure({
   generateMessage: localize({ zh_TW: zhTW }),

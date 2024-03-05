@@ -271,6 +271,9 @@ import { googleTokenLogin } from 'vue3-google-login'
 import axios from 'axios'
 import verification from '../../components/Verification.vue'
 
+// json-server網址
+const serverUrl = 'https://greensheep-json-server.onrender.com'
+
 export default {
   components: { verification },
   data() {
@@ -296,22 +299,27 @@ export default {
         this.date = new Date()
       }
     },
+    // 信箱規則
     emailRule(value) {
       const email = /^[\w\.-]+@(gmail\.com|yahoo\.com\.tw)$/
       return email.test(value) ? true : '請輸入Gmail/Yahoo帳號'
     },
+    // 密碼規則
     passwordRule(value) {
       let password = /^(?!.*\d{6,})(?!.*(.)\1{4,}).{6,12}$/
       return value !== undefined && password.test(value) ? true : `請輸入正確密碼`
     },
+    // 確認密碼規則
     confirmPasswordRule(value) {
       return value === this.user.password && value ? true : '請輸入相同密碼'
     },
+    // 生日
     format() {
       this.user.birthday = `${this.date.getFullYear()}/${this.date.getMonth() + 1}/${this.date.getDate()}`
 
       return `您的生日: ${this.user.birthday}`
     },
+    // 條款與政策小視窗
     openModal(state) {
       state === '條款' ? (this.policy.DOCState = true) : (this.policy.DOCState = false)
 
@@ -326,11 +334,24 @@ export default {
         this.policy.Check ? true : (this.alertText = '請詳閱條款和政策')
       }
     },
-    onSubmit() {
+    async checkAccounts(email) {
+      try {
+        const response = await axios.get(`${serverUrl}/users/?email=${email}`)
+
+        return response.data.length !== 0
+      } catch (error) {
+        console.log(error.response.data)
+      }
+    },
+    async onSubmit() {
       this.policyRule('註冊')
-      if (this.policy.Check) {
-        console.log(this.user)
-        this.signUp()
+      if (await this.checkAccounts(this.user.email)) {
+        alert('此信箱已經註冊過囉!')
+        this.$router.push({ name: 'MemberLogin' })
+      } else {
+        if (this.policy.Check) {
+          this.signUp()
+        }
       }
     },
     signUp() {
@@ -345,7 +366,7 @@ export default {
         Subject: '親愛的會員您好，GreenSheep客服中心寄送驗證碼來囉~',
         Body: body
       }).then((message) => {
-        alert(message)
+        alert('已發送驗證碼到信箱囉!')
       })
     },
     securityCode(length = 5) {
@@ -359,6 +380,7 @@ export default {
 
       return randomCode
     },
+    // google登入
     accessTokenLogin() {
       googleTokenLogin({
         clientId: this.GOOGLECLIENT
@@ -384,6 +406,7 @@ export default {
         console.error('獲取聯絡人信息時出錯:', error)
       }
     },
+    // Line 登入
     lineLoginEvent() {
       let clientID = '2003862374'
       // 會使用到encodeURIComponent是因為hash模式
@@ -410,9 +433,7 @@ export default {
     }
   },
   mounted() {
-    this.policy.Modal = new Modal(this.$refs.policyModal, {
-      backdrop: false
-    })
+    this.policy.Modal = new Modal(this.$refs.policyModal)
   }
 }
 </script>
