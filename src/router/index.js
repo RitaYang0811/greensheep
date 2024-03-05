@@ -51,14 +51,19 @@ const router = createRouter({
           component: () => import('../views/user/StoryView.vue')
         },
         {
-          path: 'articleList',
-          name: 'UserArticleList',
-          component: () => import('../views/user/ArticleListView.vue'),
+          path: 'articles',
+          name: 'UserArticleLayout',
+          component: () => import('../views/user/ArticleLayoutView.vue'),
           children: [
             {
-              path: 'articleDetail',
-              name: 'UserArticleDetail',
-              component: () => import('../views/user/ArticleDetailView.vue')
+              path: '',
+              name: 'UserArticles',
+              component: () => import('../views/user/ArticlesView.vue')
+            },
+            {
+              path: ':id',
+              name: 'UserArticle',
+              component: () => import('../views/user/ArticleView.vue')
             }
           ]
         },

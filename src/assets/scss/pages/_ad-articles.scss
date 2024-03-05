@@ -1,0 +1,13 @@
+.ad-article {
+  .check-box {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+  .disabled-link {
+    pointer-events: none;
+    & i {
+      color: rgb(159, 159, 159) !important;
+    }
+  }
+}

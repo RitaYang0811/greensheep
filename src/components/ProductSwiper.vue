@@ -6,7 +6,6 @@
         '--swiper-pagination-color': '#fff'
       }"
       :loop="true"
-      :spaceBetween="10"
       :navigation="true"
       :thumbs="{ swiper: thumbsSwiper }"
       :modules="modules"
