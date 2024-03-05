@@ -25,14 +25,8 @@
               data-aos-once="true"
             >
               Discover your
-            </div>
-            <div
-              data-aos="fade-right"
-              data-aos-duration="2000"
-              data-aos-delay="300"
-              data-aos-once="true"
-              data-aos-easing="ease"
-            >
+              <br />
+
               Unique Elegance
             </div>
           </h2>
@@ -44,8 +38,8 @@
             data-aos-offset="50"
             data-aos-once="true"
           >
-            <a class="custom-btn custom-btn-primary shop-now" href="2-1.productPage.html"
-              >SHOP NOW</a
+            <RouterLink to="/products" class="custom-btn custom-btn-primary shop-now cursor-pointer"
+              >SHOP NOW</RouterLink
             >
           </button>
         </div>
@@ -54,14 +48,23 @@
       <div
         class="banner-icon w-60 z-1 d-none d-lg-flex justify-content-end border-bottom border-greyD4"
       >
-        <a href="#" class="mb-1">
-          <img src="./icons/line-green.svg" alt="line-icon" />
+        <a href="https://lin.ee/bYROr08" target="_blank" class="mb-1">
+          <img src="./icons/line-icon.svg" alt="line-icon" />
         </a>
-        <a href="#" class="mb-1">
-          <img src="./icons/fb-green.svg" alt="fb-icon" />
+
+        <a
+          href="https://www.facebook.com/profile.php?id=100071826680344&mibextid=opq0tG"
+          class="mb-1"
+          target="_blank"
+        >
+          <img src="./icons/fb-icon.svg" alt="fb-icon" />
         </a>
-        <a href="#" class="mb-1">
-          <img src="./icons/ig-green.svg" alt="ig-icon" />
+        <a
+          href="https://www.instagram.com/greensheep_jewelry?igsh=MWNkcjd0azZud3JheQ%3D%3D&utm_source=qr"
+          class="mb-1"
+          target="_blank"
+        >
+          <img src="./icons/ig-icon.svg" alt="ig-icon" />
         </a>
       </div>
     </div>
@@ -116,7 +119,9 @@
           data-aos-duration="1500"
           data-aos-offset="50"
         >
-          <a class="custom-btn custom-btn-secondary" href="4-1.Story.html">My Story</a>
+          <RouterLink to="/story" class="custom-btn custom-btn-secondary" href="4-1.Story.html"
+            >My Story</RouterLink
+          >
         </button>
       </div>
 
