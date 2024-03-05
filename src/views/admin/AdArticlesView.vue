@@ -1,17 +1,23 @@
 <template>
   <div class="ad-article">
-    <h1 class="fs-3 mb-4">文章管理</h1>
-    <div class="input-group mb-4 bg-white d-flex align-items-center">
-      <input type="search" class="form-control">
-      <a href="#">
-        <img src="@/assets/images/search_green_24dp.svg" alt="搜尋" class="px-1">
-      </a>
+    <h1 class="fs-3 mb-4 fw-bold">文章管理</h1>
+    <div class="position-relative">
+      <input
+        class="form-control mb-4 rounded-3 border border-primary bg-transparent fs-6"
+        type="text"
+        placeholder="請輸入要搜尋的文章"
+        v-model.trim="keyword"
+      />
+      <i
+        class="bi bi-search float-end fs-5 text-primary pe-2 mt-2 position-absolute top-0 end-0"
+      ></i>
     </div>
+    <!-- article tab -->
     <ul class="nav border-bottom border-primary mb-4">
       <li class="nav-item">
         <a
           class="nav-link px-6 py-4"
-          :class="{ active: currentTabData === '公開文章'}"
+          :class="{ active: currentTab === '公開文章'}"
           href="#"
           @click.prevent="changeTab('公開文章')">
           公開文章
@@ -20,28 +26,29 @@
       <li class="nav-item">
         <a
           class="nav-link px-6 py-4"
-          :class="{ active: currentTabData === '草稿文章'}"
+          :class="{ active: currentTab === '草稿文章'}"
           href="#"
           @click.prevent="changeTab('草稿文章')">
           草稿文章
         </a>
       </li>
     </ul>
+    <!-- article action -->
     <div class="d-flex gap-4 align-items-center mb-4">
       <a
         href="#"
         class="btn btn-primary"
-        :class="{ disabled: loadingStatusData.loadingItem }"
+        :class="{ disabled: loadingStatus.loadingItem }"
         @click.prevent="articleActivity('new')"
       >
         建立文章
       </a>
-      <template v-if="currentTabData === '公開文章'">
+      <template v-if="currentTab === '公開文章'">
         <a
           v-if="!isSelectPinnedArticle"
           href="#"
           class="btn btn-primary"
-          :class="{ disabled: loadingStatusData.loadingItem }"
+          :class="{ disabled: loadingStatus.loadingItem }"
           @click.prevent="isSelectPinnedArticle = true"
         >
           置頂文章管理
@@ -51,7 +58,7 @@
           <a
             href="#"
             class="btn btn-sm btn-danger"
-            @click.prevent="selectedPinnedArticle = [ ...pinnedArticlesData ]; isSelectPinnedArticle = false">
+            @click.prevent="selectedPinnedArticle = [ ...pinnedArticles ]; isSelectPinnedArticle = false">
             取消
           </a>
           <p>已選擇: {{ selectedPinnedArticle.length }} 篇</p>
@@ -65,8 +72,9 @@
         </template>
       </template>
     </div>
-    <ul v-if="!loadingStatusData.loadingItem" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 ps-0 list-unstyled" style="row-gap: 24px;">
-      <li class="col" v-for="article in currentPageArticlesData" :key="article.id">
+    <!-- article list -->
+    <ul v-if="!loadingStatus.loadingItem" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 ps-0 list-unstyled" style="row-gap: 24px;">
+      <li class="col" v-for="article in currentPageArticles" :key="article.id">
         <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
           <span class="check-box" v-if="isSelectPinnedArticle">
             <input
@@ -94,7 +102,7 @@
             >
               <a
                 href="#"
-                :class="{ 'disabled-link': loadingStatusData.loadingDelete || isSelectPinnedArticle }"
+                :class="{ 'disabled-link': loadingStatus.loadingDelete || isSelectPinnedArticle }"
                 @click.prevent="articleActivity('edit', article.id)">
                 <i class="bi bi-pencil-fill text-dark fs-6"></i>
               </a>
@@ -110,49 +118,27 @@
       </li>
     </ul>
     <!-- pagination -->
-    <div v-if="!loadingStatusData.loadingItem" class="text-center va-pagination">
-      <template v-if="currentTabData === '公開文章'">
-        <vue-awesome-paginate
-          :total-items="publicArticlesData.length"
-          :items-per-page="10"
-          :max-pages-shown="3"
-          v-model="currentPage"
-          @click="getCurrentPageArticles"
-          pagination-container-class="cus-pagination"
-          paginate-buttons-class="page-link"
-          number-buttons-class="fs-8"
-          active-page-class="active"
-        >
-          <template #prev-button>
-            <span class="material-icons fs-8 p-1"> navigate_before </span>
-          </template>
-          <template #next-button>
-            <span class="material-icons fs-8 p-1"> navigate_next </span>
-          </template>
-        </vue-awesome-paginate>
-      </template>
-      <template v-else-if="currentTabData === '草稿文章'">
-        <vue-awesome-paginate
-          :total-items="privateArticlesData.length"
-          :items-per-page="10"
-          :max-pages-shown="3"
-          v-model="currentPage"
-          @click="getCurrentPageArticles"
-          pagination-container-class="cus-pagination"
-          paginate-buttons-class="page-link"
-          number-buttons-class="fs-8"
-          active-page-class="active"
-        >
-          <template #prev-button>
-            <span class="material-icons fs-8 p-1"> navigate_before </span>
-          </template>
-          <template #next-button>
-            <span class="material-icons fs-8 p-1"> navigate_next </span>
-          </template>
-        </vue-awesome-paginate>
-      </template>
+    <div v-if="!loadingStatus.loadingItem && searchArticles.length" class="text-center va-pagination">
+      <vue-awesome-paginate
+        :total-items="searchArticles.length"
+        :items-per-page="10"
+        :max-pages-shown="3"
+        v-model="articlesCurrentPage"
+        @click="getCurrentPageArticles"
+        pagination-container-class="cus-pagination"
+        paginate-buttons-class="page-link"
+        number-buttons-class="fs-8"
+        active-page-class="active"
+      >
+        <template #prev-button>
+          <span class="material-icons fs-8 p-1"> navigate_before </span>
+        </template>
+        <template #next-button>
+          <span class="material-icons fs-8 p-1"> navigate_next </span>
+        </template>
+      </vue-awesome-paginate>
     </div>
-    <div v-if="loadingStatusData.loadingItem"
+    <div v-if="loadingStatus.loadingItem"
       class="d-flex justify-content-center align-items-center"
       style="min-height: 360px;"
     >
@@ -172,7 +158,8 @@ export default {
     return {
       isSelectPinnedArticle: false,
       selectedPinnedArticle: [],
-      currentPage: 1,
+      articlesCurrentPage: 1,
+      keyword: '',
       isLoading: false,
     }
   },
@@ -188,7 +175,7 @@ export default {
 
         // ----- 取消置頂 -----
         // 原置頂文章若不在當次選取的文章中則取消置頂狀態
-        const cancelPinnedArticles = this.pinnedArticlesData.filter(id => {
+        const cancelPinnedArticles = this.pinnedArticles.filter(id => {
           return !this.selectedPinnedArticle.includes(id)
         })
 
@@ -209,7 +196,7 @@ export default {
         // ----- 新增置頂 -----
         // 當次選取的文章中若不在原置頂文章中則需要去取得資料
         const addPinnedArticle = this.selectedPinnedArticle.filter(id => {
-          return !this.pinnedArticlesData.includes(id)
+          return !this.pinnedArticles.includes(id)
         })
 
         // 取得欲置頂文章的 content 資料給 put 使用 (因為 get/articles 不包含 content 欄位)
@@ -236,22 +223,25 @@ export default {
     }
   },
   watch: {
-    pinnedArticlesData() {
-      this.selectedPinnedArticle = [ ...this.pinnedArticlesData ]
+    pinnedArticles() {
+      this.selectedPinnedArticle = [ ...this.pinnedArticles ]
+    },
+    keyword() {
+      this.getCurrentPageArticles(1, this.keyword)
+    },
+    // articlesCurrentPage()、currentPage() 做類似雙向綁定
+    articlesCurrentPage() {
+      this.updateCurrentPage(this.articlesCurrentPage)
     },
     currentPage() {
-      this.updateCurrentPage(this.currentPage)
-    },
-    currentPageData() {
-      this.currentPage = this.currentPageData
+      this.articlesCurrentPage = this.currentPage
     }
   },
   computed: {
     ...mapState(adArticlesStore, [
-      'articlesData', 'loadingStatusData',
-      'currentTabData', 'publicArticlesData',
-      'privateArticlesData', 'pinnedArticlesData',
-      'currentPageData', 'currentPageArticlesData'
+      'loadingStatus', 'searchArticles',
+      'currentTab', 'pinnedArticles',
+      'currentPage', 'currentPageArticles',
     ])
   },
   mounted() {
