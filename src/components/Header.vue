@@ -135,7 +135,7 @@
           </li>
         </ul>
       </div>
-      <!-- 右側icon -->
+      <!-- 右側icon : 搜尋、會員、購物袋 -->
       <div class="d-flex">
         <div class="header-icon d-flex align-items-center">
           <!-- 搜尋欄 -->
@@ -154,7 +154,9 @@
               <input
                 type="text"
                 class="form-control no-box-shadow search-box input-group-text bg-transparent text-start d-none d-lg-block"
-                placeholder="search..."
+                placeholder="搜尋..."
+                v-model="searchWord"
+                @keyup.enter="searchProducts"
               />
             </div>
           </form>
@@ -217,21 +219,39 @@
 </template>
 
 <script>
-import { mapState } from 'pinia'
+import { mapState, mapActions } from 'pinia'
 import cartStore from '@/stores/cartStore'
+import searchStore from '@/stores/searchStore'
+import productStore from '@/stores/productStore'
+
 export default {
   data() {
-    return {}
+    return {
+      searchWord: ''
+    }
   },
   methods: {
+    ...mapActions(searchStore, ['setSearchWord']),
+    ...mapActions(productStore, ['getFilterProducts']),
     toProductsView() {
       this.$router.push({
         path: '/products'
       })
+    },
+    searchProducts() {
+      this.setSearchWord(this.searchWord)
+      if (this.searchWord.trim() !== '') {
+        // 发送搜索词到商品视图
+        this.$router.push({ path: '/products' })
+      }
+      this.getFilterProducts()
+      this.searchWord = '' // 清空搜索词
     }
   },
+
   computed: {
-    ...mapState(cartStore, ['carts'])
+    ...mapState(cartStore, ['carts']),
+    ...mapState(searchStore, ['searchQuery'])
   }
 }
 </script>

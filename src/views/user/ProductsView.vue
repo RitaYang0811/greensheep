@@ -43,7 +43,11 @@
         </nav>
         <!-- 商品列表 -->
         <div class="row row-cols-2 row-cols-lg-5 gx-4 gy-6 mb-10 mb-lg-20">
-          <li class="col list-unstyled h-100 column" v-for="product in products" :key="product.id">
+          <li
+            class="col list-unstyled h-100 column"
+            v-for="product in filterProducts"
+            :key="product.id"
+          >
             <router-link :to="`/products/${product.id}`" class="card border-0">
               <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
                 <span
@@ -103,19 +107,16 @@
 <script>
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
+//import searchStore from '@/stores/searchStore'
 import SwiperAllProducts from '@/components/SwiperAllProducts.vue'
 import PagiNation from '@/components/PagiNation.vue'
 import { mapState, mapActions } from 'pinia'
-import { useRoute } from 'vue-router'
 
 export default {
   data() {
     return {
       isLoading: false,
-      currentCategory: null,
-      routeData: {
-        route: null
-      }
+      currentCategory: null
     }
   },
   components: {
@@ -123,30 +124,36 @@ export default {
     PagiNation
   },
   computed: {
-    ...mapState(productStore, ['products', 'category', 'pagination', 'categories'])
+    ...mapState(productStore, [
+      'products',
+      'filterProducts',
+      'category',
+      'pagination',
+      'categories'
+    ])
+    // filterProducts() {
+    //   return this.products.filter((product) => product.title.match(this.searchWords))
+    // }
   },
-  watch: {
-    routeData: {
-      handler() {
-        this.getProducts(this.routeData.route)
-      },
-      deep: true
-    }
-  },
+
   methods: {
-    ...mapActions(productStore, ['getProducts']),
+    ...mapActions(productStore, ['getProducts', 'getFilterProducts']),
     ...mapActions(cartStore, ['addToCart']),
-    //pagiNation 傳值更新頁面
+
     updatePage(page) {
-      this.getProducts(this.routeData.route, page)
+      this.getProducts(this.$route, page)
     }
   },
   mounted() {
-    //一開始取得產品
-    const route = useRoute()
-    this.routeData.route = route
-    this.getProducts(this.routeData.route)
+    this.getProducts(this.$route), this.getFilterProducts()
+    // console.log('首頁搜尋keyword', this.$route.query.keyword)
+    // this.searchWords = this.$route.query.keyword
   }
+  // beforeRouteUpdate(to, from, next) {
+  //   this.getProducts(to)
+  //   console.log('再次搜尋keyword', this.$route.query.keyword)
+  //   next()
+  // }
 }
 </script>
 

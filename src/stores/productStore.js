@@ -1,11 +1,15 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import axios from 'axios'
-
+import searchStore from '@/stores/searchStore'
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
+
+const { searchQuery } = searchStore()
 
 export default defineStore('productStore', {
   state: () => ({
+    //searchWords: '',
     products: [],
+    filterProducts: [],
     recommendProducts: [],
     category: '全部商品 ALL',
     categories: ['項鍊 PENDANT', '戒指 RING', '耳環 EARRINGS', '手鍊 BRACELET'],
@@ -13,13 +17,18 @@ export default defineStore('productStore', {
     pagination: {},
     loadingStatus: false
   }),
+  // getters: {
+  //   filterProducts: () => {
+  //     return this.products.filter((product) => product.title.match(searchQuery))
+  //   }
+  // },
   actions: {
     //初始化取得產品
     getProducts(route, page = 1) {
       this.loadingStatus = true
-      console.log(this.loadingStatus)
-      const { category = '' } = route.query
 
+      const { category = '' } = route.query
+      console.log('getProducts的路由', route)
       this.category = category
 
       const apiUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products?category=${category}&page=${page}`
@@ -65,7 +74,17 @@ export default defineStore('productStore', {
           this.recommendProducts.push(randomProduct)
         }
       }
-      console.log('推薦商品', this.recommendProducts)
+      //console.log('推薦商品', this.recommendProducts)
+    },
+    getFilterProducts(searchQuery) {
+      console.log('111', searchQuery)
+
+      if (searchQuery === '') {
+        this.filterProducts = this.products
+      } else {
+        this.filterProducts = this.products.filter((product) => product.title.match(searchQuery))
+      }
+      console.log('getFilterProducts', this.filterProducts, searchQuery)
     }
   }
 })
