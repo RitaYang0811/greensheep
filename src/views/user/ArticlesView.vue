@@ -14,11 +14,11 @@
       <li
         class="col-12" v-for="article in currentPageArticles.slice(0, 1)" :key="article.id"
       >
-        <div class="articles-item position-relative">
+        <div class="articles-item position-relative h-100">
           <img
             :src="article.image"
             :alt="article.title"
-            class="w-100 object-fit-cover"
+            class="w-100 h-100 object-fit-cover"
           />
           <div
             class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100"
@@ -33,11 +33,11 @@
         </div>
       </li>
       <li class="col-4" v-for="article in currentPageArticles.slice(1, 7)" :key="article.id">
-        <div class="articles-item position-relative">
+        <div class="articles-item position-relative h-100">
           <img
             :src="article.image"
             :alt="article.title"
-            class="w-100 object-fit-cover"
+            class="w-100 h-100 object-fit-cover"
           />
           <div
             class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100"
@@ -52,11 +52,11 @@
         </div>
       </li>
       <li class="col-3" v-for="article in currentPageArticles.slice(7, 11)" :key="article.id">
-        <div class="articles-item position-relative">
+        <div class="articles-item position-relative h-100">
           <img
             :src="article.image"
             :alt="article.title"
-            class="w-100 object-fit-cover"
+            class="w-100 h-100 object-fit-cover"
           />
           <div
             class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100"

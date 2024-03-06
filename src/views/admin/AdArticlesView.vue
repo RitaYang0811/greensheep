@@ -33,90 +33,242 @@
         </a>
       </li>
     </ul>
-    <!-- article action -->
-    <div class="d-flex gap-4 align-items-center mb-4">
-      <a
-        href="#"
-        class="btn btn-primary"
-        :class="{ disabled: loadingStatus.loadingItem }"
-        @click.prevent="articleActivity('new')"
-      >
-        建立文章
-      </a>
-      <template v-if="currentTab === '公開文章'">
+    <!-- article action & 顯示方式 -->
+    <div class="d-flex gap-2 gap-md-4 justify-content-between align-items-center mb-4">
+      <!-- article action -->
+      <div class="d-flex gap-2 gap-md-4 align-items-center">
         <a
-          v-if="!isSelectPinnedArticle"
           href="#"
           class="btn btn-primary"
-          :class="{ disabled: loadingStatus.loadingItem }"
-          @click.prevent="isSelectPinnedArticle = true"
+          :class="[{ disabled: loadingStatus.loadingItem }, { 'd-none': isSelectPinnedArticle }]"
+          @click.prevent="articleActivity('new')"
         >
-          置頂文章管理
+          建立文章
         </a>
-        <template v-else>
-          <a href="#" class="btn btn-primary" @click.prevent="updatePinnedArticle">儲存置頂文章</a>
+        <template v-if="currentTab === '公開文章'">
           <a
+            v-if="!isSelectPinnedArticle"
             href="#"
-            class="btn btn-sm btn-danger"
-            @click.prevent="selectedPinnedArticle = [ ...pinnedArticles ]; isSelectPinnedArticle = false">
-            取消
+            class="btn btn-primary"
+            :class="{ disabled: loadingStatus.loadingItem }"
+            @click.prevent="isSelectPinnedArticle = true"
+          >
+            置頂文章管理
           </a>
-          <p>已選擇: {{ selectedPinnedArticle.length }} 篇</p>
-          <a
-            href="#"
-            class="text-decoration-underline link-underline-grey9F link-offset-1"
-            @click.prevent="selectedPinnedArticle = []">
-            清除選擇
-          </a>
-          <p class="text-danger fs-8">*最多可選擇 3 篇文章</p>
-        </template>
-      </template>
-    </div>
-    <!-- article list -->
-    <ul v-if="!loadingStatus.loadingItem" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 ps-0 list-unstyled" style="row-gap: 24px;">
-      <li class="col" v-for="article in currentPageArticles" :key="article.id">
-        <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
-          <span class="check-box" v-if="isSelectPinnedArticle">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              v-model="selectedPinnedArticle"
-              :value="article.id"
-              :id="article.id"
-              :disabled="selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)"
-            />
-          </span>
-          <img
-            :src="article.image"
-            class="card-img-top h-100 w-100 object-fit-cover"
-            :alt="article.title"
-            style="height: 250px"
-          />
-          <div class="card-body p-0 px-2 pt-2">
-            <h5 class="card-title display-6 text-dark mb-2" style="height: 40px">
-              <span v-if="article.isPinned" class="float-end bg-primary text-white py-1 px-2 fs-8">置頂</span
-              >{{ article.title }}
-            </h5>
-            <div
-              class="card-foot d-flex justify-content-evenly border-top border-1 border-primary py-2"
-            >
+          <template v-else>
+            <a href="#" class="btn btn-primary" @click.prevent="updatePinnedArticle">儲存置頂文章</a>
+            <a
+              href="#"
+              class="btn btn-danger"
+              @click.prevent="selectedPinnedArticle = [ ...pinnedArticles ]; isSelectPinnedArticle = false">
+              取消
+            </a>
+            <!-- 置頂選擇狀態 PC -->
+            <div class="d-none d-md-flex gap-4">
+              <p>已選擇: {{ selectedPinnedArticle.length }} 篇</p>
               <a
                 href="#"
-                :class="{ 'disabled-link': loadingStatus.loadingDelete || isSelectPinnedArticle }"
-                @click.prevent="articleActivity('edit', article.id)">
-                <i class="bi bi-pencil-fill text-dark fs-6"></i>
+                class="text-decoration-underline link-underline-grey9F link-offset-1"
+                @click.prevent="selectedPinnedArticle = []">
+                清除選擇
               </a>
-              <a
-                href="#"
-                :class="{ 'disabled-link': isSelectPinnedArticle }"
-                @click.prevent="articleActivity('delete', article.id)">
-                <i class="bi bi-trash3-fill text-dark fs-6"></i>
-              </a>
+              <p class="text-danger fs-8">*最多可選擇 3 篇文章</p>
             </div>
-          </div>
-        </label>
-      </li>
-    </ul>
+          </template>
+        </template>
+      </div>
+      <!-- 顯示方式 -->
+      <div class="d-flex gap-2 gap-md-4">
+        <a
+          href="#"
+          class="btn border border-1 border-primary btn-md text-primary p-2 rounded-3"
+          :class="[{ 'bg-primary': isList }, { 'text-white': isList }]"
+          @click.prevent="isList = true"
+          ><i class="bi bi-ui-checks fs-5"></i
+        ></a>
+        <a
+          href="#"
+          class="btn border border-1 border-primary btn-md text-primary p-2 rounded-3"
+          :class="[{ 'bg-primary': !isList }, { 'text-white': !isList }]"
+          @click.prevent="isList = false"
+          ><i class="bi bi-ui-checks-grid fs-5"></i
+        ></a>
+      </div>
+    </div>
+    <!-- 置頂選擇狀態 mobile -->
+    <div v-if="isSelectPinnedArticle" class="d-md-none d-flex gap-4 mb-4">
+      <p>已選擇: {{ selectedPinnedArticle.length }} 篇</p>
+      <a
+        href="#"
+        class="text-decoration-underline link-underline-grey9F link-offset-1"
+        @click.prevent="selectedPinnedArticle = []">
+        清除選擇
+      </a>
+      <p class="text-danger fs-8">*最多可選擇 3 篇文章</p>
+    </div>
+
+    <!-- article list -->
+    <template v-if="!loadingStatus.loadingItem">
+      <!-- article list 卡片模式 -->
+      <ul v-if="!isList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 mb-10 mb-lg-15 ps-0 list-unstyled" style="row-gap: 24px;">
+        <li class="col" v-for="article in currentPageArticles" :key="article.id">
+          <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
+            <span class="check-box" v-if="isSelectPinnedArticle">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                v-model="selectedPinnedArticle"
+                :value="article.id"
+                :id="article.id"
+                :disabled="selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)"
+              />
+            </span>
+            <img
+              :src="article.image"
+              class="card-img-top w-100 object-fit-cover"
+              :alt="article.title"
+              style="height: 200px"
+            />
+            <div class="card-body d-flex flex-column p-0 px-2 pt-2">
+              <h5 class="card-title display-6 text-dark pb-2 mb-auto">
+                <span v-if="article.isPinned" class="float-end bg-primary text-white py-1 px-2 fs-8">置頂</span
+                >{{ article.title }}
+              </h5>
+              <div
+                class="card-foot d-flex justify-content-evenly border-top border-1 border-primary py-2"
+              >
+                <a
+                  href="#"
+                  :class="{ 'disabled-link': loadingStatus.loadingDelete || isSelectPinnedArticle }"
+                  @click.prevent="articleActivity('edit', article.id)">
+                  <i class="bi bi-pencil-fill text-dark fs-6"></i>
+                </a>
+                <a
+                  href="#"
+                  :class="{ 'disabled-link': isSelectPinnedArticle }"
+                  @click.prevent="articleActivity('delete', article.id)">
+                  <i class="bi bi-trash3-fill text-dark fs-6"></i>
+                </a>
+              </div>
+            </div>
+          </label>
+        </li>
+      </ul>
+      <!-- article list 列表模式 -->
+      <ul v-if="isList" class="d-flex flex-column gap-3 mb-10 mb-lg-15 ps-0 list-unstyled">
+        <li v-for="article in currentPageArticles" :key="article.id" class="bg-white rounded-3">
+          <label :for="article.id" class="d-flex gap-3 gap-md-8 px-2 py-4 px-sm-4">
+            <div class="d-flex align-items-center gap-1 gap-sm-4 position-relative" style="min-width: 98px;">
+              <template v-if="isSelectPinnedArticle">
+                <div class="check-box d-md-none">
+                  <input
+                    class="form-check-input "
+                    type="checkbox"
+                    v-model="selectedPinnedArticle"
+                    :value="article.id"
+                    :id="article.id"
+                    :disabled="selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)"
+                  />
+                </div>
+                <input
+                  class="form-check-input d-none d-md-block"
+                  type="checkbox"
+                  v-model="selectedPinnedArticle"
+                  :value="article.id"
+                  :id="article.id"
+                  :disabled="selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)"
+                />
+              </template>
+              <img
+                :src="article.image"
+                class="rounded object-fit-cover"
+                :alt="article.title"
+                style="height: 98px; width: 98px;"
+              />
+            </div>
+            <div class="d-flex align-items-md-center flex-column flex-md-row flex-grow-1 gap-md-15 gap-lg-30">
+              <div class="d-flex gap-1 flex-grow-1">
+                <h5 class="card-title display-6 text-dark flex-grow-1">
+                  {{article.title }}
+                </h5>
+                <p v-if="article.isPinned" class="align-self-start bg-primary text-white text-nowrap py-1 px-2 rounded-pill fs-9 "
+                  >置頂</p
+                >
+              </div>
+              <div class="d-flex gap-4 gap-md-8 me-md-10">
+                <a
+                  href="#"
+                  :class="{ 'disabled-link': loadingStatus.loadingDelete || isSelectPinnedArticle }"
+                  @click.prevent="articleActivity('edit', article.id)">
+                  <i class="bi bi-pencil-fill text-dark fs-6"></i>
+                </a>
+                <a
+                  href="#"
+                  class=""
+                  :class="{ 'disabled-link': isSelectPinnedArticle }"
+                  @click.prevent="articleActivity('delete', article.id)">
+                  <i class="bi bi-trash3-fill text-dark fs-6"></i>
+                </a>
+              </div>
+            </div>
+          </label>
+        </li>
+      </ul>   
+    </template>        
+    <!-- <tbody>
+          <template v-for="article in currentPageArticles" :key="article.id">
+            <tr class="product-item w-100 d-flex mb-3 bg-white rounded-3 align-content-center">
+              <label class="w-100 d-flex align-items-center position-relative" :for="article.id">
+                <td class="col-4 col-sm-3 col-lg-2 my-auto border-bottom-0">
+                  <div class="d-flex gap-2 gap-md-4 align-items-center px-md-4 py-4">
+                    <template v-if="isSelectPinnedArticle">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        v-model="selectedPinnedArticle"
+                        :value="article.id"
+                        :id="article.id"
+                        :disabled="selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)"
+                      />
+                    </template>
+                    <img
+                      :src="article.image"
+                      class="img-fluid rounded object-fit-cover"
+                      :alt="article.title"
+                      style="height: 98px; aspect-ratio: 1 / 1"
+                    />
+                  </div>
+                </td>
+                <div class="col-8 col-sm-9 col-lg-10">
+                  <div class="row">
+                    <td class="col-12 col-md-9 my-auto">
+                      <span v-if="article.isPinned" class="bg-primary text-white py-1 px-2 rounded-pill fs-9 float-end"
+                        >置頂</span
+                      >
+                      <h5 class="card-title display-6 text-dark">
+                        {{article.title }}
+                      </h5>
+                    </td>
+                    <td class="col-12 col-md-3 d-flex align-items-center justify-content-md-center gap-4 gap-md-10">
+                      <a
+                        href="#"
+                        :class="{ 'disabled-link': loadingStatus.loadingDelete || isSelectPinnedArticle }"
+                        @click.prevent="articleActivity('edit', article.id)">
+                        <i class="bi bi-pencil-fill text-dark fs-6"></i>
+                      </a>
+                      <a
+                        href="#"
+                        :class="{ 'disabled-link': isSelectPinnedArticle }"
+                        @click.prevent="articleActivity('delete', article.id)">
+                        <i class="bi bi-trash3-fill text-dark fs-6"></i>
+                      </a>
+                    </td>
+                  </div>
+                </div>
+              </label>
+            </tr>
+          </template>
+        </tbody> -->
     <!-- pagination -->
     <div v-if="!loadingStatus.loadingItem && searchArticles.length" class="text-center va-pagination">
       <vue-awesome-paginate
@@ -160,6 +312,7 @@ export default {
       selectedPinnedArticle: [],
       articlesCurrentPage: 1,
       keyword: '',
+      isList: false,
       isLoading: false,
     }
   },

@@ -88,7 +88,7 @@
         <span class="invalid-feedback text-end">文章內容 為必填</span>
       </div>
     </div>
-    <div v-if="!loadingStatus.loadingItem" class="d-flex justify-content-end gap-4" @click="submitActivity($event)">
+    <div v-if="!loadingStatus.loadingItem" class="d-flex justify-content-end gap-4 mb-4" @click="submitActivity($event)">
       <template v-if="isNew">
         <button type="submit" ref="toPrivate" class="btn btn-outline-primary border-1">儲存草稿</button>
         <button type="submit" ref="toPublic" class="btn btn-primary">建立文章</button>
