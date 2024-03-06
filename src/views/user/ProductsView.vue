@@ -21,11 +21,6 @@
               >{{ category }}
             </RouterLink>
           </li>
-
-          <li class="d-inline-block py-2 mx-3"></li>
-          <li>
-            <a class="d-inline-block py-2 mx-3" href="3-1.cusProduct.html">客製設計</a>
-          </li>
         </ul>
       </aside>
       <div class="col-lg-10 py-2">

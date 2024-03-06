@@ -12,7 +12,7 @@ export default defineStore('productStore', {
     filterProducts: [],
     recommendProducts: [],
     category: '全部商品 ALL',
-    categories: ['項鍊 PENDANT', '戒指 RING', '耳環 EARRINGS', '手鍊 BRACELET'],
+    categories: ['項鍊 PENDANT', '戒指 RING', '耳環 EARRINGS', '手鍊 BRACELET', '客製設計 '],
     productInfo: {},
     pagination: {},
     loadingStatus: false

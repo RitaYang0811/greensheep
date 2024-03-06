@@ -12,7 +12,9 @@
                 <RouterLink to="/products" class="fs-8 text-white me-lg-6">全部商品</RouterLink>
               </li>
               <li>
-                <RouterLink to="/custom" class="fs-8 text-white me-lg-6 mx-lg-0 mx-12"
+                <RouterLink
+                  to="/products/客製設計 CUSTOMIZED?category=客製設計 CUSTOMIZED`"
+                  class="fs-8 text-white me-lg-6 mx-lg-0 mx-12"
                   >客製設計</RouterLink
                 >
               </li>

@@ -43,6 +43,10 @@ const router = createRouter({
             {
               path: '手鍊 BRACELET',
               component: () => import('../views/user/ProductsView.vue')
+            },
+            {
+              path: '客製設計 CUSTOMIZED',
+              component: () => import('../views/user/ProductsView.vue')
             }
           ]
         },
@@ -53,7 +57,7 @@ const router = createRouter({
           component: () => import('../views/user/ProductDetailView.vue')
         },
         {
-          path: 'custom',
+          path: 'custom/:id',
           name: 'UserCustom',
           component: () => import('../views/user/CustomView.vue')
         },

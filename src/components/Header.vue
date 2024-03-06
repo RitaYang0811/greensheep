@@ -88,11 +88,13 @@
             </ul>
           </li>
           <li class="nav-item" style="min-width: 130px">
-            <RouterLink to="/custom" class="nav-link nav-item-en py-2 py-lg-1 px-2"
-              >CUSTOMISED</RouterLink
+            <RouterLink
+              to="/products/客製設計 CUSTOMIZED?category=客製設計 CUSTOMIZED`"
+              class="nav-link nav-item-en py-2 py-lg-1 px-2"
+              >CUSTOMIZED</RouterLink
             >
             <RouterLink
-              to="/custom"
+              to="/products/客製設計 CUSTOMIZED?category=客製設計 CUSTOMIZED`"
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
               >客製設計
             </RouterLink>
