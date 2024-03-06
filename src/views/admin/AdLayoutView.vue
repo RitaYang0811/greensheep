@@ -5,10 +5,9 @@
       <header class="d-lg-none admin-header d-flex justify-content-between align-items-center">
         <a
           class="d-lg-none"
-          data-bs-toggle="offcanvas"
-          href="#mobileAdminMenu"
           role="button"
           aria-controls="mobileAdminMenu"
+          @click.prevent="openOffcanvas"
         >
           <i class="bi bi-list fs-2 text-white"></i>
         </a>
@@ -78,7 +77,7 @@
   <div
     class="admin-offcanvas offcanvas offcanvas-start bg-primary text-white"
     tabindex="-1"
-    id="mobileAdminMenu"
+    ref="adminMenuOffcanvas"
     aria-labelledby="mobileAdminMenuLabel"
   >
     <div class="offcanvas-header px-4 py-4 position-relative">
@@ -90,42 +89,41 @@
       />
       <a
         class="ms-auto"
-        data-bs-toggle="offcanvas"
-        href="#offcanvasExample"
         role="button"
         aria-controls="offcanvasExample"
+        @click.prevent="closeOffcanvas"
       >
         <img src="@/assets/images/close_white_24dp.svg" alt="關閉" />
       </a>
     </div>
-    <div class="offcanvas-body px-0 d-flex flex-column justify-content-between">
+    <div class="offcanvas-body p-0 d-flex flex-column justify-content-between">
       <ul class="list-unstyled">
-        <li>
+        <li @click="closeOffcanvas">
           <RouterLink to="/admin/home" class="admin-sidebar-hover d-block py-6">首頁</RouterLink>
         </li>
-        <li>
+        <li @click="closeOffcanvas">
           <RouterLink to="/admin/products" class="admin-sidebar-hover d-block py-6"
             >商品管理</RouterLink
           >
         </li>
-        <li>
+        <li @click="closeOffcanvas">
           <RouterLink to="/admin/orders" class="admin-sidebar-hover d-block py-6"
             >訂單管理</RouterLink
           >
         </li>
-        <li>
+        <li @click="closeOffcanvas">
           <RouterLink to="/admin/articles" class="admin-sidebar-hover d-block py-6"
             >文章管理</RouterLink
           >
         </li>
-        <li>
+        <li @click="closeOffcanvas">
           <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6">優惠管理</RouterLink>
         </li>
-        <li>
+        <li @click="closeOffcanvas">
           <a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a>
         </li>
       </ul>
-      <a href="##" class="admin-sidebar-hover d-block py-6" @click.prevent="signout">
+      <a href="##" class="admin-sidebar-hover d-block py-6" @click.prevent="signout(); closeOffcanvas()">
         登出
         <i class="bi bi-box-arrow-right ms-1 fs-2 align-middle"></i>
       </a>
@@ -136,15 +134,19 @@
 </template>
 
 <script>
+import { Offcanvas } from 'bootstrap'
+
 export default {
   data() {
     return {
       checkSuccess: false,
       isLoading: false,
+      offcanvas: '',
       previousScrollY: 0
     }
   },
   methods: {
+    // 登入驗證
     checkLogin() {
       this.isLoading = true
       const token = document.cookie.replace(
@@ -156,7 +158,7 @@ export default {
         const url = `${import.meta.env.VITE_APP_API_URL}/api/user/check`
         this.$http
           .post(url)
-          .then((res) => {
+          .then(() => {
             this.checkSuccess = true
           })
           .catch((err) => {
@@ -175,10 +177,22 @@ export default {
       document.cookie = 'AdminToken=;expires=;'
       alert('已登出')
       this.$router.push('/login')
+    },
+    openOffcanvas() {
+      this.offcanvas.show()
+    },
+    closeOffcanvas() {
+      this.offcanvas.hide()
     }
   },
   mounted() {
+    // 登入驗證
     this.checkLogin()
+    // mobile menu 實例
+    this.offcanvas = new Offcanvas(this.$refs.adminMenuOffcanvas, {
+      backdrop: true
+    })
+    // 監聽滾動事件，滾輪下滑時 header 隱藏，上滑時 header 顯示
     window.addEventListener('scroll', () => {
       let currentScrollY = window.scrollY;
       // 當前滑動位置小於前一個位置即為滾輪往上滑
@@ -194,5 +208,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css';
 </style>
