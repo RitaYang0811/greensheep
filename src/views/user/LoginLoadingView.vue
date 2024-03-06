@@ -1,0 +1,97 @@
+<template>
+  <div class="d-flex flex-column align-items-center py-50">Loading</div>
+</template>
+
+<script>
+import axios from 'axios'
+import Qs from 'qs'
+import { jwtDecode } from 'jwt-decode'
+
+// json-server網址
+const serverUrl = 'https://greensheep-json-server.onrender.com'
+export default {
+  data() {
+    return {
+      user: {},
+      userInfo: {}
+    }
+  },
+  methods: {
+    // 判斷是否已註冊帳號
+    async checkAccounts(email) {
+      try {
+        const response = await axios.get(`${serverUrl}/users/?email=${email}`)
+        return response.data.length === 0
+      } catch (error) {
+        console.log(error.response.data)
+      }
+    },
+    // google登入
+    async googleAccount() {
+      if (await this.checkAccounts(this.$route.query.googleEmail)) {
+        alert('此信箱尚未註冊過!')
+        this.$router.push({ name: 'MemberSignUp' })
+      } else {
+        this.user.email = this.$route.query.googleEmail
+        this.user.password = `google-${this.user.email}`
+        this.login()
+      }
+    },
+    // 登入
+    login() {
+      axios
+        .post(`${serverUrl}/login`, this.user)
+        .then((res) => {
+          this.userInfo.token = res.data.accessToken
+          this.userInfo.id = res.data.user.id
+          localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
+          this.$router.push({ name: 'MemberLayout' })
+        })
+        .catch((err) => {
+          alert('帳號或密碼錯誤!')
+          this.$router.push({ name: 'MemberLogin' })
+        })
+    }
+  },
+  async mounted() {
+    // google登入
+    if (Object.keys(this.$route.query).length) {
+      this.googleAccount()
+      return
+    }
+
+    // Line登入
+    // 先對參數做處理，剩下驗證碼
+    const urlParams = new URLSearchParams(window.location.href.split('?')[1])
+
+    // 再利用URLSearchParams中get方法取值
+    this.code = urlParams.get('code')
+    console.log(this.code)
+    let options = Qs.stringify({
+      // 向Resource Server發送請求的參數
+      // 用Qs是要轉成form-urlencoded 因為LINE不吃JSON格式
+      grant_type: 'authorization_code',
+      code: this.code,
+      redirect_uri: 'http://localhost:5173/greensheep/#/loginLoading',
+      client_id: '2003862374',
+      client_secret: '3f92c0ff3156006f79bca2ab6e993a4e'
+    })
+    try {
+      const lineRes = await axios.post('https://api.line.me/oauth2/v2.1/token', options, {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+      if (await this.checkAccounts(jwtDecode(lineRes.data.id_token).email)) {
+        alert('此信箱尚未註冊過!')
+        this.$router.push({ name: 'MemberSignUp' })
+      } else {
+        this.user.email = jwtDecode(lineRes.data.id_token).email
+        this.user.password = `line-${this.user.email}`
+        this.login()
+      }
+    } catch {
+      alert('請重新登入')
+      this.$router.push({ name: 'MemberLogin' })
+    }
+  }
+}
+</script>

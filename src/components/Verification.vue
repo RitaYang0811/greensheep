@@ -28,6 +28,8 @@
       <p>驗證註冊</p>
     </button>
   </v-form>
+  {{ verificationCode }}
+  {{ securityCode }}
 </template>
 
 <script>
@@ -37,19 +39,13 @@ export default {
   props: ['verificationCode', 'userInfo'],
   data() {
     return {
-      securityCode: null,
       securityInput: null,
       user: {}
     }
   },
-  computed: {
-    codeUpdate() {
-      return (this.securityCode = this.verificationCode)
-    }
-  },
   methods: {
     checkCode() {
-      if (this.securityInput === this.securityCode) {
+      if (this.securityInput === this.verificationCode) {
         alert('驗證成功')
         this.onSubmit()
         return
