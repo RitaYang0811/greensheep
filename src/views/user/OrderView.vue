@@ -40,11 +40,63 @@
         </p>
       </div>
     </div>
+    <!-- 購物車內容 -->
+    <div class="">
+      <table class="table align-middle border-primary">
+        <thead>
+          <tr>
+            <th scope="col" class="text-primary fw-medium">商品資訊</th>
+            <th scope="col" class="text-primary fw-medium">數量</th>
+            <th scope="col" class="text-primary fw-medium">價格</th>
+            <th scope="col" class="text-primary fw-medium"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="cart in carts" :key="cart.id">
+            <th scope="row" class="py-4">
+              <div class="card border-0" style="max-width: 540px">
+                <div class="row g-0 align-items-center">
+                  <div class="col-md-4">
+                    <div class="ratio ratio-1x1">
+                      <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover" alt="..." />
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="fs-6 card-title text-primary fw-medium">
+                        {{ cart.product.title }}
+                      </h5>
+                      <small class="text-start fw-normal">{{ cart.product.category }}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </th>
+            <td class="py-4">
+              <div class="d-flex justify-content-center ">
+                <button class="btn btn-link text-primary" @click.prevent="cart.qty++" @click="updateCart(cart)"><i
+                    class="bi bi-plus-circle fs-3"></i></button>
+                <input type="number" class="p-2 w-10" min="1" v-model="cart.qty" disabled />
+                <button class="btn btn-link text-primary" @click.prevent="cart.qty--" @click="updateCart(cart)"
+                  :disabled="cart.qty <= 1"><i class="bi bi-dash-circle fs-3"></i></button>
+              </div>
 
-    <h2 class="fs-5 font-notosans">
-      合計：NT$8,160 <br />
-      （共3件）
-    </h2>
+
+            </td>
+            <td class="py-4 text-primary">NT$ {{ parseInt(cart.total) }}</td>
+            <td class="py-4">
+              <button class="btn btn-primary" @click="deleteCart(cart.id)">刪除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 class="fs-5 font-notosans mt-6">
+        合計：NT${{ total }}<br />
+        （共{{ carts.length }}件）
+      </h2>
+    </div>
+
+
   </div>
 
   <!-- 顧客資料、訂單資料 -->
@@ -57,23 +109,24 @@
           <div class="bg-greyD4 px-8 py-5">
             <h4 class="fs-6 my-4">已經是會員？登入後更方便管理訂單</h4>
             <div class="d-flex justify-content-between my-5">
-              <a href="8-1.memLogin.html" class="btn btn-grey66 fs-6 p-5 my-auto" style="width: 47%">會員登入</a>
-              <a href="#" class="btn btn-success fs-6 p-5" style="width: 47%">Line Account</a>
+
+              <router-link to="/memberLogin" class="btn btn-grey66 fs-6 p-5 my-auto w-100">會員登入</router-link>
+
             </div>
 
             <form action="" class="text-dark">
               <label for="name" class="fs-6 mb-1">顧客名稱</label><br />
-              <input type="text" id="name" class="p-2 w-100 mb-4 border-0" />
+              <input type="text" id="name" class="p-2 w-100 mb-4 border-0" v-model="orderData.user.name" />
 
               <label for="email" class="fs-6 mb-1">電子信箱</label><br />
-              <input type="email" id="email" class="p-2 w-100 mb-1 border-0" />
+              <input type="email" id="email" class="p-2 w-100 mb-1 border-0" v-model="orderData.user.email" />
               <p class="mb-3 text-end">訂單將以此Email通知</p>
 
               <label for="phone" class="fs-6 mb-1">電話號碼</label><br />
-              <input type="tel" id="phone" class="p-2 w-100 mb-4 border-0" />
+              <input type="tel" id="phone" class="p-2 w-100 mb-4 border-0" v-model="orderData.user.tel" />
 
-              <label for="birthday" class="fs-6 mb-1">生日</label><br />
-              <input type="date" id="birthday" class="p-2 w-100 mb-6 border-0" />
+              <!-- <label for="birthday" class="fs-6 mb-1">生日</label><br />
+              <input type="date" id="birthday" class="p-2 w-100 mb-6 border-0" v-model="orderData.birthday" /> -->
             </form>
           </div>
         </div>
@@ -81,25 +134,34 @@
         <div class="col-12 col-md-6 mt-md-0 mt-5 d-flex flex-column">
           <h3 class="fs-4 fw-medium text-start mb-4">送貨資料</h3>
           <div class="bg-greyD4 px-8 py-5 text-dark flex-grow-1">
-            <h5 class="fs-5 my-4 font-notosans">已選擇的送貨方式：7-11取貨</h5>
+            <h5 class="fs-5 my-4 font-notosans">已選擇的送貨方式：{{ orderDeliverData.deliver }}</h5>
 
-            <input type="checkbox" id="data" class="form-check-input my-4" />
+            <input type="checkbox" id="data" class="form-check-input my-4" v-model="recipientAsOrderData" />
             <label for="data" class="form-check-label my-4 fs-6 ms-2">收件人資料與顧客資料相同</label>
 
             <form class="my-3">
               <label for="recipient" class="fs-6 mb-1">收件人名稱</label><br />
-              <input type="name" id="recipient" class="p-2 w-100 mb-1 border-0" />
+              <input type="name" id="recipient" class="p-2 w-100 mb-1 border-0" v-model="recipient.name"
+                :disabled="recipientAsOrderData" />
               <p class="mb-3 text-end">
                 請填入收件人真實姓名，以確保順利收件
               </p>
 
               <label for="recipient-phone" class="fs-6 mb-1">收件人電話號碼</label><br />
-              <input type="tel" id="recipient-phone" class="p-2 w-100 mb-4 border-0" />
+              <input type="tel" id="recipient-phone" class="p-2 w-100 mb-4 border-0" v-model="recipient.tel"
+                :disabled="recipientAsOrderData" />
+
+              <label for="recipient-phone" class="fs-6 mb-1" v-if="showAddress()">收件人地址</label><br />
+              <input type="tel" id="recipient-phone" class="p-2 w-100 mb-4 border-0" v-model="recipient.address"
+                 v-if="showAddress()" />
+
             </form>
+            <div class="" v-if="showStore()">
+              <h4 class="fs-5 fw-medium py-4 mt-2">選擇門市</h4>
 
-            <h4 class="fs-5 fw-medium py-4 mt-2">選擇門市</h4>
+              <button type="button" class="btn btn-primary fs-5 p-5 w-100 mb-3">搜尋門市</button>
+            </div>
 
-            <a href="#" class="btn btn-primary fs-5 p-5 w-100 mb-3">搜尋門市</a>
           </div>
         </div>
       </div>
@@ -108,33 +170,37 @@
         <div class="me-5 mt-md-0 mt-5">
           <h3 class="fs-4 fw-medium text-start mb-4">付款資料</h3>
           <div class="bg-greyD4 px-8 py-5">
-            <h4 class="fs-6 my-4">已選擇付款方式：線上刷卡</h4>
-            <form action="" class="">
-              <div class="form-floating">
-                <input type="email" class="form-control mb-5" id="Card-number" placeholder="name@example.com" />
-                <label for="Card-number">卡號</label>
-              </div>
+            <h4 class="fs-6 my-4">已選擇付款方式：{{ orderDeliverData.payWay }}</h4>
+            <div class="" v-if="showCreditCard()">
+              <form action="" class="" >
+                <div class="form-floating">
+                  <input type="email" class="form-control mb-5" id="Card-number" placeholder="name@example.com" />
+                  <label for="Card-number">卡號</label>
+                </div>
 
-              <div class="form-floating">
-                <input type="email" class="form-control mb-5" id="Card-name" placeholder="name@example.com" />
-                <label for="Card-name">持卡人姓名</label>
-              </div>
+                <div class="form-floating">
+                  <input type="email" class="form-control mb-5" id="Card-name" placeholder="name@example.com" />
+                  <label for="Card-name">持卡人姓名</label>
+                </div>
 
-              <div class="form-floating">
-                <input type="email" class="form-control mb-5" id="Card-date" placeholder="name@example.com" />
-                <label for="Card-date">有效期限(MM/YY)</label>
-              </div>
+                <div class="form-floating">
+                  <input type="email" class="form-control mb-5" id="Card-date" placeholder="name@example.com" />
+                  <label for="Card-date">有效期限(MM/YY)</label>
+                </div>
 
-              <div class="form-floating">
-                <input type="email" class="form-control mb-5" id="Card-pin" placeholder="name@example.com" />
-                <label for="Card-pin">安全碼</label>
-              </div>
-            </form>
+                <div class="form-floating">
+                  <input type="email" class="form-control mb-5" id="Card-pin" placeholder="name@example.com" />
+                  <label for="Card-pin">安全碼</label>
+                </div>
+              </form>
 
-            <p class="px-2">
-              本金流服務由 SHOPLINE Payments 提供,通過 PCI-DSS
-              國際信用卡組織最高等級認證,提供安全的交易服務,支援國內外信用卡刷卡。
-            </p>
+              <p class="px-2">
+                本金流服務由 SHOPLINE Payments 提供,通過 PCI-DSS
+                國際信用卡組織最高等級認證,提供安全的交易服務,支援國內外信用卡刷卡。
+              </p>
+
+            </div>
+
           </div>
         </div>
 
@@ -143,7 +209,8 @@
           <div class="bg-greyD4 px-8 py-5">
             <h4 class="fs-5 my-4">有什麼要對賣家說的話：</h4>
             <form action="" class="form-floating">
-              <textarea name="" id="" rows="15" class="mb-4 w-100 no-resize border-0"></textarea>
+              <textarea name="" id="" rows="15" class="mb-4 w-100 no-resize border-0"
+                v-model="orderData.message"></textarea>
             </form>
           </div>
         </div>
@@ -154,8 +221,8 @@
   <div class="container py-8 text-start text-primary">
     <div class="row">
       <div class="col-lg-6 col-12">
-        <a href="7-2.shopCart.html" class="d-flex align-items-center p-8 fs-5 fw-medium text-primary"><span
-            class="material-icons fs-5 me-2"> arrow_back_ios_new </span><span>返回購物車</span></a>
+        <router-link to="/cart" class="d-flex align-items-center p-8 fs-5 fw-medium text-primary"><span
+            class="material-icons fs-5 me-2"> arrow_back_ios_new </span><span>返回購物車</span></router-link>
       </div>
 
       <div class="col-lg-6 col-12 p-8">
@@ -177,13 +244,97 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'pinia';
+import cartStore from '@/stores/cartStore';
 
 export default {
   data() {
-    return {}
+    return {
+      recipientAsOrderData: false,
+      recipient: {
+        name: '',
+        tel: '',
+        address: '',
+      },
+      orderData: {
+        user: {
+          name: '',
+          email: '',
+          tel: '',
+          address: '',
+        },
+        message: '',
+        birthday: '',
+      },
+      orderDeliverData: {},
+
+
+    }
   },
-  methods: {},
-  mounted() { },
+  methods: {
+    ...mapActions(cartStore, ['getCarts', 'updateCart', 'deleteCart']),
+    //選擇寄送時出現地址
+    showAddress() {
+      if (this.orderDeliverData.deliver == '中華郵政') {
+        return true
+      }
+      if (this.orderDeliverData.deliver == '黑貓宅急便') {
+        return true
+      }
+      if (this.orderDeliverData.deliver == '宅配通') {
+        return true
+      }
+      if (this.orderDeliverData.deliver == 'UPS') {
+        return true
+      }
+      if (this.orderDeliverData.deliver == 'DHL') {
+        return true
+      }
+    },
+    //選擇便利店時出現選店
+    showStore() {
+      if (this.orderDeliverData.deliver == '7-11取貨') {
+        return true
+      }
+      if (this.orderDeliverData.deliver == '全家取貨') {
+        return true
+      }
+      if (this.orderDeliverData.deliver == 'OK取貨') {
+        return true
+      }
+      if (this.orderDeliverData.deliver == '萊爾富取貨') {
+        return true
+      }
+    },
+    showCreditCard() {
+      if (this.orderDeliverData.payWay == '信用卡') {
+        return true
+      }
+    },
+  },
+  computed: {
+    ...mapState(cartStore, ['carts', 'deliverData']),
+    total() {
+      let total = 0
+      this.carts.forEach((item) => {
+        total += item.final_total
+      })
+      return total
+    },
+  },
+  watch: {
+    recipientAsOrderData(value) {
+      if (value) {
+        this.recipient.name = this.orderData.user.name
+        this.recipient.tel = this.orderData.user.tel
+      }
+
+    }
+  },
+
+  mounted() {
+    this.orderDeliverData = { ...this.deliverData }
+  },
 
 }
 
