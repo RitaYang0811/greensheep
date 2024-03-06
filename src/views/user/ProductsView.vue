@@ -7,19 +7,19 @@
       <aside class="d-none d-lg-block col-lg-2 h-bottom-line">
         <ul class="d-none d-md-block list-unstyled text-dark text-start">
           <li>
-            <routerLink
-              to="/products"
+            <RouterLink
+              to="/products/productsAll"
               class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
-              >全部商品 ALL</routerLink
+              >全部商品 ALL</RouterLink
             >
           </li>
           <!-- categoryList -->
           <li v-for="category in categories" :key="category + 123">
-            <routerLink
-              :to="`/products?category=${category}`"
+            <RouterLink
+              :to="`/products/${category}?category=${category}`"
               class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
               >{{ category }}
-            </routerLink>
+            </RouterLink>
           </li>
 
           <li class="d-inline-block py-2 mx-3"></li>
@@ -142,10 +142,8 @@ export default {
     ...mapState(searchStore, ['searchQuery']),
     filterProducts() {
       if (this.searchWord) {
-        // 如果只存在搜索词，则返回符合搜索词的产品
         return this.products.filter((product) => product.title.match(this.searchWord))
       } else {
-        // 如果都不存在，则返回所有产品
         return this.products
       }
     }
