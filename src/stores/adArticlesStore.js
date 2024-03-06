@@ -11,6 +11,7 @@ export default defineStore('adminArticles',{
     publicArticles: [],
     privateArticles: [],
     pinnedArticles: [],
+    searchArticles: [],
     article: {
       title: '',
       image: '',
@@ -88,7 +89,7 @@ export default defineStore('adminArticles',{
         return bNum - aNum
       })
 
-      // AdArticlesView.vue 中的　watch 監聽無法監聽到陣列 push 的變化，所以宣告新陣列並賦值到 this.pinnedArticles 觸發監聽
+      // AdArticlesView.vue 中的 watch 監聽無法監聽到陣列 push 的變化，所以宣告新陣列並賦值到 this.pinnedArticles 觸發監聽
       this.pinnedArticles = filterPinnedArticles
     },
     // 切換 tab
@@ -98,16 +99,19 @@ export default defineStore('adminArticles',{
       this.currentPage = 1
       this.getCurrentPageArticles(this.currentPage)
     },
-    getCurrentPageArticles(page) {
+    // 當前頁要顯示的資料
+    getCurrentPageArticles(page, keyword = '') {
       switch(this.currentTab) {
         case '公開文章':
-          this.currentPageArticles = this.publicArticles.slice((page - 1) * 10, page * 10) // 10: 一頁顯示幾筆資料
+          this.searchArticles = this.publicArticles.filter(article => article.title.match(keyword))
+          this.currentPageArticles = this.searchArticles.slice((page - 1) * 10, page * 10) // 10: 一頁顯示幾筆資料
           // page  articlesSliceIndex
           //  1         0 ~ 9
           //  2        10 ~ 19
           break
         case '草稿文章':
-          this.currentPageArticles = this.privateArticles.slice((page - 1) * 10, page * 10)
+          this.searchArticles = this.privateArticles.filter(article => article.title.match(keyword))
+          this.currentPageArticles = this.searchArticles.slice((page - 1) * 10, page * 10)
           break
       }
     },
@@ -141,7 +145,7 @@ export default defineStore('adminArticles',{
     },
     // 取得單一文章
     getArticle(id) {
-      this.loadingStatusData.loadingItem = true
+      this.loadingStatus.loadingItem = true
       const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article/${id}`
       
       axios.get(url)
@@ -152,7 +156,7 @@ export default defineStore('adminArticles',{
           alert(err.response.data.message)
         })
         .finally(() => {
-          this.loadingStatusData.loadingItem = false
+          this.loadingStatus.loadingItem = false
         })
     },
     // 新增/編輯文章
@@ -245,41 +249,5 @@ export default defineStore('adminArticles',{
     }
   },
   getters: {
-    articleData: ({article}) => {
-      return article
-    },
-    articlesData: ({articles}) => {
-      return articles
-    },
-    isLoadingData: ({isLoading}) => {
-      return isLoading
-    },
-    isNewData: ({isNew}) => {
-      return isNew
-    },
-    loadingStatusData: ({loadingStatus}) => {
-      return loadingStatus
-    },
-    formStatusData: ({formStatus}) => {
-      return formStatus
-    },
-    currentTabData: ({currentTab}) => {
-      return currentTab
-    },
-    currentPageData: ({currentPage}) => {
-      return currentPage
-    },
-    currentPageArticlesData: ({currentPageArticles}) => {
-      return currentPageArticles
-    },
-    publicArticlesData: ({publicArticles}) => {
-      return publicArticles
-    },
-    privateArticlesData: ({privateArticles}) => {
-      return privateArticles
-    },
-    pinnedArticlesData: ({pinnedArticles}) => {
-      return pinnedArticles
-    }
   }
 })
