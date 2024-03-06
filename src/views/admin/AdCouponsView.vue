@@ -1,6 +1,6 @@
 <template>
   <div class="ad-coupon px-lg-10 pt-lg-10 text-start">
-    <h1 class="fs-3 mb-4">優惠管理</h1>
+    <h1 class="fs-3 mb-4 fw-bold">優惠管理</h1>
     <ul class="nav border-bottom border-primary mb-4">
       <li class="nav-item">
         <a
