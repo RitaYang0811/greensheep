@@ -136,7 +136,6 @@ export default defineStore('adminArticles',{
         case 'edit':
           this.article = []
           this.isNew = false
-          this.getArticle(id)
           this.$router.push(`/admin/articles/${id}`)
           break
         default:

@@ -65,13 +65,20 @@
       left: 48%;
     }
   }
+  .popover {
+    border-radius: 8px;
+    border-width: 0;
+    &-body {
+      padding: 12px;
+    }
+  }
   
   @keyframes scale {
     from {
       transform: scale(1);
     }
     to {
-      transform: scale(1.2);
+      transform: scale(1.4);
     }
   }
   

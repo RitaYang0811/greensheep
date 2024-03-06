@@ -102,8 +102,9 @@
   <VueLoading :active="isLoading" />
 </template>
 <script>
-import adArticlesStore from "@/stores/adArticlesStore.js";
-import { mapActions, mapState } from 'pinia';
+import adArticlesStore from "@/stores/adArticlesStore.js"
+import { mapActions, mapState } from 'pinia'
+// import { useRoute } from "vue-router"
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
 export default {
@@ -151,9 +152,10 @@ export default {
         alert(err.response.data.message)
       })
     },
-    ...mapActions(adArticlesStore, ['updateArticle'])
+    ...mapActions(adArticlesStore, ['updateArticle', 'getArticle'])
   },
   watch: {
+    // 新增: 賦予初始值、編輯: 觸發 mounted 的 getArticle(id)，取得 id 的 data
     article() {
       this.articleData = { ...this.article }
       // 給 radio 選項綁定使用
@@ -161,9 +163,11 @@ export default {
         this.articleData.isPublic ? this.editIsPublic = "public" : this.editIsPublic = "private"
       }
     },
+    // 根據是否有加入圖片切換狀態
     'articleData.image'() {
       this.formStatus.hasFormImage = true
     },
+    // 根據是否有加入文章內容切換狀態
     'articleData.content'() {
       this.articleData.content ? this.formStatus.hasFormContent = true : this.formStatus.hasFormContent = false
     },
@@ -172,7 +176,12 @@ export default {
     ...mapState(adArticlesStore, ['article', 'isLoading', 'loadingStatus','formStatus' , 'isNew'])
   },
   mounted() {
-    this.articleData = { ...this.article }
+    // 在編輯/新增頁面重整時的 isNew 為初始值(true)，所以不能用 isNew 做判斷
+    // $route.name 如果不是 新增頁面 的 pathname，即為編輯
+    if(this.$route.name !== 'AdminCreateArticle') {
+      const id = this.$route.params.id
+      this.getArticle(id)
+    }
   }
 }
 </script>

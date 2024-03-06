@@ -16,11 +16,13 @@ export default {
   },
   mounted() {
     this.popoverRing = new Popover(this.$refs.ringPopoverBtn, {
+      container: '.home3', // 指定要在哪個位置渲染
       html: true,
       content: this.$refs.ringPopoverContent,
       placement: 'top',
     })
     this.popoverNecklace = new Popover(this.$refs.necklacePopoverBtn, {
+      container: '.home3',
       html: true,
       content: this.$refs.necklacePopoverContent,
       placement: 'top'
@@ -38,7 +40,7 @@ export default {
           <div class="row pb-9 pb-lg-0 pt-15 pt-lg-30 position-relative">
             <img
               class="position-absolute w-100 top-0 start-0 cus-img-bg"
-              src="../assets/images/img_diy_bg.png"
+              src="@/assets/images/img_diy_bg.png"
             />
             <!-- 客製化介紹 -->
             <div class="cus-desc col-12 col-lg-4 order-lg-3 mb-6 mb-lg-0 px-12 text-lg-start">
@@ -56,12 +58,12 @@ export default {
             <div class="col-8 col-md-6 col-lg-4 position-relative">
               <img
                 class="cus-img-font position-relative mb-7 d-none d-lg-inline-block"
-                src="../assets/images/img_diy_font.png"
+                src="@/assets/images/img_diy_font.png"
                 alt="handmadeJewelry"
               />
               <img
                 class="cus-img-ring position-relative"
-                src="../assets/images/img-diy-left.png"
+                src="@/assets/images/img-diy-left.png"
                 alt="customRing"
               />
               <button
@@ -70,12 +72,13 @@ export default {
                 ref="ringPopoverBtn"
                 data-bs-toggle="popover"
               >
-                <img src="../assets/images/point.png" alt="雷雕客製" />
+                <img src="@/assets/images/point.png" alt="雷雕客製" />
               </button>
+              <!-- popover -->
               <div class="d-none">
-                <div class="p-2" ref="ringPopoverContent">
-                  <p class="mb-4">雷切刻字</p>
-                  <div class="border d-flex align-items-center px-2 py-1">
+                <div ref="ringPopoverContent">
+                  <p class="mb-3 text-dark">雷切刻字</p>
+                  <div class="border d-flex align-items-center px-2 py-1 rounded-1">
                     <input class="cus-popover-input border-0 ls-2" type="text" placeholder="hello world !" />
                     <!-- 待修改路由，需加上 method: closePopover -->
                     <a href="##">
@@ -89,7 +92,7 @@ export default {
             <div class="cus-img-necklace col-9 col-md-6 col-lg-4 ms-auto position-relative">
               <img
                 class="base-image"
-                src="../assets/images/img-diy-center.png"
+                src="@/assets/images/img-diy-center.png"
                 alt="customNecklace"
               />
               <button
@@ -98,21 +101,22 @@ export default {
                 ref="necklacePopoverBtn"
                 data-bs-toggle="popover"
               >
-                <img src="../assets/images/point.png" alt="寶石客製化" />
+                <img src="@/assets/images/point.png" alt="寶石客製化" />
               </button>
+               <!-- popover -->
               <div class="d-none">
-                <div class="p-2" ref="necklacePopoverContent">
-                  <p class="mb-4">選擇寶石</p>
+                <div ref="necklacePopoverContent">
+                  <p class="mb-3 text-dark">選擇寶石</p>
                   <div class="d-flex gap-2">
                     <!-- 待修改路由，需加上 method: closePopover -->
                     <a href="##">
-                      <img src="../assets/images/stoneBox.png" alt="寶石 1">
+                      <img src="@/assets/images/stoneBox.png" alt="寶石 1">
                     </a>
                     <a href="##">
-                      <img src="../assets/images/stoneBox1.png" alt="寶石 2">
+                      <img src="@/assets/images/stoneBox1.png" alt="寶石 2">
                     </a>
                     <a href="##">
-                      <img src="../assets/images/stoneBox2.png" alt="寶石 3">
+                      <img src="@/assets/images/stoneBox2.png" alt="寶石 3">
                     </a>
                   </div>
                 </div>
@@ -129,28 +133,28 @@ export default {
       <div class="px-md-6">
         <ul class="row list-unstyled">
           <li class="col-lg-3 col-6 pb-4">
-            <img class="mb-3" src="../assets/images/diamond.png" alt="最高品質保證" />
+            <img class="mb-3" src="@/assets/images/diamond.png" alt="最高品質保證" />
             <p class="text-dark mb-3 ls-2">最高品質保證</p>
             <p class="text-grey9F fs-8 lh-lg ls-2">
               品牌堅持以最高品質來製作每一件作品，所有作品均選用天然寶石與優質的金屬材料，確保每一件作品都散發絕佳光彩。
             </p>
           </li>
           <li class="col-lg-3 col-6">
-            <img class="mb-3" src="../assets/images/car.png" alt="全球配送" />
+            <img class="mb-3" src="@/assets/images/car.png" alt="全球配送" />
             <p class="text-dark mb-3 ls-2">全球配送</p>
             <p class="text-grey9F fs-8 lh-lg ls-2">
               我們樂於將綠羊作品傳遞至世界各地，不論您身在何處，我們提供全球配送服務，確保您能夠輕鬆地有我們的珠寶飾品。
             </p>
           </li>
           <li class="col-lg-3 col-6">
-            <img class="mb-3" src="../assets/images/return.png" alt="完善退換貨機制" />
+            <img class="mb-3" src="@/assets/images/return.png" alt="完善退換貨機制" />
             <p class="text-dark mb-3 ls-2">完善退換貨機制</p>
             <p class="text-grey9F fs-8 lh-lg ls-2">
               我們尊重每一位客戶的選擇，提供完善退換貨機制，若您對購買的作品(客製商品除外)有任何疑慮或不滿意，請隨時與我們聯繫，我們將竭誠為您解決。
             </p>
           </li>
           <li class="col-lg-3 col-6">
-            <img class="mb-3" src="../assets/images/drew.png" alt="原創設計手工製作" />
+            <img class="mb-3" src="@/assets/images/drew.png" alt="原創設計手工製作" />
             <p class="text-dark mb-3 ls-2">原創設計手工製作</p>
             <p class="text-grey9F fs-8 lh-lg ls-2">
               綠羊品牌的每一件作品都是由專業的設計師原創設計，並由台灣資深金工師傅手工製作。這使得每一件作品都散發著原創的獨特風格，讓您感受到我們的用心與品質保證。
@@ -165,7 +169,7 @@ export default {
       <img
         style="top: 45%; left: 28.7%"
         class="position-absolute translate-middle zindex-sticky"
-        src="../assets/images/img_mark.png"
+        src="@/assets/images/img_mark.png"
         alt="img_mark"
       />
       <p class="col-5 fs-6 lh-lg mx-auto ls-2">
@@ -178,7 +182,7 @@ export default {
       <img
         style="top: 41%; left: 16%"
         class="position-absolute translate-middle zindex-sticky"
-        src="../assets/images/img_mark.png"
+        src="@/assets/images/img_mark.png"
         alt="img_mark"
       />
       <p class="col-11 fs-6 lh-lg mx-auto ls-2">
