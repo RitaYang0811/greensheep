@@ -17,14 +17,9 @@ export default defineStore('productStore', {
     pagination: {},
     loadingStatus: false
   }),
-  // getters: {
-  //   filterProducts: () => {
-  //     return this.products.filter((product) => product.title.match(searchQuery))
-  //   }
-  // },
+
   actions: {
-    //初始化取得產品
-    getProducts(route, page = 1) {
+    async getProducts(route, page = 1) {
       this.loadingStatus = true
 
       const { category = '' } = route.query
@@ -33,39 +28,34 @@ export default defineStore('productStore', {
 
       const apiUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products?category=${category}&page=${page}`
 
-      axios
-        .get(apiUrl)
-        .then((res) => {
-          this.products = res.data.products
-          console.log('所有商品', this.products)
+      try {
+        const res = await axios.get(apiUrl)
+        this.products = res.data.products
+        console.log('所有商品', this.products)
 
-          this.pagination = { ...res.data.pagination }
-        })
-        .catch((err) => {
-          console.log(err.data.message)
-        })
-        .finally(() => {
-          this.loadingStatus = false
-        })
+        this.pagination = { ...res.data.pagination }
+      } catch (err) {
+        console.error(err.data.message)
+      } finally {
+        this.loadingStatus = false
+      }
     },
 
-    getProductInfo(id) {
-      let url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/product/${id}`
-      axios
-        .get(url)
-        .then((res) => {
-          this.loadingStatus = true
-          console.log(res.data)
-          this.productInfo = res.data.product
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-        .finally(() => {
-          this.loadingStatus = false
-        })
+    async getProductInfo(id) {
+      const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/product/${id}`
+      try {
+        const res = await axios.get(url)
+        this.loadingStatus = true
+        console.log(res.data)
+        this.productInfo = res.data.product
+      } catch (err) {
+        console.error(err)
+      } finally {
+        this.loadingStatus = false
+      }
     },
-    getRecommendProducts(id) {
+
+    async getRecommendProducts(id) {
       this.recommendProducts = []
       while (this.recommendProducts.length < 4) {
         const randomProduct = this.products[Math.floor(Math.random() * this.products.length)]
@@ -74,17 +64,7 @@ export default defineStore('productStore', {
           this.recommendProducts.push(randomProduct)
         }
       }
-      //console.log('推薦商品', this.recommendProducts)
-    },
-    getFilterProducts(searchQuery) {
-      console.log('111', searchQuery)
-
-      if (searchQuery === '') {
-        this.filterProducts = this.products
-      } else {
-        this.filterProducts = this.products.filter((product) => product.title.match(searchQuery))
-      }
-      console.log('getFilterProducts', this.filterProducts, searchQuery)
+      //console.log('推荐商品', this.recommendProducts)
     }
   }
 })

@@ -230,6 +230,14 @@ export default {
       searchWord: ''
     }
   },
+  watch: {
+    searchWord: {
+      handler(newVal, oldVal) {
+        console.log('searchWord被修改', newVal, oldVal)
+        this.searchWord = newVal
+      }
+    }
+  },
   methods: {
     ...mapActions(searchStore, ['setSearchWord']),
     ...mapActions(productStore, ['getFilterProducts']),
@@ -243,8 +251,9 @@ export default {
       if (this.searchWord.trim() !== '') {
         // 发送搜索词到商品视图
         this.$router.push({ path: '/products' })
+        console.log('searchProducts', this.searchWord)
       }
-      this.getFilterProducts()
+
       this.searchWord = '' // 清空搜索词
     }
   },

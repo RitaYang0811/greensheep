@@ -43,7 +43,14 @@
         </nav>
         <!-- 商品列表 -->
         <div class="row row-cols-2 row-cols-lg-5 gx-4 gy-6 mb-10 mb-lg-20">
+          <div
+            v-if="filterProducts.length && filterProducts.length == 0"
+            class="alert alert-warning h-100 d-flex justify-content-center align-items-center"
+          >
+            Sorry,依您的關鍵字「{{ searchWord }}」搜尋不到產品呢...
+          </div>
           <li
+            v-else
             class="col list-unstyled h-100 column"
             v-for="product in filterProducts"
             :key="product.id"
@@ -107,7 +114,7 @@
 <script>
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
-//import searchStore from '@/stores/searchStore'
+import searchStore from '@/stores/searchStore'
 import SwiperAllProducts from '@/components/SwiperAllProducts.vue'
 import PagiNation from '@/components/PagiNation.vue'
 import { mapState, mapActions } from 'pinia'
@@ -115,6 +122,7 @@ import { mapState, mapActions } from 'pinia'
 export default {
   data() {
     return {
+      searchWord: '',
       isLoading: false,
       currentCategory: null
     }
@@ -130,12 +138,24 @@ export default {
       'category',
       'pagination',
       'categories'
-    ])
-    // filterProducts() {
-    //   return this.products.filter((product) => product.title.match(this.searchWords))
-    // }
+    ]),
+    ...mapState(searchStore, ['searchQuery']),
+    filterProducts() {
+      if (this.searchWord) {
+        // 如果只存在搜索词，则返回符合搜索词的产品
+        return this.products.filter((product) => product.title.match(this.searchWord))
+      } else {
+        // 如果都不存在，则返回所有产品
+        return this.products
+      }
+    }
   },
-
+  //監聽路由變化後重新取得產品
+  watch: {
+    $route(to, from) {
+      this.getProducts(to)
+    }
+  },
   methods: {
     ...mapActions(productStore, ['getProducts', 'getFilterProducts']),
     ...mapActions(cartStore, ['addToCart']),
@@ -145,15 +165,10 @@ export default {
     }
   },
   mounted() {
-    this.getProducts(this.$route), this.getFilterProducts()
-    // console.log('首頁搜尋keyword', this.$route.query.keyword)
-    // this.searchWords = this.$route.query.keyword
+    this.getProducts(this.$route)
+    this.searchWord = this.searchQuery
+    console.log(this.searchWord)
   }
-  // beforeRouteUpdate(to, from, next) {
-  //   this.getProducts(to)
-  //   console.log('再次搜尋keyword', this.$route.query.keyword)
-  //   next()
-  // }
 }
 </script>
 
