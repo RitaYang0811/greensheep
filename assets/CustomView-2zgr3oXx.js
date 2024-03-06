@@ -1,1 +1,0 @@
-import{_ as o,c as s,o as t,p as c,l as a,a as _}from"./index-2hhN2grE.js";const d={},n=e=>(c("data-v-7d30b148"),e=e(),a(),e),p={class:"faq"},r=n(()=>_("h1",null,"Custom",-1)),i=[r];function l(e,f){return t(),s("div",p,i)}const u=o(d,[["render",l],["__scopeId","data-v-7d30b148"]]);export{u as default};
