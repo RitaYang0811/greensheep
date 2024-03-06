@@ -358,7 +358,7 @@ export default {
       this.user.securityCode = this.securityCode()
       this.signupState = false
       this.securityState = true
-      const body = `使用者:Email:${this.user.email}<br/>驗證碼:${this.user.securityCode}<br/>Messages:申請註冊GreenSheep會員<br/> `
+      const body = `使用者:${this.user.email}<br/>驗證碼:${this.user.securityCode}<br/>Messages:申請註冊GreenSheep會員<br/> `
       Email.send({
         SecureToken: '0435dc8c-9e69-445a-9569-0d031827457c',
         To: `${this.user.email}`,
