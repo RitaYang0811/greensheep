@@ -43,7 +43,7 @@
                   <VField
                     type="number"
                     name="金額"
-                    :rules="couponData.title === '金額折抵' ? 'required|ruleTest1:@折抵金額' : ''"
+                    :rules="couponData.title === '金額折抵' ? 'required|compareWithDiscount:@折抵金額' : ''"
                     class="form-control"
                     :class="{ 'is-invalid': errors['金額'] }"
                     placeholder="設定金額"
@@ -56,7 +56,7 @@
                   <VField
                     type="number"
                     name="折抵金額"
-                    :rules="couponData.title === '金額折抵' ? 'required|ruleTest2:@金額' : ''"
+                    :rules="couponData.title === '金額折抵' ? 'required|compareWithPrice:@金額' : ''"
                     class="form-control"
                     :class="{ 'is-invalid': errors['折抵金額'] }"
                     placeholder="設定金額"
@@ -150,8 +150,10 @@ import { dateFormat } from '@/utils/dateFormat.js'
 import { unixToDate } from '@/utils/unixToDate.js'
 import { defineRule } from 'vee-validate'
 
+// 自定義規則
+// https://vee-validate.logaretm.com/v4/guide/global-validators/#cross-field-validation
 // value: 訂單金額, target: 折抵金額
-defineRule('ruleTest1', (value, [target]) => {
+defineRule('compareWithDiscount', (value, [target]) => {
   if(typeof value === 'number' && typeof target === 'number') {
     return value >= target ? true : '折抵金額不可大於訂單金額'
   }
@@ -159,7 +161,7 @@ defineRule('ruleTest1', (value, [target]) => {
 });
 
 // value: 折抵金額, target: 訂單金額
-defineRule('ruleTest2', (value, [target]) => {
+defineRule('compareWithPrice', (value, [target]) => {
   if(typeof value === 'number' && typeof target === 'number') {
     return value <= target ? true : '折抵金額不可大於訂單金額'
   }
@@ -172,19 +174,11 @@ export default {
     return {
       modal: '',
       couponData: '',
-      dateSelected: true,
+      dateSelected: true, // true: 有選擇日期或第一次點開 modal，false: 曾點開日期選擇器但未選擇日期
       dateCounter: 0
     }
   },
   methods: {
-    ruleTest3() {
-      const minBuyPrice = this.couponData.min_buy_price_by_price
-      const discountPrice = this.couponData.discount_price
-      // 判斷兩個欄位是否都有輸入值
-      if(typeof minBuyPrice === 'number' && typeof discountPrice === 'number') {
-        return minBuyPrice > discountPrice ? true : '折抵金額不可大於訂單金額'
-      }
-    },
     // 綁 blur 監聽，關閉日期選擇器後觸發
     datepickerInputStyle() {
       // 初始值設為零讓第一次點進 modal 時不會觸發驗證失敗樣式
@@ -198,6 +192,9 @@ export default {
     },
     openModal() {
       this.modal.show();
+      // 重置點擊次數及狀態
+      this.dateCounter = 0
+      this.dateSelected = true
     },
     closeModal() {
       this.modal.hide();
@@ -207,10 +204,12 @@ export default {
       const unixMs = unix * 1000;
       return unixToDate(unixMs);
     },
+    // 要顯示在畫面上的日期格式
     format(date) {
       const arr = date.map(e => dateFormat(e))
       return `${arr[0] ? arr[0] : '請選擇日期'} 至 ${arr[1] ? arr[1] : '請選擇日期'}`
     },
+    // 送出新增 / 編輯優惠券的資料
     updateCoupon() {
       // 送出後要驗證 dates 是否為空
       if(this.couponData.dates === null || isNaN(this.couponData.dates[0])){
@@ -221,11 +220,11 @@ export default {
     }
   },
   watch: {
-    // 打開 modal 時觸發
+    // 打開 modal 時，依照類型(新增或刪除)賦予 coupon 對應的 data
     coupon() {
       // 拷貝並將時間戳改成毫秒單位
       this.couponData = { ...this.coupon };
-      // range 模式的 VueDatePicker 使用此格式
+      // range 模式的 VueDatePicker 使用陣列格式儲存開始與結束時間
       this.couponData.dates = [this.couponData.start_date * 1000, this.couponData.due_date * 1000]
     }
   },
@@ -245,7 +244,7 @@ export default {
   },
   mounted() {
     this.modal = new Modal(this.$refs.adCouponCompModal, {
-      backdrop: false
+      backdrop: true
     });
   }
 }

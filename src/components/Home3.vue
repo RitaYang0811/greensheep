@@ -16,11 +16,13 @@ export default {
   },
   mounted() {
     this.popoverRing = new Popover(this.$refs.ringPopoverBtn, {
+      container: '.home3', // 指定要在哪個位置渲染
       html: true,
       content: this.$refs.ringPopoverContent,
       placement: 'top',
     })
     this.popoverNecklace = new Popover(this.$refs.necklacePopoverBtn, {
+      container: '.home3',
       html: true,
       content: this.$refs.necklacePopoverContent,
       placement: 'top'
@@ -72,10 +74,11 @@ export default {
               >
                 <img src="../assets/images/point.png" alt="雷雕客製" />
               </button>
+              <!-- popover -->
               <div class="d-none">
-                <div class="p-2" ref="ringPopoverContent">
-                  <p class="mb-4">雷切刻字</p>
-                  <div class="border d-flex align-items-center px-2 py-1">
+                <div ref="ringPopoverContent">
+                  <p class="mb-3 text-dark">雷切刻字</p>
+                  <div class="border d-flex align-items-center px-2 py-1 rounded-1">
                     <input class="cus-popover-input border-0 ls-2" type="text" placeholder="hello world !" />
                     <!-- 待修改路由，需加上 method: closePopover -->
                     <a href="##">
@@ -100,9 +103,10 @@ export default {
               >
                 <img src="../assets/images/point.png" alt="寶石客製化" />
               </button>
+               <!-- popover -->
               <div class="d-none">
-                <div class="p-2" ref="necklacePopoverContent">
-                  <p class="mb-4">選擇寶石</p>
+                <div ref="necklacePopoverContent">
+                  <p class="mb-3 text-dark">選擇寶石</p>
                   <div class="d-flex gap-2">
                     <!-- 待修改路由，需加上 method: closePopover -->
                     <a href="##">
