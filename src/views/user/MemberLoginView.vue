@@ -13,12 +13,12 @@
           <ul class="list-unstyled">
             <li class="py-3">
               <a href="#" class="p-3 google-account"
-                ><img src="../../assets/images/google.svg" alt="google" />Continue with Google
+                ><img src="../../assets/images/google.svg" alt="" />Continue with Google
               </a>
             </li>
             <li class="py-3">
               <a href="#" class="p-3 line-account">
-                <img src="../../assets/images/line-messenger.svg" alt="line" />
+                <img src="../../assets/images/line-messenger.svg" alt="" />
 
                 Continue with Line</a
               >
