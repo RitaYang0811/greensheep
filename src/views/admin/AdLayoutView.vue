@@ -1,6 +1,7 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid scroll-body" ref="scrollBody">
     <div class="row">
+      <!-- mobile header -->
       <header class="d-lg-none admin-header d-flex justify-content-between align-items-center">
         <a
           class="d-lg-none"
@@ -20,6 +21,7 @@
       </header>
     </div>
     <div class="row">
+      <!-- PC menu -->
       <aside
         class="admin-sidebar d-none d-lg-flex flex-column justify-content-between col-lg-1 px-0 position-fixed bg-primary text-white text-center"
       >
@@ -67,11 +69,12 @@
           </li>
         </ul>
       </aside>
-      <main class="col-lg-11 admin-main">
+      <main class="col-lg-11 admin-main pt-12 pt-lg-0">
         <RouterView v-if="checkSuccess" />
       </main>
     </div>
   </div>
+  <!-- mobile menu -->
   <div
     class="admin-offcanvas offcanvas offcanvas-start bg-primary text-white"
     tabindex="-1"
@@ -137,7 +140,8 @@ export default {
   data() {
     return {
       checkSuccess: false,
-      isLoading: false
+      isLoading: false,
+      previousScrollY: 0
     }
   },
   methods: {
@@ -175,6 +179,16 @@ export default {
   },
   mounted() {
     this.checkLogin()
+    window.addEventListener('scroll', () => {
+      let currentScrollY = window.scrollY;
+      // 當前滑動位置小於前一個位置即為滾輪往上滑
+      if( currentScrollY < this.previousScrollY) {
+        this.$refs.scrollBody.classList.remove('hideUp');
+      } else {
+        this.$refs.scrollBody.classList.add('hideUp');
+      }
+      this.previousScrollY = currentScrollY;
+    });
   }
 }
 </script>
