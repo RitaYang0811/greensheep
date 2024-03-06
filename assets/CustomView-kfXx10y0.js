@@ -1,1 +1,0 @@
-import{_ as o,c as s,o as t,E as c,G as a,a as _}from"./index-PFnB1WTL.js";const d={},n=e=>(c("data-v-81a1b515"),e=e(),a(),e),r={class:"faq"},p=n(()=>_("h1",null,"Custom",-1)),i=[p];function f(e,h){return t(),s("div",r,i)}const u=o(d,[["render",f],["__scopeId","data-v-81a1b515"]]);export{u as default};
