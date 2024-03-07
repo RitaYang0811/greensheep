@@ -54,12 +54,15 @@
       card_giftcard
     </span>
     <h2 class="fs-3 my-10">恭喜你完成訂單</h2>
-    <p class="fs-4 text-primary">訂單編號：20230725889695</p>
+    <router-link to="/products" class="fs-3 my-10 underline text-primary"> 繼續選購</router-link>
   </div>
 
   <div class="container text-primary mb-20 py-20">
     <p class="fs-5 mb-4">
-      歡迎隨時至<a href="9-1.memberInfo.html" style="color: #990000">會員中心</a>了解訂單最新狀態
+      歡迎隨時至
+      <router-link to="/member" style="color: #990000">會員中心 </router-link>
+      <!-- <a href="9-1.memberInfo.html" style="color: #990000"></a> -->
+      了解訂單最新狀態
     </p>
     <p class="fs-5">
       有任何問題請加入<a href="#" class="underline">官方Line客服</a>
@@ -75,6 +78,7 @@ export default {
   methods:{
   },
   mounted(){
+    // location.reload();
   },
 }
 </script>

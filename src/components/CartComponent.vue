@@ -22,22 +22,23 @@
                     <div class="card-body text-start">
                       <div class="">
                         <span class="mb-2 badge rounded-pill text-bg-primary">{{ cart.product.category }} </span>
-                        <h5 class="card-title text-primary">                           
-                        {{ cart.product.title }}         
-                      </h5>
+                        <h5 class="card-title text-primary">
+                          {{ cart.product.title }}
+                        </h5>
                       </div>
-                      
+
                       <div class="">
-                        <button class="btn btn-link text-primary ps-0 pe-2" @click.prevent="cart.qty++" @click="updateCart(cart)"><i
-                  class="bi bi-plus-circle fs-4"></i></button>
+                        <button class="btn btn-link text-primary ps-0 pe-2" @click.prevent="cart.qty++"
+                          @click="updateCart(cart)"><i class="bi bi-plus-circle fs-4"></i></button>
                         <input type="number" min="1" class="w-25 my-2 fs-5" v-model="cart.qty" disabled>
-                        <button class="btn btn-link text-primary ps-2" @click.prevent="cart.qty--" @click="updateCart(cart)" :disabled="cart.qty<=1"><i
-                  class="bi bi-dash-circle fs-4"></i></button>
+                        <button class="btn btn-link text-primary ps-2" @click.prevent="cart.qty--"
+                          @click="updateCart(cart)" :disabled="cart.qty<=1"><i
+                            class="bi bi-dash-circle fs-4"></i></button>
                       </div>
 
-                      
 
-                      <p class="card-text text-small text-dark">NT$ {{ cart.total }}</p>
+
+                      <p class="card-text text-small text-dark">NT$ {{ parseInt(cart.total) }}</p>
                     </div>
                   </div>
                   <div class="col-md-1 d-flex align-items-center" @click.prevent="deleteCart(cart.id)">
@@ -52,7 +53,7 @@
       </div>
 
       <div class="my-2">
-        <p class="text-success text-end fs-4 p-4 text-dark border-top">總計：$ <span>{{ total }}</span> 元</p>
+        <p class="text-success text-end fs-4 p-4 text-dark border-top">總計：$ <span>{{ parseInt(total) }}</span> 元</p>
 
         <router-link to="/cart" class="btn btn-primary w-100 fs-4 p-4" @click="closeOffcanvas"> 立即結帳
         </router-link>
