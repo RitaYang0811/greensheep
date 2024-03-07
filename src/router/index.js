@@ -121,6 +121,12 @@ const router = createRouter({
           name: 'loginLoading',
           component: () => import('../views/user/LoginLoadingView.vue')
         },
+        // 忘記密碼
+        {
+          path: 'memberForget',
+          name: 'memberForget',
+          component: () => import('../views/user/MemberForgetView.vue')
+        },
         //會員註冊
         {
           path: 'memberSignUp',
