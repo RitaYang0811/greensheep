@@ -582,6 +582,8 @@ export default {
     },
     // 開啟新增/編輯優惠券的 modal
     openModal(type, id) {
+      console.log('parent $refs', this.$refs)
+      this.$refs.adCouponModal.reset()
       switch (type) {
         case 'new':
           this.isNew = true

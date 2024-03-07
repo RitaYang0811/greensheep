@@ -2,12 +2,14 @@
 <div class="modal fade ad-coupon" ref="adCouponCompModal" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <VForm class="modal-content custom-form" ref="couponForm" @submit="updateCoupon" v-slot="{ errors }">
-      <div class="modal-header py-4 px-6">
-        <h2 class="modal-title fs-4">
+      <div class="modal-header bg-primary py-2 px-3">
+        <h2 class="modal-title fs-5 fw-medium text-white">
           <template v-if="isNew">建立優惠券</template>
           <template v-else>編輯優惠券</template>
         </h2>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <a role="button" aria-label="Close" @click.prevent="closeModal">
+          <i class="bi bi-x-lg text-white"></i>
+        </a>
       </div>
       <div class="modal-body py-4 px-6">
         <div v-if="loadingStatus.loadingGetCoupon" class="d-flex justify-content-center align-items-center" style="min-height: 360px;">
@@ -16,7 +18,6 @@
           </div>
         </div>
         <div v-else class="text-start">
-          <h3 class="fs-5 mb-3">折扣內容</h3>
           <div class="mb-3">
             <label for="couponCode" class="form-label fs-6 mb-3">優惠碼</label>
             <VField
@@ -134,7 +135,14 @@
         </div>
       </div>
       <div class="modal-footer py-4 px-6">
-        <button type="button" class="btn btn-outline-primary border-1" data-bs-dismiss="modal" :disabled="loadingStatus.loadingGetCoupon">取消</button>
+        <button
+          type="button"
+          class="btn btn-outline-primary border-1"
+          :disabled="loadingStatus.loadingGetCoupon"
+          @click="closeModal"
+        >
+        取消
+        </button>
         <button type="submit" class="btn btn-primary" :disabled="loadingStatus.loadingGetCoupon">確定</button>
       </div>
     </VForm>
@@ -187,6 +195,10 @@ export default {
         ? this.dateSelected = false
         : this.dateSelected = true
       }
+    },
+    reset() {
+      console.log('child $refs', this.$refs)
+      this.$refs.couponForm.resetForm()
     },
     openModal() {
       this.modal.show();
