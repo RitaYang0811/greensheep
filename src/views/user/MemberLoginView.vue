@@ -70,11 +70,16 @@
               <p>立即登入</p>
             </button>
           </v-form>
-          <p class="mt-1 text-end">
-            還沒有帳號嗎？前往<router-link to="/memberSignUp" class="text-decoration-underline"
-              >註冊</router-link
-            >
-          </p>
+          <div class="mb-3 d-flex justify-content-between">
+            <p class="mt-1 text-start">
+              <router-link to="/memberForget">忘記密碼</router-link>
+            </p>
+            <p class="mt-1 text-end">
+              還沒有帳號嗎？前往<router-link to="/memberSignUp" class="text-decoration-underline"
+                >註冊</router-link
+              >
+            </p>
+          </div>
         </div>
       </div>
     </div>

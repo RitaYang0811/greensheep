@@ -28,8 +28,6 @@
       <p>驗證註冊</p>
     </button>
   </v-form>
-  {{ verificationCode }}
-  {{ securityCode }}
 </template>
 
 <script>
