@@ -25,9 +25,9 @@
             class="w-100 h-100 object-fit-cover"
           />
           <div
-            class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100"
+            class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100 p-4"
           >
-            <h3 class="fs-4 text-white lh-lg mb-3">
+            <h3 class="fs-4 text-white lh-sm mb-3">
               {{ article.title }}
             </h3>
             <RouterLink :to="`/articles/${article.id}`" class="custom-btn custom-btn-more"
@@ -47,9 +47,9 @@
             class="w-100 h-100 object-fit-cover"
           />
           <div
-            class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100"
+            class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100 p-4"
           >
-            <h3 class="fs-5 text-white lh-lg mb-3">
+            <h3 class="fs-5 text-white lh-sm mb-3">
               {{ article.title }}
             </h3>
             <RouterLink :to="`/articles/${article.id}`" class="custom-btn custom-btn-more"
@@ -69,9 +69,9 @@
             class="w-100 h-100 object-fit-cover"
           />
           <div
-            class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100"
+            class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100 p-4"
           >
-            <h3 class="fs-5 text-white lh-lg mb-3">
+            <h3 class="fs-6 text-white lh-sm mb-3">
               {{ article.title }}
             </h3>
             <RouterLink :to="`/articles/${article.id}`" class="custom-btn custom-btn-more"
@@ -96,7 +96,7 @@
           <div
             class="black-overlay opacity-100 position-absolute top-50 translate-middle-y d-flex flex-column justify-content-center align-items-center w-100 p-4"
           >
-            <h3 class="fs-5 fs-sm-4 text-white lh-lg mb-3">
+            <h3 class="fs-5 fs-sm-4 text-white lh-sm mb-3">
               {{ article.title }}
             </h3>
             <RouterLink :to="`/articles/${article.id}`" class="custom-btn custom-btn-more"
@@ -118,7 +118,7 @@
           <div
             class="black-overlay opacity-100 position-absolute top-50 translate-middle-y d-flex flex-column justify-content-center align-items-center w-100 p-4"
           >
-            <h3 class="fs-5 text-white lh-lg mb-3">
+            <h3 class="fs-5 text-white lh-sm mb-3">
               {{ article.title }}
             </h3>
             <RouterLink :to="`/articles/${article.id}`" class="custom-btn custom-btn-more"

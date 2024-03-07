@@ -32,8 +32,9 @@
     </div>
 
     <h2
+      v-if="article"
       class="h4 text-primary text-center mb-10 fw-bold"
-      data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100" data-aos-once="true"
+      data-aos="fade-up" data-aos-duration="1200" data-aos-once="true"
     >
       猜你也喜歡
     </h2>
@@ -54,12 +55,12 @@
             <img
               :src="product.imageUrl"
               class="card-img-top show position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
-              alt="鯨湛 - Brave | 拉利瑪海紋石純銀項鍊"
+              :alt="product.title"
             />
             <img
               :src="product.imageUrl2"
               class="card-img-top change position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
-              alt="鯨湛 - Brave | 拉利瑪海紋石純銀項鍊"
+              :alt="product.title"
             />
           </div>
           <div
@@ -102,7 +103,7 @@ import { useRoute } from 'vue-router'
 export default {
   data() {
     return {
-      article:[],
+      article: '',
       isLoading: false
     }
   },
