@@ -358,7 +358,7 @@ export default {
 
     },
     deleteAllOrders() {
-      // const deleteAllOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders/all`;
+      const deleteAllOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders/all`;
 
       Swal.fire({
         title: '確認永久刪除全部訂單?',
@@ -371,15 +371,14 @@ export default {
       }).then((result) => {
 
         if (result.isConfirmed) {
-          console.log("刪除全部訂單")
-
-          // axios.delete(deleteAllOrdersUrl)
-          //   .then(() => {
-          //     location.reload()
-          //   })
-          //   .catch((err) => {
-          //     console.log(err)
-          //   })
+          // console.log("刪除全部訂單")
+          axios.delete(deleteAllOrdersUrl)
+            .then(() => {
+              location.reload()
+            })
+            .catch((err) => {
+              console.log(err)
+            })
         }
       })
 
