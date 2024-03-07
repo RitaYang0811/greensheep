@@ -110,7 +110,7 @@
     <!-- article list -->
     <template v-if="!loadingStatus.loadingItem">
       <!-- article list 卡片模式 -->
-      <ul v-if="!isList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 mb-10 mb-lg-15 ps-0 list-unstyled" style="row-gap: 24px;">
+      <ul v-if="!isList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 mb-10 mb-lg-15 ps-0 list-unstyled" style="row-gap: 12px;">
         <li class="col" v-for="article in currentPageArticles" :key="article.id">
           <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
             <span class="check-box" v-if="isSelectPinnedArticle">
@@ -248,8 +248,9 @@
   </div>
 </template>
 <script>
-import adArticlesStore from "@/stores/adArticlesStore.js";
-import { mapActions, mapState } from 'pinia';
+import adArticlesStore from "@/stores/adArticlesStore.js"
+import { mapActions, mapState } from 'pinia'
+import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 
 export default {
   data() {
@@ -312,10 +313,10 @@ export default {
         })
         const resPutArticle = await Promise.all(apiUrlsPutArticle)
 
-        alert('置頂文章已更新')
+        toastSuccess('已更新置頂文章')
         this.getArticles();
       } catch (err) {
-        alert(err.response.data.message)
+        toastError(err.response.data.message)
       } finally {
         this.isLoading = false
       }

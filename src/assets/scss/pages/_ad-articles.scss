@@ -6,8 +6,8 @@
   }
   .disabled-link {
     pointer-events: none;
-    & i {
-      color: rgb(159, 159, 159) !important;
+    .bi {
+      color: $grey9F !important;
     }
   }
 }

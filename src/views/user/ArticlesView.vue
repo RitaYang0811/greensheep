@@ -7,12 +7,16 @@
           <li class="breadcrumb-item active" aria-current="page">專欄文章</li>
         </ol>
       </nav>
-      <h1 class="h2 text-primary mb-12 fw-bold">專欄文章</h1>
+      <h1
+        class="h2 text-primary mb-12 fw-bold"
+        data-aos="fade-up" data-aos-duration="1200"
+      >專欄文章</h1>
     </div>
     <!-- PC article list -->
     <ul class="row list-unstyled mb-10 mb-lg-20 d-none d-lg-flex" style="row-gap: 24px;">
       <li
         class="col-12" v-for="article in currentPageArticles.slice(0, 1)" :key="article.id"
+        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200"
       >
         <div class="articles-item position-relative h-100">
           <img
@@ -32,7 +36,10 @@
           </div>
         </div>
       </li>
-      <li class="col-4" v-for="article in currentPageArticles.slice(1, 7)" :key="article.id">
+      <li
+        class="col-4" v-for="article in currentPageArticles.slice(1, 7)" :key="article.id"
+        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="400"
+      >
         <div class="articles-item position-relative h-100">
           <img
             :src="article.image"
@@ -51,7 +58,10 @@
           </div>
         </div>
       </li>
-      <li class="col-3" v-for="article in currentPageArticles.slice(7, 11)" :key="article.id">
+      <li
+        class="col-3" v-for="article in currentPageArticles.slice(7, 11)" :key="article.id"
+        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="600"
+      >
         <div class="articles-item position-relative h-100">
           <img
             :src="article.image"
