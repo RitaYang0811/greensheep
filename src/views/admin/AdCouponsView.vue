@@ -414,7 +414,6 @@ export default {
         loadingGetCoupon: false,
         loadingDelCoupon: ''
       },
-      // timer: ''
     }
   },
   components: {
@@ -502,22 +501,20 @@ export default {
       this.changePage(this.currentPage)
     },
     // 取得單一優惠券
-    getCoupon(id) {
-      this.loadingStatus.loadingGetCoupon = true
+    async getCoupon(id) {
+      try {
+        this.loadingStatus.loadingGetCoupon = true
 
-      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupons`
+        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupons`
 
-      this.$http
-        .get(url)
-        .then((res) => {
-          this.coupon = res.data.coupons.find((coupon) => coupon.id === id)
-        })
-        .catch((err) => {
-          toastError(err.response.data.message)
-        })
-        .finally(() => {
-          this.loadingStatus.loadingGetCoupon = false
-        })
+        const res = await this.$http.get(url)
+        this.coupon = res.data.coupons.find((coupon) => coupon.id === id)
+        this.loadingStatus.loadingGetCoupon = false
+      } catch (err) {
+        toastError(err.response.data.message)
+      } finally {
+        this.loadingStatus.loadingGetCoupon = false
+      }
     },
     // 新增/編輯優惠券
     updateCoupon(couponData) {
@@ -597,23 +594,22 @@ export default {
         })
     },
     // 開啟新增/編輯優惠券的 modal
-    openModal(type, id) {
+    async openModal(type, id) {
       switch (type) {
         case 'new':
-          // this.timer = new Date().getTime()
-          // this.$refs.adCouponModal.reset()
+          this.$refs.adCouponModal.reset()
           this.isNew = true
           this.coupon = {
             title: '金額折抵' // 預設值給 :checked 判斷
-          }       
+          }
+          console.log('this.coupon', this.coupon)
           this.$refs.adCouponModal.openModal()
           break
         case 'edit':
-          // this.timer = new Date().getTime()
-          // this.$refs.adCouponModal.reset()
+          this.$refs.adCouponModal.reset()
           this.isNew = false
-          this.getCoupon(id)
           this.$refs.adCouponModal.openModal()
+          await this.getCoupon(id)
           break
       }
     },
