@@ -49,7 +49,7 @@ const router = createRouter({
               component: () => import('../views/user/ProductsView.vue')
             },
             {
-              path: '其他配件',
+              path: '其他配件 OTHERS',
               component: () => import('../views/user/ProductsView.vue')
             }
           ]

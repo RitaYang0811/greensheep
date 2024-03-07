@@ -17,7 +17,7 @@
           <!-- categoryList -->
           <li v-for="category in categories" :key="category + 123">
             <RouterLink
-              :to="`/products/${category}?category=${category}`"
+              :to="`/products/${category}`"
               class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
               @click="changeCategory(category)"
               >{{ category }}
@@ -32,7 +32,10 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><router-link :to="`/`">首頁</router-link></li>
               <li class="breadcrumb-item">
-                <routerLink to="/products" class="cursor-pointer" @click="changeCategory('all')"
+                <routerLink
+                  to="/products/productsAll"
+                  class="cursor-pointer"
+                  @click="changeCategory('all')"
                   >商品</routerLink
                 >
               </li>
