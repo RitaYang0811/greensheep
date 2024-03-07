@@ -248,8 +248,9 @@
   </div>
 </template>
 <script>
-import adArticlesStore from "@/stores/adArticlesStore.js";
-import { mapActions, mapState } from 'pinia';
+import adArticlesStore from "@/stores/adArticlesStore.js"
+import { mapActions, mapState } from 'pinia'
+import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 
 export default {
   data() {
@@ -312,10 +313,10 @@ export default {
         })
         const resPutArticle = await Promise.all(apiUrlsPutArticle)
 
-        alert('置頂文章已更新')
+        toastSuccess('已更新置頂文章')
         this.getArticles();
       } catch (err) {
-        alert(err.response.data.message)
+        toastError(err.response.data.message)
       } finally {
         this.isLoading = false
       }

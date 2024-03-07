@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { dateToUnix } from '@/utils/dateToUnix.js'
+import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 
 export default defineStore('adminArticles',{
   state: () => ({
@@ -60,7 +61,7 @@ export default defineStore('adminArticles',{
           currentPageNum++;
         }
       } catch (err) {
-        alert(err.response.data.message)
+        toastError(err.response.data.message)
       }
 
       // 文章分類
@@ -152,7 +153,7 @@ export default defineStore('adminArticles',{
           this.article = res.data.article
         })
         .catch(err => {
-          alert(err.response.data.message)
+          toastError(err.response.data.message)
         })
         .finally(() => {
           this.loadingStatus.loadingItem = false
@@ -193,11 +194,11 @@ export default defineStore('adminArticles',{
         }
         axios[http](url, { data: data })
           .then(res => {
-            alert(res.data.message)
+            toastSuccess(res.data.message)
             this.$router.push('/admin/articles')
           })
           .catch(err => {
-            alert(err.response.data.message)
+            toastError(err.response.data.message)
           })
           .finally(() => {
             this.isLoading = false
@@ -213,12 +214,12 @@ export default defineStore('adminArticles',{
 
         axios[http](url, { data: articleData })
         .then(res => {
-          alert(res.data.message)
+          toastSuccess(res.data.message)
           // push 會觸發該 view 頁面的 mounted，mounted 會執行 getArticles，所以不需再此行後在重新執行 getArticles
           this.$router.push('/admin/articles')
         })
         .catch(err => {
-          alert(err.response.data.message)
+          toastError(err.response.data.message)
         })
         .finally(() => {
           this.isLoading = false
@@ -233,11 +234,11 @@ export default defineStore('adminArticles',{
 
       axios.delete(url)
         .then(res => {
-          alert(res.data.message)
+          toastSuccess(res.data.message)
           this.getArticles()
         })
         .catch(err => {
-          alert(err.response.data.message)
+          toastError(err.response.data.message)
         })
         .finally(() => {
           this.loadingStatus.loadingDelete = false

@@ -135,6 +135,7 @@
 
 <script>
 import { Offcanvas } from 'bootstrap'
+import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 
 export default {
   data() {
@@ -149,10 +150,14 @@ export default {
     // 登入驗證
     checkLogin() {
       this.isLoading = true
+
+      // 取出 token
       const token = document.cookie.replace(
         /(?:(?:^|.*;\s*)AdminToken\s*=\s*([^;]*).*$)|^.*$/,
         '$1'
       )
+
+      // token 存在則執行驗證
       if (token) {
         this.$http.defaults.headers.common.Authorization = token
         const url = `${import.meta.env.VITE_APP_API_URL}/api/user/check`
@@ -162,20 +167,23 @@ export default {
             this.checkSuccess = true
           })
           .catch((err) => {
-            alert(err.response.data.message)
+            toastError(err.response.data.message)
             this.$router.push('/login')
           })
           .finally(() => {
             this.isLoading = false
           })
-      } else {
-        alert('請先登入')
+      } else { // 否則跳轉登入頁面
+        toastError('請先登入')
         this.$router.push('/login')
       }
     },
+    // 登出
     signout() {
+      // 清空 cookie 裡的 AdminToken expires
       document.cookie = 'AdminToken=;expires=;'
-      alert('已登出')
+      
+      toastSuccess('已登出')
       this.$router.push('/login')
     },
     openOffcanvas() {

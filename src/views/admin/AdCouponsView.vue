@@ -139,8 +139,7 @@
             </td>
             <td>
               <a
-                href="#"
-                class="svg-hover-primary"
+                href="#"             
                 :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }"
                 @click.prevent="openModal('edit', coupon.id)"
               >
@@ -149,16 +148,20 @@
             </td>
             <td>
               <div class="d-flex align-items-center">
-                <a href="#" class="svg-hover-primary" @click.prevent="deleteCoupon(coupon.id)">
+                <a
+                  href="#"               
+                  :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }"
+                  @click.prevent="deleteCoupon(coupon.id)"
+                >
                   <i class="bi bi-trash3-fill text-dark fs-6"></i>
                 </a>
-                <!-- <div
+                <div
                   v-if="loadingStatus.loadingDelCoupon === coupon.id"
                   class="spinner-border spinner-border-sm"
                   role="status"
                 >
                   <span class="visually-hidden">Loading...</span>
-                </div> -->
+                </div>
               </div>
             </td>
           </tr>
@@ -257,16 +260,26 @@
             <div class="col-3">
               <div class="d-flex justify-content-between justify-content-sm-evenly pe-4 py-2">
                 <a
-                  href="#"
-                  class="svg-hover-primary"
+                  href="#"               
                   :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }"
                   @click.prevent="openModal('edit', coupon.id)"
                 >
                 <i class="bi bi-pencil-fill text-dark fs-6"></i>
                 </a>
-                <a href="#" class="svg-hover-primary" @click.prevent="deleteCoupon(coupon.id)">
-                    <i class="bi bi-trash3-fill text-dark fs-6"></i>
-                  </a>
+                <a
+                  href="#"
+                  :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }"
+                  @click.prevent="deleteCoupon(coupon.id)"
+                >
+                  <i class="bi bi-trash3-fill text-dark fs-6"></i>
+                  <div
+                    v-if="loadingStatus.loadingDelCoupon === coupon.id"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
@@ -373,13 +386,15 @@
     :isNew="isNew"
     :loadingStatus="loadingStatus"
     @update-coupon="updateCoupon"
-  />
+    />
+    <!-- :key="timer" -->
 </template>
 
 <script>
 import AdCouponModal from '@/components/AdCouponModal.vue'
 import { unixToDate } from '@/utils/unixToDate.js'
 import { dateToUnix } from '@/utils/dateToUnix.js'
+import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 
 export default {
   data() {
@@ -398,7 +413,8 @@ export default {
         loadingGetCoupons: false,
         loadingGetCoupon: false,
         loadingDelCoupon: ''
-      }
+      },
+      // timer: ''
     }
   },
   components: {
@@ -435,7 +451,7 @@ export default {
           currentPageNum++
         }
       } catch (err) {
-        alert(err.response.data.message)
+        toastError(err.response.data.message)
       }
 
       // 依有效狀態分類優惠券
@@ -497,7 +513,7 @@ export default {
           this.coupon = res.data.coupons.find((coupon) => coupon.id === id)
         })
         .catch((err) => {
-          alert(err.response.data.message)
+          toastError(err.response.data.message)
         })
         .finally(() => {
           this.loadingStatus.loadingGetCoupon = false
@@ -533,12 +549,12 @@ export default {
         this.$http
           .post(url, { data: data })
           .then((res) => {
-            alert(res.data.message)
+            toastSuccess(res.data.message)
             this.$refs.adCouponModal.closeModal()
             this.getCoupons()
           })
           .catch((err) => {
-            alert(err.response.data.message)
+            toastError(err.response.data.message)
           })
           .finally(() => {
             this.loadingStatus.loadingGetCoupon = false
@@ -550,12 +566,12 @@ export default {
         this.$http
           .put(url, { data: data })
           .then((res) => {
-            alert(res.data.message)
+            toastSuccess(res.data.message)
             this.$refs.adCouponModal.closeModal()
             this.getCoupons()
           })
           .catch((err) => {
-            alert(err.response.data.message)
+            toastError(err.response.data.message)
           })
           .finally(() => {
             this.loadingStatus.loadingGetCoupon = false
@@ -570,11 +586,11 @@ export default {
       this.$http
         .delete(url)
         .then((res) => {
-          alert(res.data.message)
+          toastSuccess(res.data.message)
           this.getCoupons()
         })
         .catch((err) => {
-          alert(err.response.data.message)
+          toastError(err.response.data.message)
         })
         .finally(() => {
           this.loadingStatus.loadingDelCoupon = ''
@@ -582,21 +598,24 @@ export default {
     },
     // 開啟新增/編輯優惠券的 modal
     openModal(type, id) {
-      console.log('parent $refs', this.$refs)
-      this.$refs.adCouponModal.reset()
       switch (type) {
         case 'new':
+          // this.timer = new Date().getTime()
+          // this.$refs.adCouponModal.reset()
           this.isNew = true
           this.coupon = {
             title: '金額折抵' // 預設值給 :checked 判斷
-          }
+          }       
+          this.$refs.adCouponModal.openModal()
           break
         case 'edit':
+          // this.timer = new Date().getTime()
+          // this.$refs.adCouponModal.reset()
           this.isNew = false
           this.getCoupon(id)
+          this.$refs.adCouponModal.openModal()
           break
       }
-      this.$refs.adCouponModal.openModal()
     },
     // unix 時間戳轉成 ${year}-${month}-${day} 格式
     unixToDate(unix) {

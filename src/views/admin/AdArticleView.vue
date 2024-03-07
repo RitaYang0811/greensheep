@@ -104,7 +104,7 @@
 <script>
 import adArticlesStore from "@/stores/adArticlesStore.js"
 import { mapActions, mapState } from 'pinia'
-// import { useRoute } from "vue-router"
+import { toastError } from "@/utils/sweetalertToast.js"
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
 export default {
@@ -149,7 +149,7 @@ export default {
         this.articleData.image = res.data.imageUrl
       })
       .catch((err) => {
-        alert(err.response.data.message)
+        toastError(err.response.data.message)
       })
     },
     ...mapActions(adArticlesStore, ['updateArticle', 'getArticle'])

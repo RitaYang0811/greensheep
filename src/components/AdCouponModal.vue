@@ -197,7 +197,6 @@ export default {
       }
     },
     reset() {
-      console.log('child $refs', this.$refs)
       this.$refs.couponForm.resetForm()
     },
     openModal() {
