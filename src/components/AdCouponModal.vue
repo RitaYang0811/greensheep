@@ -231,8 +231,9 @@ export default {
   watch: {
     // 打開 modal 時，依照類型(新增或刪除)賦予 coupon 對應的 data
     coupon() {
+      this.couponData = ''
       // 拷貝並將時間戳改成毫秒單位
-      this.couponData = { ...this.coupon };
+      this.couponData = this.coupon;
       // range 模式的 VueDatePicker 使用陣列格式儲存開始與結束時間
       this.couponData.dates = [this.couponData.start_date * 1000, this.couponData.due_date * 1000]
     }
