@@ -110,7 +110,7 @@
     <!-- article list -->
     <template v-if="!loadingStatus.loadingItem">
       <!-- article list 卡片模式 -->
-      <ul v-if="!isList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 mb-10 mb-lg-15 ps-0 list-unstyled" style="row-gap: 24px;">
+      <ul v-if="!isList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 mb-10 mb-lg-15 ps-0 list-unstyled" style="row-gap: 12px;">
         <li class="col" v-for="article in currentPageArticles" :key="article.id">
           <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
             <span class="check-box" v-if="isSelectPinnedArticle">
