@@ -295,7 +295,7 @@ export default {
       isBlock: true,
       isList: false,
       searchWord: '',
-      isLoading: false,
+
       currentCategory: '',
       currentProductsPage: 1
     }
@@ -306,6 +306,7 @@ export default {
   computed: {
     ...mapState(productStore, [
       'products',
+      'isLoading',
       'categoryProducts',
       'currentProducts',
       'currentPage',
