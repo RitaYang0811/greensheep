@@ -134,7 +134,7 @@
         :total-items="articles.length"
         :items-per-page="11"
         :max-pages-shown="3"
-        v-model="currentPage"
+        v-model="articlesCurrentPage"
         @click="changePage"
         pagination-container-class="cus-pagination va-pagination mb-20 mb-lg-25"
         paginate-buttons-class="page-link"
@@ -153,65 +153,30 @@
   <VueLoading :active="isLoading" />
 </template>
 <script>
+import { mapState, mapActions } from 'pinia'
+import articleStore from '@/stores/articleStore.js'
+
 export default {
   data() {
     return {
-      articles: [],
-      currentPage: 1,
-      currentPageArticles: [],
-      isLoading: false
+      articlesCurrentPage: 1,
     }
   },
   methods: {
-    // 取得所有文章
-    async getArticles() {
-      try {
-        this.isLoading = true
-
-        // 第一次 get 文章回傳的頁碼資料
-        let currentPageNum
-        let totalPagesNum
-
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/articles`
-
-        // get 第一頁資料
-        const resFirstPage = await this.$http.get(url)
-        this.articles = resFirstPage.data.articles // 第一頁的 data
-        currentPageNum = resFirstPage.data.pagination.current_page + 1 // +1 給下段的 while 判斷需不需要繼續打 API
-        totalPagesNum = resFirstPage.data.pagination.total_pages
-
-        // 若有 2 頁以上，繼續 get 後續頁碼的資料
-        while(currentPageNum <= totalPagesNum) {
-          const resOtherPages = await this.$http.get(`${url}?page=${currentPageNum}`)
-          this.articles = [...this.articles, ...resOtherPages.data.articles]
-          currentPageNum++;
-        }
-
-        // 排序 置頂優先
-        this.articles.sort((a, b) => {
-          const aNum = a.isPinned === undefined ? 0 : Number(a.isPinned)
-          const bNum = b.isPinned === undefined ? 0 : Number(b.isPinned)
-  
-          return bNum - aNum
-        })
-        
-        // 取得當頁要顯示的文章
-        this.changePage(this.currentPage)
-
-      } catch (err) {
-        alert(err.response.data.message)
-      } finally {
-        this.isLoading = false
-      }
+    ...mapActions(articleStore, ['getArticles', 'changePage', 'updateCurrentPage'])
+  },
+  watch: {
+    // articlesCurrentPage()、currentPage() 做類似雙向綁定
+    articlesCurrentPage() {
+      this.updateCurrentPage(this.articlesCurrentPage)
     },
-    changePage(page) {
-      this.currentPageArticles = this.articles.slice((page - 1) * 11, page * 11) // 11: 一頁顯示幾筆資料
-      // page  couponsSliceIndex
-      //  1         0 ~ 11
-      //  2        11 ~ 22
-    },
+    currentPage() {
+      this.articlesCurrentPage = this.currentPage
+    }
+    
   },
   computed: {
+    ...mapState(articleStore, ['isLoading', 'currentPage', 'currentPageArticles', 'articles'])
   },
   mounted() {
     this.getArticles()

@@ -38,7 +38,7 @@
       猜你也喜歡
     </h2>
     <ul class="row row-cols-2 row-cols-md-4 g-4 mb-20 list-unstyled">
-      <li v-for="(product, index) in products.slice(0, 4)" :key="product.id" class="col d-flex flex-column product-item">
+      <li v-for="(product, index) in recommendProducts" :key="product.id" class="col d-flex flex-column product-item">
         <RouterLink
           :to="`/products/${product.id}`"
           class="d-flex flex-column product-item"
@@ -107,7 +107,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(productStore, ['getProducts']),
+    ...mapActions(productStore, ['getProducts', 'getRecommendProducts']),
     // 取得單一文章
     getArticle() {
       this.isLoading = true
@@ -127,12 +127,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(productStore, ['products'])
+    ...mapState(productStore, ['products', 'recommendProducts'])
   },
-  mounted() {
+  async mounted() {
     const route = useRoute()
     this.getArticle()
-    this.getProducts(route)
+    await this.getProducts(route)
+    await this.getRecommendProducts()
   }
 }
 </script>
