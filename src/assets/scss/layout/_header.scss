@@ -129,6 +129,12 @@
     font-size: 14px;
   }
 }
+.search-icon {
+  color: $white;
+  &:hover {
+    color: $primary;
+  }
+}
 .header-white-icon {
   display: block;
 }

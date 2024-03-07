@@ -15,8 +15,8 @@ export default defineStore('productStore', {
       '戒指 RING',
       '耳環 EARRINGS',
       '手鍊 BRACELET',
-      '客製設計 ',
-      '其他配件'
+      '客製設計 CUSTOMIZED ',
+      '其他配件 OTHERS'
     ],
     productInfo: {},
     recommendProducts: [],
@@ -51,18 +51,24 @@ export default defineStore('productStore', {
     getSort(status) {
       if (status === 'new') {
         this.showTitle = '最近更新'
+        console.log('1')
         return this.products.sort((a, b) => b.updateTime - a.updateTime)
       } else if (status === 'priceH2L') {
         this.showTitle = '價格 - 由高到低'
+        console.log('2')
         return this.products.sort((a, b) => b.price - a.price)
       } else if (status === 'priceL2H') {
         this.showTitle = '價格 - 由低到高'
+        console.log('2')
         return this.products.sort((a, b) => a.price - b.price)
       } else if (status === 'timeN2O') {
         this.showTitle = '上架時間 - 由新到舊'
+        console.log('3')
+
         return this.products.sort((a, b) => b.createTime - a.createTime)
       } else if (status === 'timeO2N') {
         this.showTitle = '上架時間 - 由舊到新'
+        console.log('4')
         return this.products.sort((a, b) => a.createTime - b.createTime)
       }
     },
@@ -74,6 +80,7 @@ export default defineStore('productStore', {
         this.category = '全部商品 ALL'
         this.currentPage = 1
         this.getSort(status)
+        console.log(status)
         this.categoryProducts = this.products
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
         this.loadingStatus.loadingFilterProducts = false

@@ -17,24 +17,25 @@
       </h1>
       <!-- menu  -->
       <div
-        class="collapse navbar-collapse flex-column offcanvas offcanvas-end py-16 px-12 py-lg-0 px-lg-0"
-        id="offcanvasExample"
+        class="collapse navbar-collapse flex-column offcanvas offcanvas-end py-16 px-12 p-lg-0"
+        ref="menuOffCanvas"
         style="max-width: 85%"
       >
+        <!-- mobile:close-icon -->
         <div class="offcanvas-header d-lg-none">
           <button
             type="button"
             class="btn-close position-absolute"
-            data-bs-dismiss="offcanvas"
             aria-label="Close"
+            @click.prevent="closeMenuOffCanvas"
             style="padding: 10px; top: 16px; right: 16px"
           ></button>
         </div>
+        <!-- pc menu -->
         <ul class="navbar-nav me-auto gap-xxl-4 gap-xl-2 position-relative align-items-md-start">
           <li class="nav-item dropdown" style="min-width: 101px">
             <button
               class="nav-link dropdown-toggle nav-item-en py-2 py-lg-1 px-2"
-              data-bs-toggle="dropdown"
               aria-expanded="false"
               @click="toProductsView"
             >
@@ -42,7 +43,6 @@
             </button>
             <button
               class="nav-link dropdown-toggle nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              data-bs-toggle="dropdown"
               aria-expanded="false"
               @click="toProductsView"
             >
@@ -52,42 +52,19 @@
             <!-- 全部商品的下拉選單 -->
             <ul
               class="dropdown-menu custom-dropdown-menu shadow-none border-0 font-noto-serif fs-8 start-50"
+              ref="dropdownMenu"
             >
-              <li>
-                <RouterLink to="/products" class="d-block py-3 py-lg-2 px-5">最新商品</RouterLink>
-              </li>
-              <li>
-                <a class="d-block py-3 py-lg-2 px-5" href="#">情人節禮物推薦</a>
-              </li>
-              <li><a class="d-block py-3 py-lg-2 px-5" href="#">優惠商品</a></li>
-              <li>
-                <hr class="dropdown-divider bg-white d-none d-lg-block" />
-              </li>
-              <li><a class="d-block py-3 py-lg-2 px-5" href="#">戒指 Ring</a></li>
-              <li>
-                <a class="d-block py-3 py-lg-2 px-5" href="#">耳環 Earrings</a>
-              </li>
-              <li>
-                <a class="d-block py-3 py-lg-2 px-5" href="#">手環 Bracelet</a>
-              </li>
-              <li>
-                <a class="d-block py-3 py-lg-2 px-5" href="#">項鍊 Pendant</a>
-              </li>
-              <li>
-                <hr class="dropdown-divider bg-white d-none d-lg-block" />
-              </li>
-              <li>
-                <a class="d-block py-3 py-lg-2 px-5" href="#">925 純銀 Silver</a>
-              </li>
-              <li>
-                <a class="d-block py-3 py-lg-2 px-5" href="#">14K金 14K-Gold</a>
-              </li>
-              <li>
-                <a class="d-block py-3 py-lg-2 px-5" href="#">18K金 18K-Gold</a>
+              <li v-for="category in categories" :key="category + 123">
+                <RouterLink
+                  :to="`/products/${category}`"
+                  class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
+                  @click="changeCategory(category)"
+                  >{{ category }}
+                </RouterLink>
               </li>
             </ul>
           </li>
-          <li class="nav-item" style="min-width: 130px">
+          <li class="nav-item" style="min-width: 130px" @click="closeMenuOffCanvas()">
             <RouterLink
               to="/products/客製設計 CUSTOMIZED?category=客製設計 CUSTOMIZED`"
               class="nav-link nav-item-en py-2 py-lg-1 px-2"
@@ -99,7 +76,7 @@
               >客製設計
             </RouterLink>
           </li>
-          <li class="nav-item" style="min-width: 81px">
+          <li class="nav-item" style="min-width: 81px" @click="closeMenuOffCanvas()">
             <RouterLink to="/story" class="nav-link nav-item-en py-2 py-lg-1 px-2"
               >ABOUT</RouterLink
             >
@@ -109,7 +86,7 @@
               >關於品牌
             </RouterLink>
           </li>
-          <li class="nav-item" style="min-width: 81px">
+          <li class="nav-item" style="min-width: 81px" @click="closeMenuOffCanvas()">
             <RouterLink to="/articles" class="nav-link nav-item-en py-2 py-lg-1 px-2"
               >BLOG</RouterLink
             >
@@ -119,7 +96,7 @@
               >專欄文章
             </RouterLink>
           </li>
-          <li class="nav-item" style="min-width: 81px">
+          <li class="nav-item" style="min-width: 81px" @click="closeMenuOffCanvas()">
             <RouterLink to="/faq" class="nav-link nav-item-en py-2 py-lg-1 px-2">Q&A</RouterLink>
             <RouterLink
               to="/faq"
@@ -127,32 +104,30 @@
               >常見問題
             </RouterLink>
           </li>
-          <li class="nav-item d-lg-none" style="min-width: 100px">
-            <RouterLink
-              to="/memberLogin"
-              class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start"
-              href="8-1.memLogin.html"
+          <li class="nav-item d-lg-none" style="min-width: 100px" @click="closeMenuOffCanvas()">
+            <RouterLink to="/memberLogin" class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start"
               >登入/註冊</RouterLink
             >
           </li>
         </ul>
       </div>
-      <!-- 右側icon : 搜尋、會員、購物袋 -->
+      <!-- pc 右側icon : 搜尋、會員、購物袋 -->
       <div class="d-flex">
         <div class="header-icon d-flex align-items-center">
           <!-- 搜尋欄 -->
           <form class="header-form me-2 flex-shrink-1">
             <div class="input-group d-flex align-items-center">
-              <img
-                class="header-white-icon"
-                src="../assets/images/ic-search-white.svg"
-                alt="搜尋欄"
-              />
-              <img
-                class="header-green-icon"
-                src="../assets/images/ic-search-green.svg"
-                alt="搜尋欄"
-              />
+              <div>
+                <i
+                  class="bi bi-search header-white-icon text-white"
+                  @click="openSearchOffCanvas()"
+                ></i>
+                <i
+                  class="bi bi-search header-green-icon text-primary"
+                  @click="openSearchOffCanvas()"
+                ></i>
+              </div>
+
               <input
                 type="text"
                 class="form-control no-box-shadow search-box input-group-text bg-transparent text-start d-none d-lg-block"
@@ -162,6 +137,7 @@
               />
             </div>
           </form>
+
           <!-- 會員中心 -->
           <router-link to="/memberLogin" class="me-2 d-none d-lg-block flex-grow-1">
             <img
@@ -203,12 +179,11 @@
             </div>
           </a>
         </div>
-        <!-- menu-icon 在md時出現-->
+        <!-- mobile:menu-icon-->
         <button
           class="navbar-toggler no-box-shadow border-0 mx-0"
           type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasExample"
+          @click.prevent="openMenuOffCanvas"
           aria-controls="offcanvasExample"
           aria-expanded="false"
           aria-label="Toggle navigation"
@@ -216,11 +191,35 @@
           <span class="menu-icon material-icons border-0 no-box-shadow">menu</span>
         </button>
       </div>
+      <!-- mobile:搜尋 -->
+
+      <div
+        class="searchOffCanvas offcanvas offcanvas-top bg-light py-5 px-4 d-lg-none"
+        tabindex="-1"
+        ref="searchOffCanvas"
+        aria-labelledby="offcanvasTopLabel"
+      >
+        <div class="d-flex align-items-center justify-content-center">
+          <div class="d-flex border-bottom border-greyD4"></div>
+          <i class="bi bi-search text-primary fs-5"></i>
+          <input
+            type="text"
+            class="form-control no-box-shadow input-group-text bg-transparent text-start w-100"
+            placeholder="請輸入搜尋商品"
+            v-model="searchWord"
+            @keyup.enter="searchProducts"
+          />
+          <a role="button" @click.prevent="closeSearchOffCanvas()">
+            <i class="bi bi-x fs-4 text-dark"></i
+          ></a>
+        </div>
+      </div>
     </div>
   </nav>
 </template>
 
 <script>
+import { Offcanvas, Dropdown } from 'bootstrap'
 import { mapState, mapActions } from 'pinia'
 import cartStore from '@/stores/cartStore'
 import searchStore from '@/stores/searchStore'
@@ -231,7 +230,11 @@ export default {
     return {
       headerCategory: '',
       searchWord: '',
-      headerCurrentPage: 1
+      headerCurrentPage: 1,
+      menuOffCanvas: '',
+      searchOffCanvas: '',
+      dropdownMenu: '',
+      isDropdownMenuOpen: false
     }
   },
   watch: {
@@ -247,28 +250,69 @@ export default {
     ...mapActions(productStore, ['getProducts', 'getFilterProducts']),
     toProductsView() {
       this.headerCategory = ''
-      console.log('點選header shop', this.headerCategory)
-      this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'new')
-      this.$router.push({ path: '/products' })
-      //this.getProducts()
+      this.isDropdownMenuOpen = !this.isDropdownMenuOpen
+      this.toggleDropdownMenu(this.isDropdownMenuOpen)
+      this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
+      this.$router.push({ path: '/products/productsAll' })
+      console.log(this.isDropdownMenuOpen)
     },
-    searchProducts() {
-      this.setSearchWord(this.searchWord)
-      if (this.searchWord.trim() !== '') {
-        // 发送搜索词到商品视图
-        this.$router.push({ path: '/products' })
-        console.log('searchProducts', this.searchWord)
-      }
-
-      this.searchWord = '' // 清空搜索词
+    changeCategory(category) {
+      this.headerCategory = category
+      this.isDropdownMenuOpen = !this.isDropdownMenuOpen
+      this.toggleDropdownMenu(this.isDropdownMenuOpen)
+      this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
+    },
+    openMenuOffCanvas() {
+      this.menuOffCanvas.show()
+    },
+    closeMenuOffCanvas() {
+      this.menuOffCanvas.hide()
+    },
+    openSearchOffCanvas() {
+      this.searchOffCanvas.show()
+    },
+    closeSearchOffCanvas() {
+      this.searchOffCanvas.hide()
+    },
+    toggleDropdownMenu(status) {
+      status === true ? this.dropdownMenu.show() : this.dropdownMenu.hide()
     }
+    // openDropdownMenu() {
+
+    // }
+    // searchProducts() {
+    //   this.setSearchWord(this.searchWord)
+    //   if (this.searchWord.trim() !== '') {
+    //     // 发送搜索词到商品视图
+    //     this.$router.push({ path: '/products' })
+    //     console.log('searchProducts', this.searchWord)
+    //   }
+
+    //   this.searchWord = '' // 清空搜索词
+    // }
   },
 
   computed: {
     ...mapState(cartStore, ['carts']),
-    ...mapState(searchStore, ['searchQuery'])
+    ...mapState(searchStore, ['searchQuery']),
+    ...mapState(productStore, ['category', 'categories'])
+  },
+  mounted() {
+    // mobile menu 實例
+    this.menuOffCanvas = new Offcanvas(this.$refs.menuOffCanvas, {
+      backdrop: true
+    })
+    this.searchOffCanvas = new Offcanvas(this.$refs.searchOffCanvas, {
+      backdrop: false
+    })
+    this.dropdownMenu = new Dropdown(this.$refs.dropdownMenu)
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.searchOffCanvas {
+  margin-top: 24px;
+  height: 64px;
+}
+</style>
