@@ -9,14 +9,14 @@
       </nav>
       <h1
         class="h2 text-primary mb-12 fw-bold"
-        data-aos="fade-up" data-aos-duration="1200"
+        data-aos="fade-up" data-aos-duration="1200" data-aos-once="true"
       >專欄文章</h1>
     </div>
     <!-- PC article list -->
     <ul class="row list-unstyled mb-10 mb-lg-20 d-none d-lg-flex" style="row-gap: 24px;">
       <li
         class="col-12" v-for="article in currentPageArticles.slice(0, 1)" :key="article.id"
-        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200"
+        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200" data-aos-once="true"
       >
         <div class="articles-item position-relative h-100">
           <img
@@ -38,7 +38,7 @@
       </li>
       <li
         class="col-4" v-for="article in currentPageArticles.slice(1, 7)" :key="article.id"
-        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="400"
+        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="400" data-aos-once="true"
       >
         <div class="articles-item position-relative h-100">
           <img
@@ -60,7 +60,7 @@
       </li>
       <li
         class="col-3" v-for="article in currentPageArticles.slice(7, 11)" :key="article.id"
-        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="600"
+        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="600" data-aos-once="true"
       >
         <div class="articles-item position-relative h-100">
           <img
@@ -85,6 +85,7 @@
     <ul class="row list-unstyled mb-10 mb-lg-20 d-lg-none" style="row-gap: 24px;">
       <li
         class="col-12" v-for="article in currentPageArticles.slice(0, 1)" :key="article.id"
+        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100" data-aos-once="true"
       >
         <div class="articles-item position-relative h-100">
           <img
@@ -106,6 +107,7 @@
       </li>
       <li
         class="col-12 col-sm-6" v-for="article in currentPageArticles.slice(1, 11)" :key="article.id"
+        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100" data-aos-once="true"
       >
         <div class="articles-item position-relative h-100">
           <img

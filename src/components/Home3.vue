@@ -44,20 +44,20 @@ export default {
             />
             <!-- 客製化介紹 -->
             <div
-              class="cus-desc col-12 col-lg-4 order-lg-3 mb-6 mb-lg-0 px-12 text-lg-start"            
+              class="cus-desc col-12 col-lg-4 order-lg-3 mb-6 mb-lg-0 px-12 text-lg-start"
             >
-              <div data-aos="fade-left" data-aos-duration="1200" data-aos-delay="100">
+              <div data-aos="fade-left" data-aos-duration="1200" data-aos-delay="100" data-aos-once="true">
                 <h5 class="text-white fs-6 mb-1 ls-2">開始客製屬於您的產品</h5>
                 <h3 class="text-white fs-2 mb-4 ls-1">CUSTOMIZE YOUR STYLE</h3>
               </div>
-              <div data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+              <div data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200" data-aos-once="true">
                 <p class="text-light mb-1 fs-7 ls-2">2 個步驟創作你的專屬心意</p>
                 <p class="text-light mb-4 fs-8 ls-2">Create Your Unique Elegance</p>
                 <p class="text-decolight mb-4 ls-2">Step 1：選擇專屬寶石</p>
                 <p class="text-decolight mb-4 ls-2">Step 2：輸入你想說的話</p>
               </div>
               <a href="#" class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary ls-2"
-                data-aos="fade-left" data-aos-duration="1200" data-aos-delay="300"
+                data-aos="fade-left" data-aos-duration="1200" data-aos-delay="300" data-aos-once="true"
               >
                 Start Now
               </a>
@@ -144,12 +144,14 @@ export default {
         class="text-primary fs-6 mb-1 fw-bold ls-2"
         data-aos="fade-up"
         data-aos-duration="1200"
+        data-aos-once="true"
       >為什麼選擇我們</p>
       <h3
         class="fs-lg-2 fs-1 mb-12 text-primary ls-1"
         data-aos="fade-up"
         data-aos-duration="1200"
         data-aos-delay="100"
+        data-aos-once="true"
       >WHY GREEN SHEEP HANDMADE JEWELRY?</h3>
       <div class="px-md-6">
         <ul class="row list-unstyled">
@@ -158,6 +160,7 @@ export default {
             data-aos="fade-up"
             data-aos-duration="1200"
             data-aos-delay="200"
+            data-aos-once="true"
           >
             <img class="mb-3" src="@/assets/images/diamond.png" alt="最高品質保證" />
             <p class="text-dark mb-3 ls-2">最高品質保證</p>
@@ -170,6 +173,7 @@ export default {
             data-aos="fade-up"
             data-aos-duration="1200"
             data-aos-delay="300"
+            data-aos-once="true"
           >
             <img class="mb-3" src="@/assets/images/car.png" alt="全球配送" />
             <p class="text-dark mb-3 ls-2">全球配送</p>
@@ -182,6 +186,7 @@ export default {
             data-aos="fade-up"
             data-aos-duration="1200"
             data-aos-delay="400"
+            data-aos-once="true"
           >
             <img class="mb-3" src="@/assets/images/return.png" alt="完善退換貨機制" />
             <p class="text-dark mb-3 ls-2">完善退換貨機制</p>
@@ -194,6 +199,7 @@ export default {
             data-aos="fade-up"
             data-aos-duration="1200"
             data-aos-delay="500"
+            data-aos-once="true"
           >
             <img class="mb-3" src="@/assets/images/drew.png" alt="原創設計手工製作" />
             <p class="text-dark mb-3 ls-2">原創設計手工製作</p>
@@ -210,6 +216,7 @@ export default {
         class="fs-2 mt-21 mb-10 text-white ls-1"
         data-aos="fade-up"
         data-aos-duration="1200"
+        data-aos-once="true"
       >
         EMBRACE YOUR INNER GREEN SHEEP
       </h3>
@@ -224,6 +231,7 @@ export default {
         data-aos="fade-up"
         data-aos-duration="1200"
         data-aos-delay="100"
+        data-aos-once="true"
       >
         綠羊 GreenSheep handmade jewelry
         是獨特而優雅的。他代表著對自然的敬畏，彷彿迷人的綠洲，帶給人們內心的平靜與柔和。每一位佩戴者都像一隻羊，柔軟而堅定，他們不害怕與眾不同，因為他們知道自己是最優雅的綠羊。

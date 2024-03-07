@@ -14,11 +14,17 @@
 
     <h1
       class="h2 text-primary text-center mb-12 fw-bold"
-      data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100"
+      data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100" data-aos-once="true"
     >
       {{ article.title }}
     </h1>
-    <div class="row d-flex d-lg-block mb-20" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+    <div 
+      class="row d-flex d-lg-block mb-20" 
+      data-aos="fade-up"
+      data-aos-duration="1200"
+      data-aos-delay="200"
+      data-aos-once="true"
+    >
       <div class="col-lg-5 me-4 mb-2" style="float: left;"><img :src="article.image" alt=""></div>
       <div class="col-12 lh-lg text-primary">
         <div v-html="article.content"></div>
@@ -27,7 +33,7 @@
 
     <h2
       class="h4 text-primary text-center mb-10 fw-bold"
-      data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100"
+      data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100" data-aos-once="true"
     >
       猜你也喜歡
     </h2>
@@ -39,6 +45,7 @@
           data-aos="fade-up"
           data-aos-duration="1200"
           :data-aos-delay="index * 200"
+          data-aos-once="true"
         >
           <div
             class="product h-border position-relative"

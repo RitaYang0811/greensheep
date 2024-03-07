@@ -118,14 +118,27 @@
           data-aos="fade-out"
           data-aos-duration="1000"
           data-aos-delay="200"
+          data-aos-once="true"
         />
       </div>
     </div>
-    <h3 class="h2 my-15 fw-medium mx-auto" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
+    <h3
+      class="h2 my-15 fw-medium mx-auto"
+      data-aos="fade-up"
+      data-aos-duration="1200"
+      data-aos-delay="100"
+      data-aos-once="true"
+    >
       EMBRACE YOUR INNER GREEN SHEEP
     </h3>
 
-    <div class="row mb-10" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
+    <div
+      class="row mb-10"
+      data-aos="fade-up"
+      data-aos-duration="1200"
+      data-aos-delay="100"
+      data-aos-once="true"
+    >
       <div class="col-lg-5 col-12">
         <img
           class="mb-4 mb-lg-0"
@@ -134,6 +147,7 @@
           data-aos="fade-out"
           data-aos-duration="1000"
           data-aos-delay="200"
+          data-aos-once="true"
         />
       </div>
       <div class="col-12 col-lg-7">
@@ -155,7 +169,13 @@
       </div>
     </div>
 
-    <div class="mb-20" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
+    <div
+      class="mb-20"
+      data-aos="fade-up"
+      data-aos-duration="1200"
+      data-aos-delay="100"
+      data-aos-once="true"
+    >
       <p
         class="fs-7 text-start text-primary font-noto-serif lh-lg text-start"
       >
