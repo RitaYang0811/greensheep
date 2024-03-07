@@ -173,7 +173,6 @@ export default {
     currentPage() {
       this.articlesCurrentPage = this.currentPage
     }
-    
   },
   computed: {
     ...mapState(articleStore, ['isLoading', 'currentPage', 'currentPageArticles', 'articles'])
