@@ -19,15 +19,20 @@
       </ol>
     </nav>
 
-    <h1 class="fs-2 text-primary mb-7 fw-bold">品牌故事與精神</h1>
-    <section data-aos="fade-up">
+    <h1
+      class="fs-2 text-primary mb-7 fw-bold"
+      data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100"
+    >
+      品牌故事與精神
+    </h1>
+    <section data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
       <p class="fs-7 text-primary font-noto-serif lh-lg text-start">
         綠羊 GreenSheep handmade
         jewelry 的起源，源自創辦人那份對美的無窮追求。她追逐著優雅和美，並以自己的方式重新定義風格與流行。她深信，每一個人都應該能夠享受到獨特的珠寶飾品，而這些飾品應該是原創且擁有自信的。因此，綠羊 Green
         Sheep 誕生了，成為那個能夠實現這個信念的品牌。
       </p>
     </section>
-    <section data-aos="fade-up">
+    <section data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
       <p class="fs-7 text-primary font-noto-serif lh-lg text-start">
         The genesis of Green Sheep traces back to the founder's unwavering
         pursuit of beauty. With an unyielding passion, she embraced elegance
@@ -38,7 +43,7 @@
       </p>
     </section>
 
-    <section data-aos="fade-up">
+    <section data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
       <div class="my-7 my-lg-10">
         <div class="row justify-content-center z-0 mb-6">
           <span class="col-5 col-lg-4 deco-spin position-relative">
@@ -86,7 +91,7 @@
         </div>
       </div>
     </section>
-    <div class="row mb-5" data-aos="fade-up">
+    <div class="row mb-5" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
       <div class="col-lg-8 col-12">
         <p class="fs-7 text-primary font-noto-serif lh-lg text-start">
           <span class="fw-bold"
@@ -116,11 +121,11 @@
         />
       </div>
     </div>
-    <h3 class="h2 my-15 fw-medium mx-auto">
+    <h3 class="h2 my-15 fw-medium mx-auto" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
       EMBRACE YOUR INNER GREEN SHEEP
     </h3>
 
-    <div class="row mb-10" data-aos="fade-up">
+    <div class="row mb-10" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
       <div class="col-lg-5 col-12">
         <img
           class="mb-4 mb-lg-0"
@@ -150,7 +155,7 @@
       </div>
     </div>
 
-    <div class="mb-20" data-aos="fade-up">
+    <div class="mb-20" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
       <p
         class="fs-7 text-start text-primary font-noto-serif lh-lg text-start"
       >
@@ -171,7 +176,6 @@
 </template>
 <script>
 import SwiperImages from '@/components/SwiperImages.vue'
-import { RouterLink } from 'vue-router';
 
 export default {
   components: {

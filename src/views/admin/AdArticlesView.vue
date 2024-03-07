@@ -110,7 +110,7 @@
     <!-- article list -->
     <template v-if="!loadingStatus.loadingItem">
       <!-- article list 卡片模式 -->
-      <ul v-if="!isList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 mb-10 mb-lg-15 ps-0 list-unstyled" style="row-gap: 24px;">
+      <ul v-if="!isList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 mb-10 mb-lg-15 ps-0 list-unstyled" style="row-gap: 12px;">
         <li class="col" v-for="article in currentPageArticles" :key="article.id">
           <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
             <span class="check-box" v-if="isSelectPinnedArticle">
@@ -131,7 +131,7 @@
             />
             <div class="card-body d-flex flex-column p-0 px-2 pt-2">
               <h5 class="card-title display-6 text-dark pb-2 mb-auto">
-                <span v-if="article.isPinned" class="float-end bg-primary text-white py-1 px-2 fs-8">置頂</span
+                <span v-if="article.isPinned" class="float-end bg-primary text-white py-1 px-2 ms-1 fs-8">置頂</span
                 >{{ article.title }}
               </h5>
               <div
@@ -215,60 +215,6 @@
         </li>
       </ul>   
     </template>        
-    <!-- <tbody>
-          <template v-for="article in currentPageArticles" :key="article.id">
-            <tr class="product-item w-100 d-flex mb-3 bg-white rounded-3 align-content-center">
-              <label class="w-100 d-flex align-items-center position-relative" :for="article.id">
-                <td class="col-4 col-sm-3 col-lg-2 my-auto border-bottom-0">
-                  <div class="d-flex gap-2 gap-md-4 align-items-center px-md-4 py-4">
-                    <template v-if="isSelectPinnedArticle">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        v-model="selectedPinnedArticle"
-                        :value="article.id"
-                        :id="article.id"
-                        :disabled="selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)"
-                      />
-                    </template>
-                    <img
-                      :src="article.image"
-                      class="img-fluid rounded object-fit-cover"
-                      :alt="article.title"
-                      style="height: 98px; aspect-ratio: 1 / 1"
-                    />
-                  </div>
-                </td>
-                <div class="col-8 col-sm-9 col-lg-10">
-                  <div class="row">
-                    <td class="col-12 col-md-9 my-auto">
-                      <span v-if="article.isPinned" class="bg-primary text-white py-1 px-2 rounded-pill fs-9 float-end"
-                        >置頂</span
-                      >
-                      <h5 class="card-title display-6 text-dark">
-                        {{article.title }}
-                      </h5>
-                    </td>
-                    <td class="col-12 col-md-3 d-flex align-items-center justify-content-md-center gap-4 gap-md-10">
-                      <a
-                        href="#"
-                        :class="{ 'disabled-link': loadingStatus.loadingDelete || isSelectPinnedArticle }"
-                        @click.prevent="articleActivity('edit', article.id)">
-                        <i class="bi bi-pencil-fill text-dark fs-6"></i>
-                      </a>
-                      <a
-                        href="#"
-                        :class="{ 'disabled-link': isSelectPinnedArticle }"
-                        @click.prevent="articleActivity('delete', article.id)">
-                        <i class="bi bi-trash3-fill text-dark fs-6"></i>
-                      </a>
-                    </td>
-                  </div>
-                </div>
-              </label>
-            </tr>
-          </template>
-        </tbody> -->
     <!-- pagination -->
     <div v-if="!loadingStatus.loadingItem && searchArticles.length" class="text-center va-pagination">
       <vue-awesome-paginate
@@ -302,8 +248,9 @@
   </div>
 </template>
 <script>
-import adArticlesStore from "@/stores/adArticlesStore.js";
-import { mapActions, mapState } from 'pinia';
+import adArticlesStore from "@/stores/adArticlesStore.js"
+import { mapActions, mapState } from 'pinia'
+import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 
 export default {
   data() {
@@ -366,10 +313,10 @@ export default {
         })
         const resPutArticle = await Promise.all(apiUrlsPutArticle)
 
-        alert('置頂文章已更新')
+        toastSuccess('已更新置頂文章')
         this.getArticles();
       } catch (err) {
-        alert(err.response.data.message)
+        toastError(err.response.data.message)
       } finally {
         this.isLoading = false
       }

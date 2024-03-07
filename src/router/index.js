@@ -138,7 +138,13 @@ const router = createRouter({
         {
           path: 'memberLogin',
           name: 'MemberLogin',
-          component: () => import('../views/user/MemberLogin.vue')
+          component: () => import('../views/user/MemberLoginView.vue')
+        },
+        // 會員登入loading頁
+        {
+          path: 'loginLoading',
+          name: 'loginLoading',
+          component: () => import('../views/user/LoginLoadingView.vue')
         },
         //會員註冊
         {

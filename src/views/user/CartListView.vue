@@ -79,8 +79,8 @@
               <button class="btn btn-link text-primary" @click.prevent="cart.qty++" @click="updateCart(cart)"><i
                   class="bi bi-plus-circle fs-3"></i></button>
               <input type="number" class="p-2 w-10" min="1" v-model="cart.qty" disabled />
-              <button class="btn btn-link text-primary" @click.prevent="cart.qty--" @click="updateCart(cart)" :disabled="cart.qty<=1"><i
-                  class="bi bi-dash-circle fs-3"></i></button>
+              <button class="btn btn-link text-primary" @click.prevent="cart.qty--" @click="updateCart(cart)"
+                :disabled="cart.qty <= 1"><i class="bi bi-dash-circle fs-3"></i></button>
             </div>
 
 
@@ -99,8 +99,10 @@
       <div class="row">
         <div class="col-md-2 text-primary fw-medium">已使用優惠</div>
         <div class="col-md-10 text-start" v-if="carts[0]?.coupon">
-          <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4">{{ carts[0].coupon.title }}</span>
-          <span class="fs-7 text-primary">{{ `消費滿 NT$ ${carts[0].coupon.min_buy_price_by_discount}，享 ${carts[0].coupon.percent /10} 折` }}</span>
+          <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4">{{
+      carts[0].coupon.title }}</span>
+          <span class="fs-7 text-primary">{{ `消費滿 NT$ ${carts[0].coupon.min_buy_price_by_discount}，享
+            ${carts[0].coupon.percent / 10} 折` }}</span>
         </div>
       </div>
     </div>
@@ -159,7 +161,8 @@
           </div> -->
           <div class="d-flex justify-content-between mb-5">
             <p class="">優惠券： </p>
-            <span v-if="carts[0]?.coupon">{{ `消費滿 NT$ ${carts[0].coupon.min_buy_price_by_discount}，享 ${carts[0].coupon.percent /10} 折` }}</span>
+            <span v-if="carts[0]?.coupon">{{ `消費滿 NT$ ${carts[0].coupon.min_buy_price_by_discount}，享
+              ${carts[0].coupon.percent / 10} 折` }}</span>
           </div>
 
           <div class="border border-primary border-1 mb-5"></div>
@@ -167,8 +170,7 @@
             <p class="">合計：</p>
             <p class="fw-bold">NT$ {{ parseInt(total) }}</p>
           </div>
-          <button class="btn btn-primary p-5 fs-5 w-100 text-white"
-            @click="goCheckout">前往結帳</button>
+          <button class="btn btn-primary p-5 fs-5 w-100 text-white" @click="goCheckout">前往結帳</button>
         </div>
       </div>
     </div>
@@ -187,6 +189,7 @@ import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 
 import OrderRules from "../../components/OrderRules.vue"
+import Swal from 'sweetalert2'
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
 export default {
@@ -200,7 +203,7 @@ export default {
       isLoading: false,
       coupon: "",
       select: [
-        { location: "台灣", deliver: ["黑貓宅急便", "7-11", "全家", "OK", "萊爾富"], payWay: ["信用卡", "貨到付款", "轉帳", "超商繳費"] },
+        { location: "台灣", deliver: ["黑貓宅急便", "7-11取貨", "全家取貨", "OK取貨", "萊爾富取貨"], payWay: ["信用卡", "貨到付款", "轉帳", "超商繳費"] },
         { location: "外島", deliver: ["中華郵政", "黑貓宅急便", "宅配通"], payWay: ["信用卡", "轉帳"] },
         { location: "海外", deliver: ["中華郵政", "DHL", "UPS"], payWay: ["信用卡"] }
       ],
@@ -220,28 +223,55 @@ export default {
 
     sendCoupon(coupon) {
       const sendCouponUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/coupon`
-      const sendData={
-        data:{
-          code:coupon
+      const sendData = {
+        data: {
+          code: coupon
         }
       }
       this.axios.post(sendCouponUrl, sendData)
-      .then(()=>{
-        this.coupon = ""
-        this.getCarts()
-      })
-      .catch((err)=>{
-        console.log(err)
-      })    
+        .then(() => {
+          this.coupon = ""
+          this.getCarts()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
-    goCheckout(){
-      // this.$router.push('/order')
-      if(this.deliverChoose.payWay.length >0 && this.deliverChoose.deliver.length >0){
-        this.$router.push('/order')
-        this.getDeliverData(this.deliverChoose)
-      }else{
-        alert('付款方式必填')
+    goCheckout() {
+      if (this.deliverChoose.location.length == 0) {
+        Swal.fire({
+          title: "收件地點必填",
+          confirmButtonColor: "#566B5A",
+          icon: "warning"
+        });
+        return
       }
+      if(this.deliverChoose.deliver.length == 0) {
+        Swal.fire({
+          title: "配送方式必填",
+          confirmButtonColor: "#566B5A",
+          icon: "warning"
+        });
+        return
+      }
+      if (this.deliverChoose.payWay.length == 0) {
+        Swal.fire({
+          title: "付款方式必填",
+          confirmButtonColor: "#566B5A",
+          icon: "warning"
+        });
+        return
+      }
+      
+        this.getDeliverData(this.deliverChoose)
+        this.$router.push('/order')
+
+      // if (this.deliverChoose.payWay.length > 0 && this.deliverChoose.deliver.length > 0) {
+      //   this.$router.push('/order')
+      //   this.getDeliverData(this.deliverChoose)
+      // } else {
+      //   alert('付款方式必填')
+      // }
 
     },
 
@@ -281,9 +311,9 @@ export default {
 
   computed: {
     ...mapState(cartStore, ['carts', 'total']),
-    rawTotal(){
+    rawTotal() {
       let total = 0;
-      this.carts.forEach((item)=>{
+      this.carts.forEach((item) => {
         total += item.total
       })
       return total
@@ -296,7 +326,7 @@ export default {
       this.locations.push(item.location)
     })
     this.getCarts();
-    
+
   },
 
 }

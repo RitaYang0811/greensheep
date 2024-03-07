@@ -1,7 +1,7 @@
 .dp-custom {
   .dp__theme_light {
-    --dp-primary-color: #566b5a !important;
-    --dp-primary-disabled-color: rgba(87, 107, 90, 0.65) !important;
+    --dp-primary-color: #566b5a !important; // $primary
+    --dp-primary-disabled-color: #566b5aa6 !important; // rgba($primary, 0.65)
   }
   .dp__input {
     border-radius: 0;

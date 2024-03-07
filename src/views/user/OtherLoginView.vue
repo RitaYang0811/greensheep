@@ -174,7 +174,7 @@ export default {
         this.accountState = 'line-'
       }
     } catch {
-      alert('請重新登入')
+      alert('請重新註冊')
       this.$router.push({ name: 'MemberSignUp' })
     }
   }

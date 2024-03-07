@@ -1,6 +1,6 @@
 .ad-coupon {
   .table-head {
-    background-color: #f4ede1;
+    // background-color: #f4ede1;
     &::after {
       content: "";
       position: absolute;
@@ -12,15 +12,15 @@
     }
   }
   .table-container{
-    height: calc(100vh - 220px);
+    // height: calc(100vh - 220px);
     &::-webkit-scrollbar{
     display:none;
     }
   }
   .disabled-link {
     pointer-events: none;
-    svg {
-      fill: $greyD4;
+    .bi {
+      color: $grey9F !important;
     }
   }
   .custom-form {

@@ -1,0 +1,176 @@
+<template>
+  <div class="d-flex flex-column align-items-center py-15">
+    <div>
+      <h2 class="fs-2">WELCOME</h2>
+      <p class="text-primary">Discover Your Unique Elegance</p>
+    </div>
+    <div class="w-50 member-content">
+      <!-- 登入輸入內容 -->
+      <div class="d-flex flex-column align-items-center py-8">
+        <h1 class="fs-1 mb-8">會員登入</h1>
+        <div>
+          <!-- google或line 帳號登入 -->
+          <ul class="list-unstyled">
+            <li class="py-3">
+              <button type="button" @click="accessTokenLogin" class="p-3 google-account">
+                <img src="../../assets/images/google.svg" alt="" />Google 登 入
+              </button>
+            </li>
+            <li class="py-3">
+              <button class="p-3 line-account" @click="lineLoginEvent">
+                <img src="../../assets/images/line-messenger.svg" alt="" />
+                Line 登 入
+              </button>
+            </li>
+          </ul>
+
+          <p class="d-flex justify-content-center align-items-center py-6 hr-line">or</p>
+          <!-- 表單 -->
+          <v-form ref="form" class="member-form" v-slot="{ errors }" @submit="onSubmit">
+            <!-- 信箱 -->
+            <div class="form-floating mb-3">
+              <v-field
+                name="email"
+                type="email"
+                class="form-control"
+                :class="{ 'is-invalid': errors['email'] }"
+                id="email"
+                aria-describedby="emailHelp"
+                placeholder="請輸入Email (Google/Yahoo)"
+                :rules="emailRule"
+                v-model="user.email"
+              ></v-field>
+              <label for="email">請輸入Email</label>
+              <error-message name="email" class="invalid-feedback text-start"></error-message>
+            </div>
+            <!-- 密碼 -->
+            <div class="form-floating mb-3">
+              <v-field
+                name="password"
+                type="password"
+                class="form-control"
+                :class="{ 'is-invalid': errors['password'] }"
+                id="password"
+                aria-describedby="passwordHelp"
+                placeholder="請輸入密碼(6-12字元且不連續)"
+                :rules="passwordRule"
+                v-model="user.password"
+              ></v-field>
+              <label for="password">請輸入密碼(6-12字元且不連續)</label>
+              <error-message name="password" class="invalid-feedback text-start"></error-message>
+            </div>
+
+            <button
+              type="submit"
+              class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
+            >
+              <div class="button-img-box me-1">
+                <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+              </div>
+              <p>立即登入</p>
+            </button>
+          </v-form>
+          <p class="mt-1 text-end">
+            還沒有帳號嗎？前往<router-link to="/memberSignUp" class="text-decoration-underline"
+              >註冊</router-link
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped></style>
+
+<script>
+import { googleTokenLogin } from 'vue3-google-login'
+
+// json-server網址
+const serverUrl = 'https://greensheep-json-server.onrender.com'
+
+export default {
+  data() {
+    return {
+      user: {},
+      userInfo: {},
+      GOOGLECLIENT: '780150754854-h5d15n56b8clqorddealcei20qcv17dd.apps.googleusercontent.com',
+      googleToken: null
+    }
+  },
+  methods: {
+    // 信箱規則
+    emailRule(value) {
+      const email = /^[\w\.-]+@(gmail\.com|yahoo\.com\.tw)$/
+      return email.test(value) ? true : '請輸入Gmail/Yahoo帳號'
+    },
+    // 密碼規則
+    passwordRule(value) {
+      let password = /^(?!.*\d{6,})(?!.*(.)\1{4,}).{6,12}$/
+      return value !== undefined && password.test(value) ? true : `請輸入正確密碼`
+    },
+    // 一般登入
+    onSubmit() {
+      console.log(this.user)
+      this.$http
+        .post(`${serverUrl}/login`, this.user)
+        .then((res) => {
+          this.userInfo.token = res.data.accessToken
+          this.userInfo.id = res.data.user.id
+          localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
+          this.$router.push({ name: 'MemberLayout' })
+        })
+        .catch((err) => {
+          alert('帳號或密碼錯誤!')
+          this.$router.push({ name: 'MemberLogin' })
+        })
+    },
+    // google登入
+    accessTokenLogin() {
+      googleTokenLogin({
+        clientId: this.GOOGLECLIENT
+      }).then((response) => {
+        this.googleToken = response.access_token
+        this.fetchContactInfo()
+      })
+    },
+    async fetchContactInfo() {
+      try {
+        const response = await this.$http.get('https://www.googleapis.com/oauth2/v1/userinfo', {
+          headers: {
+            Authorization: `Bearer ${this.googleToken}`
+          }
+        })
+
+        // 帶路由參數進去OtherLoginView
+        this.$router.push({
+          path: '/loginLoading',
+          query: { googleEmail: response.data.email }
+        })
+      } catch (error) {
+        console.error('獲取聯絡人信息時出錯:', error)
+      }
+    },
+    // Line 登入
+    lineLoginEvent() {
+      let clientID = '2003862374'
+      // 會使用到encodeURIComponent是因為hash模式
+      let redirectUri = encodeURIComponent('http://localhost:5173/greensheep/#/loginLoading')
+      let URL = 'https://access.line.me/oauth2/v2.1/authorize?'
+      // 必填
+      URL += 'response_type=code' // 希望LINE回應什麼 ，目前只有code能選
+      URL += `&client_id=${clientID}` // 你的頻道ID
+      URL += `&redirect_uri=${redirectUri}` // 要接收回傳訊息的網址
+      URL += '&state=123456789' // 用來防止跨站請求的 之後回傳會傳回來給你驗證 通常設亂數 這邊就先放123456789
+      URL += '&scope=openid%20profile%20email' // 使用者要求的權限，目前就三個能選 openid profile email
+      // 選填
+      URL += '&nonce=helloWorld'
+      URL += '&prompt= consent'
+      URL += '&max_age=3600'
+      URL += '&ui_locales=zh-TW'
+      URL += '&bot_prompt=normal'
+      window.open(URL, '_self') // 轉跳到該網址
+    }
+  }
+}
+</script>

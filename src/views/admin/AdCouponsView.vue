@@ -1,7 +1,8 @@
 <template>
-  <div class="ad-coupon px-lg-10 pt-lg-10 text-start">
-    <h1 class="fs-3 mb-4">優惠管理</h1>
-    <ul class="nav border-bottom border-primary mb-4">
+  <div class="ad-coupon px-lg-10 pt-3 pt-lg-10 text-start">
+    <h1 class="fs-3 mb-4 fw-bold">優惠管理</h1>
+    <!-- tab -->
+    <ul class="nav flex-nowrap text-nowrap overflow-x-scroll overflow-x-sm-auto border-bottom border-primary mb-4">
       <li class="nav-item">
         <a
           class="nav-link px-6 py-4"
@@ -44,9 +45,11 @@
       </li>
     </ul>
     <a href="#" class="btn btn-primary mb-4" @click.prevent="openModal('new')">新增優惠券</a>
-    <div class="table-container table-responsive">
+    <!-- PC coupons -->
+    <div class="table-container table-responsive d-none d-lg-block">
       <table class="table align-middle text-nowrap mb-4">
-        <thead class="table-head sticky-top">
+        <!-- <thead class="table-head sticky-top"></thead> -->
+        <thead class="table-head position-relative">
           <tr>
             <th style="width: 15%">優惠碼</th>
             <th style="width: 30%">優惠型式</th>
@@ -71,7 +74,7 @@
                 {{ coupon.percent % 10 ? coupon.percent : coupon.percent / 10 }} 折
               </p>
             </td>
-            <td>{{ coupon.start_date ? unixToDate(coupon.start_date) : '-' }}</td>
+            <td>{{ unixToDate(coupon.start_date) }}</td>
             <td>{{ unixToDate(coupon.due_date) }}</td>
             <td>
               <template v-if="currentTab === '所有優惠券'">
@@ -136,40 +139,21 @@
             </td>
             <td>
               <a
-                href="#"
-                class="svg-hover-primary"
+                href="#"             
                 :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }"
                 @click.prevent="openModal('edit', coupon.id)"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 0 24 24"
-                  width="24px"
-                  fill="#9f9f9f"
-                >
-                  <path d="M0 0h24v24H0z" fill="none" />
-                  <path
-                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                  />
-                </svg>
+              <i class="bi bi-pencil-fill text-dark fs-6"></i>
               </a>
             </td>
             <td>
               <div class="d-flex align-items-center">
-                <a href="#" class="svg-hover-primary" @click.prevent="deleteCoupon(coupon.id)">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 0 24 24"
-                    width="24px"
-                    fill="#9f9f9f"
-                  >
-                    <path d="M0 0h24v24H0z" fill="none" />
-                    <path
-                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                    />
-                  </svg>
+                <a
+                  href="#"               
+                  :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }"
+                  @click.prevent="deleteCoupon(coupon.id)"
+                >
+                  <i class="bi bi-trash3-fill text-dark fs-6"></i>
                 </a>
                 <div
                   v-if="loadingStatus.loadingDelCoupon === coupon.id"
@@ -183,97 +167,215 @@
           </tr>
         </tbody>
       </table>
-      <!-- pagination -->
-      <div class="text-center va-pagination">
-        <template v-if="currentTab === '所有優惠券' && !loadingStatus.loadingGetCoupons">
-          <vue-awesome-paginate
-            :total-items="coupons.length"
-            :items-per-page="10"
-            :max-pages-shown="3"
-            v-model="currentPage"
-            @click="changePage"
-            pagination-container-class="cus-pagination"
-            paginate-buttons-class="page-link"
-            number-buttons-class="fs-8"
-            active-page-class="active"
-          >
-            <template #prev-button>
-              <span class="material-icons fs-8 p-1"> navigate_before </span>
-            </template>
-            <template #next-button>
-              <span class="material-icons fs-8 p-1"> navigate_next </span>
-            </template>
-          </vue-awesome-paginate>
-        </template>
-        <template v-else-if="currentTab === '有效' && !loadingStatus.loadingGetCoupons">
-          <vue-awesome-paginate
-            :total-items="validCoupons.length"
-            :items-per-page="10"
-            :max-pages-shown="3"
-            v-model="currentPage"
-            @click="changePage"
-            pagination-container-class="cus-pagination"
-            paginate-buttons-class="page-link"
-            number-buttons-class="fs-8"
-            active-page-class="active"
-          >
-            <template #prev-button>
-              <span class="material-icons fs-8 p-1"> navigate_before </span>
-            </template>
-            <template #next-button>
-              <span class="material-icons fs-8 p-1"> navigate_next </span>
-            </template>
-          </vue-awesome-paginate>
-        </template>
-        <template v-else-if="currentTab === '尚未生效' && !loadingStatus.loadingGetCoupons">
-          <vue-awesome-paginate
-            :total-items="notYetValidCoupons.length"
-            :items-per-page="10"
-            :max-pages-shown="3"
-            v-model="currentPage"
-            @click="changePage"
-            pagination-container-class="cus-pagination"
-            paginate-buttons-class="page-link"
-            number-buttons-class="fs-8"
-            active-page-class="active"
-          >
-            <template #prev-button>
-              <span class="material-icons fs-8 p-1"> navigate_before </span>
-            </template>
-            <template #next-button>
-              <span class="material-icons fs-8 p-1"> navigate_next </span>
-            </template>
-          </vue-awesome-paginate>
-        </template>
-        <template v-else-if="currentTab === '已失效' && !loadingStatus.loadingGetCoupons">
-          <vue-awesome-paginate
-            :total-items="InvalidCoupons.length"
-            :items-per-page="10"
-            :max-pages-shown="3"
-            v-model="currentPage"
-            @click="changePage"
-            pagination-container-class="cus-pagination"
-            paginate-buttons-class="page-link"
-            number-buttons-class="fs-8"
-            active-page-class="active"
-          >
-            <template #prev-button>
-              <span class="material-icons fs-8 p-1"> navigate_before </span>
-            </template>
-            <template #next-button>
-              <span class="material-icons fs-8 p-1"> navigate_next </span>
-            </template>
-          </vue-awesome-paginate>
-        </template>
-      </div>
-      <div
-        v-if="loadingStatus.loadingGetCoupons"
-        class="d-flex justify-content-center align-items-center"
-        style="min-height: 360px"
-      >
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
+    </div>
+    <!-- mobile coupons -->
+    <ul class="row list-unstyled text-dark d-lg-none" style="row-gap: 12px;">
+      <li class="col-12" v-for="coupon in currentPageCoupons" :key="coupon.id">
+        <div class="border border-primary rounded overflow-hidden">
+          <div class="row g-0">
+            <div class="col-12">
+              <div class="bg-primary d-flex justify-content-between align-items-center px-2 py-2">
+                <div class="bg-primary text-white fw-bold">{{ coupon.code }}</div>
+                <div class="text-end bg-white rounded-pill px-2 py-1 fs-8">
+                  <template v-if="currentTab === '所有優惠券'">
+                    <span
+                      v-if="dateToUnix() > coupon.start_date && dateToUnix() < coupon.due_date"
+                      class="text-success"
+                    >
+                      有效
+                      <img
+                        src="@/components/icons/check_circle_success_18dp.svg"
+                        alt="有效"
+                        class="align-top"
+                      />
+                    </span>
+                    <span v-if="dateToUnix() > coupon.due_date" class="text-danger">
+                      已失效
+                      <img
+                        src="@/components/icons/cancel_danger_18dp.svg"
+                        alt="已失效"
+                        class="align-top"
+                      />
+                    </span>
+                    <span v-if="dateToUnix() < coupon.start_date">
+                      尚未生效
+                      <img
+                        src="@/components/icons/remove_circle_black_18dp.svg"
+                        alt="已失效"
+                        class="align-top"
+                      />
+                    </span>
+                  </template>
+                  <template v-else-if="currentTab === '有效'">
+                    <span class="text-success">
+                      有效
+                      <img
+                        src="@/components/icons/check_circle_success_18dp.svg"
+                        alt="有效"
+                        class="align-top"
+                      />
+                    </span>
+                  </template>
+                  <template v-else-if="currentTab === '尚未生效'">
+                    <span>
+                      尚未生效
+                      <img
+                        src="@/components/icons/remove_circle_black_18dp.svg"
+                        alt="已失效"
+                        class="align-top"
+                      />
+                    </span>
+                  </template>
+                  <template v-else-if="currentTab === '已失效'">
+                    <span class="text-danger">
+                      已失效
+                      <img
+                        src="@/components/icons/cancel_danger_18dp.svg"
+                        alt="已失效"
+                        class="align-top"
+                      />
+                    </span>
+                  </template>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="px-2 py-2 border-bottom border-primary">
+                <p class="fw-bold mb-2">{{ coupon.title }}</p>
+                <p v-if="coupon.title === '金額折抵'">
+                  消費滿 NT$ {{ coupon.min_buy_price_by_price }}，享 NT$
+                  {{ coupon.discount_price }} 折扣
+                </p>
+                <p v-if="coupon.title === '訂單折扣'">
+                  消費滿 NT$ {{ coupon.min_buy_price_by_discount }}，享
+                  {{ coupon.percent % 10 ? coupon.percent : coupon.percent / 10 }} 折
+                </p>
+              </div>
+            </div>
+            <div class="col-9">
+              <p class="px-2 py-2">
+                {{ unixToDate(coupon.start_date) }} 至 {{ unixToDate(coupon.due_date) }}
+              </p>
+            </div>
+            <div class="col-3">
+              <div class="d-flex justify-content-between justify-content-sm-evenly pe-4 py-2">
+                <a
+                  href="#"               
+                  :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }"
+                  @click.prevent="openModal('edit', coupon.id)"
+                >
+                <i class="bi bi-pencil-fill text-dark fs-6"></i>
+                </a>
+                <a
+                  href="#"
+                  :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }"
+                  @click.prevent="deleteCoupon(coupon.id)"
+                >
+                  <i class="bi bi-trash3-fill text-dark fs-6"></i>
+                  <div
+                    v-if="loadingStatus.loadingDelCoupon === coupon.id"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
+      </li>
+    </ul>
+    <!-- pagination -->
+    <div class="text-center va-pagination">
+      <template v-if="currentTab === '所有優惠券' && !loadingStatus.loadingGetCoupons">
+        <vue-awesome-paginate
+          :total-items="coupons.length"
+          :items-per-page="10"
+          :max-pages-shown="3"
+          v-model="currentPage"
+          @click="changePage"
+          pagination-container-class="cus-pagination"
+          paginate-buttons-class="page-link"
+          number-buttons-class="fs-8"
+          active-page-class="active"
+        >
+          <template #prev-button>
+            <span class="material-icons fs-8 p-1"> navigate_before </span>
+          </template>
+          <template #next-button>
+            <span class="material-icons fs-8 p-1"> navigate_next </span>
+          </template>
+        </vue-awesome-paginate>
+      </template>
+      <template v-else-if="currentTab === '有效' && !loadingStatus.loadingGetCoupons">
+        <vue-awesome-paginate
+          :total-items="validCoupons.length"
+          :items-per-page="10"
+          :max-pages-shown="3"
+          v-model="currentPage"
+          @click="changePage"
+          pagination-container-class="cus-pagination"
+          paginate-buttons-class="page-link"
+          number-buttons-class="fs-8"
+          active-page-class="active"
+        >
+          <template #prev-button>
+            <span class="material-icons fs-8 p-1"> navigate_before </span>
+          </template>
+          <template #next-button>
+            <span class="material-icons fs-8 p-1"> navigate_next </span>
+          </template>
+        </vue-awesome-paginate>
+      </template>
+      <template v-else-if="currentTab === '尚未生效' && !loadingStatus.loadingGetCoupons">
+        <vue-awesome-paginate
+          :total-items="notYetValidCoupons.length"
+          :items-per-page="10"
+          :max-pages-shown="3"
+          v-model="currentPage"
+          @click="changePage"
+          pagination-container-class="cus-pagination"
+          paginate-buttons-class="page-link"
+          number-buttons-class="fs-8"
+          active-page-class="active"
+        >
+          <template #prev-button>
+            <span class="material-icons fs-8 p-1"> navigate_before </span>
+          </template>
+          <template #next-button>
+            <span class="material-icons fs-8 p-1"> navigate_next </span>
+          </template>
+        </vue-awesome-paginate>
+      </template>
+      <template v-else-if="currentTab === '已失效' && !loadingStatus.loadingGetCoupons">
+        <vue-awesome-paginate
+          :total-items="InvalidCoupons.length"
+          :items-per-page="10"
+          :max-pages-shown="3"
+          v-model="currentPage"
+          @click="changePage"
+          pagination-container-class="cus-pagination"
+          paginate-buttons-class="page-link"
+          number-buttons-class="fs-8"
+          active-page-class="active"
+        >
+          <template #prev-button>
+            <span class="material-icons fs-8 p-1"> navigate_before </span>
+          </template>
+          <template #next-button>
+            <span class="material-icons fs-8 p-1"> navigate_next </span>
+          </template>
+        </vue-awesome-paginate>
+      </template>
+    </div>
+    <div
+      v-if="loadingStatus.loadingGetCoupons"
+      class="d-flex justify-content-center align-items-center"
+      style="min-height: 360px"
+    >
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
     </div>
   </div>
@@ -284,13 +386,15 @@
     :isNew="isNew"
     :loadingStatus="loadingStatus"
     @update-coupon="updateCoupon"
-  />
+    />
+    <!-- :key="timer" -->
 </template>
 
 <script>
 import AdCouponModal from '@/components/AdCouponModal.vue'
 import { unixToDate } from '@/utils/unixToDate.js'
 import { dateToUnix } from '@/utils/dateToUnix.js'
+import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 
 export default {
   data() {
@@ -309,7 +413,8 @@ export default {
         loadingGetCoupons: false,
         loadingGetCoupon: false,
         loadingDelCoupon: ''
-      }
+      },
+      // timer: ''
     }
   },
   components: {
@@ -346,7 +451,7 @@ export default {
           currentPageNum++
         }
       } catch (err) {
-        alert(err.response.data.message)
+        toastError(err.response.data.message)
       }
 
       // 依有效狀態分類優惠券
@@ -408,7 +513,7 @@ export default {
           this.coupon = res.data.coupons.find((coupon) => coupon.id === id)
         })
         .catch((err) => {
-          alert(err.response.data.message)
+          toastError(err.response.data.message)
         })
         .finally(() => {
           this.loadingStatus.loadingGetCoupon = false
@@ -444,12 +549,12 @@ export default {
         this.$http
           .post(url, { data: data })
           .then((res) => {
-            alert(res.data.message)
+            toastSuccess(res.data.message)
             this.$refs.adCouponModal.closeModal()
             this.getCoupons()
           })
           .catch((err) => {
-            alert(err.response.data.message)
+            toastError(err.response.data.message)
           })
           .finally(() => {
             this.loadingStatus.loadingGetCoupon = false
@@ -461,12 +566,12 @@ export default {
         this.$http
           .put(url, { data: data })
           .then((res) => {
-            alert(res.data.message)
+            toastSuccess(res.data.message)
             this.$refs.adCouponModal.closeModal()
             this.getCoupons()
           })
           .catch((err) => {
-            alert(err.response.data.message)
+            toastError(err.response.data.message)
           })
           .finally(() => {
             this.loadingStatus.loadingGetCoupon = false
@@ -481,11 +586,11 @@ export default {
       this.$http
         .delete(url)
         .then((res) => {
-          alert(res.data.message)
+          toastSuccess(res.data.message)
           this.getCoupons()
         })
         .catch((err) => {
-          alert(err.response.data.message)
+          toastError(err.response.data.message)
         })
         .finally(() => {
           this.loadingStatus.loadingDelCoupon = ''
@@ -495,17 +600,22 @@ export default {
     openModal(type, id) {
       switch (type) {
         case 'new':
+          // this.timer = new Date().getTime()
+          // this.$refs.adCouponModal.reset()
           this.isNew = true
           this.coupon = {
             title: '金額折抵' // 預設值給 :checked 判斷
-          }
+          }       
+          this.$refs.adCouponModal.openModal()
           break
         case 'edit':
+          // this.timer = new Date().getTime()
+          // this.$refs.adCouponModal.reset()
           this.isNew = false
           this.getCoupon(id)
+          this.$refs.adCouponModal.openModal()
           break
       }
-      this.$refs.adCouponModal.openModal()
     },
     // unix 時間戳轉成 ${year}-${month}-${day} 格式
     unixToDate(unix) {
