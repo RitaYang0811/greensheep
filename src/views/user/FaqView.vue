@@ -19,7 +19,7 @@
       </ol>
     </nav>
 
-    <div data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
+    <div data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100" data-aos-once="true">
       <div class="row justify-content-center g-0">
         <div
           class="btn-group border-bottom border-1 border-primary"

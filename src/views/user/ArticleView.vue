@@ -14,11 +14,17 @@
 
     <h1
       class="h2 text-primary text-center mb-12 fw-bold"
-      data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100"
+      data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100" data-aos-once="true"
     >
       {{ article.title }}
     </h1>
-    <div class="row d-flex d-lg-block mb-20" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+    <div 
+      class="row d-flex d-lg-block mb-20" 
+      data-aos="fade-up"
+      data-aos-duration="1200"
+      data-aos-delay="200"
+      data-aos-once="true"
+    >
       <div class="col-lg-5 me-4 mb-2" style="float: left;"><img :src="article.image" alt=""></div>
       <div class="col-12 lh-lg text-primary">
         <div v-html="article.content"></div>
@@ -27,18 +33,19 @@
 
     <h2
       class="h4 text-primary text-center mb-10 fw-bold"
-      data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100"
+      data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100" data-aos-once="true"
     >
       猜你也喜歡
     </h2>
     <ul class="row row-cols-2 row-cols-md-4 g-4 mb-20 list-unstyled">
-      <li v-for="(product, index) in products.slice(0, 4)" :key="product.id" class="col d-flex flex-column product-item">
+      <li v-for="(product, index) in recommendProducts" :key="product.id" class="col d-flex flex-column product-item">
         <RouterLink
           :to="`/products/${product.id}`"
           class="d-flex flex-column product-item"
           data-aos="fade-up"
           data-aos-duration="1200"
           :data-aos-delay="index * 200"
+          data-aos-once="true"
         >
           <div
             class="product h-border position-relative"
@@ -100,7 +107,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(productStore, ['getProducts']),
+    ...mapActions(productStore, ['getProducts', 'getRecommendProducts']),
     // 取得單一文章
     getArticle() {
       this.isLoading = true
@@ -120,12 +127,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(productStore, ['products'])
+    ...mapState(productStore, ['products', 'recommendProducts'])
   },
-  mounted() {
+  async mounted() {
     const route = useRoute()
     this.getArticle()
-    this.getProducts(route)
+    await this.getProducts(route)
+    await this.getRecommendProducts()
   }
 }
 </script>
