@@ -229,24 +229,28 @@ import productStore from '@/stores/productStore'
 export default {
   data() {
     return {
-      searchWord: ''
+      headerCategory: '',
+      searchWord: '',
+      headerCurrentPage: 1
     }
   },
   watch: {
-    searchWord: {
-      handler(newVal, oldVal) {
-        console.log('searchWord被修改', newVal, oldVal)
-        this.searchWord = newVal
-      }
-    }
+    // searchWord: {
+    //   handler(newVal, oldVal) {
+    //     console.log('searchWord被修改', newVal, oldVal)
+    //     this.searchWord = newVal
+    //   }
+    // },
   },
   methods: {
     ...mapActions(searchStore, ['setSearchWord']),
-    ...mapActions(productStore, ['getFilterProducts']),
+    ...mapActions(productStore, ['getProducts', 'getFilterProducts']),
     toProductsView() {
-      this.$router.push({
-        path: '/products'
-      })
+      this.headerCategory = ''
+      console.log('點選header shop', this.headerCategory)
+      this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'new')
+      this.$router.push({ path: '/products' })
+      //this.getProducts()
     },
     searchProducts() {
       this.setSearchWord(this.searchWord)

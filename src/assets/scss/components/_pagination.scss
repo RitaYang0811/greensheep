@@ -3,6 +3,10 @@
   display: flex;
   justify-content: center;
   gap: 16px;
+  &.active {
+    border-radius: 50%;
+    background-color: $white !important;
+  }
   a {
     width: 24px;
     height: 24px;
@@ -16,6 +20,13 @@
     &:focus {
       background-color: $white;
     }
+  }
+}
+.page-link {
+  display: inline-block;
+  &.active {
+    border-radius: 50%;
+    background-color: $white !important;
   }
 }
 .page-item {

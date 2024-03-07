@@ -47,6 +47,10 @@ const router = createRouter({
             {
               path: '客製設計 CUSTOMIZED',
               component: () => import('../views/user/ProductsView.vue')
+            },
+            {
+              path: '其他配件',
+              component: () => import('../views/user/ProductsView.vue')
             }
           ]
         },

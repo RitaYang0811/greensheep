@@ -214,7 +214,6 @@
     ></DeleteProductModal>
     <!-- pagiNation -->
     <PagiNation :pagination="allPagination" @update-page="updatePage" />
-    <!-- loading -->
     <VueLoading v-model:active="isLoading" />
   </div>
 </template>
