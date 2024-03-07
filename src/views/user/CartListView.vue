@@ -189,6 +189,7 @@ import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 
 import OrderRules from "../../components/OrderRules.vue"
+import Swal from 'sweetalert2'
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
 export default {
@@ -237,13 +238,40 @@ export default {
         })
     },
     goCheckout() {
-      // this.$router.push('/order')
-      if (this.deliverChoose.payWay.length > 0 && this.deliverChoose.deliver.length > 0) {
-        this.$router.push('/order')
-        this.getDeliverData(this.deliverChoose)
-      } else {
-        alert('付款方式必填')
+      if (this.deliverChoose.location.length == 0) {
+        Swal.fire({
+          title: "收件地點必填",
+          confirmButtonColor: "#566B5A",
+          icon: "warning"
+        });
+        return
       }
+      if(this.deliverChoose.deliver.length == 0) {
+        Swal.fire({
+          title: "配送方式必填",
+          confirmButtonColor: "#566B5A",
+          icon: "warning"
+        });
+        return
+      }
+      if (this.deliverChoose.payWay.length == 0) {
+        Swal.fire({
+          title: "付款方式必填",
+          confirmButtonColor: "#566B5A",
+          icon: "warning"
+        });
+        return
+      }
+      
+        this.getDeliverData(this.deliverChoose)
+        this.$router.push('/order')
+
+      // if (this.deliverChoose.payWay.length > 0 && this.deliverChoose.deliver.length > 0) {
+      //   this.$router.push('/order')
+      //   this.getDeliverData(this.deliverChoose)
+      // } else {
+      //   alert('付款方式必填')
+      // }
 
     },
 
