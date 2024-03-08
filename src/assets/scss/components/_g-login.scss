@@ -1,0 +1,141 @@
+.g-login-btn {
+  $root: &;
+  $login-button-icon-width: 40px;
+  $login-button-icon-height: 40px;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: unset;
+  border-radius: 6px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+    transition: all 0.2s ease-out;
+  }
+
+  &--disabled {
+    cursor: default;
+  }
+
+  &Text {
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    width: 100%;
+
+    padding: calc((#{$login-button-icon-width} / 2) - 1px);
+    padding-right: calc(#{$login-button-icon-width} - 1px);
+    padding-left: $login-button-icon-width;
+  }
+
+  &Icon {
+    width: $login-button-icon-width;
+    height: $login-button-icon-height;
+    flex-shrink: 0;
+
+    padding-left: calc((46px - #{$login-button-icon-width}) / 2 - 1px);
+
+    padding-right: calc((46px - #{$login-button-icon-width}) / 2);
+  }
+
+  &--line {
+    $login-button-icon-width: 26px;
+
+    border-color: #06c755;
+    background-color: #06c755;
+
+    &:hover {
+      background-color: #05b34d;
+      border-color: #05b34d;
+    }
+
+    &:active,
+    &:focus {
+      background-color: #048b3c;
+      border-color: #048b3c;
+    }
+
+    &#{$root}--disabled {
+      background-color: white;
+      border-color: rgba(229, 229, 229, 0.6);
+
+      #{$root}Icon {
+        background-color: rgba(30, 30, 30, 0.2);
+      }
+
+      #{$root}Text {
+        color: rgba(30, 30, 30, 0.2);
+
+        &::after {
+          background-color: rgba(229, 229, 229, 0.6);
+        }
+      }
+    }
+
+    #{$root}Text {
+      position: relative;
+      font-size: 16px;
+      color: white;
+
+      // アイコンとテキスト間の区切り線
+      &::after {
+        position: absolute;
+        content: '';
+        width: 1px;
+        height: calc(100% - 2px);
+        background-color: rgba(0, 0, 0, 0.08);
+        left: -1px;
+        top: 1px;
+      }
+    }
+
+    #{$root}Icon {
+      mask-image: image-url('guide/icon_line.svg');
+      mask-repeat: no-repeat;
+      mask-origin: content-box;
+      // background-color: #fff;
+    }
+  }
+
+  &--google {
+    border-color: #747775;
+    background-color: white;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: #e0e0e0;
+      border-color: #666967;
+
+      #{$root}Text {
+        color: #676767;
+      }
+    }
+
+    &#{$root}--disabled {
+      background-color: white;
+      border-color: #1f1f1f1f;
+
+      #{$root}Text,
+      #{$root}Icon {
+        opacity: 38%;
+      }
+    }
+
+    #{$root}Text {
+      font-size: 14px;
+      color: #757575;
+    }
+
+    #{$root}Icon {
+      background-image: image-url('guide/icon_google.svg');
+      background-repeat: no-repeat;
+      background-origin: content-box;
+    }
+  }
+}

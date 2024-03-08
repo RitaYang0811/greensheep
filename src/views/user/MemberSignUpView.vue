@@ -12,14 +12,19 @@
           <!-- google或line 帳號登入 -->
           <ul class="list-unstyled">
             <li class="py-3">
-              <button type="button" @click="accessTokenLogin" class="p-3 google-account">
-                <img src="../../assets/images/google.svg" alt="" />Google 登 入
+              <button class="g-login-btn g-login-btn--google ji-mb-10" @click="accessTokenLogin">
+                <span class="g-login-btnIcon"
+                  ><img src="../../assets/images/google.svg" alt="line圖片"
+                /></span>
+                <span class="g-login-btnText">Google登入</span>
               </button>
             </li>
             <li class="py-3">
-              <button class="p-3 line-account" @click="lineLoginEvent">
-                <img src="../../assets/images/line-messenger.svg" alt="" />
-                Line 登 入
+              <button class="g-login-btn g-login-btn--line mt-3" @click="lineLoginEvent">
+                <span class="g-login-btnIcon"
+                  ><img src="../../assets/images/btn_base.png" alt="line圖片"
+                /></span>
+                <span class="g-login-btnText">LINE登入</span>
               </button>
             </li>
           </ul>
@@ -68,7 +73,7 @@
             <div class="form-floating mb-3">
               <v-field
                 name="password"
-                type="password"
+                :type="passwordActive ? 'text' : 'password'"
                 class="form-control"
                 :class="{ 'is-invalid': errors['password'] }"
                 id="password"
@@ -78,13 +83,22 @@
                 v-model="user.password"
               ></v-field>
               <label for="password">請輸入密碼(6-12字元且不連續)</label>
+              <i
+                class="checkByEye"
+                :class="[
+                  passwordActive ? 'bi-eye' : 'bi-eye-slash',
+                  'bi',
+                  { 'checkByEye-alert': checkEyeState }
+                ]"
+                @click="passwordActive = !passwordActive"
+              ></i>
               <error-message name="password" class="invalid-feedback text-start"></error-message>
             </div>
             <!-- 再次確認密碼 -->
             <div class="form-floating mb-3">
               <v-field
                 name="confirmPassword"
-                type="password"
+                :type="confirmActive ? 'text' : 'password'"
                 class="form-control"
                 :class="{ 'is-invalid': errors['confirmPassword'] }"
                 id="confirmPassword"
@@ -94,6 +108,15 @@
                 v-model="user.confirmPassword"
               />
               <label for="password">請再次確認密碼</label>
+              <i
+                class="checkByEye"
+                :class="[
+                  confirmActive ? 'bi-eye' : 'bi-eye-slash',
+                  'bi',
+                  { 'checkByEye-alert': confirmEyeState }
+                ]"
+                @click="confirmActive = !confirmActive"
+              ></i>
               <error-message
                 name="confirmPassword"
                 class="invalid-feedback text-start"
@@ -290,7 +313,13 @@ export default {
       signupState: true,
       securityState: false,
       GOOGLECLIENT: '780150754854-h5d15n56b8clqorddealcei20qcv17dd.apps.googleusercontent.com',
-      googleToken: null
+      googleToken: null,
+      initCount: 0,
+      confirmCount: 0,
+      checkEyeState: false,
+      confirmEyeState: false,
+      passwordActive: false,
+      confirmActive: false
     }
   },
   methods: {
@@ -307,11 +336,31 @@ export default {
     // 密碼規則
     passwordRule(value) {
       let password = /^(?!.*\d{6,})(?!.*(.)\1{4,}).{6,12}$/
-      return value !== undefined && password.test(value) ? true : `請輸入正確密碼`
+      if (value !== undefined && password.test(value)) {
+        this.checkEyeState = false
+        this.initCount = 0
+        return true
+      } else {
+        if (this.initCount) {
+          this.checkEyeState = true
+        }
+        this.initCount += 1
+        return `請輸入正確密碼`
+      }
     },
     // 確認密碼規則
     confirmPasswordRule(value) {
-      return value === this.user.password && value ? true : '請輸入相同密碼'
+      if (value === this.user.password && value) {
+        this.confirmEyeState = false
+        this.confirmCount = 0
+        return true
+      } else {
+        if (this.confirmCount) {
+          this.confirmEyeState = true
+        }
+        this.confirmCount += 1
+        return '請輸入相同密碼'
+      }
     },
     // 生日
     format() {

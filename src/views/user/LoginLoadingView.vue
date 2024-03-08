@@ -1,5 +1,7 @@
 <template>
-  <div class="d-flex flex-column align-items-center py-50">Loading</div>
+  <div class="d-flex flex-column align-items-center py-50">
+    <VueLoading v-model:active="isLoading"></VueLoading>
+  </div>
 </template>
 
 <script>
@@ -13,7 +15,8 @@ export default {
   data() {
     return {
       user: {},
-      userInfo: {}
+      userInfo: {},
+      isLoading: true
     }
   },
   methods: {
@@ -66,7 +69,6 @@ export default {
 
     // 再利用URLSearchParams中get方法取值
     this.code = urlParams.get('code')
-    console.log(this.code)
     let options = Qs.stringify({
       // 向Resource Server發送請求的參數
       // 用Qs是要轉成form-urlencoded 因為LINE不吃JSON格式
