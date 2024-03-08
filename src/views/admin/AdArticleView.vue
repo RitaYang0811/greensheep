@@ -3,7 +3,7 @@
     <template v-if="isNew">建立文章</template>
     <template v-else>編輯文章</template>
   </h1>
-  <VForm @submit="updateArticle(articleData, activityIsPublic, editIsPublic)" v-slot="{ errors }">
+  <VForm ref="articleForm" @submit="updateArticle(articleData, activityIsPublic, editIsPublic)" v-slot="{ errors }">
     <div v-if="loadingStatus.loadingItem" class="d-flex justify-content-center align-items-center" style="min-height: 360px;">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -95,7 +95,7 @@
             :config="editorConfig"
             v-model.lazy="articleData.content"
             :class="{ 'is-invalid': errors['文章內容'] }"
-            placeholder="Type the content here!"
+            @blur="blurValidate"
           ></ckeditor>
         </VField>
         <ErrorMessage name="文章內容" class="invalid-feedback text-end"/>
@@ -164,6 +164,10 @@ export default {
       .catch((err) => {
         toastError(err.response.data.message)
       })
+    },
+    // 手動觸發 ckeditor 驗證
+    blurValidate() {
+      this.$refs.articleForm.validateField('文章內容')
     },
     ...mapActions(adArticlesStore, ['updateArticle', 'getArticle'])
   },
