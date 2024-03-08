@@ -1,11 +1,10 @@
 <template>
-  <div
-    to="/products"
-    class="accordion fs-8 py-1 bg-primary text-white cursor-pointer"
-    @click="toProductsView"
+  <router-link
+    to="/products/productsAll"
+    class="d-block accordion fs-8 py-1 bg-primary text-white cursor-pointer"
   >
     即日起，訂單達 2,000元 以上即可享免運費優惠！
-  </div>
+  </router-link>
 
   <nav
     class="navbar navbar-expand-lg navbar-light navbar-hover py-3 flex-column sticky-top position-relative"
@@ -37,14 +36,14 @@
             <button
               class="nav-link dropdown-toggle nav-item-en py-2 py-lg-1 px-2"
               aria-expanded="false"
-              @click="toProductsView"
+              @click="toggleDropdownMenu(isDropdownMenuOpen)"
             >
               SHOP
             </button>
             <button
               class="nav-link dropdown-toggle nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
               aria-expanded="false"
-              @click="toProductsView"
+              @click="toggleDropdownMenu(isDropdownMenuOpen)"
             >
               全部商品
             </button>
@@ -54,9 +53,14 @@
               class="dropdown-menu custom-dropdown-menu shadow-none border-0 font-noto-serif fs-8 start-50"
               ref="dropdownMenu"
             >
+              <li class="d-inline-block py-2 mx-3 position-relative cursor-pointer">
+                <RouterLink to="/products/productsAll" @click="toProductsView"
+                  >全部商品 ALL</RouterLink
+                >
+              </li>
               <li v-for="category in categories" :key="category + 123">
                 <RouterLink
-                  :to="`/products/${category}`"
+                  :to="{ path: `/products/${category}`, query: { category: category } }"
                   class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
                   @click="changeCategory(category)"
                   >{{ category }}
@@ -251,16 +255,18 @@ export default {
     toProductsView() {
       this.headerCategory = ''
       this.isDropdownMenuOpen = !this.isDropdownMenuOpen
-      this.toggleDropdownMenu(this.isDropdownMenuOpen)
+      this.closeDropdownMenu()
+      this.closeMenuOffCanvas()
       this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
       this.$router.push({ path: '/products/productsAll' })
-      console.log(this.isDropdownMenuOpen)
     },
     changeCategory(category) {
+      console.log('changeCategory', category)
       this.headerCategory = category
       this.isDropdownMenuOpen = !this.isDropdownMenuOpen
-      this.toggleDropdownMenu(this.isDropdownMenuOpen)
+      this.closeDropdownMenu()
       this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
+      this.closeMenuOffCanvas()
     },
     openMenuOffCanvas() {
       this.menuOffCanvas.show()
@@ -274,8 +280,15 @@ export default {
     closeSearchOffCanvas() {
       this.searchOffCanvas.hide()
     },
+    openDropdownMenu() {
+      this.dropdownMenu.show()
+    },
+    closeDropdownMenu() {
+      this.dropdownMenu.hide()
+    },
     toggleDropdownMenu(status) {
-      status === true ? this.dropdownMenu.show() : this.dropdownMenu.hide()
+      this.isDropdownMenuOpen = !this.isDropdownMenuOpen
+      this.isDropdownMenuOpen === true ? this.openDropdownMenu() : this.closeDropdownMenu()
     }
     // openDropdownMenu() {
 
