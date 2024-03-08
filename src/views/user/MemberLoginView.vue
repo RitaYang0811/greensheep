@@ -22,7 +22,7 @@
             <li class="py-3">
               <button class="g-login-btn g-login-btn--line mt-3" @click="lineLoginEvent">
                 <span class="g-login-btnIcon"
-                  ><img src="../../assets/images/btn_base.png" alt="line圖片"
+                  ><img src="../../assets/images/line-image.png" alt="line圖片"
                 /></span>
                 <span class="g-login-btnText">LINE登入</span>
               </button>
