@@ -3,7 +3,7 @@
     <template v-if="isNew">建立文章</template>
     <template v-else>編輯文章</template>
   </h1>
-  <VForm @submit="updateArticle(articleData, activityIsPublic, editIsPublic)" v-slot="{ errors }">
+  <VForm ref="articleForm" @submit="updateArticle(articleData, activityIsPublic, editIsPublic)" v-slot="{ errors }">
     <div v-if="loadingStatus.loadingItem" class="d-flex justify-content-center align-items-center" style="min-height: 360px;">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -84,8 +84,21 @@
       </div>
       <div class="col-lg-8">
         <p class="form-label">文章內容</p>
-        <ckeditor :class="{ 'is-invalid': !formStatus.hasFormContent }" :editor="editor" v-model.lazy="articleData.content" :config="editorConfig" placeholder="Type the content here!"></ckeditor>
-        <span class="invalid-feedback text-end">文章內容 為必填</span>
+        <VField
+          name="文章內容"
+          v-model.lazy="articleData.content"
+          rules="required"
+        >
+          <ckeditor
+            data-test="ckeditor"
+            :editor="editor"
+            :config="editorConfig"
+            v-model.lazy="articleData.content"
+            :class="{ 'is-invalid': errors['文章內容'] }"
+            @blur="blurValidate"
+          ></ckeditor>
+        </VField>
+        <ErrorMessage name="文章內容" class="invalid-feedback text-end"/>
       </div>
     </div>
     <div v-if="!loadingStatus.loadingItem" class="d-flex justify-content-end gap-4 mb-4" @click="submitActivity($event)">
@@ -105,7 +118,9 @@
 import adArticlesStore from "@/stores/adArticlesStore.js"
 import { mapActions, mapState } from 'pinia'
 import { toastError } from "@/utils/sweetalertToast.js"
+
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import MyUploadAdapter from '@/utils/uploadImage.js';
 
 export default {
   data() {
@@ -124,7 +139,21 @@ export default {
       editorConfig: {
         placeholder: '輸入文字',
         language: 'zh',
-        toolbar: ['undo', 'redo', '|','heading', '|', 'bold', 'italic', 'blockQuote', '|', 'link', 'mediaEmbed'],
+        toolbar: {
+          items: [
+            'undo', 'redo', '|','heading', '|',
+            'bold', 'italic', 'blockQuote', '|',
+            'bulletedList', 'numberedList', '|',
+            'link','imageUpload', 'mediaEmbed', '|',
+          ],
+          shouldNotGroupWhenFull: true // 工具列寬度不足時換行
+        },
+        extraPlugins: [
+          function(editor) {
+            editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+              return new MyUploadAdapter(loader);
+          }}
+        ]
       }
     }
   },
@@ -152,6 +181,10 @@ export default {
         toastError(err.response.data.message)
       })
     },
+    // 手動觸發 ckeditor 驗證
+    blurValidate() {
+      this.$refs.articleForm.validateField('文章內容')
+    },
     ...mapActions(adArticlesStore, ['updateArticle', 'getArticle'])
   },
   watch: {
@@ -166,10 +199,6 @@ export default {
     // 根據是否有加入圖片切換狀態
     'articleData.image'() {
       this.formStatus.hasFormImage = true
-    },
-    // 根據是否有加入文章內容切換狀態
-    'articleData.content'() {
-      this.articleData.content ? this.formStatus.hasFormContent = true : this.formStatus.hasFormContent = false
     },
   },
   computed: {

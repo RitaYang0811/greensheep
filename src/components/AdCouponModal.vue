@@ -115,12 +115,16 @@
                  :enable-time-picker="false": 預設 true 可以選擇到更細部的時和分，這邊關閉，以日為最小單位
                  locale="zh-TW" cancelText="取消" selectText="選擇": 語系以及顯示文字設定
             -->
+            <VField
+              name="日期"
+              v-model="couponData.dates"
+              rules="required"
+            >
               <VueDatePicker
-                @blur="datepickerInputStyle"
-                class="dp-custom"
-                input-class-name="form-control dp-input"
-                :class="{ 'dp-custom-invalid ': !dateSelected }"
                 v-model="couponData.dates"
+                input-class-name="border-0"
+                class="dp-custom form-control py-0 ps-0 pe-9"
+                :class="{ 'is-invalid': errors['日期'] }"
                 model-type="timestamp"
                 :range="{ partialRange: false }"
                 :format="format"
@@ -128,9 +132,10 @@
                 locale="zh-TW"
                 cancelText="取消"
                 selectText="選擇"
-                required
-              />
-            <span role="alert" class="invalid-feedback" :class="{ 'd-block': !dateSelected }">請選擇開始 / 結束日期</span>
+                @blur="blurValidate"
+              ></VueDatePicker>
+            </VField>
+            <ErrorMessage name="日期" class="invalid-feedback"/>
           </div>
         </div>
       </div>
@@ -180,30 +185,14 @@ export default {
     return {
       modal: '',
       couponData: '',
-      dateSelected: true, // true: 有選擇日期或第一次點開 modal，false: 曾點開日期選擇器但未選擇日期
-      dateCounter: 0
     }
   },
   methods: {
-    // 綁 blur 監聽，關閉日期選擇器後觸發
-    datepickerInputStyle() {
-      // 初始值設為零讓第一次點進 modal 時不會觸發驗證失敗樣式
-      this.dateCounter ++
-      // >0 即點超過一次，此時若為假值即代表沒有選取時間，要呈現驗證失敗樣式
-      if(this.dateCounter > 0) {
-        this.couponData.dates === null || isNaN(this.couponData.dates[0])
-        ? this.dateSelected = false
-        : this.dateSelected = true
-      }
-    },
     reset() {
       this.$refs.couponForm.resetForm()
     },
     openModal() {
       this.modal.show();
-      // 重置點擊次數及狀態
-      this.dateCounter = 0
-      this.dateSelected = true
     },
     closeModal() {
       this.modal.hide();
@@ -218,13 +207,12 @@ export default {
       const arr = date.map(e => dateFormat(e))
       return `${arr[0] ? arr[0] : '請選擇日期'} 至 ${arr[1] ? arr[1] : '請選擇日期'}`
     },
+    // 手動觸發 datepicker 驗證
+    blurValidate() {
+      this.$refs.couponForm.validateField('日期')
+    },
     // 送出新增 / 編輯優惠券的資料
     updateCoupon() {
-      // 送出後要驗證 dates 是否為空
-      if(this.couponData.dates === null || isNaN(this.couponData.dates[0])){
-        this.dateSelected = false
-        return
-      }
       this.$emit('updateCoupon', this.couponData);
     }
   },
@@ -235,7 +223,9 @@ export default {
       // 拷貝並將時間戳改成毫秒單位
       this.couponData = this.coupon;
       // range 模式的 VueDatePicker 使用陣列格式儲存開始與結束時間
-      this.couponData.dates = [this.couponData.start_date * 1000, this.couponData.due_date * 1000]
+      if(!this.isNew) {
+        this.couponData.dates = [this.couponData.start_date * 1000, this.couponData.due_date * 1000]
+      }
     }
   },
   computed: {
