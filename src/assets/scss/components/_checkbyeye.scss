@@ -1,0 +1,10 @@
+.checkByEye {
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-40%);
+  &-alert {
+    top: 50%;
+    transform: translateY(-100%);
+  }
+}

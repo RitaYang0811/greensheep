@@ -12,14 +12,19 @@
           <!-- google或line 帳號登入 -->
           <ul class="list-unstyled">
             <li class="py-3">
-              <button type="button" @click="accessTokenLogin" class="p-3 google-account">
-                <img src="../../assets/images/google.svg" alt="" />Google 登 入
+              <button class="g-login-btn g-login-btn--google ji-mb-10" @click="accessTokenLogin">
+                <span class="g-login-btnIcon"
+                  ><img src="../../assets/images/google.svg" alt="line圖片"
+                /></span>
+                <span class="g-login-btnText">Google登入</span>
               </button>
             </li>
             <li class="py-3">
-              <button class="p-3 line-account" @click="lineLoginEvent">
-                <img src="../../assets/images/line-messenger.svg" alt="" />
-                Line 登 入
+              <button class="g-login-btn g-login-btn--line mt-3" @click="lineLoginEvent">
+                <span class="g-login-btnIcon"
+                  ><img src="../../assets/images/btn_base.png" alt="line圖片"
+                /></span>
+                <span class="g-login-btnText">LINE登入</span>
               </button>
             </li>
           </ul>
@@ -47,7 +52,7 @@
             <div class="form-floating mb-3">
               <v-field
                 name="password"
-                type="password"
+                :type="isActive ? 'text' : 'password'"
                 class="form-control"
                 :class="{ 'is-invalid': errors['password'] }"
                 id="password"
@@ -57,6 +62,21 @@
                 v-model="user.password"
               ></v-field>
               <label for="password">請輸入密碼(6-12字元且不連續)</label>
+              <i
+                class="checkByEye"
+                :class="[
+                  isActive ? 'bi-eye' : 'bi-eye-slash',
+                  'bi',
+                  { 'checkByEye-alert': checkEyeState }
+                ]"
+                @click="isActive = !isActive"
+              ></i>
+              <!-- { 'checkByEye-alert': checkEyeState } -->
+
+              <!-- <i
+                class="bi bi-eye-slash checkByEye"
+                :class="{ 'checkByEye-alert': checkEyeState }"
+              ></i> -->
               <error-message name="password" class="invalid-feedback text-start"></error-message>
             </div>
 
@@ -86,7 +106,7 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss"></style>
 
 <script>
 import { googleTokenLogin } from 'vue3-google-login'
@@ -100,7 +120,10 @@ export default {
       user: {},
       userInfo: {},
       GOOGLECLIENT: '780150754854-h5d15n56b8clqorddealcei20qcv17dd.apps.googleusercontent.com',
-      googleToken: null
+      googleToken: null,
+      initCount: 0,
+      checkEyeState: false,
+      isActive: false
     }
   },
   methods: {
@@ -112,11 +135,19 @@ export default {
     // 密碼規則
     passwordRule(value) {
       let password = /^(?!.*\d{6,})(?!.*(.)\1{4,}).{6,12}$/
-      return value !== undefined && password.test(value) ? true : `請輸入正確密碼`
+      if (value !== undefined && password.test(value)) {
+        this.checkEyeState = false
+        return true
+      } else {
+        if (this.initCount) {
+          this.checkEyeState = true
+        }
+        this.initCount += 1
+        return `請輸入正確密碼`
+      }
     },
     // 一般登入
     onSubmit() {
-      console.log(this.user)
       this.$http
         .post(`${serverUrl}/login`, this.user)
         .then((res) => {
