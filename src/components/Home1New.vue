@@ -38,7 +38,9 @@
             data-aos-offset="50"
             data-aos-once="true"
           >
-            <RouterLink to="/products" class="custom-btn custom-btn-primary shop-now cursor-pointer"
+            <RouterLink
+              to="/products/productsAll"
+              class="custom-btn custom-btn-primary shop-now cursor-pointer"
               >SHOP NOW</RouterLink
             >
           </button>
@@ -119,9 +121,7 @@
           data-aos-duration="1500"
           data-aos-offset="50"
         >
-          <RouterLink to="/story" class="custom-btn custom-btn-secondary" href="4-1.Story.html"
-            >My Story</RouterLink
-          >
+          <RouterLink to="/story" class="custom-btn custom-btn-secondary">My Story</RouterLink>
         </button>
       </div>
 

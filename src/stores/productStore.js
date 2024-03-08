@@ -85,6 +85,7 @@ export default defineStore('productStore', {
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
         this.loadingStatus.loadingFilterProducts = false
       } else if (category) {
+        console.log('@@@')
         this.getSort(status)
         this.categoryProducts = this.products.filter((item) => item.category === category)
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
