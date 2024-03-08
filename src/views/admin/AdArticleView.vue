@@ -118,7 +118,9 @@
 import adArticlesStore from "@/stores/adArticlesStore.js"
 import { mapActions, mapState } from 'pinia'
 import { toastError } from "@/utils/sweetalertToast.js"
+
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import MyUploadAdapter from '@/utils/uploadImage.js';
 
 export default {
   data() {
@@ -137,7 +139,21 @@ export default {
       editorConfig: {
         placeholder: '輸入文字',
         language: 'zh',
-        toolbar: ['undo', 'redo', '|','heading', '|', 'bold', 'italic', 'blockQuote', '|', 'link', 'mediaEmbed'],
+        toolbar: {
+          items: [
+            'undo', 'redo', '|','heading', '|',
+            'bold', 'italic', 'blockQuote', '|',
+            'bulletedList', 'numberedList', '|',
+            'link','imageUpload', 'mediaEmbed', '|',
+          ],
+          shouldNotGroupWhenFull: true // 工具列寬度不足時換行
+        },
+        extraPlugins: [
+          function(editor) {
+            editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+              return new MyUploadAdapter(loader);
+          }}
+        ]
       }
     }
   },
