@@ -9,25 +9,40 @@
           >
             <div class="d-flex mb-lg-0 align-items-lg-center mb-4">
               <li>
-                <RouterLink to="/products" class="fs-8 text-white me-lg-6">全部商品</RouterLink>
+                <RouterLink
+                  to="/products/productsAll"
+                  class="fs-8 text-white me-lg-6"
+                  @click="scrollToTop"
+                  >全部商品</RouterLink
+                >
               </li>
               <li>
-                <RouterLink to="/custom" class="fs-8 text-white me-lg-6 mx-lg-0 mx-12"
+                <RouterLink
+                  to="/products/客製設計%20CUSTOMIZED`"
+                  class="fs-8 text-white me-lg-6 mx-lg-0 mx-12"
+                  @click="scrollToTop"
                   >客製設計</RouterLink
                 >
               </li>
               <li>
-                <RouterLink to="/story" class="fs-8 text-white me-lg-6">關於品牌</RouterLink>
+                <RouterLink to="/story" class="fs-8 text-white me-lg-6" @click="scrollToTop"
+                  >關於品牌</RouterLink
+                >
               </li>
             </div>
             <div class="d-flex align-items-lg-center">
               <li>
-                <RouterLink to="/articles" class="fs-8 text-white me-lg-6 me-12"
+                <RouterLink
+                  to="/articles"
+                  class="fs-8 text-white me-lg-6 me-12"
+                  @click="scrollToTop"
                   >專欄文章</RouterLink
                 >
               </li>
               <li>
-                <RouterLink to="/faq" class="fs-8 text-white me-12 me-lg-6">常見問題</RouterLink>
+                <RouterLink to="/faq" class="fs-8 text-white me-12 me-lg-6" @click="scrollToTop"
+                  >常見問題</RouterLink
+                >
               </li>
               <li>
                 <RouterLink to="/admin/home" target="_blank" class="fs-8 text-white"

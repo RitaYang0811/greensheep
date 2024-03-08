@@ -2,12 +2,14 @@
 <div class="modal fade ad-coupon" ref="adCouponCompModal" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <VForm class="modal-content custom-form" ref="couponForm" @submit="updateCoupon" v-slot="{ errors }">
-      <div class="modal-header py-4 px-6">
-        <h2 class="modal-title fs-4">
+      <div class="modal-header bg-primary py-2 px-3">
+        <h2 class="modal-title fs-5 fw-medium text-white">
           <template v-if="isNew">建立優惠券</template>
           <template v-else>編輯優惠券</template>
         </h2>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <a role="button" aria-label="Close" @click.prevent="closeModal">
+          <i class="bi bi-x-lg text-white"></i>
+        </a>
       </div>
       <div class="modal-body py-4 px-6">
         <div v-if="loadingStatus.loadingGetCoupon" class="d-flex justify-content-center align-items-center" style="min-height: 360px;">
@@ -16,7 +18,6 @@
           </div>
         </div>
         <div v-else class="text-start">
-          <h3 class="fs-5 mb-3">折扣內容</h3>
           <div class="mb-3">
             <label for="couponCode" class="form-label fs-6 mb-3">優惠碼</label>
             <VField
@@ -107,14 +108,13 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="couponCode" class="form-label fs-6 mb-3" @click="test">開始 / 結束日期</label>
+            <label for="couponCode" class="form-label fs-6 mb-3">開始 / 結束日期</label>
             <!-- model-type="timestamp": 選擇日期時儲存的資料格式，這邊用 unix timestamp，預設是毫秒單位，所以 v-model 綁定的資料須先換算成毫秒單位
                  :range="{ partialRange: false }": range 模式，partialRange 為 false 需選擇兩個日期
                  :format="format": 後面綁定自定義的 format 方法，呈現在畫面上的是將此方法執行後的回傳結果，不會動到原始資料
                  :enable-time-picker="false": 預設 true 可以選擇到更細部的時和分，這邊關閉，以日為最小單位
                  locale="zh-TW" cancelText="取消" selectText="選擇": 語系以及顯示文字設定
             -->
-            <div class="testClass">
               <VueDatePicker
                 @blur="datepickerInputStyle"
                 class="dp-custom"
@@ -130,13 +130,19 @@
                 selectText="選擇"
                 required
               />
-            </div>
             <span role="alert" class="invalid-feedback" :class="{ 'd-block': !dateSelected }">請選擇開始 / 結束日期</span>
           </div>
         </div>
       </div>
       <div class="modal-footer py-4 px-6">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" :disabled="loadingStatus.loadingGetCoupon">取消</button>
+        <button
+          type="button"
+          class="btn btn-outline-primary border-1"
+          :disabled="loadingStatus.loadingGetCoupon"
+          @click="closeModal"
+        >
+        取消
+        </button>
         <button type="submit" class="btn btn-primary" :disabled="loadingStatus.loadingGetCoupon">確定</button>
       </div>
     </VForm>
@@ -190,6 +196,9 @@ export default {
         : this.dateSelected = true
       }
     },
+    reset() {
+      this.$refs.couponForm.resetForm()
+    },
     openModal() {
       this.modal.show();
       // 重置點擊次數及狀態
@@ -222,8 +231,9 @@ export default {
   watch: {
     // 打開 modal 時，依照類型(新增或刪除)賦予 coupon 對應的 data
     coupon() {
+      this.couponData = ''
       // 拷貝並將時間戳改成毫秒單位
-      this.couponData = { ...this.coupon };
+      this.couponData = this.coupon;
       // range 模式的 VueDatePicker 使用陣列格式儲存開始與結束時間
       this.couponData.dates = [this.couponData.start_date * 1000, this.couponData.due_date * 1000]
     }

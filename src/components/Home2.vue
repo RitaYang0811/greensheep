@@ -4,7 +4,10 @@
     <h3 class="fs-2 mb-6 text-center text-primary">OUR COLLECTIONS</h3>
     <div class="row gy-5">
       <div class="col-lg-3 col-6">
-        <a href="2-1.productPage.html">
+        <RouterLink
+          :to="{ path: '/products/項鍊 PENDANT', query: { category: '項鍊 PENDANT' } }"
+          @click="changeCategory('項鍊 PENDANT')"
+        >
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -21,11 +24,10 @@
               <h5 class="card-title display-4 p-3">PENDANT</h5>
             </div>
           </div>
-        </a>
+        </RouterLink>
       </div>
-
       <div class="col-lg-3 col-6">
-        <a href="2-1.productPage.html">
+        <router-link to="/products/戒指%20RING" @click="getFilterProducts('戒指 RING')">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -41,10 +43,10 @@
               <h5 class="card-title display-4 p-3">RING</h5>
             </div>
           </div>
-        </a>
+        </router-link>
       </div>
       <div class="col-lg-3 col-6">
-        <a href="2-1.productPage.html">
+        <router-link to="/products/耳環%20EARRINGS">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -60,10 +62,10 @@
               <h5 class="card-title display-4 p-3">EARRINGS</h5>
             </div>
           </div>
-        </a>
+        </router-link>
       </div>
       <div class="col-lg-3 col-6">
-        <a href="2-1.productPage.html">
+        <router-link to="/products/手鍊%20BRACELET">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -79,13 +81,12 @@
               <h5 class="card-title display-4 p-3">BRACELET</h5>
             </div>
           </div>
-        </a>
+        </router-link>
       </div>
     </div>
   </div>
 
   <!-- 極致工藝 -->
-
   <div class="container py-16">
     <h2 class="fs-6 mb-1 text-center fw-bold text-primary">極致工藝與藝術追求</h2>
     <h3 class="fs-2 mb-6 text-center text-primary">ARTS AND CRAFTS</h3>
@@ -120,10 +121,10 @@
           <p class="card-text py-4 fs-8 text-white" style="line-height: 200%">
             每一件珠寶都是一個故事的開端，他們不僅是獨特設計的結晶，更是佩戴者心靈的寄託。以傳統經典風格為基礎，注入優雅的細節和精湛工藝，綻放永恆時尚展現你的自信光芒。
           </p>
-          <a
-            href="2-1.productPage.html"
+          <router-link
+            to="/products/productsAll"
             class="card-link border-bottom py-2 px-3 display-8 text-white custom-btn custom-btn-white shop-now"
-            >SHOP NOW</a
+            >SHOP NOW</router-link
           >
         </div>
       </div>
@@ -137,10 +138,10 @@
           <p class="card-text py-4 fs-8 text-white" style="line-height: 200%">
             每一件珠寶都是一個故事的開端，他們不僅是獨特設計的結晶，更是佩戴者心靈的寄託。以傳統經典風格為基礎，注入優雅的細節和精湛工藝，綻放永恆時尚展現你的自信光芒。
           </p>
-          <a
-            href="2-1.productPage.html"
+          <router-link
+            to="/products"
             class="card-link border-bottom py-2 px-3 display-8 text-white custom-btn custom-btn-white shop-now"
-            >SHOP NOW</a
+            >SHOP NOW</router-link
           >
         </div>
       </div>
@@ -154,10 +155,10 @@
           <p class="card-text py-4 fs-8 text-white" style="line-height: 200%">
             每一件珠寶都是一個故事的開端，他們不僅是獨特設計的結晶，更是佩戴者心靈的寄託。以傳統經典風格為基礎，注入優雅的細節和精湛工藝，綻放永恆時尚展現你的自信光芒。
           </p>
-          <a
-            href="2-1.productPage.html"
+          <router-link
+            to="/products/productsAll"
             class="card-link border-bottom py-2 px-3 display-8 text-white custom-btn custom-btn-white shop-now"
-            >SHOP NOW</a
+            >SHOP NOW</router-link
           >
         </div>
       </div>
@@ -169,7 +170,6 @@
       </div>
     </div>
   </div>
-
   <!-- 熱賣商品 -->
   <!-- 電腦版 -->
   <div class="container-lg py-16 d-lg-block d-none">
@@ -178,15 +178,15 @@
         <h2 class="fs-6 text-primary fw-bold text-lg-start text-cneter">熱賣商品</h2>
         <h3 class="fs-2 mb-12 text-primary text-lg-start text-center">OUR BEST SELLERS</h3>
         <div class="position-relative me-auto d-lg-block d-none">
-          <a
-            href="2-1.productPage.html"
+          <router-link
+            to="/products/productsAll"
             class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary"
-            >Discover More</a
+            >Discover More</router-link
           >
         </div>
       </div>
       <div class="col-lg-3">
-        <a href="2-1.productPage.html">
+        <router-link to="/products/productsAll">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border position-relative"
             data-aos="fade-up"
@@ -215,11 +215,11 @@
               <p class="card-text fs-8 font-noto-serif">耳環 / 925純銀 / 海水藍寶</p>
             </div>
           </div>
-        </a>
+        </router-link>
       </div>
 
       <div class="col-lg-3">
-        <a href="2-1.productPage.html">
+        <router-link to="/products/productsAll">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -251,11 +251,11 @@
               <p class="card-text fs-8 font-noto-serif">項鍊 / 925純銀</p>
             </div>
           </div>
-        </a>
+        </router-link>
       </div>
 
       <div class="col-lg-3">
-        <a href="2-1.productPage.html">
+        <router-link to="/products/productsAll">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -289,11 +289,10 @@
               <p class="card-text fs-8 font-noto-serif">戒指 / 18K金 / 鑽石</p>
             </div>
           </div>
-        </a>
+        </router-link>
       </div>
     </div>
   </div>
-
   <!-- 手機版 -->
   <div class="wrap d-lg-none d-block">
     <div class="container mb-6">
@@ -303,7 +302,7 @@
 
     <div class="overflow-x-auto container-fluid">
       <div class="d-flex justify-content-between list-unstyled py-2" style="min-width: 992px">
-        <a href="2-1.productPage.html">
+        <router-link to="/products/productsAll">
           <div class="card text-white border-0 bg-primary bg-gradient h-border">
             <img src="../assets/images/img-prod-1.png" class="card-img opacity-75" alt="" />
             <div
@@ -314,9 +313,9 @@
               <p class="card-text fs-8 font-noto-serif">耳環 / 925純銀 / 海水藍寶</p>
             </div>
           </div>
-        </a>
+        </router-link>
 
-        <a href="2-1.productPage.html">
+        <router-link to="/products/productsAll">
           <div class="card text-white border-0 bg-primary bg-gradient h-border">
             <img src="../assets/images/img-prod-2.png" class="card-img opacity-75" alt="" />
             <div
@@ -330,9 +329,9 @@
               <p class="card-text fs-8 font-noto-serif">項鍊 / 925純銀</p>
             </div>
           </div>
-        </a>
+        </router-link>
 
-        <a href="2-1.productPage.html">
+        <router-link to="/products/productsAll">
           <div class="card text-white border-0 bg-primary bg-gradient h-border">
             <img src="../assets/images/img-prod-3.png" class="card-img opacity-75" alt="" />
             <div
@@ -347,28 +346,48 @@
               <p class="card-text fs-8 font-noto-serif">戒指 / 18K金 / 鑽石</p>
             </div>
           </div>
-        </a>
+        </router-link>
       </div>
     </div>
 
     <div class="container">
       <div class="my-auto mt-6 mb-20">
-        <a
-          href="2-1.productPage.html"
+        <router-link
+          to="/products/productsAll"
           class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary"
-          >Discover More</a
+          >Discover More</router-link
         >
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="js" name="Home2"></script>
+<script>
+import productStore from '@/stores/productStore'
+import { mapState, mapActions } from 'pinia'
+export default {
+  data() {
+    return {
+      page: 1,
+      currentCategory: ''
+    }
+  },
+  methods: {
+    ...mapActions(productStore, ['getFilterProducts']),
+    changeCategory(category) {
+      this.currentCategory = category
+      this.getFilterProducts(this.headerCategory, this.page, 'timeN2O')
+      console.log(this.currentCategory)
+    }
+  }
+}
+</script>
 
 <style scoped>
 .shop-now::after {
   content: 'SHOP NOW';
 }
+
 .shop-now:hover::after {
   color: #566b5a;
 }

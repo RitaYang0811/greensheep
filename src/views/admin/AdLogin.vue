@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
+
 export default {
   data () {
     return {
@@ -42,13 +44,15 @@ export default {
 
       this.$http.post(url, data)
         .then(res => {
+          // 取得到期時間和 token 存到 cookie
           const { expired, token } = res.data
           document.cookie = `AdminToken=${token}; expires=${new Date(expired)}`
-          alert(res.data.message)
+
+          toastSuccess(res.data.message)
           this.$router.push('/admin/home')
         })
         .catch(err => {
-          alert(err.response.data.message)
+          toastError(err.response.data.message)
         })
         .finally(() => {
           this.isLoading = false

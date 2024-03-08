@@ -117,13 +117,19 @@
           >
         </li>
         <li @click="closeOffcanvas">
-          <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6">優惠管理</RouterLink>
+          <RouterLink to="/admin/coupons" class="admin-sidebar-hover d-block py-6"
+            >優惠管理</RouterLink
+          >
         </li>
         <li @click="closeOffcanvas">
           <a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a>
         </li>
       </ul>
-      <a href="##" class="admin-sidebar-hover d-block py-6" @click.prevent="signout(); closeOffcanvas()">
+      <a
+        href="##"
+        class="admin-sidebar-hover d-block py-6"
+        @click.prevent="signout(), closeOffcanvas()"
+      >
         登出
         <i class="bi bi-box-arrow-right ms-1 fs-2 align-middle"></i>
       </a>
@@ -135,6 +141,7 @@
 
 <script>
 import { Offcanvas } from 'bootstrap'
+import { toastSuccess, toastError } from '@/utils/sweetalertToast.js'
 
 export default {
   data() {
@@ -149,10 +156,14 @@ export default {
     // 登入驗證
     checkLogin() {
       this.isLoading = true
+
+      // 取出 token
       const token = document.cookie.replace(
         /(?:(?:^|.*;\s*)AdminToken\s*=\s*([^;]*).*$)|^.*$/,
         '$1'
       )
+
+      // token 存在則執行驗證
       if (token) {
         this.$http.defaults.headers.common.Authorization = token
         const url = `${import.meta.env.VITE_APP_API_URL}/api/user/check`
@@ -162,20 +173,24 @@ export default {
             this.checkSuccess = true
           })
           .catch((err) => {
-            alert(err.response.data.message)
+            toastError(err.response.data.message)
             this.$router.push('/login')
           })
           .finally(() => {
             this.isLoading = false
           })
       } else {
-        alert('請先登入')
+        // 否則跳轉登入頁面
+        toastError('請先登入')
         this.$router.push('/login')
       }
     },
+    // 登出
     signout() {
+      // 清空 cookie 裡的 AdminToken expires
       document.cookie = 'AdminToken=;expires=;'
-      alert('已登出')
+
+      toastSuccess('已登出')
       this.$router.push('/login')
     },
     openOffcanvas() {
@@ -194,18 +209,17 @@ export default {
     })
     // 監聽滾動事件，滾輪下滑時 header 隱藏，上滑時 header 顯示
     window.addEventListener('scroll', () => {
-      let currentScrollY = window.scrollY;
+      let currentScrollY = window.scrollY
       // 當前滑動位置小於前一個位置即為滾輪往上滑
-      if( currentScrollY < this.previousScrollY) {
-        this.$refs.scrollBody.classList.remove('hideUp');
+      if (currentScrollY < this.previousScrollY) {
+        this.$refs.scrollBody.classList.remove('hideUp')
       } else {
-        this.$refs.scrollBody.classList.add('hideUp');
+        this.$refs.scrollBody.classList.add('hideUp')
       }
-      this.previousScrollY = currentScrollY;
-    });
+      this.previousScrollY = currentScrollY
+    })
   }
 }
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>
