@@ -4,7 +4,7 @@
       <!-- data-bs-target要記得改，綁定order.id -->
       <button class="accordion-button fs-7" type="button" data-bs-toggle="collapse" :data-bs-target="`#${order.id}`"
         aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-        {{ order.create_at }} | {{ order.id }}
+        {{ order.create_at }}
         <span :class="order.is_paid ? 'text-bg-primary' : 'text-bg-danger'"
           class="ms-10 badge rounded-pill text-bg-primary fs-7">{{ order.is_paid ? "已付款" : "未付款" }}</span>
         <span class="ms-10 badge rounded-pill text-bg-primary fs-7" v-if="order?.orderStatus?.done">已完成</span>
@@ -21,9 +21,9 @@
           <!-- <img :src="product.product.imageUrl" alt="" class="w-10 img-fluid object-fit-cover m-4 rounded-2"
                     style="height: 100px;width:50px;"> -->
           <div class="ms-7 d-flex align-items-center ">
-            <span class="badge rounded-pill text-bg-primary fs-7 m-2">{{ product.product.category }}</span>
-            <h3>
-              {{ product.product.title }} ({{ product.product.id }})</h3>
+            <span class="badge rounded-pill text-bg-light text-grey66 fs-7 m-2">{{ product.product.category }}</span>
+            <h3 class="fs-5 fw-light text-grey66">
+              {{ product.product.title }}</h3>
           </div>
           <div class=" me-7 d-flex ">
             <span class="mx-3">數量：{{ product.qty }} </span>
@@ -41,7 +41,7 @@
         <div class="my-4 border border-3 "></div>
         <!-- 用戶資料渲染處 -->
         <div class="mt-4">
-          <div class="fs-4">
+          <div class="fs-4 text-primary fw-bold">
             <!-- <h3>{{ order.user.name }}</h3> -->
             <!-- <p class="m-2">配送方式：黑貓宅配</p> -->
             <p class="m-2">客戶姓名：{{ order.user.name }}</p>
@@ -69,7 +69,7 @@
 
 <script>
 export default {
-  props: ['orders', 'openModal', 'deleteOrder','confirmDelete'],
+  props: ['orders', 'openModal', 'deleteOrder', 'confirmDelete'],
 
 
 
