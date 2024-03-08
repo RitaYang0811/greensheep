@@ -8,7 +8,7 @@
             <router-link to="/">首頁</router-link>
           </li>
           <li class="breadcrumb-item" aria-current="page">
-            <router-link to="/products">全部商品</router-link>
+            <router-link to="/products/productsAll">全部商品</router-link>
           </li>
           <li class="breadcrumb-item" aria-current="page">
             <routerLink :to="`/products?category=${productInfo.category}`"
@@ -30,8 +30,8 @@
             <h1 class="fw-bold fs-3 fs-lg-2 me-5">{{ productInfo.title }}</h1>
             <!-- 愛心收藏 -->
 
-            <i class="bi bi-heart fs-4 text-primary"></i>
-            <i class="bi bi-heart-fill fs-4 text-primary"></i>
+            <!-- <i class="bi bi-heart fs-4 text-primary"></i>
+            <i class="bi bi-heart-fill fs-4 text-primary"></i> -->
           </div>
           <!-- v-if 無折扣 -->
           <p
@@ -79,12 +79,18 @@
           </div>
           <!-- 產品特色 -->
           <div class="my-4">
-            <p class="d-flex align-items-center text-primary mb-2 fs-8 fs-lg-7">
+            <p
+              v-if="productInfo.material"
+              class="d-flex align-items-center text-primary mb-2 fs-8 fs-lg-7"
+            >
               <span class="material-icons me-1 fs-8 fs-lg-7"> check_circle </span>
 
               材質：{{ productInfo.material }}
             </p>
-            <p class="d-flex align-items-center text-primary mb-2 fs-8 fs-lg-7">
+            <p
+              v-if="productInfo.purchaseWay"
+              class="d-flex align-items-center text-primary mb-2 fs-8 fs-lg-7"
+            >
               <span class="material-icons me-1 fs-8 fs-lg-7"> check_circle </span>
               {{ productInfo.purchaseWay }}：接單後{{ productInfo.makingDays }}日內出貨
             </p>
@@ -96,7 +102,10 @@
 
               贈：{{ productInfo.gifts.join('、') }}
             </p>
-            <p class="d-flex align-items-center text-primary mb-2 fs-8 fs-lg-7">
+            <p
+              v-if="productInfo.wrap"
+              class="d-flex align-items-center text-primary mb-2 fs-8 fs-lg-7"
+            >
               <span class="material-icons me-1 fs-8 fs-lg-7"> check_circle </span>
 
               包裝：{{ productInfo.wrap }}
@@ -104,11 +113,11 @@
           </div>
           <!-- 優惠加購 -->
           <div
-            v-if="productInfo.wrap === '品牌經典紙盒包裝'"
+            v-if="productInfo.wrap === '品牌絨布禮盒包裝'"
             class="d-flex align-items-center justify-content-between bg-light rounded-2 px-6 py-3 gap-5 mb-4"
           >
             <!-- checkbox -->
-            <div
+            <!-- <div
               class="form-check fs-8 w-40 w-lg-30 w-xl-40 d-flex align-items-center"
               style="color: #990000"
             >
@@ -124,10 +133,11 @@
               >
                 優惠加購價 NT$200
               </label>
-            </div>
+            </div> -->
             <!-- Button trigger modal -->
             <div
-              class="d-flex align-items-center justify-content-between gap-4 w-60 w-lg-70 w-xl-60"
+              v-if="productInfo.wrap === '品牌絨布禮盒包裝'"
+              class="d-flex align-items-center justify-content-between gap-4 w-100 w-lg-70 w-xl-60"
             >
               <div>
                 <span class="badge rounded-pill bg-primary text-white lh-sm mb-1">送禮必備</span>
@@ -237,7 +247,7 @@
     </div> -->
 
     <p
-      class="mb-5 text-primary lh-lg"
+      class="product-content mb-5 text-primary lh-lg w-100 w-lg-80 mx-auto"
       data-aos="fade-up"
       data-aos-duration="1000"
       data-aos-offset="50"
@@ -252,8 +262,13 @@
         data-aos-duration="1000"
         data-aos-delay="200"
       >
-        <p class="mb-1 px-1 display-6 border-start border-end border-1 border-dark lh-1">材質</p>
-        <p class="lh-lg">{{ productInfo.material }}</p>
+        <p
+          v-if="productInfo.material"
+          class="mb-1 px-1 display-6 border-start border-end border-1 border-dark lh-1"
+        >
+          材質
+        </p>
+        <p v-if="productInfo.material" class="lh-lg">{{ productInfo.material }}</p>
       </div>
 
       <div
@@ -277,6 +292,30 @@
       </div> -->
       <!-- 圖片區 -->
       <div class="row py-10 mb-20 mb-lg-25 w-lg-80 mx-auto justify-content-center">
+        <div
+          class="mb-3 col-6 col-md-4 col-lg-6"
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+          data-aos-once="true"
+        >
+          <img
+            :src="productInfo.imageUrl"
+            alt="商品圖片"
+            class="product-content-img object-fit-cover"
+          />
+        </div>
+        <div
+          class="mb-3 col-6 col-md-4 col-lg-6"
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+          data-aos-once="true"
+        >
+          <img
+            :src="productInfo.imageUrl2"
+            alt="商品圖片"
+            class="product-content-img object-fit-cover"
+          />
+        </div>
         <template v-for="imgUrl in productInfo.imagesUrl" :key="imgUrl">
           <div
             class="mb-3 col-6 col-md-4 col-lg-6"
@@ -445,7 +484,14 @@ export default {
     transform: rotate(360deg);
   }
 }
-
+.product-content {
+  @include pad {
+    max-width: 768px;
+  }
+  @include mobile {
+    max-width: 375px;
+  }
+}
 .product-content-img {
   width: 100%;
   height: 500px;

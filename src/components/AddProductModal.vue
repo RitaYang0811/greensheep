@@ -101,7 +101,7 @@
               </div>
               <div class="col-9">
                 <div class="mb-9">
-                  <label for="productTitle" class="h6 mb-2">商品名稱</label>
+                  <label for="productTitle" class="h6 mb-2">*商品名稱</label>
                   <VField
                     type="text"
                     name="商品名稱"
@@ -117,7 +117,7 @@
                   </div>
                 </div>
                 <div class="mb-9">
-                  <label for="productCategory" class="h6 mb-2">商品分類</label>
+                  <label for="productCategory" class="h6 mb-2">*商品分類</label>
                   <VField
                     id="productCategory"
                     name="商品分類"
@@ -130,14 +130,14 @@
                     as="select"
                   >
                     <option value="" disabled>請選擇商品分類</option>
-                    <option v-for="category in categories" :key="category" value="category">
+                    <option v-for="category in categories" :key="category" :value="category">
                       {{ category }}
                     </option>
                   </VField>
                   <ErrorMessage name="商品分類" class="invalid-feedback" />
                 </div>
                 <div class="mb-9">
-                  <label for="form-label" class="h6 mb-2">商品購買方式</label>
+                  <label for="form-label" class="h6 mb-2">*商品購買方式</label>
 
                   <div class="form-check">
                     <input
@@ -147,7 +147,6 @@
                       id="inStockProduct"
                       value="現貨商品"
                       v-model="tempProduct.purchaseWay"
-                      checked
                     />
                     <label class="form-check-label text-grey66" for="inStockProduct">
                       現貨商品
@@ -168,7 +167,7 @@
                   </div>
                 </div>
                 <div class="mb-9">
-                  <label for="makingDays" class="h6 mb-2">商品出貨天數</label>
+                  <label for="makingDays" class="h6 mb-2">*商品出貨天數</label>
                   <VField
                     as="select"
                     name="出貨天數"
@@ -186,7 +185,7 @@
                   <ErrorMessage name="出貨天數" class="invalid-feedback" />
                 </div>
                 <div class="mb-3">
-                  <label for="productPrice" class="h6 mb-2">商品原價格 (NT$)</label>
+                  <label for="productPrice" class="h6 mb-2">*商品原價格 (NT$)</label>
                   <VField
                     id="productPrice"
                     name="商品原價"
@@ -199,7 +198,7 @@
                   <ErrorMessage name="商品原價" class="invalid-feedback" />
                 </div>
                 <div class="mb-3">
-                  <label for="productDiscount" class="h6 mb-2">商品折扣</label>
+                  <label for="productDiscount" class="h6 mb-2">*商品折扣</label>
                   <VField
                     as="select"
                     id="productDiscount"
@@ -211,7 +210,7 @@
                     placeholder="請選擇商品折扣"
                     v-model="tempProduct.discount"
                   >
-                    <option selected disabled value="">請選擇折扣比</option>
+                    <option selected disabled value="">*請選擇折扣比</option>
                     <option :value="10">無折扣</option>
                     <option :value="discount" v-for="discount in discounts" :key="discount">
                       {{ discount }} 折
@@ -229,7 +228,7 @@
                   />
                 </div>
                 <div class="mb-9">
-                  <label for="productUnit" class="h6 mb-2">販售單位</label>
+                  <label for="productUnit" class="h6 mb-2">*販售單位</label>
                   <VField
                     as="select"
                     id="productUnit"
@@ -308,7 +307,6 @@
                       value="品牌經典紙盒包裝"
                       id="paperBox"
                       name="packageWayRadio"
-                      checked
                       v-model="tempProduct.wrap"
                     />
 
@@ -331,13 +329,13 @@
                   </div>
                 </div>
                 <div class="mb-9">
-                  <label for="form-label" class="h6 mb-2">是否啟用</label>
+                  <label for="form-label" class="h6 mb-2">*是否上架</label>
 
                   <div class="form-check">
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      name="purchaseWayRadio"
+                      name="isEnabled"
                       id="isEnabled"
                       v-model="tempProduct.is_enabled"
                     />
@@ -345,6 +343,19 @@
                       {{ tempProduct.is_enabled ? '上架' : '未上架' }}
                     </label>
                   </div>
+                  <!-- <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="isEnabledRadio"
+                      id="isEnabledFalse"
+                      false-value="0"
+                      v-model="tempProduct.is_enabled"
+                    />
+                    <label class="form-check-label text-grey66" for="isEnabledFalse">
+                      先存成草稿
+                    </label>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -357,6 +368,7 @@
                   id="exampleFormControlTextarea1"
                   rows="10"
                   v-model="tempProduct.content"
+                  style="white-space: pre-wrap"
                 ></textarea>
               </div>
             </div>
@@ -368,12 +380,37 @@
           </button>
 
           <button
+            v-if="isNew === true"
             type="button"
             class="btn btn-deco float-end"
             @click="$emit('confirmUpdate', isNew)"
           >
-            儲存
+            新增儲存
           </button>
+          <button
+            v-else
+            type="button"
+            class="btn btn-deco float-end"
+            @click="$emit('confirmUpdate', isNew)"
+          >
+            修改儲存
+          </button>
+          <!-- <button
+            v-else-if="tempProduct.is_enabled == 0"
+            type="button"
+            class="btn btn-deco float-end"
+            @click="$emit('confirmUpdate', isNew)"
+          >
+            儲存草稿
+          </button>
+          <button
+            v-else
+            type="button"
+            class="btn btn-deco float-end"
+            @click="$emit('confirmUpdate', isNew)"
+          >
+            請確認是否上架
+          </button> -->
         </div>
       </VForm>
     </div>

@@ -36,12 +36,13 @@ export default defineStore('productStore', {
       try {
         const res = await axios.get(apiUrl)
         this.products = res.data.products
-        this.getSort('new')
-        this.categoryProducts = this.products
-        this.currentProducts = this.products.slice(
-          (this.currentPage - 1) * 12,
-          this.currentPage * 12
-        )
+        this.getFilterProducts('', 1, 'timeN2O')
+        // this.categoryProducts = this.products
+        // this.currentProducts = this.products.slice(
+        //   (this.currentPage - 1) * 12,
+        //   this.currentPage * 12
+        // )
+        // console.log(this.products)
       } catch (err) {
         alert(err.data.message)
       }
@@ -80,10 +81,11 @@ export default defineStore('productStore', {
         this.category = '全部商品 ALL'
         this.currentPage = 1
         this.getSort(status)
-        console.log(status)
+        console.log(this.products)
         this.categoryProducts = this.products
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
         this.loadingStatus.loadingFilterProducts = false
+        console.log('全部商品', this.currentProducts, this.categoryProducts)
       } else if (category) {
         console.log('@@@')
         this.getSort(status)

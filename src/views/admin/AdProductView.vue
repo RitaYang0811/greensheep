@@ -319,6 +319,7 @@ export default {
       if (isNew) {
         const createTime = Date.now()
         this.tempProduct.createTime = createTime
+
         console.log('建立的商品', this.tempProduct)
       } else {
         const updateTime = Date.now()
