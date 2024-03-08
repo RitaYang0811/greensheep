@@ -29,25 +29,23 @@ export default defineStore('adminArticles',{
     },
     formStatus: {
       hasFormImage: true,
-      hasFormContent: true
     }
 	}),
   actions: {
     // 取得全部文章資料
     async getArticles() {
-      this.articles = []
-      this.publicArticles = []
-      this.privateArticles = []
-
-      this.loadingStatus.loadingItem = true
-
-      // 第一次 get 文章回傳的頁碼資料
-      let currentPageNum
-      let totalPagesNum
-
-      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/articles`
-
       try {
+        this.articles = []
+        this.publicArticles = []
+        this.privateArticles = []
+  
+        this.loadingStatus.loadingItem = true
+  
+        // 第一次 get 文章回傳的頁碼資料
+        let currentPageNum
+        let totalPagesNum
+  
+        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/articles`
         // get 第一頁資料
         const resFirstPage = await axios.get(url)
         this.articles = resFirstPage.data.articles // 第一頁的 data
@@ -60,16 +58,17 @@ export default defineStore('adminArticles',{
           this.articles = [...this.articles, ...resOtherPages.data.articles]
           currentPageNum++;
         }
+
+        // 文章分類
+        this.filterArticles()
+        // 依當前 tab 取得該 tab 的當前頁資料
+        this.getCurrentPageArticles(this.currentPage)
+
       } catch (err) {
         toastError(err.response.data.message)
+      } finally {
+        this.loadingStatus.loadingItem = false
       }
-
-      // 文章分類
-      this.filterArticles()
-      // 依當前 tab 取得該 tab 的當前頁資料
-      this.getCurrentPageArticles(this.currentPage)
-
-      this.loadingStatus.loadingItem = false
     },
     // 分為公開文章 / 草稿文章
     filterArticles() {
@@ -161,12 +160,12 @@ export default defineStore('adminArticles',{
     },
     // 新增/編輯文章
 		updateArticle(articleData, isPublic, editIsPublic) {
-      // 驗證圖片 & ckeditor 內容
-      if(!articleData.image || !articleData.content) {
-        articleData.image ? this.formStatus.hasFormImage = true : this.formStatus.hasFormImage = false
-        articleData.content ? this.formStatus.hasFormContent = true : this.formStatus.hasFormContent = false
-        return
-      }
+      // // 驗證是否有圖圖片
+      // if(!articleData.image || !articleData.content) {
+      //   articleData.image ? this.formStatus.hasFormImage = true : this.formStatus.hasFormImage = false
+      //   articleData.content ? this.formStatus.hasFormContent = true : this.formStatus.hasFormContent = false
+      //   return
+      // }
 
       this.isLoading = true
 

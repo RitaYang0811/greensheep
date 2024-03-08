@@ -422,21 +422,23 @@ export default {
   methods: {
     // 取得全部優惠券資料
     async getCoupons() {
-      this.coupons = []
-      this.validCoupons = []
-      this.InvalidCoupons = []
-      this.notYetValidCoupons = []
-      this.currentPageCoupons = []
-
-      this.loadingStatus.loadingGetCoupons = true
-
-      // 第一次 get 優惠券回傳的頁碼資料
-      let currentPageNum
-      let totalPagesNum
-
-      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupons`
-
       try {
+        this.loadingStatus.loadingGetCoupons = true
+        
+        // 清空資料
+        this.coupons = []
+        this.validCoupons = []
+        this.InvalidCoupons = []
+        this.notYetValidCoupons = []
+        this.currentPageCoupons = []
+
+
+        // 第一次 get 優惠券回傳的頁碼資料
+        let currentPageNum
+        let totalPagesNum
+
+        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupons`
+
         // get 第一頁資料
         const resFirstPage = await this.$http.get(url)
         this.coupons = resFirstPage.data.coupons // 第一頁的 data
@@ -449,16 +451,17 @@ export default {
           this.coupons = [...this.coupons, ...resOtherPages.data.coupons]
           currentPageNum++
         }
+
+        // 依有效狀態分類優惠券
+        this.filterCoupons()
+        // 依當前 tab 取得該 tab 的當前頁資料
+        this.changePage(this.currentPage)
+
       } catch (err) {
         toastError(err.response.data.message)
+      } finally {
+        this.loadingStatus.loadingGetCoupons = false
       }
-
-      // 依有效狀態分類優惠券
-      this.filterCoupons()
-      // 依當前 tab 取得該 tab 的當前頁資料
-      this.changePage(this.currentPage)
-
-      this.loadingStatus.loadingGetCoupons = false
     },
     // 依有效狀態分類優惠券
     filterCoupons() {
@@ -597,7 +600,7 @@ export default {
     async openModal(type, id) {
       switch (type) {
         case 'new':
-          this.$refs.adCouponModal.reset()
+          // this.$refs.adCouponModal.reset()
           this.isNew = true
           this.coupon = {
             title: '金額折抵' // 預設值給 :checked 判斷
@@ -606,7 +609,7 @@ export default {
           this.$refs.adCouponModal.openModal()
           break
         case 'edit':
-          this.$refs.adCouponModal.reset()
+          // this.$refs.adCouponModal.reset()
           this.isNew = false
           this.$refs.adCouponModal.openModal()
           await this.getCoupon(id)

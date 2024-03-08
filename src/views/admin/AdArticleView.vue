@@ -84,8 +84,21 @@
       </div>
       <div class="col-lg-8">
         <p class="form-label">文章內容</p>
-        <ckeditor :class="{ 'is-invalid': !formStatus.hasFormContent }" :editor="editor" v-model.lazy="articleData.content" :config="editorConfig" placeholder="Type the content here!"></ckeditor>
-        <span class="invalid-feedback text-end">文章內容 為必填</span>
+        <VField
+          name="文章內容"
+          v-model.lazy="articleData.content"
+          rules="required"
+        >
+          <ckeditor
+            data-test="ckeditor"
+            :editor="editor"
+            :config="editorConfig"
+            v-model.lazy="articleData.content"
+            :class="{ 'is-invalid': errors['文章內容'] }"
+            placeholder="Type the content here!"
+          ></ckeditor>
+        </VField>
+        <ErrorMessage name="文章內容" class="invalid-feedback text-end"/>
       </div>
     </div>
     <div v-if="!loadingStatus.loadingItem" class="d-flex justify-content-end gap-4 mb-4" @click="submitActivity($event)">
@@ -166,10 +179,6 @@ export default {
     // 根據是否有加入圖片切換狀態
     'articleData.image'() {
       this.formStatus.hasFormImage = true
-    },
-    // 根據是否有加入文章內容切換狀態
-    'articleData.content'() {
-      this.articleData.content ? this.formStatus.hasFormContent = true : this.formStatus.hasFormContent = false
     },
   },
   computed: {
