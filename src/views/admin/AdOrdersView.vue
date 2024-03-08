@@ -60,6 +60,7 @@
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
           <Accordion :orders="doneOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+
           <!-- Accordion -->
         </div>
       </div>
@@ -68,13 +69,15 @@
 
   </div>
 
+
+
   <!-- Modal -->
   <div class="modal fade rounded-2" id="adOrderModal" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-4 ms-2" id="staticBackdropLabel">訂單詳細資料</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-header bg-primary ">
+          <h1 class="modal-title fs-4 ms-2 text-light" id="staticBackdropLabel">訂單詳細資料</h1>
+          <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <!-- checkbox -->
@@ -185,7 +188,6 @@
             <p class="fs-4">優惠券：
               <span class="ms-2 fs-5 badge rounded-pill text-bg-warning" v-if="modalData?.products">{{
           Object.values(modalData?.products)[0]?.coupon?.code }}</span>
-              <!-- {{ console.log(modalData.products) }} -->
             </p>
             <p class="fs-4 me-4">總金額：{{ parseInt(modalData?.total) }}</p>
           </div>
@@ -285,7 +287,6 @@ export default {
             timer: 1500
           });
           location.reload()
-          // this.getAllOrders();
         })
         .catch((err) => {
           console.log(err)
@@ -293,7 +294,6 @@ export default {
     },
     deleteOrder(data) {
       const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`;
-
       Swal.fire({
         title: '是否刪除該訂單?',
         icon: 'warning',
@@ -334,8 +334,6 @@ export default {
     },
     confirmDelete(data) {
       const deleteOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data}`;
-      console.log(data)
-
       Swal.fire({
         title: '確認永久刪除該訂單?',
         icon: 'warning',
@@ -359,7 +357,6 @@ export default {
     },
     deleteAllOrders() {
       const deleteAllOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders/all`;
-
       Swal.fire({
         title: '確認永久刪除全部訂單?',
         icon: 'warning',
@@ -369,7 +366,6 @@ export default {
         cancelButtonText: '  否  ',
         confirmButtonText: '  是  '
       }).then((result) => {
-
         if (result.isConfirmed) {
           // console.log("刪除全部訂單")
           axios.delete(deleteAllOrdersUrl)
@@ -381,9 +377,6 @@ export default {
             })
         }
       })
-
-
-
     },
 
     openModal(order) {
@@ -391,8 +384,8 @@ export default {
       this.modalProducts = Object.values(order.products)
       //將訂單狀態塞入
       this.orderStatus = order.orderStatus
-      // console.log(this.modalData)
     },
+
   },
 
   mounted() {
