@@ -1,7 +1,7 @@
 <template>
   <div class="modal modal-xl" tabindex="-1" ref="addModal">
     <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
+      <VForm class="modal-content" v-slot="{ errors }">
         <div class="modal-header bg-primary">
           <h5 v-if="isNew === true" class="modal-title fw-medium text-white ps-3 py-2">新增商品</h5>
           <h5 v-else class="modal-title fw-medium text-white ps-3 py-2">編輯商品</h5>
@@ -12,21 +12,24 @@
               <div class="col-3">
                 <h6 class="fw-medium mb-2">商品圖片</h6>
 
-                <span class="font-notosans fs-8">最多上傳10張照片</span>
+                <span class="font-notosans fs-8">最多總共可上傳10張照片</span>
               </div>
               <div class="col-9">
                 <h6 class="mb-4">商品首圖</h6>
-
                 <div class="row row-cols-1 row-cols-md-2 g-4 mb-8">
                   <div class="col">
                     <div class="d-flex flex-column gap-2">
                       <div>第一張</div>
-                      <input
+                      <VField
+                        name="商品首圖-1"
+                        rules="required"
                         class="form-control mb-2"
+                        :class="{ 'is-invalid': errors['商品首圖-1'] }"
                         type="file"
                         id="formFile"
                         @change="uploadImage('main1', $event)"
                       />
+                      <ErrorMessage name="商品首圖-1" class="invalid-feedback" />
                       <img
                         v-if="tempProduct.imageUrl"
                         :src="tempProduct.imageUrl"
@@ -39,12 +42,16 @@
                   <div class="col">
                     <div class="d-flex flex-column gap-2">
                       <div>第二張</div>
-                      <input
+                      <VField
+                        name="商品首圖-2"
+                        rules="required"
                         class="form-control mb-2"
+                        :class="{ 'is-invalid': errors['商品首圖-2'] }"
                         type="file"
                         id="formFile"
                         @change="uploadImage('main2', $event)"
                       />
+                      <ErrorMessage name="商品首圖-2" class="invalid-feedback" />
                       <img
                         v-if="tempProduct.imageUrl2"
                         :src="tempProduct.imageUrl2"
@@ -94,29 +101,40 @@
               </div>
               <div class="col-9">
                 <div class="mb-9">
-                  <label for="form-label " class="h6 mb-2">商品名稱</label>
-                  <input
+                  <label for="productTitle" class="h6 mb-2">商品名稱</label>
+                  <VField
                     type="text"
+                    name="商品名稱"
+                    rules="required|max:15"
                     class="form-control border border-primary"
+                    :class="{ 'is-invalid': errors['商品名稱'] }"
+                    id="productTitle"
                     v-model="tempProduct.title"
                   />
+                  <ErrorMessage name="商品名稱" class="invalid-feedback" />
                   <div id="nameHelp" class="form-text font-notosans">
                     商品名稱請不要超過15個字（含中文、英文、數字、空格及符號）
                   </div>
                 </div>
                 <div class="mb-9">
-                  <label for="form-label" class="h6 mb-2">商品分類</label>
-                  <select
+                  <label for="productCategory" class="h6 mb-2">商品分類</label>
+                  <VField
+                    id="productCategory"
+                    name="商品分類"
                     class="form-select border border-primary"
+                    :class="{ 'is-invalid': errors['商品分類'] }"
+                    rules="required"
                     aria-label="Default select example"
+                    placeholder="請輸入分類"
                     v-model="tempProduct.category"
+                    as="select"
                   >
                     <option value="" disabled>請選擇商品分類</option>
-                    <option value="項鍊 PENDANT">項鍊 PENDANT</option>
-                    <option value="戒指 RING">戒指 RING</option>
-                    <option value="耳環 EARRINGS">耳環 EARRINGS</option>
-                    <option value="手鍊 BRACELET">手鍊 BRACELET</option>
-                  </select>
+                    <option v-for="category in categories" :key="category" value="category">
+                      {{ category }}
+                    </option>
+                  </VField>
+                  <ErrorMessage name="商品分類" class="invalid-feedback" />
                 </div>
                 <div class="mb-9">
                   <label for="form-label" class="h6 mb-2">商品購買方式</label>
@@ -150,27 +168,47 @@
                   </div>
                 </div>
                 <div class="mb-9">
-                  <label for="form-label" class="h6 mb-2">商品出貨天數</label>
-                  <select
+                  <label for="makingDays" class="h6 mb-2">商品出貨天數</label>
+                  <VField
+                    as="select"
+                    name="出貨天數"
+                    id="makingDays"
+                    rules="required"
                     class="form-select border border-primary"
+                    :class="{ 'is-invalid': errors['出貨天數'] }"
+                    placeholder="請選擇商品出貨天數"
                     aria-label="Default select example"
                     v-model="tempProduct.makingDays"
                   >
                     <option selected value="" disabled>請選擇商品出貨天數</option>
                     <option :value="day" v-for="day in 60" :key="day">{{ day }}</option>
-                  </select>
+                  </VField>
+                  <ErrorMessage name="出貨天數" class="invalid-feedback" />
                 </div>
-                <div class="mb-9">
-                  <label for="form-label" class="h6 mb-2">商品原價格 (NT$)</label>
-                  <input
+                <div class="mb-3">
+                  <label for="productPrice" class="h6 mb-2">商品原價格 (NT$)</label>
+                  <VField
+                    id="productPrice"
+                    name="商品原價"
                     type="number"
-                    class="form-control border border-primary mb-3"
+                    rules="required"
+                    class="form-control border border-primary"
+                    :class="{ 'is-invalid': errors['商品原價'] }"
                     v-model="tempProduct.origin_price"
                   />
-                  <label for="form-label" class="h6 mb-2">商品折扣</label>
-                  <select
-                    class="form-select border border-primary mb-3"
+                  <ErrorMessage name="商品原價" class="invalid-feedback" />
+                </div>
+                <div class="mb-3">
+                  <label for="productDiscount" class="h6 mb-2">商品折扣</label>
+                  <VField
+                    as="select"
+                    id="productDiscount"
+                    name="商品折扣"
+                    rules="required"
+                    class="form-select border border-primary"
+                    :class="{ 'is-invalid': errors['商品折扣'] }"
                     aria-label="Default select example"
+                    placeholder="請選擇商品折扣"
                     v-model="tempProduct.discount"
                   >
                     <option selected disabled value="">請選擇折扣比</option>
@@ -178,9 +216,11 @@
                     <option :value="discount" v-for="discount in discounts" :key="discount">
                       {{ discount }} 折
                     </option>
-                  </select>
+                  </VField>
+                  <ErrorMessage name="商品折扣" class="invalid-feedback" />
+                </div>
+                <div class="mb-9">
                   <label for="form-label" class="h6 mb-2">商品折扣後價格 (NT$)</label>
-
                   <input
                     type="text"
                     class="form-control border border-primary"
@@ -189,9 +229,13 @@
                   />
                 </div>
                 <div class="mb-9">
-                  <label for="form-label" class="h6 mb-2">販售單位</label>
-
-                  <select
+                  <label for="productUnit" class="h6 mb-2">販售單位</label>
+                  <VField
+                    as="select"
+                    id="productUnit"
+                    name="單位"
+                    rules="required"
+                    :class="{ 'is-invalid': errors['單位'] }"
                     class="form-select border border-primary"
                     aria-label="Default select example"
                     v-model="tempProduct.unit"
@@ -200,7 +244,8 @@
                     <option :value="unit" v-for="unit in units" :key="unit">
                       {{ unit }}
                     </option>
-                  </select>
+                  </VField>
+                  <ErrorMessage name="單位" class="invalid-feedback" />
                 </div>
 
                 <div class="mb-9">
@@ -217,6 +262,7 @@
                   <select
                     class="form-select border border-primary"
                     aria-label="Default select example"
+                    placeholder="請選擇商品材質"
                     v-model="tempProduct.material"
                   >
                     <option selected>請選擇商品材質</option>
@@ -318,23 +364,18 @@
         </div>
         <div class="modal-footer d-block">
           <button type="button" class="btn btn-primary float-start" data-bs-dismiss="modal">
-            離開編輯</button
-          ><button
+            離開編輯
+          </button>
+
+          <button
             type="button"
             class="btn btn-deco float-end"
             @click="$emit('confirmUpdate', isNew)"
           >
-            預覽
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary float-end"
-            @click="$emit('confirmUpdate', isNew)"
-          >
-            儲存草稿
+            儲存
           </button>
         </div>
-      </div>
+      </VForm>
     </div>
   </div>
 </template>
@@ -343,6 +384,7 @@
 import Modal from 'bootstrap/js/dist/modal'
 import axios from 'axios'
 import draggable from 'vuedraggable'
+import { defineRule } from 'vee-validate'
 
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default {
@@ -352,6 +394,14 @@ export default {
       drag: false,
 
       addModal: null,
+      categories: [
+        '項鍊 PENDANT',
+        '戒指 RING',
+        '耳環 EARRINGS',
+        '手鍊 BRACELET',
+        '客製設計 CUSTOMIZED ',
+        '其他配件 OTHERS'
+      ],
       materials: [
         '925銀 925-Silver',
         '14K金 14K-Gold',
@@ -452,7 +502,6 @@ export default {
 
 <style scope lang="scss">
 @import '@/assets/scss/utils/mixin.scss';
-/*被拖拽对象的样式*/
 
 .add-images {
   width: 100%;

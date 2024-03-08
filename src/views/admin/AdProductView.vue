@@ -43,11 +43,11 @@
       <li class="nav-item">
         <a
           class="nav-link px-3 px-md-6 py-2 py-lg-4"
-          :class="{ active: currentTab === '未上架' }"
+          :class="{ active: currentTab === '未上架/草稿' }"
           href="#"
-          @click.prevent="getProducts('未上架')"
+          @click.prevent="getProducts('未上架/草稿')"
         >
-          未上架
+          未上架/草稿
         </a>
       </li>
     </ul>
@@ -61,12 +61,12 @@
           @click.prevent="openModal('new')"
           >建 立 商 品</a
         >
-        <a
+        <!-- <a
           href="#"
           class="btn border border-1 border-primary btn-md text-primary py-3 px-5 rounded-3"
           @click.prevent="highLight"
           >編輯主打商品</a
-        >
+        > -->
       </div>
       <div class="mb-3 position-relative">
         <a
