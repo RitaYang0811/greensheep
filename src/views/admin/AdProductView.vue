@@ -223,9 +223,10 @@ import adProductStore from '@/stores/adProductStore.js'
 import AddProductModal from '@/components/AddProductModal.vue'
 import DeleteProductModal from '@/components/DeleteProductModal.vue'
 import PagiNation from '@/components/PagiNation.vue'
-
+import Swal from 'sweetalert2'
 import axios from 'axios'
 import { mapState, mapActions } from 'pinia'
+
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default {
   data() {
@@ -257,6 +258,7 @@ export default {
     ...mapActions(adProductStore, ['getProducts']),
     openModal(status, item) {
       if (status === 'new') {
+        this.tempProduct = { imagesUrl: [], gifts: [] }
         this.$refs.addModal.open()
       } else if (status === 'edit') {
         this.$refs.addModal.open()
@@ -305,10 +307,10 @@ export default {
     },
 
     //編輯主打商品
-    highLight() {
-      this.hightLightInput = true
-      console.log(this.hightLightInput)
-    },
+    // highLight() {
+    //   this.hightLightInput = true
+    //   console.log(this.hightLightInput)
+    // },
     //確認編輯
     confirmUpdate(isNew) {
       console.log('confirmUpdate', isNew, this.tempProduct)
@@ -319,6 +321,7 @@ export default {
       if (isNew) {
         const createTime = Date.now()
         this.tempProduct.createTime = createTime
+
         console.log('建立的商品', this.tempProduct)
       } else {
         const updateTime = Date.now()
@@ -333,6 +336,15 @@ export default {
           this.getProducts(this.currentTab, this.currentPage)
           this.$refs.addModal.close()
           this.tempProduct = { imagesUrl: [], gifts: [] }
+          console.log('this.tempProduct ', this.tempProduct)
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '更新商品成功',
+            showConfirmButton: false,
+            toast: true,
+            timer: 1500
+          })
         })
         .catch((err) => {
           console.log(err)
@@ -346,6 +358,14 @@ export default {
           console.log(res)
           this.getProducts(this.currentTab)
           this.$refs.deleteModal.close()
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '刪除成功!',
+            showConfirmButton: false,
+            toast: true,
+            timer: 1500
+          })
         })
         .catch((err) => {
           console.log(err)

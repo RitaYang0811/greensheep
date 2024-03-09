@@ -13,7 +13,7 @@
           </div>
           <div class="w-50 bg-white m-2">
             <div class="p-8">
-              <span class="d-block fs-2 mb-3 text-primary fw-medium">2</span>
+              <span class="d-block fs-2 mb-3 text-primary fw-medium">{{ unpaidOrders }}</span>
               <span class="d-block fs-5 mb-3 text-primary">待付款訂單</span>
             </div>
             <button type="button " class="custom-btn custom-btn-toGreen w-100">查看詳情</button>
@@ -68,7 +68,32 @@
     </div>
   </div>
 </template>
-<script></script>
+<script>
+import axios from 'axios'
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
+
+import Swal from 'sweetalert2'
+import orderStore from '@/stores/orderStore.js'
+import { mapState, mapActions } from 'pinia'
+
+export default {
+  data() {
+    return {
+      homepageUnpaidOrders: []
+    }
+  },
+  methods: {
+    ...mapActions(orderStore, ['getAllOrders'])
+  },
+  computed: {
+    ...mapState(orderStore, ['allOrders', ' unpaidOrders', 'paidOrders'])
+  },
+  mounted() {
+    this.getAllOrders()
+    this.homepageUnpaidOrders = this.unpaidOrders
+  }
+}
+</script>
 <style scoped lang="scss">
 // .notice-board {
 //   height: calc(100vh - 230px);

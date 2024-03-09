@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default defineStore('adProductStore', {

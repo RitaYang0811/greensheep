@@ -12,6 +12,7 @@
       class="mySwiper2"
     >
       <swiper-slide><img :src="productInfo.imageUrl" :alt="productInfo.title" /></swiper-slide>
+      <swiper-slide><img :src="productInfo.imageUrl2" :alt="productInfo.title" /></swiper-slide>
       <swiper-slide v-for="(img, index) in productInfo.imagesUrl" :key="index + 123">
         <img :src="img" :alt="productInfo.title" />
       </swiper-slide>
@@ -27,6 +28,7 @@
       class="mySwiper"
     >
       <swiper-slide><img :src="productInfo.imageUrl" :alt="productInfo.title" /></swiper-slide>
+      <swiper-slide><img :src="productInfo.imageUrl2" :alt="productInfo.title" /></swiper-slide>
       <swiper-slide v-for="(img, index) in productInfo.imagesUrl" :key="index + 123">
         <img :src="img" :alt="productInfo.title" /> </swiper-slide
     ></swiper>

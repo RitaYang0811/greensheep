@@ -119,11 +119,15 @@
               v-for="product in currentProducts"
               :key="product.id"
             >
-              <router-link :to="`/products/${product.id}`" class="card border-0">
+              <router-link
+                :to="`/products/${product.id}`"
+                class="card border-0"
+                @click="scrollToTop"
+              >
                 <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
                   <span
                     v-if="product.discount !== 10"
-                    class="position-absolute start-0 bottom-0 z-2 bg-deco p-1 text-dark fs-8"
+                    class="position-absolute start-0 bottom-0 z-1 bg-deco p-1 text-dark fs-8"
                     >{{ product.discount }}折</span
                   >
                   <img
@@ -172,7 +176,7 @@
             <table v-if="isList === true" class="table mb-10 mb-lg-15">
               <tbody>
                 <template v-for="item in currentProducts" :key="item.id">
-                  <router-link :to="`/products/${item.id}`"
+                  <router-link :to="`/products/${item.id}`" @click="scrollToTop"
                     ><tr
                       class="product-item row mb-3 bg-white rounded-3 align-content-center py-2 py-lg-1"
                     >
@@ -367,6 +371,9 @@ export default {
     sort(status) {
       this.isShow = false
       this.getFilterProducts(this.currentCategory, this.currentProductsPage, status)
+    },
+    scrollToTop() {
+      window.scrollTo(0, 0)
     }
   },
   mounted() {
@@ -378,9 +385,9 @@ export default {
 
 <style scoped lang="scss">
 @import '@/assets/scss/utils/_mixin.scss';
-.card-title {
-  height: 16px;
-}
+// .card-title {
+//   height: 18px;
+// }
 .list-img {
   width: 150px;
   height: 150px;
