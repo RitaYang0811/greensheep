@@ -2,25 +2,13 @@
   <div class="accordion-item my-5" v-for="order in orders" :key="order.id">
     <h2 class="accordion-header" @click="toggleCollapse(order.id)">
       <!-- data-bs-target要記得改，綁定order.id -->
-      <button
-        class="accordion-button fs-6"
-        type="button"
-        data-bs-toggle="collapse"
-        :data-bs-target="`#${order.id}`"
-        aria-expanded="true"
-      >
+      <button class="accordion-button fs-6" type="button" data-bs-toggle="collapse" :data-bs-target="`#${order.id}`"
+        aria-expanded="true">
         訂單編號：{{ order.create_at }}
-        <span
-          :class="order.is_paid ? 'text-bg-primary' : 'text-bg-danger'"
-          class="ms-10 badge rounded-pill text-bg-primary fs-8"
-          >{{ order.is_paid ? '已付款' : '未付款' }}</span
-        >
-        <span class="ms-10 badge rounded-pill text-bg-primary fs-8" v-if="order?.orderStatus?.done"
-          >已完成</span
-        >
-        <span class="ms-10 badge rounded-pill text-bg-danger fs-8" v-if="order?.is_deleted"
-          >已刪除</span
-        >
+        <span :class="order.is_paid ? 'text-bg-primary' : 'text-bg-danger'"
+          class="ms-10 badge rounded-pill text-bg-primary fs-8">{{ order.is_paid ? '已付款' : '未付款' }}</span>
+        <span class="ms-10 badge rounded-pill text-bg-primary fs-8" v-if="order?.orderStatus?.done">已完成</span>
+        <span class="ms-10 badge rounded-pill text-bg-danger fs-8" v-if="order?.is_deleted">已刪除</span>
       </button>
     </h2>
 
@@ -28,17 +16,11 @@
       <div class="accordion-body">
         <!-- 單筆產品(商品渲染處) -->
         <!-- products為陣列格式，用Object.values來拆開 -->
-        <div
-          class="border-bottom border-light d-flex align-items-center justify-content-between my-2"
-          v-for="product in Object.values(order.products)"
-          :key="product.id"
-        >
-          <!-- <img :src="product.product.imageUrl" alt="" class="w-10 img-fluid object-fit-cover m-4 rounded-2"
-                    style="height: 100px;width:50px;"> -->
+        <div class="border-bottom border-light d-flex align-items-center justify-content-between my-2"
+          v-for="product in Object.values(order.products)" :key="product.id">
           <div class="ms-4 d-flex align-items-center">
-            <span class="badge rounded-pill text-bg-light fw-medium text-grey66 fs-8 m-2">{{
-              product.product.category
-            }}</span>
+            <span class="badge rounded-pill text-bg-light fw-medium text-grey66 fs-8 m-2">
+              {{ product.product.category }}</span>
             <h3 class="fs-6 fw-medium text-dark">
               {{ product.product.title }}
             </h3>
@@ -68,29 +50,14 @@
             <p class="m-2">客戶Email：{{ order.user.email }}</p>
             <p class="m-2">備註：{{ order.message }}</p>
             <!-- Button trigger modal -->
-            <button
-              type="button"
-              class="mx-4 btn btn-deco"
-              data-bs-target="#adOrderModal"
-              @click="deleteOrder(order)"
-              v-if="!order.is_deleted"
-            >
-              刪除訂單</button
-            ><button
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#adOrderModal"
-              @click="openModal(order)"
-            >
+            <button type="button" class="mx-4 btn btn-deco" data-bs-target="#adOrderModal" @click="deleteOrder(order)"
+              v-if="!order.is_deleted">
+              刪除訂單</button><button type="button" class="btn btn-primary" data-bs-toggle="modal"
+              data-bs-target="#adOrderModal" @click="openModal(order)">
               修改訂單
             </button>
 
-            <button
-              class="btn btn-danger mx-4"
-              v-if="order.is_deleted"
-              @click.prevent="confirmDelete(order.id)"
-            >
+            <button class="btn btn-danger mx-4" v-if="order.is_deleted" @click.prevent="confirmDelete(order.id)">
               確認永久刪除訂單
             </button>
           </div>
@@ -106,13 +73,12 @@ export default {
 
   data() {
     return {
-      collapseItem: ''
     }
   },
+
   methods: {
     toggleCollapse(cid) {
       this.$refs.collape.forEach((item) => {
-        // console.log(item.attributes)
         if (item.attributes.id.value == cid) {
           item.classList.toggle('hide')
         }
