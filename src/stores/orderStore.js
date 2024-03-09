@@ -69,7 +69,6 @@ export default defineStore('orderStore', {
             timer: 1500
           })
           location.reload()
-          // this.getAllOrders();
         })
         .catch((err) => {
           console.log(err)
@@ -77,7 +76,6 @@ export default defineStore('orderStore', {
     },
     deleteOrder(data) {
       const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`
-
       Swal.fire({
         title: '是否刪除該訂單?',
         icon: 'warning',
@@ -120,8 +118,6 @@ export default defineStore('orderStore', {
     },
     confirmDelete(data) {
       const deleteOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data}`
-      console.log(data)
-
       Swal.fire({
         title: '確認永久刪除該訂單?',
         icon: 'warning',
@@ -145,7 +141,6 @@ export default defineStore('orderStore', {
     },
     deleteAllOrders() {
       const deleteAllOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders/all`
-
       Swal.fire({
         title: '確認永久刪除全部訂單?',
         icon: 'warning',
