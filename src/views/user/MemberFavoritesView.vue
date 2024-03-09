@@ -16,7 +16,7 @@
     <a href="#" class="d-flex flex-column product-item me-6 mb-6">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
         <img
-          src="@/assets/images/product-3.jpg"
+          src="@/assets/images/product-1.jpg"
           class="card-img-top position-absolute top-0 start-0 object-fit-cover"
           alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
         />
@@ -32,7 +32,7 @@
     <a href="#" class="d-flex flex-column product-item me-6 mb-6">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
         <img
-          src="@/assets/images/product-3.jpg"
+          src="@/assets/images/product-2.jpg"
           class="card-img-top position-absolute top-0 start-0 object-fit-cover"
           alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
         />
