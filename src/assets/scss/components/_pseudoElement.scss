@@ -1,6 +1,6 @@
 //行銷活動內容左邊黃色直線
 .start-line::before {
-  content: "";
+  content: '';
   position: absolute;
   width: 2px;
   height: 100%;
@@ -14,7 +14,7 @@
 .h-bottom-line {
   a {
     &::after {
-      content: "";
+      content: '';
       display: block;
       height: 1px;
       width: 100%;
@@ -27,7 +27,7 @@
       transform: scalex(1); //Ｘ軸為基準，物件尺寸100%
     }
     &.active::before {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 0.5rem;
       display: block;

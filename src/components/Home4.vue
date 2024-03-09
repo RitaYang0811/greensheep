@@ -21,6 +21,7 @@
           <!-- 第一個 -->
           <li class="article-br col-6">
             <a href="#">
+              <!-- :src="pinnedArticle[0].image" -->
               <div class="card border-0 text-white">
                 <img src="../assets/images/img-article-1.png" class="card-img" alt="文章圖片" />
                 <div
@@ -223,3 +224,30 @@
 </template>
 
 <style scoped lang="scss"></style>
+
+<script>
+import articleStore from '@/stores/articleStore.js'
+import { mapActions, mapState } from 'pinia'
+
+export default {
+  data() {
+    return {
+      pinnedArticle: []
+    }
+  },
+  methods: {
+    ...mapActions(articleStore, ['getArticles']),
+    initArticle() {
+      this.pinnedArticle = this.articles.slice(0, 3)
+      console.log(this.pinnedArticle)
+    }
+  },
+  computed: {
+    ...mapState(articleStore, ['articles'])
+  },
+  mounted() {
+    this.getArticles()
+    this.initArticle()
+  }
+}
+</script>

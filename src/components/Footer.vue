@@ -16,12 +16,20 @@
                   >全部商品</RouterLink
                 >
               </li>
-              <li>
+              <!-- <li>
                 <RouterLink
                   to="/products/客製設計%20CUSTOMIZED`"
                   class="fs-8 text-white me-lg-6 mx-lg-0 mx-12"
                   @click="scrollToTop"
                   >客製設計</RouterLink
+                >
+              </li> -->
+              <li>
+                <RouterLink
+                  to="/articles"
+                  class="fs-8 text-white me-lg-6 mx-lg-0 mx-12"
+                  @click="scrollToTop"
+                  >專欄文章</RouterLink
                 >
               </li>
               <li>
@@ -32,22 +40,19 @@
             </div>
             <div class="d-flex align-items-lg-center">
               <li>
-                <RouterLink
-                  to="/articles"
-                  class="fs-8 text-white me-lg-6 me-12"
-                  @click="scrollToTop"
-                  >專欄文章</RouterLink
-                >
-              </li>
-              <li>
                 <RouterLink to="/faq" class="fs-8 text-white me-12 me-lg-6" @click="scrollToTop"
                   >常見問題</RouterLink
                 >
               </li>
               <li>
-                <RouterLink to="/admin/home" target="_blank" class="fs-8 text-white"
+                <RouterLink to="/admin/home" target="_blank" class="fs-8 text-white me-12 me-lg-6"
                   >前往後台 <i class="bi bi-box-arrow-right d-none d-lg-inline-block"></i>
                 </RouterLink>
+              </li>
+              <li>
+                <a href="#" target="_blank" class="fs-8 text-white" @click.prevent="isLogout"
+                  >登出
+                </a>
               </li>
             </div>
           </ul>
@@ -115,6 +120,12 @@ export default {
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0)
+    },
+    // 登出
+    isLogout() {
+      localStorage.removeItem('userInfo')
+      alert('已登出會員')
+      this.$router.push({ name: 'MemberLogin' })
     }
   }
 }
