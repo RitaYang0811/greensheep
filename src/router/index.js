@@ -61,9 +61,9 @@ const router = createRouter({
           component: () => import('../views/user/ProductDetailView.vue')
         },
         {
-          path: 'custom/:id',
+          path: 'products/客製設計 CUSTOMIZED',
           name: 'UserCustom',
-          component: () => import('../views/user/CustomView.vue')
+          component: () => import('../views/user/ProductsView.vue')
         },
         {
           path: 'about',

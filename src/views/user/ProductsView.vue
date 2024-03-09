@@ -15,9 +15,9 @@
             >
           </li>
           <!-- categoryList -->
-          <li v-for="category in categories" :key="category + 123">
+          <li v-for="category in categories" :key="category">
             <RouterLink
-              :to="{ path: `/products/${category}`, query: { category: category } }"
+              :to="{ path: `/products/${category}` }"
               class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
               @click="changeCategory(category)"
               >{{ category }}

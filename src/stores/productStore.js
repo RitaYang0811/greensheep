@@ -10,14 +10,7 @@ export default defineStore('productStore', {
     currentProducts: [], //頁碼取得後的資料
     currentPage: 1,
     category: '全部商品 ALL',
-    categories: [
-      '項鍊 PENDANT',
-      '戒指 RING',
-      '耳環 EARRINGS',
-      '手鍊 BRACELET',
-      '客製設計 CUSTOMIZED ',
-      '其他配件 OTHERS'
-    ],
+    categories: ['項鍊 PENDANT', '戒指 RING', '耳環 EARRINGS', '手鍊 BRACELET', '其他配件 OTHERS'],
     productInfo: {},
     recommendProducts: [],
     isLoading: false,
@@ -87,7 +80,7 @@ export default defineStore('productStore', {
         this.loadingStatus.loadingFilterProducts = false
         console.log('全部商品', this.currentProducts, this.categoryProducts)
       } else if (category) {
-        console.log('@@@')
+        console.log('@@@', category)
         this.getSort(status)
         this.categoryProducts = this.products.filter((item) => item.category === category)
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)

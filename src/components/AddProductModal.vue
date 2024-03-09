@@ -436,7 +436,7 @@ export default {
         '戒指 RING',
         '耳環 EARRINGS',
         '手鍊 BRACELET',
-        '客製設計 CUSTOMIZED ',
+
         '其他配件 OTHERS'
       ],
       materials: [
