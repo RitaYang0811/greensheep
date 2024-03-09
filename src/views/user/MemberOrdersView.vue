@@ -109,19 +109,18 @@ export default {
     },
 
     printStatus(data) {
-      if (data.done) {
+      if (data?.done) {
         return "訂單已完成"
       }
-      if (data.sendProduct) {
+      if (data?.sendProduct) {
         return "商品已寄出"
       }
-      if (data.making) {
+      if (data?.making) {
         return "商品製作中"
-      }
-      if (data.getOrder) {
+      } else {
         return "收到訂單"
       }
-      console.log(data)
+ 
     },
 
   },

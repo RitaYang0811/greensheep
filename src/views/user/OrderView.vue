@@ -1,6 +1,4 @@
 <template>
-  <h1>訂單頁面(定位用，完成刪除)</h1>
-
   <div class="container py-20">
     <!-- progress -->
     <div class="mb-30">
@@ -76,7 +74,7 @@
               <div class="d-flex justify-content-center ">
                 <button class="btn btn-link text-primary" @click.prevent="cart.qty++" @click="updateCart(cart)"><i
                     class="bi bi-plus-circle fs-3"></i></button>
-                <input type="number" class="p-2 w-10" min="1" v-model="cart.qty" disabled />
+                <input type="number" class="p-2 w-25" min="1" v-model="cart.qty" disabled />
                 <button class="btn btn-link text-primary" @click.prevent="cart.qty--" @click="updateCart(cart)"
                   :disabled="cart.qty <= 1"><i class="bi bi-dash-circle fs-3"></i></button>
               </div>
@@ -111,9 +109,7 @@
             <div class="bg-greyD4 px-8 py-5">
               <h4 class="fs-6 my-4">已經是會員？登入後更方便管理訂單</h4>
               <div class="d-flex justify-content-between my-5">
-
                 <router-link to="/memberLogin" class="btn btn-grey66 fs-6 p-5 my-auto w-100">會員登入</router-link>
-
               </div>
 
               <form action="" class="text-dark">
@@ -122,14 +118,12 @@
                   :class="{ 'is-invalid': errors['姓名'] }" placeholder="請輸入 姓名" rules="required"
                   v-model="orderData.user.name"></v-field>
                 <error-message name="姓名" class="invalid-feedback"></error-message>
-                <!-- <input type="text" id="name" class="p-2 w-100 mb-4 border-0" v-model="orderData.user.name" /> -->
 
                 <label for="email" class="fs-6 mb-1">電子信箱</label><br />
                 <v-field id="email" name="Email" type="email" class="form-control p-2 w-100 mb-4 border-0"
                   :class="{ 'is-invalid': errors['Email'] }" placeholder="請輸入 Email" rules="email|required"
                   v-model="orderData.user.email"></v-field>
                 <error-message name="Email" class="invalid-feedback"></error-message>
-                <!-- <input type="email" id="email" class="p-2 w-100 mb-1 border-0" v-model="orderData.user.email" /> -->
                 <p class="mb-3 text-end">訂單將以此Email通知</p>
 
                 <label for="phone" class="fs-6 mb-1">電話號碼</label><br />
@@ -137,10 +131,6 @@
                   :class="{ 'is-invalid': errors['電話'] }" placeholder="請輸入電話" rules="required|numeric|min:7"
                   v-model="orderData.user.tel"></v-field>
                 <error-message name="電話" class="invalid-feedback"></error-message>
-                <!-- <input type="tel" id="phone" class="p-2 w-100 mb-4 border-0" v-model="orderData.user.tel" /> -->
-
-                <!-- <label for="birthday" class="fs-6 mb-1">生日</label><br />
-              <input type="date" id="birthday" class="p-2 w-100 mb-6 border-0" v-model="orderData.birthday" /> -->
               </form>
             </div>
           </div>
@@ -159,8 +149,6 @@
                   :class="{ 'is-invalid': errors['收件人姓名'] }" placeholder="請輸入收件人姓名" rules="required"
                   v-model="recipient.name" :disabled="recipientAsOrderData"></v-field>
                 <error-message name="收件人姓名" class="invalid-feedback"></error-message>
-                <!-- <input type="name" id="recipient" class="p-2 w-100 mb-1 border-0" v-model="recipient.name"
-                  :disabled="recipientAsOrderData" /> -->
                 <p class="mb-3 text-end">
                   請填入收件人真實姓名，以確保順利收件
                 </p>
@@ -201,8 +189,6 @@
                       :rules="showCreditCard() ? '' : 'required|numeric|digits:16'"
                       :disabled="showCreditCard()"></v-field>
                     <error-message name="卡號" class="invalid-feedback"></error-message>
-                    <!-- <input type="email" class="form-control mb-5" id="Card-number" placeholder="name@example.com"
-                      :disabled="showCreditCard()" /> -->
                     <label for="Card-number">卡號</label>
                   </div>
 
@@ -211,8 +197,6 @@
                       :class="{ 'is-invalid': errors['持卡人姓名'] }" placeholder="請輸入持卡人姓名"
                       :rules="showCreditCard() ? '' : 'required'" :disabled="showCreditCard()"></v-field>
                     <error-message name="持卡人姓名" class="invalid-feedback"></error-message>
-                    <!-- <input type="email" class="form-control mb-5" id="Card-name" placeholder="name@example.com"
-                      :disabled="showCreditCard()" /> -->
                     <label for="Card-name">持卡人姓名</label>
                   </div>
 
@@ -222,8 +206,6 @@
                       :rules="showCreditCard() ? '' : 'required|numeric|digits:4'"
                       :disabled="showCreditCard()"></v-field>
                     <error-message name="有效期限" class="invalid-feedback"></error-message>
-                    <!-- <input type="email" class="form-control mb-5" id="Card-date" placeholder="name@example.com"
-                      :disabled="showCreditCard()" /> -->
                     <label for="Card-date">有效期限(MM/YY)</label>
                   </div>
 
@@ -233,8 +215,6 @@
                       :rules="showCreditCard() ? '' : 'required|numeric|digits:3'"
                       :disabled="showCreditCard()"></v-field>
                     <error-message name="安全碼" class="invalid-feedback"></error-message>
-                    <!-- <input type="email" class="form-control mb-5" id="Card-pin" placeholder="name@example.com"
-                      :disabled="showCreditCard()" /> -->
                     <label for="Card-pin">安全碼</label>
                   </div>
                 </form>
@@ -278,23 +258,91 @@
           <div class="d-flex mb-8">
             <input type="checkbox" id="private" style="width: 1em; height: 1em" class="form-check-input" required
               checked />
-            <!-- <v-field id="private" name="同意服務條款" type="checkbox" class="form-check-input"
-              :class="{ 'is-invalid': errors['同意服務條款'] }" rules="required" checked></v-field> -->
 
-            <label for="private" class="form-check-label fs-6 ms-2">本人同意網站<a href="#" class="underline">服務條款</a> 及<a
-                href="#" class="underline">隱私權政策</a></label> <br>
+            <label for="private" class="form-check-label fs-6 ms-2">本人同意網站
+              <a href="#" class="text-decoration-underline" @click.prevent="openModal('條款')">網站服務條款</a>
+              及
+              <a href="#" class="text-decoration-underline" @click.prevent="openModal('政策')">隱私權政策</a></label> <br>
             <div class="invalid-feedback">Example invalid feedback text</div>
-            <!-- <error-message name="同意服務條款" class="invalid-feedback"></error-message> -->
           </div>
 
           <button type="submit" class="btn btn-primary p-4 fs-4 w-100">提交訂單</button>
-          <!-- <router-link to="/success" class="btn btn-primary p-4 fs-4 w-100">提交訂單</router-link> -->
         </div>
       </div>
     </div>
 
   </VForm>
 
+  <!-- 網站服務條款與政策Modal -->
+  <div class="modal fade" id="policyModal" tabindex="-1" aria-labelledby="policyModalLabel" aria-hidden="true"
+    ref="policyModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" v-if="policy.DOCState">網站服務條款</h1>
+          <h1 class="modal-title fs-5" v-else>隱私權政策</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+          <!-- 網站服務條款 -->
+          <div v-if="policy.DOCState" class="p-4">
+            <p>
+              歡迎光臨GreenSheep！我們是一個專注於提供精美飾品的電子商務平台。在使用本網站前，請詳細閱讀以下條款，使用本網站即表示您同意遵守以下規定。
+            </p>
+            <br />
+            <ul>
+              <li>
+                使用條款：您同意僅以合法目的使用本網站，不得從事任何違法或損害他人權益的活動。
+              </li>
+              <li>
+                責任限制：GreenSheep對於因使用本網站而引起的任何直接、間接、附帶或特別的損失不承擔責任。
+              </li>
+              <li>
+                商品信息：我們努力確保在網站上提供的所有商品信息準確無誤，但不能保證所有信息都是完整和最新的。
+              </li>
+              <li>使用者責任：您應對您的帳戶和密碼保密，並對在您的帳戶下的所有活動負責。</li>
+              <li>
+                知識產權：本網站上的所有內容，包括但不限於文字、圖像、標誌，均受版權和商標法保護。
+              </li>
+              <li>其他條款：本條款未涉及的其他問題，將遵循GreenSheep的一般業務實踐和標準。</li>
+            </ul>
+
+            感謝您選擇GreenSheep作為您購買飾品的平台，我們將竭盡所能為您提供最佳的購物體驗！
+          </div>
+          <!-- 隱私權政策 -->
+          <div v-else class="p-4">
+            <p>
+              歡迎您使用GreenSheep網站服務。我們非常重視您的隱私保護，並承諾保護您提供的個人信息。請您在使用本網站前仔細閱讀以下隱私條款內容：
+            </p>
+            <br />
+            <ul>
+              <li>
+                收集信息：當您註冊帳戶、下訂單或與我們聯繫時，我們可能收集您的姓名、聯繫方式、郵寄地址等個人信息。
+              </li>
+              <li>
+                信息用途：我們收集的信息將用於處理訂單、提供客戶服務、改善網站體驗以及向您發送促銷活動和產品信息。
+              </li>
+              <li>
+                信息保護：我們採取合理的安全措施來保護您的個人信息，防止未經授權的訪問、使用或泄露。
+              </li>
+              <li>
+                信息分享：我們不會未經您的同意將您的個人信息分享給第三方，除非為了履行訂單或遵守法律法規的要求。
+              </li>
+              <li>
+                Cookie使用：我們可能使用Cookie技術收集和存儲有關您訪問本網站的信息，以改善您的網站體驗。
+              </li>
+              <li>隱私政策更新：我們保留隨時更新隱私條款的權利，更新後的條款將在本網站上發布。</li>
+            </ul>
+
+            使用GreenSheep即表示您同意本隱私條款的條件和規定。如果您對此有任何疑問或需要進一步說明，請隨時聯繫我們。
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 </template>
@@ -302,6 +350,8 @@
 <script>
 import { mapState, mapActions } from 'pinia';
 import cartStore from '@/stores/cartStore';
+import Modal from 'bootstrap/js/dist/modal';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -324,8 +374,11 @@ export default {
         birthday: '',
       },
       orderDeliverData: {},
-
-
+      policy: {
+        DOCState: true,
+        Modal: '',
+        Check: false
+      },
     }
   },
   methods: {
@@ -372,6 +425,14 @@ export default {
     },
 
     sendOrder() {
+      if (this.carts.length == 0) {
+        Swal.fire({
+          title: '購物車是空的',
+          confirmButtonColor: '#566B5A',
+          icon: 'warning'
+        })
+        return
+      }
       if (this.showStore()) {
         this.recipient.address = `${this.orderDeliverData.deliver} XX店`
       }
@@ -383,11 +444,43 @@ export default {
         .then(() => {
           this.getCarts()
           this.$router.push('/success')
-          // console.log(this.orderData)
         })
+    },
 
+    checkLogin() {
+      let user = localStorage.getItem("userInfo")
+
+      const getUserUrl = 'https://greensheep-json-server.onrender.com/users';
+      if (user) {
+        const loginUserId = JSON.parse(user).id
+        console.log(loginUserId)
+        this.$http.get(getUserUrl)
+          .then((res) => {
+            console.log(res.data)
+            res.data.forEach((item) => {
+              if (item.id == loginUserId) {
+                this.orderData.user.name = item.nickName
+                this.orderData.user.email = item.email
+                this.orderData.user.tel = item.phone
+                this.orderData.user.address = item.location
+                console.log(item)
+
+              }
+            })
+          })
+
+      }
+
+
+      // console.log(user)
 
     },
+
+    openModal(state) {
+      state === '條款' ? (this.policy.DOCState = true) : (this.policy.DOCState = false)
+      this.policy.Modal.show()
+    },
+
   },
   computed: {
     ...mapState(cartStore, ['carts', 'deliverData']),
@@ -404,13 +497,16 @@ export default {
       if (value) {
         this.recipient.name = this.orderData.user.name
         this.recipient.tel = this.orderData.user.tel
+        this.recipient.address = this.orderData.user.address
       }
 
     }
   },
 
   mounted() {
+    this.policy.Modal = new Modal(this.$refs.policyModal)
     this.orderDeliverData = { ...this.deliverData }
+    this.checkLogin()
   },
 
 }

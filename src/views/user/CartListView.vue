@@ -4,34 +4,22 @@
     <div class="mb-30">
       <div class="position-relative m-4 w-75 mx-auto">
         <div class="progress">
-          <div
-            class="progress-bar"
-            role="progressbar"
-            style="width: 0%"
-            aria-valuenow="50"
-            aria-valuemin="0"
-            aria-valuemax="100"
-          ></div>
+          <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0"
+            aria-valuemax="100"></div>
         </div>
-        <button
-          type="button"
+        <button type="button"
           class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
-          style="width: 3rem; height: 3rem"
-        >
+          style="width: 3rem; height: 3rem">
           1
         </button>
-        <button
-          type="button"
+        <button type="button"
           class="position-absolute top-0 start-50 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
-          style="width: 3rem; height: 3rem"
-        >
+          style="width: 3rem; height: 3rem">
           2
         </button>
-        <button
-          type="button"
+        <button type="button"
           class="position-absolute top-0 start-100 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
-          style="width: 3rem; height: 3rem"
-        >
+          style="width: 3rem; height: 3rem">
           3
         </button>
       </div>
@@ -64,11 +52,7 @@
               <div class="row g-0 align-items-center">
                 <div class="col-md-4">
                   <div class="ratio ratio-1x1">
-                    <img
-                      :src="cart.product.imageUrl"
-                      class="img-fluid object-fit-cover"
-                      alt="..."
-                    />
+                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover" alt="..." />
                   </div>
                 </div>
                 <div class="col-md-8">
@@ -84,21 +68,13 @@
           </th>
           <td class="py-4">
             <div class="d-flex justify-content-center">
-              <button
-                class="btn btn-link text-primary"
-                @click.prevent="cart.qty--"
-                @click="updateCart(cart)"
-                :disabled="cart.qty <= 1"
-              >
+              <button class="btn btn-link text-primary" @click.prevent="cart.qty--" @click="updateCart(cart)"
+                :disabled="cart.qty <= 1">
                 <i class="bi bi-dash-circle fs-3"></i>
               </button>
-              <input type="number" class="p-2 w-10" min="1" v-model="cart.qty" disabled />
+              <input type="number" class="p-2 w-20 text-center" min="1" v-model="cart.qty" disabled />
 
-              <button
-                class="btn btn-link text-primary"
-                @click.prevent="cart.qty++"
-                @click="updateCart(cart)"
-              >
+              <button class="btn btn-link text-primary" @click.prevent="cart.qty++" @click="updateCart(cart)">
                 <i class="bi bi-plus-circle fs-3"></i>
               </button>
             </div>
@@ -117,14 +93,12 @@
       <div class="row">
         <div class="col-md-2 text-primary fw-medium">已使用優惠</div>
         <div class="col-md-10 text-start" v-if="carts[0]?.coupon">
-          <span
-            class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4"
-            >{{ carts[0].coupon.title }}</span
-          >
+          <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4">{{
+      carts[0]?.coupon?.title }}</span>
           <span class="fs-7 text-primary">{{
-            `消費滿 NT$ ${carts[0].coupon.min_buy_price_by_discount}，享
-            ${carts[0].coupon.percent / 10} 折`
-          }}</span>
+      `消費滿 NT$ ${carts[0]?.coupon?.min_buy_price_by_discount}，享
+            ${carts[0]?.coupon?.percent / 10} 折`
+    }}</span>
         </div>
       </div>
     </div>
@@ -132,16 +106,11 @@
 
   <div class="container py-10">
     <div class="row align-items-center">
-      <div class="col-md-2 text-primary fw-medium">優惠券折扣</div>
+      <div class="col-md-2 text-primary fw-medium d-md-block d-none">優惠券折扣</div>
 
       <div class="col-md-10">
-        <form class="text-start">
-          <input
-            type="text"
-            class="teat-start p-2 w-50"
-            placeholder="請輸入優惠代碼"
-            v-model="coupon"
-          />
+        <form class="text-md-start text-center">
+          <input type="text" class="teat-start p-2 w-50" placeholder="請輸入優惠代碼" v-model="coupon" />
           <button type="button" class="btn btn-primary p-3" @click="sendCoupon(coupon)">
             送出優惠券
           </button>
@@ -183,19 +152,16 @@
             <p class="">小計：</p>
             <p class="">NT$ {{ rawTotal }}</p>
           </div>
-          <!-- <div class="d-flex justify-content-between mb-5">
-            <p class="">運費：</p>
-            <p class="">免運</p>
-          </div> -->
           <div class="d-flex justify-content-between mb-5">
             <p class="">優惠券：</p>
             <span v-if="carts[0]?.coupon">{{
-              `消費滿 NT$ ${carts[0].coupon.min_buy_price_by_discount}，享
-              ${carts[0].coupon.percent / 10} 折`
-            }}</span>
+      `消費滿 NT$ ${carts[0]?.coupon?.min_buy_price_by_discount}，享
+              ${carts[0]?.coupon?.percent / 10} 折`
+    }}</span>
           </div>
 
-          <div class="border border-primary border-1 mb-5"></div>
+          <div class=" border border-primary border-1 mb-5">
+          </div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">合計：</p>
             <p class="fw-bold">NT$ {{ parseInt(total) }}</p>
@@ -254,7 +220,7 @@ export default {
         location: '',
         deliver: '',
         payWay: ''
-      } //pinia
+      }
     }
   },
 
@@ -270,15 +236,36 @@ export default {
       }
       this.axios
         .post(sendCouponUrl, sendData)
-        .then(() => {
+        .then((res) => {
+          if (res.data.data.final_total == this.rawTotal) {
+            Swal.fire({
+              title: '優惠券有誤，請重新輸入',
+              confirmButtonColor: '#566B5A',
+              icon: 'warning'
+            })
+          }
           this.coupon = ''
           this.getCarts()
         })
         .catch((err) => {
+          Swal.fire({
+            title: '優惠券有誤，請重新輸入',
+            confirmButtonColor: '#566B5A',
+            icon: 'warning'
+          })
           console.log(err)
         })
     },
+
     goCheckout() {
+      if (this.carts.length == 0) {
+        Swal.fire({
+          title: '購物車是空的',
+          confirmButtonColor: '#566B5A',
+          icon: 'warning'
+        })
+        return
+      }
       if (this.deliverChoose.location.length == 0) {
         Swal.fire({
           title: '收件地點必填',
@@ -306,13 +293,6 @@ export default {
 
       this.getDeliverData(this.deliverChoose)
       this.$router.push('/order')
-
-      // if (this.deliverChoose.payWay.length > 0 && this.deliverChoose.deliver.length > 0) {
-      //   this.$router.push('/order')
-      //   this.getDeliverData(this.deliverChoose)
-      // } else {
-      //   alert('付款方式必填')
-      // }
     }
   },
 
@@ -335,17 +315,6 @@ export default {
         }
       })
     }
-    //監聽付款內容，查看deliverChoose內容(debug用，最後會刪除。)
-    // 'deliverChoose.payWay'() {
-    //   console.log(this.deliverChoose)
-    // },
-    //監聽coupon(先預留function，之後確定了再補內容)
-    // coupon(value) {
-    //   console.log(value)
-    //   if (value == "") {
-    //     return ""
-    //   }
-    // },
   },
 
   computed: {

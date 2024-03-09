@@ -1,6 +1,4 @@
 <template>
-  <h1>訂單成功頁面(定位用，完成刪除)</h1>
-
   <div class="container py-20">
     <!-- progress -->
     <div class="mb-30">
@@ -60,12 +58,11 @@
   <div class="container text-primary mb-20 py-20">
     <p class="fs-5 mb-4">
       歡迎隨時至
-      <router-link to="/member" style="color: #990000">會員中心 </router-link>
-      <!-- <a href="9-1.memberInfo.html" style="color: #990000"></a> -->
+      <router-link to="/member/home" style="color: #990000">會員中心 </router-link>
       了解訂單最新狀態
     </p>
     <p class="fs-5">
-      有任何問題請加入<a href="#" class="underline">官方Line客服</a>
+      有任何問題請加入<a href="https://lin.ee/bYROr08" target="_blank" class="underline">官方Line客服</a>
     </p>
   </div>
 </template>
@@ -75,10 +72,10 @@ export default {
   data() {
     return {};
   },
-  methods:{
+  methods: {
   },
-  mounted(){
-    // location.reload();
+  mounted() {
+
   },
 }
 </script>
