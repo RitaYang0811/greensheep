@@ -1,9 +1,10 @@
 <template>
+
   <div class="accordion-item my-5" v-for="order in orders" :key="order.id">
-    <h2 class="accordion-header">
+    <h2 class="accordion-header" @click="toggleCollapse(order.id)">
       <!-- data-bs-target要記得改，綁定order.id -->
       <button class="accordion-button fs-7" type="button" data-bs-toggle="collapse" :data-bs-target="`#${order.id}`"
-        aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        aria-expanded="true">
         {{ order.create_at }}
         <span :class="order.is_paid ? 'text-bg-primary' : 'text-bg-danger'"
           class="ms-10 badge rounded-pill text-bg-primary fs-7">{{ order.is_paid ? "已付款" : "未付款" }}</span>
@@ -11,8 +12,8 @@
         <span class="ms-10 badge rounded-pill text-bg-danger fs-7" v-if="order?.is_deleted">已刪除</span>
       </button>
     </h2>
-    <!-- id要記得改，綁定order.id -->
-    <div :id="order.id" class="accordion-collapse collapse show">
+
+    <div :id="order.id" class="accordion-collapse collapse show" ref="collape">
       <div class="accordion-body">
         <!-- 單筆產品(商品渲染處) -->
         <!-- products為陣列格式，用Object.values來拆開 -->
@@ -29,21 +30,20 @@
             <span class="mx-3">數量：{{ product.qty }} </span>
             <p> 總價：{{ product.total }}</p>
           </div>
-
         </div>
         <div class="my-4 border border-1"></div>
         <div class="d-flex justify-content-between mx-4">
-          <p class="">優惠券：<span class="ms-2 fs-6 badge rounded-pill text-bg-secondary">{{
-    Object.values(order.products)[0]?.coupon?.code }}</span></p>
+          <p class="">優惠券：
+            <span class="ms-2 fs-6 badge rounded-pill text-bg-secondary">
+              {{ Object.values(order.products)[0]?.coupon?.code }}
+            </span>
+          </p>
           <p class="">總金額：{{ parseInt(order.total) }}</p>
-
         </div>
         <div class="my-4 border border-3 "></div>
         <!-- 用戶資料渲染處 -->
         <div class="mt-4">
           <div class="fs-4 text-primary fw-bold">
-            <!-- <h3>{{ order.user.name }}</h3> -->
-            <!-- <p class="m-2">配送方式：黑貓宅配</p> -->
             <p class="m-2">客戶姓名：{{ order.user.name }}</p>
             <p class="m-2">客戶電話：{{ order.user.tel }}</p>
             <p class="m-2">客戶地址：{{ order.user.address }}</p>
@@ -65,15 +65,34 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
 export default {
   props: ['orders', 'openModal', 'deleteOrder', 'confirmDelete'],
 
+  data() {
+    return {
+      collapseItem: '',
+    }
+  },
+  methods: {
+    toggleCollapse(cid) {
+      this.$refs.collape.forEach((item) => {
+        // console.log(item.attributes)
+        if (item.attributes.id.value == cid) {
+          item.classList.toggle('hide');
+        }
+      })
 
-
-
+    }
+  },
 }
 
 </script>
+<style lang="scss">
+.hide {
+  display: none;
+}
+</style>
