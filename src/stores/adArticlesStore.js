@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { dateToUnix } from '@/utils/dateToUnix.js'
 import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
+import { scrollToTop } from '@/utils/scrollToTop.js'
 
 export default defineStore('adminArticles',{
   state: () => ({
@@ -114,6 +115,7 @@ export default defineStore('adminArticles',{
           this.currentPageArticles = this.searchArticles.slice((page - 1) * 10, page * 10)
           break
       }
+      scrollToTop()
     },
     // 文章行為(新增、編輯、刪除)
     articleActivity(type, id) {

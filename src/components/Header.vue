@@ -60,7 +60,7 @@
               </li>
               <li v-for="category in categories" :key="category + 123">
                 <RouterLink
-                  :to="{ path: `/products/${category}`, query: { category: category } }"
+                  :to="{ path: `/products/${category}` }"
                   class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
                   @click="changeCategory(category)"
                   >{{ category }}
@@ -68,18 +68,16 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item" style="min-width: 130px" @click="closeMenuOffCanvas()">
-            <RouterLink
-              to="/products/客製設計 CUSTOMIZED?category=客製設計 CUSTOMIZED`"
-              class="nav-link nav-item-en py-2 py-lg-1 px-2"
-              >CUSTOMIZED</RouterLink
+          <!-- <li class="nav-item" style="min-width: 130px" @click="closeMenuOffCanvas()">
+            <a class="nav-link nav-item-en py-2 py-lg-1 px-2" @click.prevent="toCustomPage"
+              >CUSTOMIZED</a
             >
-            <RouterLink
-              to="/products/客製設計 CUSTOMIZED?category=客製設計 CUSTOMIZED`"
+            <a
               class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
+              @click.prevent="toCustomPage"
               >客製設計
-            </RouterLink>
-          </li>
+            </a>
+          </li> -->
           <li class="nav-item" style="min-width: 81px" @click="closeMenuOffCanvas()">
             <RouterLink to="/story" class="nav-link nav-item-en py-2 py-lg-1 px-2"
               >ABOUT</RouterLink
@@ -273,6 +271,13 @@ export default {
       this.closeDropdownMenu()
       this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
       this.closeMenuOffCanvas()
+    },
+    toCustomPage() {
+      this.headerCategory = '客製設計 CUSTOMIZED'
+
+      this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
+
+      this.$router.push({ path: '/products/productsAll' })
     },
     openMenuOffCanvas() {
       this.menuOffCanvas.show()
