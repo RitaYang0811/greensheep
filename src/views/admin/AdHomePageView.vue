@@ -1,24 +1,24 @@
 <template>
-  <div class="container px-10 pt-10">
+  <div class="container px-3 px-lg-10 mt-8 mt-lg-10 mb-7 mb-lg-10">
     <div class="row">
-      <div class="col-12 col-lg-5">
+      <div class="col-12 col-lg-5 mb-9">
         <h1 class="display-3 fw-bold mb-4 text-start">待辦清單</h1>
         <div class="d-flex">
           <div class="w-50 bg-white m-2">
-            <div class="p-8">
+            <div class="py-8">
               <span class="d-block fs-2 mb-3 text-primary fw-medium">{{ allOrders.length }}</span>
-              <span class="d-block fs-5 mb-3 text-primary">全部訂單</span>
+              <span class="d-block fs-6 mb-3 text-primary">全部訂單</span>
             </div>
             <button type="button " class="custom-btn custom-btn-toGreen w-100" @click="toOrderPage">
               查看詳情
             </button>
           </div>
           <div class="w-50 bg-white m-2">
-            <div class="p-8">
+            <div class="py-8">
               <span class="d-block fs-2 mb-3 text-primary fw-medium">{{
                 unpaidOrders.length
               }}</span>
-              <span class="d-block fs-5 mb-3 text-primary">待付款訂單</span>
+              <span class="d-block fs-6 mb-3 text-primary">待付款訂單</span>
             </div>
             <button type="button " class="custom-btn custom-btn-toGreen w-100" @click="toOrderPage">
               查看詳情
@@ -37,7 +37,7 @@
                 class="card border border-primary rounded-3 mb-4"
                 @click="toOrderPage"
               >
-                <div class="card-body p-3 text-start">
+                <div class="card-body p-3 text-start cursor-pointer">
                   <div class="fs-6 text-dark fw-medium font-notosans mb-3">
                     訂單編號：{{ newOrder.id }}
                     <span class="float-end">

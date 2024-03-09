@@ -1,5 +1,5 @@
 <template>
-  <div class="container text-start px-3 px-lg-10 mt-20 mt-lg-10 mb-7 mb-lg-10">
+  <div class="container text-start px-3 px-lg-10 mt-8 mt-lg-10 mb-7 mb-lg-10">
     <h1 class="display-3 fw-bold mb-4">所有商品</h1>
 
     <!-- search bar -->

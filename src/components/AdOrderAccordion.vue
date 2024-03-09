@@ -1,15 +1,26 @@
 <template>
-
   <div class="accordion-item my-5" v-for="order in orders" :key="order.id">
     <h2 class="accordion-header" @click="toggleCollapse(order.id)">
       <!-- data-bs-target要記得改，綁定order.id -->
-      <button class="accordion-button fs-7" type="button" data-bs-toggle="collapse" :data-bs-target="`#${order.id}`"
-        aria-expanded="true">
-        {{ order.create_at }}
-        <span :class="order.is_paid ? 'text-bg-primary' : 'text-bg-danger'"
-          class="ms-10 badge rounded-pill text-bg-primary fs-7">{{ order.is_paid ? "已付款" : "未付款" }}</span>
-        <span class="ms-10 badge rounded-pill text-bg-primary fs-7" v-if="order?.orderStatus?.done">已完成</span>
-        <span class="ms-10 badge rounded-pill text-bg-danger fs-7" v-if="order?.is_deleted">已刪除</span>
+      <button
+        class="accordion-button fs-6"
+        type="button"
+        data-bs-toggle="collapse"
+        :data-bs-target="`#${order.id}`"
+        aria-expanded="true"
+      >
+        訂單編號：{{ order.create_at }}
+        <span
+          :class="order.is_paid ? 'text-bg-primary' : 'text-bg-danger'"
+          class="ms-10 badge rounded-pill text-bg-primary fs-8"
+          >{{ order.is_paid ? '已付款' : '未付款' }}</span
+        >
+        <span class="ms-10 badge rounded-pill text-bg-primary fs-8" v-if="order?.orderStatus?.done"
+          >已完成</span
+        >
+        <span class="ms-10 badge rounded-pill text-bg-danger fs-8" v-if="order?.is_deleted"
+          >已刪除</span
+        >
       </button>
     </h2>
 
@@ -17,55 +28,76 @@
       <div class="accordion-body">
         <!-- 單筆產品(商品渲染處) -->
         <!-- products為陣列格式，用Object.values來拆開 -->
-        <div class=" border-bottom border-light d-flex align-items-center justify-content-between my-2"
-          v-for="product in Object.values(order.products)" :key="product.id">
+        <div
+          class="border-bottom border-light d-flex align-items-center justify-content-between my-2"
+          v-for="product in Object.values(order.products)"
+          :key="product.id"
+        >
           <!-- <img :src="product.product.imageUrl" alt="" class="w-10 img-fluid object-fit-cover m-4 rounded-2"
                     style="height: 100px;width:50px;"> -->
-          <div class="ms-7 d-flex align-items-center ">
-            <span class="badge rounded-pill text-bg-light text-grey66 fs-7 m-2">{{ product.product.category }}</span>
-            <h3 class="fs-5 fw-light text-grey66">
-              {{ product.product.title }}</h3>
+          <div class="ms-4 d-flex align-items-center">
+            <span class="badge rounded-pill text-bg-light fw-medium text-grey66 fs-8 m-2">{{
+              product.product.category
+            }}</span>
+            <h3 class="fs-6 fw-medium text-dark">
+              {{ product.product.title }}
+            </h3>
           </div>
-          <div class=" me-7 d-flex ">
+          <div class="me-7 d-flex text-grey99">
             <span class="mx-3">數量：{{ product.qty }} </span>
-            <p> 總價：{{ product.total }}</p>
+            <p>總價：{{ product.total }}</p>
           </div>
         </div>
         <div class="my-4 border border-1"></div>
-        <div class="d-flex justify-content-between mx-4">
-          <p class="">優惠券：
-            <span class="ms-2 fs-6 badge rounded-pill text-bg-secondary">
+        <div class="d-flex justify-content-between mx-4 text-grey66">
+          <p class="">
+            優惠券：
+            <span class="ms-2 fs-8 badge rounded-pill text-bg-secondary fw-light">
               {{ Object.values(order.products)[0]?.coupon?.code }}
             </span>
           </p>
-          <p class="">總金額：{{ parseInt(order.total) }}</p>
+          <p class="text-primary fw-medium">總金額：{{ parseInt(order.total) }}</p>
         </div>
-        <div class="my-4 border border-3 "></div>
+        <div class="my-4 border border-3"></div>
         <!-- 用戶資料渲染處 -->
         <div class="mt-4">
-          <div class="fs-4 text-primary fw-bold">
+          <div class="fs-6 text-primary">
             <p class="m-2">客戶姓名：{{ order.user.name }}</p>
             <p class="m-2">客戶電話：{{ order.user.tel }}</p>
             <p class="m-2">客戶地址：{{ order.user.address }}</p>
             <p class="m-2">客戶Email：{{ order.user.email }}</p>
             <p class="m-2">備註：{{ order.message }}</p>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adOrderModal"
-              @click="openModal(order)">
+            <button
+              type="button"
+              class="mx-4 btn btn-deco"
+              data-bs-target="#adOrderModal"
+              @click="deleteOrder(order)"
+              v-if="!order.is_deleted"
+            >
+              刪除訂單</button
+            ><button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#adOrderModal"
+              @click="openModal(order)"
+            >
               修改訂單
             </button>
-            <button type="button" class="mx-4 btn btn-danger" data-bs-target="#adOrderModal" @click="deleteOrder(order)"
-              v-if="!order.is_deleted">
-              刪除訂單
+
+            <button
+              class="btn btn-danger mx-4"
+              v-if="order.is_deleted"
+              @click.prevent="confirmDelete(order.id)"
+            >
+              確認永久刪除訂單
             </button>
-            <button class="btn btn-danger mx-4" v-if="order.is_deleted"
-              @click.prevent="confirmDelete(order.id)">確認永久刪除訂單</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -74,7 +106,7 @@ export default {
 
   data() {
     return {
-      collapseItem: '',
+      collapseItem: ''
     }
   },
   methods: {
@@ -82,14 +114,12 @@ export default {
       this.$refs.collape.forEach((item) => {
         // console.log(item.attributes)
         if (item.attributes.id.value == cid) {
-          item.classList.toggle('hide');
+          item.classList.toggle('hide')
         }
       })
-
     }
-  },
+  }
 }
-
 </script>
 <style lang="scss">
 .hide {

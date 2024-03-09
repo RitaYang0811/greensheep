@@ -1,6 +1,6 @@
 <template>
-  <div class="container px-10 pt-10 text-start">
-    <h1 class="fs-3 mb-4">訂單管理</h1>
+  <div class="container text-start px-3 px-lg-10 mt-8 mt-lg-10 mb-7 mb-lg-10">
+    <h1 class="fs-3 mb-4 fw-bold">訂單管理</h1>
 
     <nav>
       <div class="nav nav-tabs border-button border-3" id="nav-tab" role="tablist">
@@ -176,7 +176,9 @@
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header bg-primary">
-          <h1 class="modal-title fs-4 ms-2 text-light" id="staticBackdropLabel">訂單詳細資料</h1>
+          <h1 class="modal-title h5 fw-medium text-white ps-3 py-2" id="staticBackdropLabel">
+            訂單詳細資料
+          </h1>
           <button
             type="button"
             class="btn-close"
@@ -200,7 +202,7 @@
                 <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck1"
                   ><i class="bi bi-check-lg fs-2 text-light"></i
                 ></label>
-                <p class="mt-3 fs-4">收到訂單</p>
+                <p class="mt-3 fs-6">收到訂單</p>
               </div>
               <div
                 :class="orderStatus?.making ? `bg-primary` : `bg-light`"
@@ -220,7 +222,7 @@
                 <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck2"
                   ><i class="bi bi-check-lg fs-2 text-light"></i
                 ></label>
-                <p class="mt-3 fs-4">製作中</p>
+                <p class="mt-3 fs-6">製作中</p>
               </div>
               <div
                 class="mt-5"
@@ -243,7 +245,7 @@
                   for="btncheck3"
                   ><i class="bi bi-check-lg fs-2 text-light"></i
                 ></label>
-                <p class="mt-3 fs-4">已出貨</p>
+                <p class="mt-3 fs-6">已出貨</p>
               </div>
               <div
                 class="mt-5"
@@ -270,21 +272,21 @@
                   for="btncheck4"
                   ><i class="bi bi-check-lg fs-2 text-light"></i
                 ></label>
-                <p class="mt-3 fs-4">已完成</p>
+                <p class="mt-3 fs-6">已完成</p>
               </div>
             </div>
           </div>
 
-          <div class="">
-            <h3 class="text-center">客戶資料</h3>
-            <div class="border border-light text-start w-75 mx-auto">
-              <h5 class="m-2">客戶姓名：{{ modalData?.user?.name }}</h5>
-              <h5 class="m-2">客戶地址：{{ modalData?.user?.address }}</h5>
-              <h5 class="m-2">客戶Email：{{ modalData?.user?.email }}</h5>
-              <h5 class="m-2">客戶電話：{{ modalData?.user?.tel }}</h5>
-              <label for="payState" class="fs-5 text-primary m-2">付款狀態：</label>
+          <div class="mb-9">
+            <h3 class="h4 text-center mb-3 fw-medium">客戶資料</h3>
+            <div class="border border-light text-start w-75 mx-auto p-2">
+              <p class="fs-6 text-primary m-3">客戶姓名：{{ modalData?.user?.name }}</p>
+              <p class="fs-6 text-primary m-3">客戶地址：{{ modalData?.user?.address }}</p>
+              <p class="fs-6 text-primary m-3">客戶Email：{{ modalData?.user?.email }}</p>
+              <p class="fs-6 text-primary m-3">客戶電話：{{ modalData?.user?.tel }}</p>
+              <label for="payState" class="fs-6 text-primary m-3">付款狀態：</label>
               <select
-                class="form-select d-inline w-25 fs-5"
+                class="form-select d-inline w-25 fs-6"
                 id="payState"
                 aria-label="付款狀態"
                 v-model="modalData.is_paid"
@@ -305,7 +307,7 @@
               </button>
             </div>
           </div>
-          <h3 class="mb-3 mt-6">訂單商品</h3>
+          <h3 class="h4 text-center mb-3 fw-medium">訂單商品</h3>
           <table class="table align-middle border-primary">
             <thead>
               <tr>
@@ -348,15 +350,13 @@
             </tbody>
           </table>
           <div class="d-flex justify-content-between mx-4 my-5">
-            <p class="fs-4">
+            <p class="fs-6">
               優惠券：
-              <span
-                class="ms-2 fs-5 badge rounded-pill text-bg-warning"
-                v-if="modalData?.products"
-                >{{ Object.values(modalData?.products)[0]?.coupon?.code }}</span
-              >
+              <span class="ms-2 fs-6 badge rounded-pill text-bg-deco" v-if="modalData?.products">{{
+                Object.values(modalData?.products)[0]?.coupon?.code
+              }}</span>
             </p>
-            <p class="fs-4 me-4">總金額：{{ parseInt(modalData?.total) }}</p>
+            <p class="fs-5 me-4 text-primary fw-bold">總金額：{{ parseInt(modalData?.total) }}</p>
           </div>
         </div>
         <div class="modal-footer">
