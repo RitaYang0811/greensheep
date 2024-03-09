@@ -605,7 +605,6 @@ export default {
           this.coupon = {
             title: '金額折抵' // 預設值給 :checked 判斷
           }
-          console.log('this.coupon', this.coupon)
           this.$refs.adCouponModal.openModal()
           break
         case 'edit':

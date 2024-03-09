@@ -153,65 +153,63 @@ export default {
         data-aos-delay="100"
         data-aos-once="true"
       >WHY GREEN SHEEP HANDMADE JEWELRY?</h3>
-      <div class="px-md-6">
-        <ul class="row list-unstyled">
-          <li
-            class="col-lg-3 col-6 pb-4"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-            data-aos-delay="200"
-            data-aos-once="true"
-          >
-            <img class="mb-3" src="@/assets/images/diamond.png" alt="最高品質保證" />
-            <p class="text-dark mb-3 ls-2">最高品質保證</p>
-            <p class="text-grey9F fs-8 lh-lg ls-2">
-              品牌堅持以最高品質來製作每一件作品，所有作品均選用天然寶石與優質的金屬材料，確保每一件作品都散發絕佳光彩。
-            </p>
-          </li>
-          <li
-            class="col-lg-3 col-6"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-            data-aos-delay="300"
-            data-aos-once="true"
-          >
-            <img class="mb-3" src="@/assets/images/car.png" alt="全球配送" />
-            <p class="text-dark mb-3 ls-2">全球配送</p>
-            <p class="text-grey9F fs-8 lh-lg ls-2">
-              我們樂於將綠羊作品傳遞至世界各地，不論您身在何處，我們提供全球配送服務，確保您能夠輕鬆地有我們的珠寶飾品。
-            </p>
-          </li>
-          <li
-            class="col-lg-3 col-6"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-            data-aos-delay="400"
-            data-aos-once="true"
-          >
-            <img class="mb-3" src="@/assets/images/return.png" alt="完善退換貨機制" />
-            <p class="text-dark mb-3 ls-2">完善退換貨機制</p>
-            <p class="text-grey9F fs-8 lh-lg ls-2">
-              我們尊重每一位客戶的選擇，提供完善退換貨機制，若您對購買的作品(客製商品除外)有任何疑慮或不滿意，請隨時與我們聯繫，我們將竭誠為您解決。
-            </p>
-          </li>
-          <li
-            class="col-lg-3 col-6"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-            data-aos-delay="500"
-            data-aos-once="true"
-          >
-            <img class="mb-3" src="@/assets/images/drew.png" alt="原創設計手工製作" />
-            <p class="text-dark mb-3 ls-2">原創設計手工製作</p>
-            <p class="text-grey9F fs-8 lh-lg ls-2">
-              綠羊品牌的每一件作品都是由專業的設計師原創設計，並由台灣資深金工師傅手工製作。這使得每一件作品都散發著原創的獨特風格，讓您感受到我們的用心與品質保證。
-            </p>
-          </li>
-        </ul>
-      </div>
+      <ul class="row list-unstyled">
+        <li
+          class="col-lg-3 col-6 pb-4"
+          data-aos="fade-up"
+          data-aos-duration="1200"
+          data-aos-delay="200"
+          data-aos-once="true"
+        >
+          <img class="mb-3" src="@/assets/images/diamond.png" alt="最高品質保證" />
+          <p class="text-dark mb-3 ls-2">最高品質保證</p>
+          <p class="text-grey9F fs-8 lh-lg ls-2">
+            品牌堅持以最高品質來製作每一件作品，所有作品均選用天然寶石與優質的金屬材料，確保每一件作品都散發絕佳光彩。
+          </p>
+        </li>
+        <li
+          class="col-lg-3 col-6"
+          data-aos="fade-up"
+          data-aos-duration="1200"
+          data-aos-delay="300"
+          data-aos-once="true"
+        >
+          <img class="mb-3" src="@/assets/images/car.png" alt="全球配送" />
+          <p class="text-dark mb-3 ls-2">全球配送</p>
+          <p class="text-grey9F fs-8 lh-lg ls-2">
+            我們樂於將綠羊作品傳遞至世界各地，不論您身在何處，我們提供全球配送服務，確保您能夠輕鬆地有我們的珠寶飾品。
+          </p>
+        </li>
+        <li
+          class="col-lg-3 col-6"
+          data-aos="fade-up"
+          data-aos-duration="1200"
+          data-aos-delay="400"
+          data-aos-once="true"
+        >
+          <img class="mb-3" src="@/assets/images/return.png" alt="完善退換貨機制" />
+          <p class="text-dark mb-3 ls-2">完善退換貨機制</p>
+          <p class="text-grey9F fs-8 lh-lg ls-2">
+            我們尊重每一位客戶的選擇，提供完善退換貨機制，若您對購買的作品(客製商品除外)有任何疑慮或不滿意，請隨時與我們聯繫，我們將竭誠為您解決。
+          </p>
+        </li>
+        <li
+          class="col-lg-3 col-6"
+          data-aos="fade-up"
+          data-aos-duration="1200"
+          data-aos-delay="500"
+          data-aos-once="true"
+        >
+          <img class="mb-3" src="@/assets/images/drew.png" alt="原創設計手工製作" />
+          <p class="text-dark mb-3 ls-2">原創設計手工製作</p>
+          <p class="text-grey9F fs-8 lh-lg ls-2">
+            綠羊品牌的每一件作品都是由專業的設計師原創設計，並由台灣資深金工師傅手工製作。這使得每一件作品都散發著原創的獨特風格，讓您感受到我們的用心與品質保證。
+          </p>
+        </li>
+      </ul>
     </div>
     <!-- 品牌故事區 -->
-    <div class="bg-image2 mt-9 text-white py-24 position-relative d-none d-lg-inline-block">
+    <div class="bg-image2 mt-9 text-white py-24 position-relative d-none d-lg-inline-block w-100">
       <h3
         class="fs-2 mt-21 mb-10 text-white ls-1"
         data-aos="fade-up"
