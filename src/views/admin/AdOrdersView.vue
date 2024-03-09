@@ -26,7 +26,6 @@
           <Accordion :orders="allOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
           <!-- Accordion -->
         </div>
-
       </div>
       <!-- tabs 未付款 -->
       <div class="tab-pane fade" id="unpaid" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
@@ -60,16 +59,11 @@
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
           <Accordion :orders="doneOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
-
           <!-- Accordion -->
         </div>
       </div>
-
     </div>
-
   </div>
-
-
 
   <!-- Modal -->
   <div class="modal fade rounded-2" id="adOrderModal" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
