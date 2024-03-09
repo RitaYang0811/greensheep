@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { toastError } from "@/utils/sweetalertToast.js"
+import { toastError } from '@/utils/sweetalertToast.js'
 import { scrollToTop } from '@/utils/scrollToTop.js'
 
 export default defineStore('articleStore', {
@@ -30,23 +30,22 @@ export default defineStore('articleStore', {
         totalPagesNum = resFirstPage.data.pagination.total_pages
 
         // 若有 2 頁以上，繼續 get 後續頁碼的資料
-        while(currentPageNum <= totalPagesNum) {
+        while (currentPageNum <= totalPagesNum) {
           const resOtherPages = await axios.get(`${url}?page=${currentPageNum}`)
           this.articles = [...this.articles, ...resOtherPages.data.articles]
-          currentPageNum++;
+          currentPageNum++
         }
 
         // 排序 置頂優先
         this.articles.sort((a, b) => {
           const aNum = a.isPinned === undefined ? 0 : Number(a.isPinned)
           const bNum = b.isPinned === undefined ? 0 : Number(b.isPinned)
-  
+
           return bNum - aNum
         })
 
         // 取得當頁要顯示的文章
         this.changePage(this.currentPage)
-
       } catch (err) {
         toastError(err.response.data.message)
       } finally {

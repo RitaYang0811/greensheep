@@ -12,7 +12,7 @@
         rules="required"
         v-model="securityInput"
       ></v-field>
-      <label for="securityCode">請輸入驗證碼</label>
+      <label for="securityCode" class="z-0">請輸入驗證碼</label>
       <error-message name="驗證碼" class="invalid-feedback text-start"></error-message>
     </div>
 
@@ -53,7 +53,7 @@ export default {
     onSubmit() {
       this.user = {
         nickName: this.userInfo.name,
-        email: this.userInfo.email,
+        email: this.userInfo.email.toLowerCase(),
         password: this.userInfo.password,
         birthday: this.userInfo.birthday,
         favorites: [],

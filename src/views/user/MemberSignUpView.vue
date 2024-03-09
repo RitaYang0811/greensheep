@@ -50,7 +50,7 @@
                 rules="required"
                 v-model="user.name"
               ></v-field>
-              <label for="name">請輸入暱稱</label>
+              <label for="name" class="z-0">請輸入暱稱</label>
               <error-message name="暱稱" class="invalid-feedback text-start"></error-message>
             </div>
             <!-- 信箱 -->
@@ -66,7 +66,7 @@
                 :rules="emailRule"
                 v-model="user.email"
               ></v-field>
-              <label for="email">請輸入Email</label>
+              <label for="email" class="z-0">請輸入Email</label>
               <error-message name="email" class="invalid-feedback text-start"></error-message>
             </div>
             <!-- 密碼 -->
@@ -82,7 +82,7 @@
                 :rules="passwordRule"
                 v-model="user.password"
               ></v-field>
-              <label for="password">請輸入密碼(6-12字元且不連續)</label>
+              <label for="password" class="z-0">請輸入密碼(6-12字元且不連續)</label>
               <i
                 class="checkByEye"
                 :class="[
@@ -107,7 +107,7 @@
                 :rules="confirmPasswordRule"
                 v-model="user.confirmPassword"
               />
-              <label for="password">請再次確認密碼</label>
+              <label for="password" class="z-0">請再次確認密碼</label>
               <i
                 class="checkByEye"
                 :class="[
@@ -385,6 +385,7 @@ export default {
     },
     async checkAccounts(email) {
       try {
+        email = email.toLowerCase()
         const response = await axios.get(`${serverUrl}/users/?email=${email}`)
 
         return response.data.length !== 0
@@ -459,7 +460,7 @@ export default {
     lineLoginEvent() {
       let clientID = '2003862374'
       // 會使用到encodeURIComponent是因為hash模式
-      let redirectUri = encodeURIComponent('http://localhost:5173/greensheep/#/OtherLogin')
+      let redirectUri = encodeURIComponent('https://ritayang0811.github.io/greensheep/#/OtherLogin')
       let URL = 'https://access.line.me/oauth2/v2.1/authorize?'
       // 必填
       URL += 'response_type=code' // 希望LINE回應什麼 ，目前只有code能選

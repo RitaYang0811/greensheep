@@ -45,7 +45,7 @@
                 :rules="emailRule"
                 v-model="user.email"
               ></v-field>
-              <label for="email">請輸入Email</label>
+              <label for="email" class="z-0">請輸入Email</label>
               <error-message name="email" class="invalid-feedback text-start"></error-message>
             </div>
             <!-- 密碼 -->
@@ -61,7 +61,7 @@
                 :rules="passwordRule"
                 v-model="user.password"
               ></v-field>
-              <label for="password">請輸入密碼(6-12字元且不連續)</label>
+              <label for="password" class="z-0">請輸入密碼(6-12字元且不連續)</label>
               <i
                 class="checkByEye"
                 :class="[
@@ -154,11 +154,10 @@ export default {
           this.userInfo.token = res.data.accessToken
           this.userInfo.id = res.data.user.id
           localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
-          this.$router.push({ name: 'MemberLayout' })
+          this.$router.push({ name: 'MemberHome' })
         })
         .catch((err) => {
           alert('帳號或密碼錯誤!')
-          this.$router.push({ name: 'MemberLogin' })
         })
     },
     // google登入
@@ -191,7 +190,9 @@ export default {
     lineLoginEvent() {
       let clientID = '2003862374'
       // 會使用到encodeURIComponent是因為hash模式
-      let redirectUri = encodeURIComponent('http://localhost:5173/greensheep/#/loginLoading')
+      let redirectUri = encodeURIComponent(
+        'https://ritayang0811.github.io/greensheep/#/loginLoading'
+      )
       let URL = 'https://access.line.me/oauth2/v2.1/authorize?'
       // 必填
       URL += 'response_type=code' // 希望LINE回應什麼 ，目前只有code能選

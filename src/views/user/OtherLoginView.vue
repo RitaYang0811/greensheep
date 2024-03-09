@@ -22,7 +22,7 @@
               rules="required"
               v-model="user.nickName"
             ></v-field>
-            <label for="name">暱稱</label>
+            <label for="name" class="z-0">暱稱</label>
             <error-message name="暱稱" class="invalid-feedback text-start"></error-message>
           </div>
           <!-- 信箱(不能動) -->
@@ -36,7 +36,7 @@
               v-model="user.email"
               disabled
             ></v-field>
-            <label for="email">目前Email</label>
+            <label for="email" class="z-0">目前Email</label>
           </div>
 
           <!-- 生日 -->
@@ -133,16 +133,18 @@ export default {
   },
   async mounted() {
     // google登入
-    if (await this.checkAccounts(this.$route.query.googleEmail)) {
-      alert('此信箱已經註冊過囉!')
-      this.$router.push({ name: 'MemberLogin' })
-      return
-    } else {
-      if (Object.keys(this.$route.query).length) {
-        this.user.email = this.$route.query.googleEmail
-        this.user.nickName = this.$route.query.googleName
-        this.accountState = 'google-'
+    if (Object.keys(this.$route.query).length) {
+      if (await this.checkAccounts(this.$route.query.googleEmail.toLowerCase())) {
+        alert('此信箱已經註冊過囉!')
+        this.$router.push({ name: 'MemberLogin' })
         return
+      } else {
+        if (Object.keys(this.$route.query).length) {
+          this.user.email = this.$route.query.googleEmail
+          this.user.nickName = this.$route.query.googleName
+          this.accountState = 'google-'
+          return
+        }
       }
     }
 
@@ -157,7 +159,7 @@ export default {
       // 用Qs是要轉成form-urlencoded 因為LINE不吃JSON格式
       grant_type: 'authorization_code',
       code: this.code,
-      redirect_uri: 'http://localhost:5173/greensheep/#/OtherLogin',
+      redirect_uri: 'https://ritayang0811.github.io/greensheep/#/OtherLogin',
       client_id: '2003862374',
       client_secret: '3f92c0ff3156006f79bca2ab6e993a4e'
     })
@@ -165,7 +167,7 @@ export default {
       const lineRes = await axios.post('https://api.line.me/oauth2/v2.1/token', options, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
-      if (await this.checkAccounts(jwtDecode(lineRes.data.id_token).email)) {
+      if (await this.checkAccounts(jwtDecode(lineRes.data.id_token).email.toLowerCase())) {
         alert('此信箱已經註冊過囉!')
         this.$router.push({ name: 'MemberLogin' })
       } else {

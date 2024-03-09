@@ -48,7 +48,7 @@ export default {
           this.userInfo.token = res.data.accessToken
           this.userInfo.id = res.data.user.id
           localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
-          this.$router.push({ name: 'MemberLayout' })
+          this.$router.push({ name: 'MemberHome' })
         })
         .catch((err) => {
           alert('帳號或密碼錯誤!')
@@ -74,7 +74,7 @@ export default {
       // 用Qs是要轉成form-urlencoded 因為LINE不吃JSON格式
       grant_type: 'authorization_code',
       code: this.code,
-      redirect_uri: 'http://localhost:5173/greensheep/#/loginLoading',
+      redirect_uri: 'https://ritayang0811.github.io/greensheep/#/loginLoading',
       client_id: '2003862374',
       client_secret: '3f92c0ff3156006f79bca2ab6e993a4e'
     })

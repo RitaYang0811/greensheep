@@ -107,9 +107,12 @@
             </RouterLink>
           </li>
           <li class="nav-item d-lg-none" style="min-width: 100px" @click="closeMenuOffCanvas()">
-            <RouterLink to="/memberLogin" class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start"
-              >登入/註冊</RouterLink
+            <button
+              @click.prevent="isLogin"
+              class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start"
             >
+              登入/註冊
+            </button>
           </li>
         </ul>
       </div>
@@ -141,7 +144,7 @@
           </form>
 
           <!-- 會員中心 -->
-          <router-link to="/memberLogin" class="me-2 d-none d-lg-block flex-grow-1">
+          <a href="#" @click.prevent="isLogin" class="me-2 d-none d-lg-block flex-grow-1">
             <img
               class="header-white-icon p-xxl-2 p-xl-0"
               src="../assets/images/ic-person-white.svg"
@@ -152,7 +155,7 @@
               src="../assets/images/ic-person-green.svg"
               alt="會員中心"
             />
-          </router-link>
+          </a>
           <!-- 購物車 -->
           <a
             href="#"
@@ -227,6 +230,9 @@ import cartStore from '@/stores/cartStore'
 import searchStore from '@/stores/searchStore'
 import productStore from '@/stores/productStore'
 
+// json-server網址
+const serverUrl = 'https://greensheep-json-server.onrender.com'
+
 export default {
   data() {
     return {
@@ -294,6 +300,32 @@ export default {
     toggleDropdownMenu(status) {
       this.isDropdownMenuOpen = !this.isDropdownMenuOpen
       this.isDropdownMenuOpen === true ? this.openDropdownMenu() : this.closeDropdownMenu()
+    },
+    // 判斷是否已登入
+    async isLogin() {
+      const user = JSON.parse(localStorage.getItem('userInfo'))
+      if (user === null) {
+        this.$router.push({
+          path: '/memberLogin'
+        })
+        return
+      }
+      await this.$http
+        .get(`${serverUrl}/600/users/${user.id}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        })
+        .then((res) => {
+          this.$router.push({
+            path: '/member'
+          })
+        })
+        .catch((err) => {
+          this.$router.push({
+            path: '/memberLogin'
+          })
+        })
     }
     // openDropdownMenu() {
 

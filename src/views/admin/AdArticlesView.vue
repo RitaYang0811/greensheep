@@ -17,18 +17,20 @@
       <li class="nav-item">
         <a
           class="nav-link px-6 py-4"
-          :class="{ active: currentTab === '公開文章'}"
+          :class="{ active: currentTab === '公開文章' }"
           href="#"
-          @click.prevent="changeTab('公開文章')">
+          @click.prevent="changeTab('公開文章')"
+        >
           公開文章
         </a>
       </li>
       <li class="nav-item">
         <a
           class="nav-link px-6 py-4"
-          :class="{ active: currentTab === '草稿文章'}"
+          :class="{ active: currentTab === '草稿文章' }"
           href="#"
-          @click.prevent="changeTab('草稿文章')">
+          @click.prevent="changeTab('草稿文章')"
+        >
           草稿文章
         </a>
       </li>
@@ -56,11 +58,16 @@
             置頂文章管理
           </a>
           <template v-else>
-            <a href="#" class="btn btn-primary" @click.prevent="updatePinnedArticle">儲存置頂文章</a>
+            <a href="#" class="btn btn-primary" @click.prevent="updatePinnedArticle"
+              >儲存置頂文章</a
+            >
             <a
               href="#"
               class="btn btn-danger"
-              @click.prevent="selectedPinnedArticle = [ ...pinnedArticles ]; isSelectPinnedArticle = false">
+              @click.prevent="
+                (selectedPinnedArticle = [...pinnedArticles]), (isSelectPinnedArticle = false)
+              "
+            >
               取消
             </a>
             <!-- 置頂選擇狀態 PC -->
@@ -69,7 +76,8 @@
               <a
                 href="#"
                 class="text-decoration-underline link-underline-grey9F link-offset-1"
-                @click.prevent="selectedPinnedArticle = []">
+                @click.prevent="selectedPinnedArticle = []"
+              >
                 清除選擇
               </a>
               <p class="text-danger fs-8">*最多可選擇 3 篇文章</p>
@@ -101,7 +109,8 @@
       <a
         href="#"
         class="text-decoration-underline link-underline-grey9F link-offset-1"
-        @click.prevent="selectedPinnedArticle = []">
+        @click.prevent="selectedPinnedArticle = []"
+      >
         清除選擇
       </a>
       <p class="text-danger fs-8">*最多可選擇 3 篇文章</p>
@@ -110,9 +119,16 @@
     <!-- article list -->
     <template v-if="!loadingStatus.loadingItem">
       <!-- article list 卡片模式 -->
-      <ul v-if="!isList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 mb-10 mb-lg-15 ps-0 list-unstyled" style="row-gap: 12px;">
+      <ul
+        v-if="!isList"
+        class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 mb-10 mb-lg-15 ps-0 list-unstyled"
+        style="row-gap: 12px"
+      >
         <li class="col" v-for="article in currentPageArticles" :key="article.id">
-          <label class="card h-100 border border-1 border-primary position-relative" :for="article.id">
+          <label
+            class="card h-100 border border-1 border-primary position-relative"
+            :for="article.id"
+          >
             <span class="check-box" v-if="isSelectPinnedArticle">
               <input
                 class="form-check-input"
@@ -120,7 +136,9 @@
                 v-model="selectedPinnedArticle"
                 :value="article.id"
                 :id="article.id"
-                :disabled="selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)"
+                :disabled="
+                  selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)
+                "
               />
             </span>
             <img
@@ -131,7 +149,10 @@
             />
             <div class="card-body d-flex flex-column p-0 px-2 pt-2">
               <h5 class="card-title display-6 text-dark pb-2 mb-auto">
-                <span v-if="article.isPinned" class="float-end bg-primary text-white py-1 px-2 ms-1 fs-8">置頂</span
+                <span
+                  v-if="article.isPinned"
+                  class="float-end bg-primary text-white py-1 px-2 ms-1 fs-8"
+                  >置頂</span
                 >{{ article.title }}
               </h5>
               <div
@@ -140,13 +161,15 @@
                 <a
                   href="#"
                   :class="{ 'disabled-link': loadingStatus.loadingDelete || isSelectPinnedArticle }"
-                  @click.prevent="articleActivity('edit', article.id)">
+                  @click.prevent="articleActivity('edit', article.id)"
+                >
                   <i class="bi bi-pencil-fill text-dark fs-6"></i>
                 </a>
                 <a
                   href="#"
                   :class="{ 'disabled-link': isSelectPinnedArticle }"
-                  @click.prevent="articleActivity('delete', article.id)">
+                  @click.prevent="articleActivity('delete', article.id)"
+                >
                   <i class="bi bi-trash3-fill text-dark fs-6"></i>
                 </a>
               </div>
@@ -158,16 +181,22 @@
       <ul v-if="isList" class="d-flex flex-column gap-3 mb-10 mb-lg-15 ps-0 list-unstyled">
         <li v-for="article in currentPageArticles" :key="article.id" class="bg-white rounded-3">
           <label :for="article.id" class="d-flex gap-3 gap-md-8 px-2 py-4 px-sm-4">
-            <div class="d-flex align-items-center gap-1 gap-sm-4 position-relative" style="min-width: 98px;">
+            <div
+              class="d-flex align-items-center gap-1 gap-sm-4 position-relative"
+              style="min-width: 98px"
+            >
               <template v-if="isSelectPinnedArticle">
                 <div class="check-box d-md-none">
                   <input
-                    class="form-check-input "
+                    class="form-check-input"
                     type="checkbox"
                     v-model="selectedPinnedArticle"
                     :value="article.id"
                     :id="article.id"
-                    :disabled="selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)"
+                    :disabled="
+                      selectedPinnedArticle.length >= 3 &&
+                      !selectedPinnedArticle.includes(article.id)
+                    "
                   />
                 </div>
                 <input
@@ -176,47 +205,59 @@
                   v-model="selectedPinnedArticle"
                   :value="article.id"
                   :id="article.id"
-                  :disabled="selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)"
+                  :disabled="
+                    selectedPinnedArticle.length >= 3 && !selectedPinnedArticle.includes(article.id)
+                  "
                 />
               </template>
               <img
                 :src="article.image"
                 class="rounded object-fit-cover"
                 :alt="article.title"
-                style="height: 98px; width: 98px;"
+                style="height: 98px; width: 98px"
               />
             </div>
-            <div class="d-flex align-items-md-center flex-column flex-md-row flex-grow-1 gap-md-15 gap-lg-30">
+            <div
+              class="d-flex align-items-md-center flex-column flex-md-row flex-grow-1 gap-md-15 gap-lg-30"
+            >
               <div class="d-flex gap-1 flex-grow-1">
                 <h5 class="card-title display-6 text-dark flex-grow-1">
-                  {{article.title }}
+                  {{ article.title }}
                 </h5>
-                <p v-if="article.isPinned" class="align-self-start bg-primary text-white text-nowrap py-1 px-2 rounded-pill fs-9 "
-                  >置頂</p
+                <p
+                  v-if="article.isPinned"
+                  class="align-self-start bg-primary text-white text-nowrap py-1 px-2 rounded-pill fs-9"
                 >
+                  置頂
+                </p>
               </div>
               <div class="d-flex gap-4 gap-md-8 me-md-10">
                 <a
                   href="#"
                   :class="{ 'disabled-link': loadingStatus.loadingDelete || isSelectPinnedArticle }"
-                  @click.prevent="articleActivity('edit', article.id)">
+                  @click.prevent="articleActivity('edit', article.id)"
+                >
                   <i class="bi bi-pencil-fill text-dark fs-6"></i>
                 </a>
                 <a
                   href="#"
                   class=""
                   :class="{ 'disabled-link': isSelectPinnedArticle }"
-                  @click.prevent="articleActivity('delete', article.id)">
+                  @click.prevent="articleActivity('delete', article.id)"
+                >
                   <i class="bi bi-trash3-fill text-dark fs-6"></i>
                 </a>
               </div>
             </div>
           </label>
         </li>
-      </ul>   
-    </template>        
+      </ul>
+    </template>
     <!-- pagination -->
-    <div v-if="!loadingStatus.loadingItem && searchArticles.length" class="text-center va-pagination">
+    <div
+      v-if="!loadingStatus.loadingItem && searchArticles.length"
+      class="text-center va-pagination"
+    >
       <vue-awesome-paginate
         :total-items="searchArticles.length"
         :items-per-page="10"
@@ -236,9 +277,10 @@
         </template>
       </vue-awesome-paginate>
     </div>
-    <div v-if="loadingStatus.loadingItem"
+    <div
+      v-if="loadingStatus.loadingItem"
       class="d-flex justify-content-center align-items-center"
-      style="min-height: 360px;"
+      style="min-height: 360px"
     >
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -248,9 +290,9 @@
   </div>
 </template>
 <script>
-import adArticlesStore from "@/stores/adArticlesStore.js"
+import adArticlesStore from '@/stores/adArticlesStore.js'
 import { mapActions, mapState } from 'pinia'
-import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
+import { toastSuccess, toastError } from '@/utils/sweetalertToast.js'
 
 export default {
   data() {
@@ -260,11 +302,17 @@ export default {
       articlesCurrentPage: 1,
       keyword: '',
       isList: false,
-      isLoading: false,
+      isLoading: false
     }
   },
   methods: {
-    ...mapActions(adArticlesStore, ['getArticles','articleActivity', 'changeTab', 'getCurrentPageArticles', 'updateCurrentPage']),
+    ...mapActions(adArticlesStore, [
+      'getArticles',
+      'articleActivity',
+      'changeTab',
+      'getCurrentPageArticles',
+      'updateCurrentPage'
+    ]),
     // 儲存置頂文章
     async updatePinnedArticle() {
       try {
@@ -275,18 +323,18 @@ export default {
 
         // ----- 取消置頂 -----
         // 原置頂文章若不在當次選取的文章中則取消置頂狀態
-        const cancelPinnedArticles = this.pinnedArticles.filter(id => {
+        const cancelPinnedArticles = this.pinnedArticles.filter((id) => {
           return !this.selectedPinnedArticle.includes(id)
         })
 
-        // 取得欲取消的文章的 data (含content) 
-        const apiUrlsGetCancelArticle = cancelPinnedArticles.map(id => {
+        // 取得欲取消的文章的 data (含content)
+        const apiUrlsGetCancelArticle = cancelPinnedArticles.map((id) => {
           return this.$http.get(`${url}/${id}`)
         })
         const resGetCancelArticle = await Promise.all(apiUrlsGetCancelArticle)
 
         // 取消置頂狀態，isPinned 設為 false
-        const apiUrlsPutCancelArticle = resGetCancelArticle.map(article => {
+        const apiUrlsPutCancelArticle = resGetCancelArticle.map((article) => {
           const id = article?.data?.article?.id
           const data = { ...article?.data?.article, isPinned: false }
           return this.$http.put(`${url}/${id}`, { data: data })
@@ -295,18 +343,18 @@ export default {
 
         // ----- 新增置頂 -----
         // 當次選取的文章中若不在原置頂文章中則需要去取得資料
-        const addPinnedArticle = this.selectedPinnedArticle.filter(id => {
+        const addPinnedArticle = this.selectedPinnedArticle.filter((id) => {
           return !this.pinnedArticles.includes(id)
         })
 
         // 取得欲置頂文章的 content 資料給 put 使用 (因為 get/articles 不包含 content 欄位)
-        const apiUrlsGetArticle = addPinnedArticle.map(id => {
+        const apiUrlsGetArticle = addPinnedArticle.map((id) => {
           return this.$http.get(`${url}/${id}`)
         })
         const resGetArticle = await Promise.all(apiUrlsGetArticle)
 
         // 增加置頂狀態，isPinned 設為 true
-        const apiUrlsPutArticle = resGetArticle.map(article => {
+        const apiUrlsPutArticle = resGetArticle.map((article) => {
           const id = article?.data?.article?.id
           const data = { ...article?.data?.article, isPinned: true }
           return this.$http.put(`${url}/${id}`, { data: data })
@@ -314,7 +362,7 @@ export default {
         const resPutArticle = await Promise.all(apiUrlsPutArticle)
 
         toastSuccess('已更新置頂文章')
-        this.getArticles();
+        this.getArticles()
       } catch (err) {
         toastError(err.response.data.message)
       } finally {
@@ -324,7 +372,9 @@ export default {
   },
   watch: {
     pinnedArticles() {
-      this.selectedPinnedArticle = [ ...this.pinnedArticles ]
+      this.selectedPinnedArticle = [...this.pinnedArticles]
+      console.log(123)
+      console.log(this.selectedPinnedArticle)
     },
     keyword() {
       this.getCurrentPageArticles(1, this.keyword)
@@ -339,13 +389,16 @@ export default {
   },
   computed: {
     ...mapState(adArticlesStore, [
-      'loadingStatus', 'searchArticles',
-      'currentTab', 'pinnedArticles',
-      'currentPage', 'currentPageArticles',
+      'loadingStatus',
+      'searchArticles',
+      'currentTab',
+      'pinnedArticles',
+      'currentPage',
+      'currentPageArticles'
     ])
   },
   mounted() {
-    this.getArticles();
+    this.getArticles()
   }
 }
 </script>
