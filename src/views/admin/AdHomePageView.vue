@@ -6,17 +6,23 @@
         <div class="d-flex">
           <div class="w-50 bg-white m-2">
             <div class="p-8">
-              <span class="d-block fs-2 mb-3 text-primary fw-medium">5</span>
-              <span class="d-block fs-5 mb-3 text-primary">待出貨清單</span>
+              <span class="d-block fs-2 mb-3 text-primary fw-medium">{{ allOrders.length }}</span>
+              <span class="d-block fs-5 mb-3 text-primary">全部訂單</span>
             </div>
-            <button type="button " class="custom-btn custom-btn-toGreen w-100">查看詳情</button>
+            <button type="button " class="custom-btn custom-btn-toGreen w-100" @click="toOrderPage">
+              查看詳情
+            </button>
           </div>
           <div class="w-50 bg-white m-2">
             <div class="p-8">
-              <span class="d-block fs-2 mb-3 text-primary fw-medium">{{ unpaidOrders }}</span>
+              <span class="d-block fs-2 mb-3 text-primary fw-medium">{{
+                unpaidOrders.length
+              }}</span>
               <span class="d-block fs-5 mb-3 text-primary">待付款訂單</span>
             </div>
-            <button type="button " class="custom-btn custom-btn-toGreen w-100">查看詳情</button>
+            <button type="button " class="custom-btn custom-btn-toGreen w-100" @click="toOrderPage">
+              查看詳情
+            </button>
           </div>
         </div>
       </div>
@@ -79,18 +85,36 @@ import { mapState, mapActions } from 'pinia'
 export default {
   data() {
     return {
-      homepageUnpaidOrders: []
+      orderCreateTime: null,
+      passedTime: null
     }
   },
   methods: {
-    ...mapActions(orderStore, ['getAllOrders'])
+    ...mapActions(orderStore, ['getAllOrders', 'getNewOrders']),
+    toOrderPage() {
+      this.$router.push('/admin/orders')
+    }
+    // getNewOrders() {
+    //   this.orderCreateTime = this.allOrders[0].create_at
+    //   const currentTimeStamp = Date.now()
+    //   // 計算時間差，並將其轉換為分鐘數
+    //   this.passedTime = Math.floor((currentTimeStamp - this.orderCreateTime) / (1000 * 60))
+    //   console.log('時間', this.orderCreateTime, this.passedTime)
+    // }
   },
   computed: {
-    ...mapState(orderStore, ['allOrders', ' unpaidOrders', 'paidOrders'])
+    ...mapState(orderStore, [
+      'allOrders',
+      'unpaidOrders',
+      'paidOrders',
+      'deletedOrders',
+      'doneOrders'
+    ])
   },
   mounted() {
     this.getAllOrders()
-    this.homepageUnpaidOrders = this.unpaidOrders
+    this.getNewOrders()
+    console.log('home', this.allOrders, this.unpaidOrders)
   }
 }
 </script>
