@@ -3,6 +3,9 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   linkActiveClass: 'active',
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }
+  },
   routes: [
     {
       path: '/',
@@ -118,7 +121,7 @@ const router = createRouter({
           component: () => import('../views/user/MemberLayoutView.vue'),
           children: [
             {
-              path: '',
+              path: 'home',
               name: 'MemberHome',
               component: () => import('../views/user/MemberHomeView.vue')
             },

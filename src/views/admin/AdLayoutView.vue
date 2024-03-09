@@ -53,7 +53,7 @@
               >優惠管理</RouterLink
             >
           </li>
-          <li class=""><a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a></li>
+          <!-- <li class=""><a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a></li> -->
         </ul>
         <ul class="list-unstyled d-flex justify-content-center gap-6">
           <li class="mt-auto">
@@ -121,9 +121,9 @@
             >優惠管理</RouterLink
           >
         </li>
-        <li @click="closeOffcanvas">
+        <!-- <li @click="closeOffcanvas">
           <a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a>
-        </li>
+        </li> -->
       </ul>
       <a
         href="##"
