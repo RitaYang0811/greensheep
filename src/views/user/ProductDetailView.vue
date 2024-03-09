@@ -11,7 +11,7 @@
             <router-link to="/products/productsAll">全部商品</router-link>
           </li>
           <li class="breadcrumb-item" aria-current="page">
-            <routerLink :to="`/products?category=${productInfo.category}`"
+            <routerLink :to="{ path: `/products/${category}` }"
               >{{ productInfo.category }}
             </routerLink>
           </li>
@@ -275,7 +275,6 @@
         class="d-flex flex-column align-items-center mb-5"
         data-aos="fade-up"
         data-aos-duration="1000"
-        data-aos-once="true"
       >
         <p class="mb-1 px-1 display-6 border-start border-end border-1 border-dark lh-1">
           台灣原創設計 & 手工製作

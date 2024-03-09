@@ -4,10 +4,7 @@
     <h3 class="fs-2 mb-6 text-center text-primary">OUR COLLECTIONS</h3>
     <div class="row gy-5">
       <div class="col-lg-3 col-6">
-        <RouterLink
-          :to="{ path: '/products/項鍊 PENDANT', query: { category: '項鍊 PENDANT' } }"
-          @click="changeCategory('項鍊 PENDANT')"
-        >
+        <RouterLink to="/products/productsAll">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -27,7 +24,7 @@
         </RouterLink>
       </div>
       <div class="col-lg-3 col-6">
-        <router-link to="/products/戒指%20RING" @click="getFilterProducts('戒指 RING')">
+        <RouterLink to="/products/productsAll">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -43,10 +40,10 @@
               <h5 class="card-title display-4 p-3">RING</h5>
             </div>
           </div>
-        </router-link>
+        </RouterLink>
       </div>
       <div class="col-lg-3 col-6">
-        <router-link to="/products/耳環%20EARRINGS">
+        <RouterLink to="/products/productsAll">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -62,10 +59,10 @@
               <h5 class="card-title display-4 p-3">EARRINGS</h5>
             </div>
           </div>
-        </router-link>
+        </RouterLink>
       </div>
       <div class="col-lg-3 col-6">
-        <router-link to="/products/手鍊%20BRACELET">
+        <RouterLink to="/products/productsAll">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -81,7 +78,7 @@
               <h5 class="card-title display-4 p-3">BRACELET</h5>
             </div>
           </div>
-        </router-link>
+        </RouterLink>
       </div>
     </div>
   </div>
@@ -296,7 +293,7 @@
   <!-- 手機版 -->
   <div class="wrap d-lg-none d-block">
     <div class="container mb-6">
-      <h2 class="fs-6 text-primary text-cneter fw-bold">熱賣商品</h2>
+      <h2 class="fs-6 text-primary text-center fw-bold">熱賣商品</h2>
       <h3 class="fs-2 mb-12 text-primary text-center">OUR BEST SELLERS</h3>
     </div>
 

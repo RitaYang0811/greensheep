@@ -161,11 +161,7 @@
                       NT$ {{ product.price }}
                     </span>
                   </div>
-                  <!-- <span class="add-like position-absolute z-1">
-                    <i class="bi bi-heart fs-4 text-primary"></i>
-                    <i class="bi bi-heart-fill fs-4 text-primary"></i
-                  >
-                  </span> -->
+
                   <div class="d-flex gap-2">
                     <!-- 加入收藏點擊事件 -->
                     <button
