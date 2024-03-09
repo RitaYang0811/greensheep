@@ -76,7 +76,7 @@
         aria-labelledby="nav-home-tab"
         tabindex="0"
       >
-        <button type="button" class="btn btn-danger" @click="deleteAllOrders">刪除全部訂單</button>
+        <button type="button" class="btn btn-deco" @click="deleteAllOrders">刪除全部訂單</button>
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
           <Accordion

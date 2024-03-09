@@ -18,15 +18,10 @@ export default defineStore('orderStore', {
         this.allOrders = []
         this.unpaidOrders = []
         this.paidOrders = []
-        this.deletedOrders = []
-        this.doneOrders = []
         const getOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders`
-
         const res = await axios.get(getOrdersUrl)
         this.allOrders = res.data.orders
-        console.log('Before forEach:', this.allOrders)
         this.allOrders.forEach((item) => {
-          console.log('Processing item:', item)
           //若該訂單沒有orderStatus時，代表為新訂單，加入orderStatus。
           if (!item.orderStatus) {
             item.orderStatus = {
@@ -41,37 +36,21 @@ export default defineStore('orderStore', {
             this.deletedOrders.push(item)
           } else {
             //未刪除訂單中篩出付款和未付款
-            if (!item.is_paid) {
-              // 修改此處條件
-              this.unpaidOrders.push(item) // 修改此處
+            if (item.is_paid) {
+              this.paidOrders.push(item)
             } else {
-              // 新增這個條件
-              this.paidOrders.push(item) // 新增這個部分
+              this.unpaidOrders.push(item)
             }
           }
           //篩出完成訂單
           if (item.orderStatus.done) {
             this.doneOrders.push(item)
           }
-          console.log('store', this.allOrders, this.unpaidOrders)
         })
       } catch (err) {
         console.log(err)
       }
     },
-    async getNewOrders() {
-      try {
-        await this.getAllOrders()
-        this.orderCreateTime = this.allOrders[0].create_at
-        const currentTimeStamp = new Date().getTime()
-        this.passedTime = Math.floor((currentTimeStamp - this.orderCreateTime) / (1000 * 60))
-        console.log('時間', this.orderCreateTime, currentTimeStamp, this.passedTime)
-        console.log()
-      } catch (error) {
-        console.log(error)
-      }
-    },
-
     updateOrder(data) {
       const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`
       //更新訂單中塞入訂單狀態，用以處理訂單狀態

@@ -31,40 +31,23 @@
         <div class="d-flex">
           <div class="notice-board w-100 bg-white m-2">
             <div class="p-3">
-              <div class="card border border-primary rounded-3 mb-4">
+              <div
+                v-for="newOrder in homeOrderInfo"
+                :key="newOrder.id"
+                class="card border border-primary rounded-3 mb-4"
+                @click="toOrderPage"
+              >
                 <div class="card-body p-3 text-start">
                   <div class="fs-6 text-dark fw-medium font-notosans mb-3">
-                    訂單編號099156557
+                    訂單編號：{{ newOrder.id }}
                     <span class="float-end">
                       <i class="bi bi-exclamation-circle-fill text-danger"></i
                     ></span>
                   </div>
 
-                  <p class="fs-7 text-primary">此筆訂單已超過3天未處理，請盡快處理！</p>
-                </div>
-              </div>
-              <div class="card border border-primary rounded-3 mb-4">
-                <div class="card-body p-3 text-start">
-                  <div class="fs-6 text-dark fw-medium font-notosans mb-3">
-                    訂單編號099156557
-                    <span class="float-end">
-                      <i class="bi bi-exclamation-circle-fill text-danger"></i
-                    ></span>
-                  </div>
-
-                  <p class="fs-7 text-primary">此筆訂單已超過3天未付款，請盡快處理！</p>
-                </div>
-              </div>
-              <div class="card border border-primary rounded-3 mb-4">
-                <div class="card-body p-3 text-start">
-                  <div class="fs-6 text-dark fw-medium font-notosans mb-3">
-                    訂單編號099156557
-                    <span class="float-end">
-                      <i class="bi bi-exclamation-circle-fill text-danger"></i
-                    ></span>
-                  </div>
-
-                  <p class="fs-7 text-primary">31分鐘前剛收到一筆新訂單！</p>
+                  <p class="fs-7 text-primary">
+                    恭喜你！{{ newOrder.passedTime }} 收到一筆新訂單喔！
+                  </p>
                 </div>
               </div>
             </div>
@@ -86,21 +69,50 @@ export default {
   data() {
     return {
       orderCreateTime: null,
-      passedTime: null
+      passedTime: null,
+      homeOrderInfo: []
     }
   },
   methods: {
     ...mapActions(orderStore, ['getAllOrders', 'getNewOrders']),
     toOrderPage() {
       this.$router.push('/admin/orders')
+    },
+    getHomeOrders() {
+      console.log('3', this.allOrders, this.unpaidOrders)
+      const nowTime = Math.floor(new Date().getTime() / 1000)
+      console.log(nowTime)
+      // 使用 map 方法從 allOrders 中提取 id 和 create_at
+      const homeOrderInfo = this.unpaidOrders.map((order) => ({
+        id: order.create_at,
+        createTime: order.create_at,
+        passedTime: this.calculatePassedTime(nowTime, order.create_at)
+      }))
+
+      // 將組成的新陣列賦值給 homeOrderInfo
+      this.homeOrderInfo = homeOrderInfo
+    },
+    calculatePassedTime(nowTime, createTime) {
+      const diff = nowTime - createTime // 計算現在時間與訂單創建時間的差值（秒）
+
+      if (diff < 60) {
+        // 如果差值小於60秒，使用秒來表示
+        return diff + '秒前'
+      } else if (diff >= 60 && diff < 60 * 60) {
+        // 如果差值小於一小時（60分鐘），使用分鐘來表示
+        const minutesPassed = Math.floor(diff / 60)
+        return minutesPassed + '分鐘前'
+      } else if (diff >= 60 * 60 && diff < 24 * 60 * 60) {
+        // 如果差值小於一天（24小時），使用小時來表示
+        const hoursPassed = Math.floor(diff / (60 * 60))
+        return hoursPassed + '小時前'
+      } else {
+        // 否則，使用日和小時來表示
+        const daysPassed = Math.floor(diff / (24 * 60 * 60))
+        const remainingHours = Math.floor((diff % (24 * 60 * 60)) / (60 * 60))
+        return daysPassed + '天' + remainingHours + '小時前'
+      }
     }
-    // getNewOrders() {
-    //   this.orderCreateTime = this.allOrders[0].create_at
-    //   const currentTimeStamp = Date.now()
-    //   // 計算時間差，並將其轉換為分鐘數
-    //   this.passedTime = Math.floor((currentTimeStamp - this.orderCreateTime) / (1000 * 60))
-    //   console.log('時間', this.orderCreateTime, this.passedTime)
-    // }
   },
   computed: {
     ...mapState(orderStore, [
@@ -111,15 +123,10 @@ export default {
       'doneOrders'
     ])
   },
-  mounted() {
-    this.getAllOrders()
-    this.getNewOrders()
-    console.log('home', this.allOrders, this.unpaidOrders)
+  async mounted() {
+    await this.getAllOrders()
+    this.getHomeOrders()
   }
 }
 </script>
-<style scoped lang="scss">
-// .notice-board {
-//   height: calc(100vh - 230px);
-// }
-</style>
+<style scoped lang="scss"></style>
