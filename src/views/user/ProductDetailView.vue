@@ -30,8 +30,8 @@
             <h1 class="fw-bold fs-3 fs-lg-2 me-5">{{ productInfo.title }}</h1>
             <!-- 愛心收藏 -->
 
-            <!-- <i class="bi bi-heart fs-4 text-primary"></i>
-            <i class="bi bi-heart-fill fs-4 text-primary"></i> -->
+            <i class="bi bi-heart fs-4 text-primary"></i>
+            <i class="bi bi-heart-fill fs-4 text-primary"></i>
           </div>
           <!-- v-if 無折扣 -->
           <p

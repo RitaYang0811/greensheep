@@ -130,6 +130,7 @@
                     class="position-absolute start-0 bottom-0 z-1 bg-deco p-1 text-dark fs-8"
                     >{{ product.discount }}折</span
                   >
+
                   <img
                     :src="product.imageUrl"
                     class="show position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
@@ -160,13 +161,30 @@
                       NT$ {{ product.price }}
                     </span>
                   </div>
-                  <button
-                    href="#"
-                    class="custom-btn custom-btn-toGreen text-center w-100 border-1 add-to-cart"
-                    @click.prevent="addToCart(product.id)"
+                  <!-- <span class="add-like position-absolute z-1">
+                    <i class="bi bi-heart fs-4 text-primary"></i>
+                    <i class="bi bi-heart-fill fs-4 text-primary"></i
                   >
-                    <i class="bi bi-bag-check fs-6"></i>
-                  </button>
+                  </span> -->
+                  <div class="d-flex gap-2">
+                    <!-- 加入收藏點擊事件 -->
+                    <button
+                      type="button"
+                      class="custom-btn custom-btn-secondary text-center w-100 border-1 add-to-cart"
+                    >
+                      <!-- 匡線愛心 -->
+                      <i class="bi bi-heart fs-5"></i>
+                      <!-- 點擊後變實心 -->
+                      <!-- <i class="bi bi-heart-fill fs-5"></i> -->
+                    </button>
+                    <button
+                      type="button"
+                      class="custom-btn custom-btn-toGreen text-center w-100 border-1 add-to-cart"
+                      @click.prevent="addToCart(product.id)"
+                    >
+                      <i class="bi bi-bag-check fs-6"></i>
+                    </button>
+                  </div>
                 </div>
               </router-link>
             </li>
@@ -227,7 +245,17 @@
                           </span>
                         </td>
 
-                        <td class="col-12 col-md-2 my-md-auto">
+                        <td class="col-12 col-md-3 my-md-auto d-flex gap-2">
+                          <!-- 加入收藏點擊事件 -->
+                          <button
+                            type="button"
+                            class="custom-btn custom-btn-secondary text-center w-60 w-lg-100 border-1 add-to-cart"
+                          >
+                            <!-- 匡線愛心 -->
+                            <i class="bi bi-heart fs-5"></i>
+                            <!-- 點擊後變實心 -->
+                            <!-- <i class="bi bi-heart-fill fs-5"></i> -->
+                          </button>
                           <button
                             href="#"
                             class="custom-btn custom-btn-toGreen text-center w-60 w-lg-100 border-1 add-to-cart"
@@ -385,9 +413,10 @@ export default {
 
 <style scoped lang="scss">
 @import '@/assets/scss/utils/_mixin.scss';
-// .card-title {
-//   height: 18px;
-// }
+.add-like {
+  top: 10px;
+  left: 14px;
+}
 .list-img {
   width: 150px;
   height: 150px;
