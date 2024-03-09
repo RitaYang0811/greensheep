@@ -1,6 +1,6 @@
 <template>
   <!-- mx my 可以修改購物車彈出時旁邊的留白 -->
-  <div class="offcanvas offcanvas-end my-3 mx-5 p-3 rounded-3" data-bs-backdrop="false" data-bs-scroll="true"
+  <div class="offcanvas offcanvas-end my-3 mx-sm-5 mx-0 p-3 rounded-3" data-bs-backdrop="false" data-bs-scroll="true"
     tabindex="-1" id="cartOffcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header ">
       <h3 class="offcanvas-title" id="offcanvasRightLabel"></h3>
@@ -14,12 +14,13 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item mt-3" v-for="cart in carts" :key="cart.id">
               <div class="card mb-3 border-0" style="max-width: 540px;">
-                <div class="row g-0">
-                  <div class="col-md-4 d-flex align-items-center justify-content-center ">
-                    <img :src="cart.product.imageUrl" class="img-fluid rounded-2 w-75 h-75" alt="...">
+                <div class="row g-0 d-md-flex flex-wrap justify-content-center ">
+                  <div class="col-md-4 d-flex align-items-center justify-content-center"
+                    style="max-width: 120px;max-height: 120px;">
+                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover  rounded-2" alt="...">
                   </div>
                   <div class="col-md-7 d-flex align-items-center ">
-                    <div class="card-body text-start">
+                    <div class="card-body text-md-start text-center my-2 my-md-0">
                       <div class="">
                         <span class="mb-2 badge rounded-pill text-bg-primary">{{ cart.product.category }} </span>
                         <h5 class="card-title text-primary">
@@ -28,12 +29,12 @@
                       </div>
 
                       <div class="">
-                        <button class="btn btn-link text-primary ps-0 pe-2" @click.prevent="cart.qty++"
-                          @click="updateCart(cart)"><i class="bi bi-plus-circle fs-4"></i></button>
-                        <input type="number" min="1" class="w-25 my-2 fs-5" v-model="cart.qty" disabled>
-                        <button class="btn btn-link text-primary ps-2" @click.prevent="cart.qty--"
-                          @click="updateCart(cart)" :disabled="cart.qty<=1"><i
+                        <button class="btn btn-link text-primary pe-1" @click.prevent="cart.qty--"
+                          @click="updateCart(cart)" :disabled="cart.qty <= 1"><i
                             class="bi bi-dash-circle fs-4"></i></button>
+                        <input type="number" min="1" class="w-25 my-2 fs-5" v-model="cart.qty" disabled>
+                        <button class="btn btn-link text-primary ps-0 ps-1" @click.prevent="cart.qty++"
+                          @click="updateCart(cart)"><i class="bi bi-plus-circle fs-4"></i></button>
                       </div>
 
 
@@ -41,7 +42,8 @@
                       <p class="card-text text-small text-dark">NT$ {{ parseInt(cart.total) }}</p>
                     </div>
                   </div>
-                  <div class="col-md-1 d-flex align-items-center" @click.prevent="deleteCart(cart.id)">
+                  <div class="col-md-1 d-flex align-items-center justify-content-center"
+                    @click.prevent="deleteCart(cart.id)">
                     <a href="" class="text-danger fs-4"><i class="bi bi-trash"></i> </a>
                   </div>
                 </div>
@@ -54,10 +56,8 @@
 
       <div class="my-2">
         <p class="text-success text-end fs-4 p-4 text-dark border-top">總計：$ <span>{{ parseInt(total) }}</span> 元</p>
-
         <router-link to="/cart" class="btn btn-primary w-100 fs-4 p-4" @click="closeOffcanvas"> 立即結帳
         </router-link>
-        <!-- <button class="btn btn-primary w-100 fix-button fs-4 p-4 ">立即結帳</button> -->
       </div>
     </div>
   </div>
@@ -100,5 +100,3 @@ export default {
 // bootstrap icon
 @import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css";
 </style>
-
-
