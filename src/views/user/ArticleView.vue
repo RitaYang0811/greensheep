@@ -25,7 +25,7 @@
       data-aos-delay="200"
       data-aos-once="true"
     >
-      <div class="col-lg-5 me-4 mb-2" style="float: left;"><img :src="article.image" alt=""></div>
+      <div class="col-lg-5 ms-4 mb-2" style="float: right;"><img :src="article.image" :alt="article.title"></div>
       <div class="col-12 lh-lg text-primary">
         <div v-html="article.content"></div>
       </div>
@@ -38,67 +38,75 @@
     >
       猜你也喜歡
     </h2>
-    <ul class="row row-cols-2 row-cols-md-4 g-4 mb-20 list-unstyled">
-      <li v-for="(product, index) in recommendProducts" :key="product.id" class="col d-flex flex-column product-item">
-        <RouterLink
-          :to="`/products/${product.id}`"
-          class="d-flex flex-column product-item"
-          data-aos="fade-up"
-          data-aos-duration="1200"
-          :data-aos-delay="index * 200"
-          data-aos-once="true"
+    <ul class="row row-cols-2 row-cols-md-4 g-4 mb-20 ps-0 list-unstyled">
+        <!-- 放相同分類隨機商品 -->
+        <li
+          class="col list-unstyled h-100 column"
+          v-for="(product, index) in recommendProducts"
+          :key="product.id"
         >
-          <div
-            class="product h-border position-relative"
-            style="width: 100%; padding-top: 100%"
+          <RouterLink
+            :to="`/products/${product.id}`"
+            class="d-flex flex-column product-item"
+            data-aos="fade-up"
+            data-aos-duration="1200"
+            :data-aos-delay="index * 200"
+            data-aos-once="true"
           >
-            <img
-              :src="product.imageUrl"
-              class="card-img-top show position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
-              :alt="product.title"
-            />
-            <img
-              :src="product.imageUrl2"
-              class="card-img-top change position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
-              :alt="product.title"
-            />
-          </div>
-          <div
-            class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1"
-          >
-            <h5 class="card-title display-8 text-dark pt-2">
-             {{ product.title }}
-            </h5>
-            <div class="d-flex gap-1">
+            <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
+              <span
+                v-if="product.discount !== 10"
+                class="position-absolute start-0 bottom-0 z-3 bg-deco p-1 text-dark fs-8"
+                >{{ product.discount }}折</span
+              >
+              <img
+                :src="product.imageUrl"
+                class="show position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
+              />
+              <img
+                :src="product.imageUrl2"
+                class="change position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
+              />
+            </div>
+            <div class="card-body text-start">
+              <h5 class="card-title display-7 text-dark my-2">{{ product.title }}</h5>
               <!-- v-if 無折扣 -->
-              <template v-if="product.origin_price === product.price">
-                <p                
-                  class="card-text display-8 text-primary "
-                >
-                  NT$ {{ product.origin_price }}
-                </p>
-              </template> 
+              <p
+                v-if="product.origin_price === product.price"
+                class="card-text display-8 text-primary mt-3 mb-6"
+              >
+                NT$ {{ product.origin_price }}
+              </p>
+
               <!-- v-else 打折 -->
-              <template v-else>
-                <span class="card-text display-8 text-primary"
+              <div v-else class="mt-3 mb-1">
+                <span class="card-text display-8 text-primary my-2 me-2"
                   >NT$ {{ product.origin_price }}</span
                 >
                 <br /><span class="card-text display-8 text-grey9F text-decoration-line-through">
                   NT$ {{ product.price }}
                 </span>
-              </template>
+              </div>
+              <button
+                href="#"
+                class="custom-btn custom-btn-toGreen text-center w-100 border-1"
+                @click.prevent="addToCart(product.id)"
+              >
+                <i class="bi bi-bag-check fs-6"></i>
+              </button>
             </div>
-          </div>
-        </RouterLink>
-      </li>
+          </RouterLink>
+        </li>
     </ul>
   </div>
     <VueLoading :active="isLoading" />
 </template>
 <script>
 import productStore from '@/stores/productStore.js'
+import cartStore from '@/stores/cartStore.js'
 import { mapState, mapActions } from 'pinia'
 import { useRoute } from 'vue-router'
+import { toastError } from "@/utils/sweetalertToast.js"
 
 export default {
   data() {
@@ -109,6 +117,7 @@ export default {
   },
   methods: {
     ...mapActions(productStore, ['getProducts', 'getRecommendProducts']),
+    ...mapActions(cartStore, ['addToCart']),
     // 取得單一文章
     getArticle() {
       this.isLoading = true
@@ -120,7 +129,7 @@ export default {
           this.article = res.data.article
         })
         .catch(err => {
-          console.log(err)
+          toastError(err.response.data.message)
         })
         .finally(() => {
           this.isLoading = false
