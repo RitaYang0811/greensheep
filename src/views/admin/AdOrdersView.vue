@@ -4,124 +4,276 @@
 
     <nav>
       <div class="nav nav-tabs border-button border-3" id="nav-tab" role="tablist">
-        <button class="nav-link active w-10" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#allOrders"
-          type="button" role="tab" aria-controls="nav-home" aria-selected="true">全部訂單</button>
-        <button class="nav-link w-10" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#unpaid" type="button"
-          role="tab" aria-controls="nav-profile" aria-selected="false">未付款</button>
-        <button class="nav-link w-10" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#paid" type="button"
-          role="tab" aria-controls="nav-contact" aria-selected="false">已付款</button>
-        <button class="nav-link w-10" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#delete" type="button"
-          role="tab" aria-controls="nav-contact" aria-selected="false">已刪除</button>
-        <button class="nav-link w-10" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#done" type="button"
-          role="tab" aria-controls="nav-contact" aria-selected="false">已完成</button>
+        <button
+          class="nav-link active w-10"
+          id="nav-home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#allOrders"
+          type="button"
+          role="tab"
+          aria-controls="nav-home"
+          aria-selected="true"
+        >
+          全部訂單
+        </button>
+        <button
+          class="nav-link w-10"
+          id="nav-profile-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#unpaid"
+          type="button"
+          role="tab"
+          aria-controls="nav-profile"
+          aria-selected="false"
+        >
+          未付款
+        </button>
+        <button
+          class="nav-link w-10"
+          id="nav-contact-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#paid"
+          type="button"
+          role="tab"
+          aria-controls="nav-contact"
+          aria-selected="false"
+        >
+          已付款
+        </button>
+        <button
+          class="nav-link w-10"
+          id="nav-contact-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#delete"
+          type="button"
+          role="tab"
+          aria-controls="nav-contact"
+          aria-selected="false"
+        >
+          已刪除
+        </button>
+        <button
+          class="nav-link w-10"
+          id="nav-contact-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#done"
+          type="button"
+          role="tab"
+          aria-controls="nav-contact"
+          aria-selected="false"
+        >
+          已完成
+        </button>
       </div>
     </nav>
 
     <div class="tab-content m-3" id="nav-tabContent">
       <!-- tabs 全部訂單 -->
-      <div class="tab-pane fade show active" id="allOrders" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+      <div
+        class="tab-pane fade show active"
+        id="allOrders"
+        role="tabpanel"
+        aria-labelledby="nav-home-tab"
+        tabindex="0"
+      >
         <button type="button" class="btn btn-danger" @click="deleteAllOrders">刪除全部訂單</button>
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
-          <Accordion :orders="allOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+          <Accordion
+            :orders="allOrders"
+            :openModal="openModal"
+            :deleteOrder="deleteOrder"
+          ></Accordion>
           <!-- Accordion -->
         </div>
-
       </div>
       <!-- tabs 未付款 -->
-      <div class="tab-pane fade" id="unpaid" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+      <div
+        class="tab-pane fade"
+        id="unpaid"
+        role="tabpanel"
+        aria-labelledby="nav-profile-tab"
+        tabindex="0"
+      >
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
-          <Accordion :orders="unpaidOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+          <Accordion
+            :orders="unpaidOrders"
+            :openModal="openModal"
+            :deleteOrder="deleteOrder"
+          ></Accordion>
           <!-- Accordion -->
         </div>
       </div>
       <!-- tabs 已付款 -->
-      <div class="tab-pane fade" id="paid" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+      <div
+        class="tab-pane fade"
+        id="paid"
+        role="tabpanel"
+        aria-labelledby="nav-contact-tab"
+        tabindex="0"
+      >
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
-          <Accordion :orders="paidOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+          <Accordion
+            :orders="paidOrders"
+            :openModal="openModal"
+            :deleteOrder="deleteOrder"
+          ></Accordion>
           <!-- Accordion -->
         </div>
       </div>
       <!-- tab 已刪除 -->
-      <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+      <div
+        class="tab-pane fade"
+        id="delete"
+        role="tabpanel"
+        aria-labelledby="nav-contact-tab"
+        tabindex="0"
+      >
         <!-- <h2>已刪除頁面</h2> -->
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
-          <Accordion :orders="deletedOrders" :openModal="openModal" :deleteOrder="deleteOrder"
-            :confirmDelete="confirmDelete"></Accordion>
+          <Accordion
+            :orders="deletedOrders"
+            :openModal="openModal"
+            :deleteOrder="deleteOrder"
+            :confirmDelete="confirmDelete"
+          ></Accordion>
           <!-- Accordion -->
         </div>
       </div>
       <!-- tab 已完成 -->
-      <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+      <div
+        class="tab-pane fade"
+        id="done"
+        role="tabpanel"
+        aria-labelledby="nav-contact-tab"
+        tabindex="0"
+      >
         <!-- <h2>已完成頁面</h2> -->
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
-          <Accordion :orders="doneOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+          <Accordion
+            :orders="doneOrders"
+            :openModal="openModal"
+            :deleteOrder="deleteOrder"
+          ></Accordion>
           <!-- Accordion -->
         </div>
       </div>
-
     </div>
-
   </div>
 
   <!-- Modal -->
-  <div class="modal fade rounded-2" id="adOrderModal" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+  <div
+    class="modal fade rounded-2"
+    id="adOrderModal"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-hidden="true"
+  >
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-4 ms-2" id="staticBackdropLabel">訂單詳細資料</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <!-- checkbox -->
           <div class="">
-            <div class="p-10 d-flex justify-content-center " style="z-index: 10;">
+            <div class="p-10 d-flex justify-content-center" style="z-index: 10">
               <div class="">
-                <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" checked disabled>
-                <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck1"><i
-                    class="bi bi-check-lg fs-2 text-light"></i></label>
+                <input
+                  type="checkbox"
+                  class="btn-check"
+                  id="btncheck1"
+                  autocomplete="off"
+                  checked
+                  disabled
+                />
+                <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck1"
+                  ><i class="bi bi-check-lg fs-2 text-light"></i
+                ></label>
                 <p class="mt-3 fs-4">收到訂單</p>
               </div>
-              <div :class="orderStatus?.making ? `bg-primary` : `bg-light`" class="mt-5"
-                style="height: 10px;width: 20%;">
-              </div>
+              <div
+                :class="orderStatus?.making ? `bg-primary` : `bg-light`"
+                class="mt-5"
+                style="height: 10px; width: 20%"
+              ></div>
               <div class="">
                 <!-- disabled綁定後一個checkbox，如果後一個checkbox勾選，前一個就不能取消。 -->
-                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" v-model="orderStatus.making"
-                  :disabled="orderStatus?.sendProduct">
-                <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck2"><i
-                    class="bi bi-check-lg fs-2 text-light"></i></label>
+                <input
+                  type="checkbox"
+                  class="btn-check"
+                  id="btncheck2"
+                  autocomplete="off"
+                  v-model="orderStatus.making"
+                  :disabled="orderStatus?.sendProduct"
+                />
+                <label class="btn btn-outline-primary border-2 rounded-circle" for="btncheck2"
+                  ><i class="bi bi-check-lg fs-2 text-light"></i
+                ></label>
                 <p class="mt-3 fs-4">製作中</p>
               </div>
-              <div class="mt-5" :class="orderStatus?.sendProduct ? `bg-primary` : `bg-light`"
-                style="height: 10px;width: 20%;"></div>
+              <div
+                class="mt-5"
+                :class="orderStatus?.sendProduct ? `bg-primary` : `bg-light`"
+                style="height: 10px; width: 20%"
+              ></div>
               <div class="">
                 <!-- disabled綁定後一個checkbox，如果後一個checkbox勾選，前一個就不能取消。 -->
-                <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off"
-                  v-model="orderStatus.sendProduct" :disabled="(!orderStatus?.making || orderStatus?.done)">
-                <label class="btn btn-outline-primary border-2 rounded-circle"
-                  :class="orderStatus.making ? '' : 'btn-outline-light'" for="btncheck3"><i
-                    class="bi bi-check-lg fs-2 text-light"></i></label>
+                <input
+                  type="checkbox"
+                  class="btn-check"
+                  id="btncheck3"
+                  autocomplete="off"
+                  v-model="orderStatus.sendProduct"
+                  :disabled="!orderStatus?.making || orderStatus?.done"
+                />
+                <label
+                  class="btn btn-outline-primary border-2 rounded-circle"
+                  :class="orderStatus.making ? '' : 'btn-outline-light'"
+                  for="btncheck3"
+                  ><i class="bi bi-check-lg fs-2 text-light"></i
+                ></label>
                 <p class="mt-3 fs-4">已出貨</p>
               </div>
-              <div class="mt-5" :class="orderStatus.done ? `bg-primary` : `bg-light`" style="height: 10px;width: 20%;">
-              </div>
+              <div
+                class="mt-5"
+                :class="orderStatus.done ? `bg-primary` : `bg-light`"
+                style="height: 10px; width: 20%"
+              ></div>
               <div class="">
                 <!-- disabled綁定是否付款，未付款則不能完成訂單。 -->
-                <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" v-model="orderStatus.done"
-                  :disabled="(!modalData.is_paid || !orderStatus.sendProduct)">
-                <label class="btn  border-2 rounded-circle"
-                  :class="[(modalData.is_paid && orderStatus.sendProduct) ? 'btn-outline-primary' : 'btn-outline-light',]"
-                  for="btncheck4"><i class="bi bi-check-lg fs-2 text-light"></i></label>
+                <input
+                  type="checkbox"
+                  class="btn-check"
+                  id="btncheck4"
+                  autocomplete="off"
+                  v-model="orderStatus.done"
+                  :disabled="!modalData.is_paid || !orderStatus.sendProduct"
+                />
+                <label
+                  class="btn border-2 rounded-circle"
+                  :class="[
+                    modalData.is_paid && orderStatus.sendProduct
+                      ? 'btn-outline-primary'
+                      : 'btn-outline-light'
+                  ]"
+                  for="btncheck4"
+                  ><i class="bi bi-check-lg fs-2 text-light"></i
+                ></label>
                 <p class="mt-3 fs-4">已完成</p>
               </div>
             </div>
           </div>
-
 
           <div class="">
             <h3 class="text-center">客戶資料</h3>
@@ -131,17 +283,27 @@
               <h5 class="m-2">客戶Email：{{ modalData?.user?.email }}</h5>
               <h5 class="m-2">客戶電話：{{ modalData?.user?.tel }}</h5>
               <label for="payState" class="fs-5 text-primary m-2">付款狀態：</label>
-              <select class="form-select d-inline w-25 fs-5" id="payState" aria-label="付款狀態" v-model="modalData.is_paid"
-                :disabled="orderStatus.done">
-                <option :value=false>未付款</option>
-                <option :value=true>已付款</option>
+              <select
+                class="form-select d-inline w-25 fs-5"
+                id="payState"
+                aria-label="付款狀態"
+                v-model="modalData.is_paid"
+                :disabled="orderStatus.done"
+              >
+                <option :value="false">未付款</option>
+                <option :value="true">已付款</option>
               </select>
-              <button type="button" class="d-flex mx-1 my-1 btn btn-danger" data-bs-target="#adOrderModal"
-                data-bs-dismiss="modal" v-if="modalData?.is_deleted" @click="recoverDelete(modalData)">
+              <button
+                type="button"
+                class="d-flex mx-1 my-1 btn btn-danger"
+                data-bs-target="#adOrderModal"
+                data-bs-dismiss="modal"
+                v-if="modalData?.is_deleted"
+                @click="recoverDelete(modalData)"
+              >
                 回復刪除
               </button>
             </div>
-
           </div>
           <h3 class="mb-3 mt-6">訂單商品</h3>
           <table class="table align-middle border-primary">
@@ -160,7 +322,11 @@
                     <div class="row g-0 align-items-center">
                       <div class="col-md-4">
                         <div class="ratio ratio-1x1">
-                          <img :src="product.product.imageUrl" class="img-fluid object-fit-cover" alt="..." />
+                          <img
+                            :src="product.product.imageUrl"
+                            class="img-fluid object-fit-cover"
+                            alt="..."
+                          />
                         </div>
                       </div>
                       <div class="col-md-8">
@@ -182,9 +348,13 @@
             </tbody>
           </table>
           <div class="d-flex justify-content-between mx-4 my-5">
-            <p class="fs-4">優惠券：
-              <span class="ms-2 fs-5 badge rounded-pill text-bg-warning" v-if="modalData?.products">{{
-          Object.values(modalData?.products)[0]?.coupon?.code }}</span>
+            <p class="fs-4">
+              優惠券：
+              <span
+                class="ms-2 fs-5 badge rounded-pill text-bg-warning"
+                v-if="modalData?.products"
+                >{{ Object.values(modalData?.products)[0]?.coupon?.code }}</span
+              >
               <!-- {{ console.log(modalData.products) }} -->
             </p>
             <p class="fs-4 me-4">總金額：{{ parseInt(modalData?.total) }}</p>
@@ -192,32 +362,39 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-            @click="updateOrder(modalData)">確認修改</button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click="updateOrder(modalData)"
+          >
+            確認修改
+          </button>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-
 <script>
-import axios from 'axios';
+import axios from 'axios'
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
-import Accordion from '@/components/AdOrderAccordion.vue';
+import Accordion from '@/components/AdOrderAccordion.vue'
 import Swal from 'sweetalert2'
+import orderStore from '@/stores/orderStore.js'
+import { mapState, mapActions } from 'pinia'
 
 export default {
   components: {
-    Accordion,
+    Accordion
   },
   data() {
     return {
-      allOrders: [],
-      unpaidOrders: [],
-      paidOrders: [],
-      deletedOrders: [],
-      doneOrders: [],
+      // allOrders: [],
+      // unpaidOrders: [],
+      // paidOrders: [],
+      // deletedOrders: [],
+      // doneOrders: [],
       modalData: {},
       modalProducts: [],
       //訂單狀態資料
@@ -225,166 +402,183 @@ export default {
         getOrder: true,
         making: false,
         sendProduct: false,
-        done: false,
-      },
+        done: false
+      }
     }
   },
-
+  computed: {
+    ...mapState(orderStore, [
+      'allOrders',
+      'unpaidOrders',
+      'paidOrders',
+      'deletedOrders',
+      'doneOrders'
+    ])
+  },
   methods: {
-    getAllOrders() {
-      this.allOrders = []
-      this.unpaidOrders = []
-      this.paidOrders = []
-      const getOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders`;
-      axios.get(getOrdersUrl)
-        .then((res) => {
-          this.allOrders = res.data.orders;
-          this.allOrders.forEach((item) => {
-            //若該訂單沒有orderStatus時，代表為新訂單，加入orderStatus。
-            if (!item.orderStatus) {
-              item.orderStatus = {
-                getOrder: true,
-                making: false,
-                sendProduct: false,
-                done: false,
-              }
-            }
-            //先篩出刪除訂單
-            if (item.is_deleted) {
-              this.deletedOrders.push(item)
-            } else {
-              //未刪除訂單中篩出付款和未付款
-              if (item.is_paid) {
-                this.paidOrders.push(item)
-              } else {
-                this.unpaidOrders.push(item)
-              }
-            }
-            //篩出完成訂單  
-            if (item.orderStatus.done) {
-              this.doneOrders.push(item)
-            }
-          })
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    },
-    updateOrder(data) {
-      const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`;
-      //更新訂單中塞入訂單狀態，用以處理訂單狀態
-      data.orderStatus = this.orderStatus;
-      axios.put(updateOrdersUrl, { data })
-        .then(() => {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: '訂單修改成功',
-            showConfirmButton: false,
-            toast: true,
-            timer: 1500
-          });
-          location.reload()
-          // this.getAllOrders();
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
-    deleteOrder(data) {
-      const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`;
+    ...mapActions(orderStore, [
+      'getAllOrders',
+      'updateOrder',
+      'deleteOrder',
+      'recoverDelete',
+      'confirmDelete',
+      'deleteAllOrders'
+    ]),
+    //  getAllOrders() {
+    //     this.allOrders = []
+    //     this.unpaidOrders = []
+    //     this.paidOrders = []
+    //     const getOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders`
+    //     axios
+    //       .get(getOrdersUrl)
+    //       .then((res) => {
+    //         this.allOrders = res.data.orders
+    //         this.allOrders.forEach((item) => {
+    //           //若該訂單沒有orderStatus時，代表為新訂單，加入orderStatus。
+    //           if (!item.orderStatus) {
+    //             item.orderStatus = {
+    //               getOrder: true,
+    //               making: false,
+    //               sendProduct: false,
+    //               done: false
+    //             }
+    //           }
+    //           //先篩出刪除訂單
+    //           if (item.is_deleted) {
+    //             this.deletedOrders.push(item)
+    //           } else {
+    //             //未刪除訂單中篩出付款和未付款
+    //             if (item.is_paid) {
+    //               this.paidOrders.push(item)
+    //             } else {
+    //               this.unpaidOrders.push(item)
+    //             }
+    //           }
+    //           //篩出完成訂單
+    //           if (item.orderStatus.done) {
+    //             this.doneOrders.push(item)
+    //           }
+    //         })
+    //       })
+    //       .catch((err) => {
+    //         console.log(err)
+    //       })
+    //   },
+    // updateOrder(data) {
+    //   const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`
+    //   //更新訂單中塞入訂單狀態，用以處理訂單狀態
+    //   data.orderStatus = this.orderStatus
+    //   axios
+    //     .put(updateOrdersUrl, { data })
+    //     .then(() => {
+    //       Swal.fire({
+    //         position: 'top-end',
+    //         icon: 'success',
+    //         title: '訂單修改成功',
+    //         showConfirmButton: false,
+    //         toast: true,
+    //         timer: 1500
+    //       })
+    //       location.reload()
+    //       // this.getAllOrders();
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //     })
+    // },
+    // deleteOrder(data) {
+    //   const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`
 
-      Swal.fire({
-        title: '是否刪除該訂單?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#566b5a',
-        cancelButtonText: '  否  ',
-        confirmButtonText: '  是  '
-      }).then((result) => {
-        if (result.isConfirmed) {
-          console.log("delete")
-          data.is_deleted = true;
-          axios.put(updateOrdersUrl, { data })
-            .then((res) => {
-              console.log(res)
-              location.reload()
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        }
-      })
-      console.log(data)
-    },
-    recoverDelete(data) {
-      const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`;
-      data.is_deleted = false;
-      axios.put(updateOrdersUrl, { data })
-        .then((res) => {
-          console.log(res)
-          location.reload()
-          // this.getAllOrders();
-          console.log("Rocover Delete")
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
-    confirmDelete(data) {
-      const deleteOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data}`;
-      console.log(data)
+    //   Swal.fire({
+    //     title: '是否刪除該訂單?',
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#d33',
+    //     cancelButtonColor: '#566b5a',
+    //     cancelButtonText: '  否  ',
+    //     confirmButtonText: '  是  '
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       console.log('delete')
+    //       data.is_deleted = true
+    //       axios
+    //         .put(updateOrdersUrl, { data })
+    //         .then((res) => {
+    //           console.log(res)
+    //           location.reload()
+    //         })
+    //         .catch((err) => {
+    //           console.log(err)
+    //         })
+    //     }
+    //   })
+    //   console.log(data)
+    // },
+    // recoverDelete(data) {
+    //   const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`
+    //   data.is_deleted = false
+    //   axios
+    //     .put(updateOrdersUrl, { data })
+    //     .then((res) => {
+    //       console.log(res)
+    //       location.reload()
+    //       // this.getAllOrders();
+    //       console.log('Rocover Delete')
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //     })
+    // },
+    // confirmDelete(data) {
+    //   const deleteOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data}`
+    //   console.log(data)
 
-      Swal.fire({
-        title: '確認永久刪除該訂單?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#566b5a',
-        cancelButtonText: '  否  ',
-        confirmButtonText: '  是  '
-      }).then((result) => {
-        if (result.isConfirmed) {
-          axios.delete(deleteOrdersUrl)
-            .then(() => {
-              location.reload()
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        }
-      })
+    //   Swal.fire({
+    //     title: '確認永久刪除該訂單?',
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#d33',
+    //     cancelButtonColor: '#566b5a',
+    //     cancelButtonText: '  否  ',
+    //     confirmButtonText: '  是  '
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       axios
+    //         .delete(deleteOrdersUrl)
+    //         .then(() => {
+    //           location.reload()
+    //         })
+    //         .catch((err) => {
+    //           console.log(err)
+    //         })
+    //     }
+    //   })
+    // },
+    // deleteAllOrders() {
+    //   const deleteAllOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders/all`
 
-    },
-    deleteAllOrders() {
-      const deleteAllOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders/all`;
-
-      Swal.fire({
-        title: '確認永久刪除全部訂單?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#566b5a',
-        cancelButtonText: '  否  ',
-        confirmButtonText: '  是  '
-      }).then((result) => {
-
-        if (result.isConfirmed) {
-          // console.log("刪除全部訂單")
-          axios.delete(deleteAllOrdersUrl)
-            .then(() => {
-              location.reload()
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        }
-      })
-
-
-
-    },
+    //   Swal.fire({
+    //     title: '確認永久刪除全部訂單?',
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#d33',
+    //     cancelButtonColor: '#566b5a',
+    //     cancelButtonText: '  否  ',
+    //     confirmButtonText: '  是  '
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       // console.log("刪除全部訂單")
+    //       axios
+    //         .delete(deleteAllOrdersUrl)
+    //         .then(() => {
+    //           location.reload()
+    //         })
+    //         .catch((err) => {
+    //           console.log(err)
+    //         })
+    //     }
+    //   })
+    // },
 
     openModal(order) {
       this.modalData = { ...order }
@@ -392,13 +586,12 @@ export default {
       //將訂單狀態塞入
       this.orderStatus = order.orderStatus
       // console.log(this.modalData)
-    },
+    }
   },
 
   mounted() {
-    this.getAllOrders();
-  },
-
+    this.getAllOrders()
+  }
 }
 </script>
 

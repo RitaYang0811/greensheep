@@ -127,7 +127,7 @@
                 <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
                   <span
                     v-if="product.discount !== 10"
-                    class="position-absolute start-0 bottom-0 z-2 bg-deco p-1 text-dark fs-8"
+                    class="position-absolute start-0 bottom-0 z-1 bg-deco p-1 text-dark fs-8"
                     >{{ product.discount }}折</span
                   >
                   <img
