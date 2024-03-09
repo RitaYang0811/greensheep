@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { toastError } from "@/utils/sweetalertToast.js"
+import { scrollToTop } from '@/utils/scrollToTop.js'
 
 export default defineStore('articleStore', {
   state: () => ({
@@ -56,8 +57,9 @@ export default defineStore('articleStore', {
     changePage(page) {
       this.currentPageArticles = this.articles.slice((page - 1) * 11, page * 11) // 11: 一頁顯示幾筆資料
       // page  couponsSliceIndex
-      //  1         0 ~ 11
-      //  2        11 ~ 22
+      //  1         0 ~ 10
+      //  2        11 ~ 20
+      scrollToTop()
     },
     updateCurrentPage(page) {
       this.currentPage = page
