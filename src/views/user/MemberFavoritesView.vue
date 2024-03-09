@@ -15,8 +15,11 @@
   <div class="d-flex flex-wrap mb-8">
     <a href="#" class="d-flex flex-column product-item me-6 mb-6">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img src="@/assets/images/product-1.jpg" class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊" />
+        <img
+          src="@/assets/images/product-3.jpg"
+          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+        />
       </div>
       <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
         <h5 class="card-title display-8 text-dark pt-2">
@@ -28,8 +31,11 @@
 
     <a href="#" class="d-flex flex-column product-item me-6 mb-6">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img src="@/assets/images/product-2.jpg" class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊" />
+        <img
+          src="@/assets/images/product-2.jpg"
+          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+        />
         <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-secondary p-3">可 <br> 客制
                                 </span> -->
       </div>
@@ -43,8 +49,11 @@
 
     <a href="#" class="d-flex flex-column product-item me-6 mb-6">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img src="@/assets/images/product-3.jpg" class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊" />
+        <img
+          src="@/assets/images/product-3.jpg"
+          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+        />
         <span class="cus-tag">可客製</span>
       </div>
       <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
@@ -57,8 +66,11 @@
 
     <a href="#" class="d-flex flex-column product-item me-6 mb-6">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img src="@/assets/images/product-4.jpg" class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊" />
+        <img
+          src="@/assets/images/product-4.jpg"
+          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+        />
       </div>
       <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
         <h5 class="card-title display-8 text-dark pt-2">
@@ -70,8 +82,11 @@
 
     <a href="#" class="d-flex flex-column product-item me-6 mb-6">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img src="@/assets/images/product-5.jpg" class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊" />
+        <img
+          src="@/assets/images/product-5.jpg"
+          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+        />
         <span class="cus-tag">可客製</span>
       </div>
       <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
@@ -84,8 +99,11 @@
 
     <a href="#" class="d-flex flex-column product-item me-6 mb-6">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img src="@/assets/images/product-6.jpg" class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊" />
+        <img
+          src="@/assets/images/product-6.jpg"
+          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+        />
       </div>
       <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
         <h5 class="card-title display-8 text-dark pt-2">
@@ -97,8 +115,11 @@
 
     <a href="#" class="d-flex flex-column product-item me-6 mb-6">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img src="@/assets/images/product-7.jpg" class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊" />
+        <img
+          src="@/assets/images/product-7.jpg"
+          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+        />
       </div>
       <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
         <h5 class="card-title display-8 text-dark pt-2">
@@ -110,8 +131,11 @@
 
     <a href="#" class="d-flex flex-column product-item me-6 mb-6">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img src="@/assets/images/product-8.jpg" class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊" />
+        <img
+          src="@/assets/images/product-8.jpg"
+          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+        />
       </div>
       <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
         <h5 class="card-title display-8 text-dark pt-2">
@@ -123,8 +147,11 @@
 
     <a href="#" class="d-flex flex-column product-item me-6 mb-6">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img src="@/assets/images/product-9.jpg" class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊" />
+        <img
+          src="@/assets/images/product-9.jpg"
+          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
+        />
       </div>
       <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
         <h5 class="card-title display-8 text-dark pt-2">
@@ -168,6 +195,6 @@ export default {
     }
   },
   methods: {},
-  mounted() { }
+  mounted() {}
 }
 </script>
