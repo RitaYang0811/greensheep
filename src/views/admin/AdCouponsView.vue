@@ -395,6 +395,7 @@ import AdCouponModal from '@/components/AdCouponModal.vue'
 import { unixToDate } from '@/utils/unixToDate.js'
 import { dateToUnix } from '@/utils/dateToUnix.js'
 import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
+import { scrollToTop } from '@/utils/scrollToTop.js'
 
 export default {
   data() {
@@ -495,6 +496,7 @@ export default {
           this.currentPageCoupons = this.InvalidCoupons.slice((page - 1) * 10, page * 10)
           break
       }
+      scrollToTop()
     },
     // 切換 tab
     changeTab(tab) {
