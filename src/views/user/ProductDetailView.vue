@@ -30,8 +30,8 @@
             <h1 class="fw-bold fs-3 fs-lg-2 me-5">{{ productInfo.title }}</h1>
             <!-- 愛心收藏 -->
 
-            <i class="bi bi-heart fs-4 text-primary"></i>
-            <i class="bi bi-heart-fill fs-4 text-primary"></i>
+            <i class="bi bi-heart fs-4 text-primary" @click="addToLike(productInfo.id)"></i>
+            <!-- <i class="bi bi-heart-fill fs-4 text-primary"></i> -->
           </div>
           <!-- v-if 無折扣 -->
           <p
@@ -395,6 +395,8 @@ import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
 import { mapState, mapActions } from 'pinia'
 
+// json-server網址
+const serverUrl = 'https://greensheep-json-server.onrender.com'
 export default {
   data() {
     return {
@@ -423,6 +425,58 @@ export default {
       if (productContent) {
         productContent.scrollIntoView({ behavior: 'smooth' }) // 使用平滑滾動到元素
       }
+    },
+    // 加入最愛
+    async addToLike(productId) {
+      console.log('產品:', productId)
+      // 先判斷有沒有登入會員，沒有會請使用者登入
+      console.log(await this.isLogin())
+      if ((await this.isLogin()) === undefined) {
+        const likeProduct = {
+          productId: `${productId}`,
+          userId: `${JSON.parse(localStorage.getItem('userInfo')).id}`
+        }
+
+        // 確認有沒有加入過
+        const res = await this.$http.get(
+          `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
+        )
+
+        if (res.data.length) {
+          alert('已經加入過最愛囉!')
+        } else {
+          // 加入最愛
+          this.$http
+            .post(`${serverUrl}/favorites`, likeProduct)
+            .then((res) => {
+              alert('成功加入最愛!')
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }
+      }
+    },
+    async isLogin() {
+      const user = JSON.parse(localStorage.getItem('userInfo'))
+      if (user === null) {
+        alert('請先登入會員!')
+        return false
+      }
+      await this.$http
+        .get(`${serverUrl}/600/users/${user.id}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        })
+        .then((res) => {
+          console.log(123)
+          return true
+        })
+        .catch((err) => {
+          alert('請先登入會員!')
+          return false
+        })
     }
   },
   mounted() {
