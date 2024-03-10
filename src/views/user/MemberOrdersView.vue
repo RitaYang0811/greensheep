@@ -19,17 +19,17 @@
     </thead>
     <tbody class="bg-transparent">
       <tr v-for="order in userOrders" :key="order.id">
-        <th scope="row" class="py-4 text-primary fw-medium">
+        <th scope="row" class="py-4 text-primary fw-medium align-middle">
           {{ order?.create_at }}
         </th>
-        <td class="py-4 text-primary">{{ printDate(order?.create_at) }}</td>
+        <td class="py-4 text-primary align-middle">{{ printDate(order?.create_at) }}</td>
         <td class="py-4 text-primary">
           <div class="" v-for="product in Object.values(order.products)" :key="product?.id">
             {{ product?.product.title }}
           </div>
         </td>
-        <td class="">
-          <span class="btn btn-primary">
+        <td class="align-middle">
+          <span class="btn btn-primary ">
             {{ printStatus(order.orderStatus) }}
           </span>
         </td>
@@ -120,7 +120,7 @@ export default {
       } else {
         return "收到訂單"
       }
- 
+
     },
 
   },

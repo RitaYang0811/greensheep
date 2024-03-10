@@ -1,7 +1,6 @@
 <template>
-  <h1>Member Favoriates Page</h1>
 
-  <nav aria-label="breadcrumb">
+  <!-- <nav aria-label="breadcrumb">
     <ol class="breadcrumb mb-7 mb-md-15">
       <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
       <li class="breadcrumb-item">
@@ -9,160 +8,32 @@
       </li>
       <li class="breadcrumb-item active" aria-current="page">我的收藏</li>
     </ol>
-  </nav>
+  </nav> -->
+
   <h1 class="fs-3 fs-lg-2 text-start mb-6">我的收藏</h1>
   <!-- 商品頁面 -->
-  <div class="d-flex flex-wrap mb-8">
-    <a href="#" class="d-flex flex-column product-item me-6 mb-6">
+  <div class="d-flex flex-wrap mb-8 ">
+    {{ console.log(myFavoriteProducts) }}
+    <router-link :to="`/products/${product.id}`" target="_blank"
+      class="d-flex flex-column product-item me-6 mb-6 w-25 m-4" v-for="product in myFavoriteProducts"
+      :key="product.id">
       <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img
-          src="@/assets/images/product-1.jpg"
-          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
-        />
+        <img :src="product.imageUrl" class="card-img-top position-absolute top-0 start-0 object-fit-cover"
+          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊" />
       </div>
       <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
         <h5 class="card-title display-8 text-dark pt-2">
-          蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
+          <div class="badge rounded-pill text-bg-warning">{{ product.category }}</div>
+          <div class="mt-2">{{ product.title }}</div>
         </h5>
-        <p class="card-text display-8 text-primary py-2">NT$3,800</p>
+        <p class="card-text display-8 text-primary py-2">NT${{ product.price }}</p>
       </div>
-    </a>
+    </router-link>
 
-    <a href="#" class="d-flex flex-column product-item me-6 mb-6">
-      <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img
-          src="@/assets/images/product-2.jpg"
-          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
-        />
-        <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-secondary p-3">可 <br> 客制
-                                </span> -->
-      </div>
-      <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
-        <h5 class="card-title display-8 text-dark pt-2">
-          蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
-        </h5>
-        <p class="card-text display-8 text-primary py-2">NT$3,800</p>
-      </div>
-    </a>
 
-    <a href="#" class="d-flex flex-column product-item me-6 mb-6">
-      <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img
-          src="@/assets/images/product-3.jpg"
-          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
-        />
-        <span class="cus-tag">可客製</span>
-      </div>
-      <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
-        <h5 class="card-title display-8 text-dark pt-2">
-          蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
-        </h5>
-        <p class="card-text display-8 text-primary py-2">NT$3,800</p>
-      </div>
-    </a>
-
-    <a href="#" class="d-flex flex-column product-item me-6 mb-6">
-      <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img
-          src="@/assets/images/product-4.jpg"
-          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
-        />
-      </div>
-      <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
-        <h5 class="card-title display-8 text-dark pt-2">
-          蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
-        </h5>
-        <p class="card-text display-8 text-primary py-2">NT$3,800</p>
-      </div>
-    </a>
-
-    <a href="#" class="d-flex flex-column product-item me-6 mb-6">
-      <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img
-          src="@/assets/images/product-5.jpg"
-          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
-        />
-        <span class="cus-tag">可客製</span>
-      </div>
-      <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
-        <h5 class="card-title display-8 text-dark pt-2">
-          蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
-        </h5>
-        <p class="card-text display-8 text-primary py-2">NT$3,800</p>
-      </div>
-    </a>
-
-    <a href="#" class="d-flex flex-column product-item me-6 mb-6">
-      <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img
-          src="@/assets/images/product-6.jpg"
-          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
-        />
-      </div>
-      <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
-        <h5 class="card-title display-8 text-dark pt-2">
-          蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
-        </h5>
-        <p class="card-text display-8 text-primary py-2">NT$3,800</p>
-      </div>
-    </a>
-
-    <a href="#" class="d-flex flex-column product-item me-6 mb-6">
-      <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img
-          src="@/assets/images/product-7.jpg"
-          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
-        />
-      </div>
-      <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
-        <h5 class="card-title display-8 text-dark pt-2">
-          蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
-        </h5>
-        <p class="card-text display-8 text-primary py-2">NT$3,800</p>
-      </div>
-    </a>
-
-    <a href="#" class="d-flex flex-column product-item me-6 mb-6">
-      <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img
-          src="@/assets/images/product-8.jpg"
-          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
-        />
-      </div>
-      <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
-        <h5 class="card-title display-8 text-dark pt-2">
-          蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
-        </h5>
-        <p class="card-text display-8 text-primary py-2">NT$3,800</p>
-      </div>
-    </a>
-
-    <a href="#" class="d-flex flex-column product-item me-6 mb-6">
-      <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img
-          src="@/assets/images/product-9.jpg"
-          class="card-img-top position-absolute top-0 start-0 object-fit-cover"
-          alt="蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊"
-        />
-      </div>
-      <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
-        <h5 class="card-title display-8 text-dark pt-2">
-          蔚藍海洋 - Freedom | 拉利瑪海紋石純銀項鍊
-        </h5>
-        <p class="card-text display-8 text-primary py-2">NT$3,800</p>
-      </div>
-    </a>
   </div>
 
-  <nav aria-label="Page navigation ">
+  <!-- <nav aria-label="Page navigation ">
     <ul class="cus-pagination list-unstyled mb-20 mb-lg-25">
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Previous">
@@ -184,17 +55,82 @@
         </a>
       </li>
     </ul>
-  </nav>
+  </nav> -->
 </template>
 
 <script>
+import Swal from 'sweetalert2'
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
+
 export default {
   data() {
     return {
-      favorites: []
+      myFavoritesId: [],
+      myFavoriteProducts: []
     }
   },
-  methods: {},
-  mounted() {}
+  methods: {
+    checkLogin() {
+      let loginUser = localStorage.getItem("userInfo")
+      if (loginUser) {
+        this.getFavorites()
+        // return
+      } else {
+        Swal.fire({
+          title: '您尚未登入?',
+          icon: 'warning',
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#566b5a',
+          confirmButtonText: '  是  '
+        }).then(() => {
+          this.$router.push('/memberLogin')
+        })
+      }
+    },
+
+    getFavorites() {
+      let loginUser = localStorage.getItem("userInfo")
+      const loginUserId = JSON.parse(loginUser).id
+      // console.log(loginUserId)
+      const getFavoritesUrl = 'https://greensheep-json-server.onrender.com/favorites'
+      this.$http.get(getFavoritesUrl)
+        .then((res) => {
+          // console.log(res.data)
+          res.data.forEach((item) => {
+            if (item.userId == loginUserId) {
+              this.myFavoritesId.push(item)
+            }
+          })
+          // console.log(this.myFavoritesId)
+          this.getFavoriteProducts()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    getFavoriteProducts() {
+      const getProductsUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products/all`
+      this.$http.get(getProductsUrl)
+        .then((res) => {
+          // console.log(res.data.products)
+          res.data.products.forEach((item) => {
+            this.myFavoritesId.forEach((item2) => {
+              if (item.id == item2.productId) {
+                this.myFavoriteProducts.push(item)
+              }
+            })
+          })
+          // console.log(this.myFavoriteProducts)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+  },
+  mounted() {
+    this.checkLogin()
+    // this.getFavorites()
+
+  }
 }
 </script>
