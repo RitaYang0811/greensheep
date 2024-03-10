@@ -430,7 +430,7 @@ export default {
     async addToLike(productId) {
       console.log('產品:', productId)
       // 先判斷有沒有登入會員，沒有會請使用者登入
-      console.log(await this.isLogin())
+
       if ((await this.isLogin()) === undefined) {
         const likeProduct = {
           productId: `${productId}`,
