@@ -303,7 +303,7 @@ export default {
   data() {
     return {
       isShow: false,
-
+      sortTitle: '',
       isBlock: true,
       isList: false,
 
@@ -337,10 +337,12 @@ export default {
     //監聽路由變化
     $route() {
       this.currentCategory = this.$route.params.category
+      this.searchWord = this.$route.query.keyword
       this.currentProductsPage = 1
-      console.log('路由變化', this.currentCategory, this.currentCategory)
-      this.getFilterProducts(this.currentCategory, 1)
+      console.log('路由變化', this.currentCategory, this.searchWord)
+      this.getFilterProducts(this.currentCategory, 1, this.sortTitle, this.searchWord)
     },
+
     currentProductsPage(newVal) {
       console.log(newVal)
       this.changeCurrentPage()
@@ -373,6 +375,7 @@ export default {
     //排列順序切換
     sort(status) {
       this.isShow = false
+      this.sortTitle = status
       this.getFilterProducts(this.currentCategory, this.currentProductsPage, status)
     },
     scrollToTop() {
@@ -388,7 +391,9 @@ export default {
       await this.getProducts()
       console.log(this.$route)
       this.currentCategory = this.$route.params.category
-      this.getFilterProducts(this.currentCategory, 1, 'timeN2O')
+      this.searchWord = this.$route.query.keyword
+      console.log(this.currentCategory, this.searchWord)
+      this.getFilterProducts(this.currentCategory, 1, 'timeN2O', this.searchWord)
     }
   },
   async mounted() {

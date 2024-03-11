@@ -15,6 +15,7 @@ export default defineStore('productStore', {
     currentPage: 1,
     //預設顯示種類
     category: '全部商品 ALL',
+    searchWord: '',
     //所有商品種類
     categories: [
       '全部商品 ALL',
@@ -73,11 +74,20 @@ export default defineStore('productStore', {
       }
     },
     //顯示當前分類及頁數的產品
-    getFilterProducts(category, page = 1, status) {
+    getFilterProducts(category, page = 1, status = 'timeN2O', keyword) {
       this.loadingStatus.loadingFilterProducts = true
       //將選擇的分類賦值成當前分類
       this.category = category
-      if (category === '全部商品 ALL') {
+      //將關鍵字賦值成當前關鍵字
+      this.searchWord = keyword
+      if (category === undefined) {
+        this.currentPage = 1
+        //將axios 取得的所有商品篩選關鍵字後成為總商品
+        this.categoryProducts = this.products.filter((item) => item.title.match(this.searchWord))
+        //將總商品依照每頁12筆成為展示商品
+        this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
+        this.loadingStatus.loadingFilterProducts = false
+      } else if (category === '全部商品 ALL') {
         this.currentPage = 1
         this.getSort(status)
         //axios取得的所有商品為總商品
