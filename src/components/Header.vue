@@ -377,19 +377,6 @@ export default {
           })
         })
     }
-    // openDropdownMenu() {
-
-    // }
-    // searchProducts() {
-    //   this.setSearchWord(this.searchWord)
-    //   if (this.searchWord.trim() !== '') {
-    //     // 发送搜索词到商品视图
-    //     this.$router.push({ path: '/products' })
-    //     console.log('searchProducts', this.searchWord)
-    //   }
-
-    //   this.searchWord = '' // 清空搜索词
-    // }
   },
   computed: {
     ...mapState(cartStore, ['carts']),
@@ -413,17 +400,17 @@ export default {
       toggle: false
     })
 
-    // 監聽滾動事件，滾輪下滑時 header 隱藏，上滑時 header 顯示
-    window.addEventListener('scroll', () => {
-      let currentScrollY = window.scrollY
-      // 當前滑動位置小於前一個位置即為滾輪往上滑
-      if (currentScrollY < this.previousScrollY) {
-        this.$refs.scrollBody.classList.remove('hideUp')
-      } else {
-        this.$refs.scrollBody.classList.add('hideUp')
-      }
-      this.previousScrollY = currentScrollY
-    })
+    // // 監聽滾動事件，滾輪下滑時 header 隱藏，上滑時 header 顯示
+    // window.addEventListener('scroll', () => {
+    //   let currentScrollY = window.scrollY
+    //   // 當前滑動位置小於前一個位置即為滾輪往上滑
+    //   if (currentScrollY < this.previousScrollY) {
+    //     this.$refs.scrollBody.classList.remove('hideUp')
+    //   } else {
+    //     this.$refs.scrollBody.classList.add('hideUp')
+    //   }
+    //   this.previousScrollY = currentScrollY
+    // })
 
     // // 点击窗口外的区域关闭菜单
     // window.addEventListener('click', (event) => {

@@ -43,11 +43,7 @@ const router = createRouter({
           name: 'UserCustom',
           component: () => import('../views/user/ProductsView.vue')
         },
-        {
-          path: 'about',
-          name: 'UserAbout',
-          component: () => import('../views/user/AboutView.vue')
-        },
+
         {
           path: 'story',
           name: 'UserStory',

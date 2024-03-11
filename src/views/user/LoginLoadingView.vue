@@ -8,7 +8,7 @@
 import axios from 'axios'
 import Qs from 'qs'
 import { jwtDecode } from 'jwt-decode'
-
+import Swal from 'sweetalert2'
 // json-server網址
 const serverUrl = 'https://greensheep-json-server.onrender.com'
 export default {
@@ -32,7 +32,12 @@ export default {
     // google登入
     async googleAccount() {
       if (await this.checkAccounts(this.$route.query.googleEmail)) {
-        alert('此信箱尚未註冊過!')
+        Swal.fire({
+          icon: 'warning',
+          title: '此信箱尚未註冊過!',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.$router.push({ name: 'MemberSignUp' })
       } else {
         this.user.email = this.$route.query.googleEmail
@@ -51,7 +56,13 @@ export default {
           this.$router.push({ name: 'MemberHome' })
         })
         .catch((err) => {
-          alert('帳號或密碼錯誤!')
+          Swal.fire({
+            icon: 'error',
+            title: '帳號或密碼錯誤!請重新登入',
+            showConfirmButton: false,
+            timer: 1500
+          })
+
           this.$router.push({ name: 'MemberLogin' })
         })
     }
@@ -83,7 +94,12 @@ export default {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
       if (await this.checkAccounts(jwtDecode(lineRes.data.id_token).email)) {
-        alert('此信箱尚未註冊過!')
+        Swal.fire({
+          icon: 'warning',
+          title: '此信箱尚未註冊過!',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.$router.push({ name: 'MemberSignUp' })
       } else {
         this.user.email = jwtDecode(lineRes.data.id_token).email
@@ -91,7 +107,12 @@ export default {
         this.login()
       }
     } catch {
-      alert('請重新登入')
+      Swal.fire({
+        icon: 'warning',
+        title: '請重新登入',
+        showConfirmButton: false,
+        timer: 1500
+      })
       this.$router.push({ name: 'MemberLogin' })
     }
   }

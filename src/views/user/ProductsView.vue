@@ -298,7 +298,7 @@ import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
 import searchStore from '@/stores/searchStore'
 import SwiperAllProducts from '@/components/SwiperAllProducts.vue'
-import PagiNation from '@/components/PagiNation.vue'
+import Swal from 'sweetalert2'
 import { mapState, mapActions } from 'pinia'
 
 // json-server網址
@@ -372,13 +372,27 @@ export default {
         )
 
         if (res.data.length) {
-          alert('已經加入過最愛囉!')
+          Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: '已經加入過收藏囉!',
+            showConfirmButton: false,
+            toast: true,
+            timer: 1500
+          })
         } else {
           // 加入最愛
           this.$http
             .post(`${serverUrl}/favorites`, likeProduct)
             .then((res) => {
-              alert('成功加入最愛!')
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '已加入收藏!',
+                showConfirmButton: false,
+                toast: true,
+                timer: 1500
+              })
             })
             .catch((err) => {
               console.log(err)
@@ -389,7 +403,15 @@ export default {
     async isLogin() {
       const user = JSON.parse(localStorage.getItem('userInfo'))
       if (user === null) {
-        alert('請先登入會員!')
+        Swal.fire({
+          icon: 'warning',
+          title: '請先登入會員喔！',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.$router.push({
+          path: '/memberLogin'
+        })
         return false
       }
       await this.$http
@@ -403,7 +425,12 @@ export default {
           return true
         })
         .catch((err) => {
-          alert('請先登入會員!')
+          Swal.fire({
+            icon: 'warning',
+            title: '請先登入會員喔！',
+            showConfirmButton: false,
+            timer: 1500
+          })
           return false
         })
     },
@@ -439,12 +466,7 @@ export default {
     scrollToTop() {
       window.scrollTo(0, 0)
     },
-    //先改變分類和關鍵字
-    // changeFilter(category, searchWord) {
-    //   const { category } = this.$route.params
-    //   this.currentCategory = category
-    //   this.getFilterProducts(category, 1, searchWord)
-    // }
+
     async fetchData() {
       await this.getProducts()
       console.log(this.$route)
