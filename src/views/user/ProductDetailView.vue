@@ -8,10 +8,10 @@
             <router-link to="/">首頁</router-link>
           </li>
           <li class="breadcrumb-item" aria-current="page">
-            <router-link to="/products/productsAll">全部商品</router-link>
+            <router-link to="/products/全部商品%20ALL">全部商品</router-link>
           </li>
           <li class="breadcrumb-item" aria-current="page">
-            <routerLink :to="{ path: `/products/${category}` }"
+            <routerLink :to="{ path: `/products/${productInfo.category}` }"
               >{{ productInfo.category }}
             </routerLink>
           </li>

@@ -5,14 +5,32 @@ const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
 export default defineStore('productStore', {
   state: () => ({
-    products: [], //原始資料
-    categoryProducts: [], //分類後資料
-    currentProducts: [], //頁碼取得後的資料
+    //原始全部資料
+    products: [],
+    //分類後資料
+    categoryProducts: [],
+    //展示資料（顯示用）
+    currentProducts: [],
+    //預設顯示分頁
     currentPage: 1,
+    //預設顯示種類
     category: '全部商品 ALL',
-    categories: ['項鍊 PENDANT', '戒指 RING', '耳環 EARRINGS', '手鍊 BRACELET', '其他配件 OTHERS'],
+    searchWord: '',
+    //所有商品種類
+    categories: [
+      '全部商品 ALL',
+      '項鍊 PENDANT',
+      '戒指 RING',
+      '耳環 EARRINGS',
+      '手鍊 BRACELET',
+      '其他配件 OTHERS'
+    ],
+    showTitle: '',
+    //商品詳細頁資料
     productInfo: {},
+    //推薦商品資料
     recommendProducts: [],
+    //載入狀態
     isLoading: false,
     loadingStatus: {
       loadingGetProducts: false,
@@ -29,13 +47,7 @@ export default defineStore('productStore', {
       try {
         const res = await axios.get(apiUrl)
         this.products = res.data.products
-        this.getFilterProducts('', 1, 'timeN2O')
-        // this.categoryProducts = this.products
-        // this.currentProducts = this.products.slice(
-        //   (this.currentPage - 1) * 12,
-        //   this.currentPage * 12
-        // )
-        // console.log(this.products)
+        //console.log('觸發getProducts', this.products)
       } catch (err) {
         alert(err.data.message)
       }
@@ -43,48 +55,62 @@ export default defineStore('productStore', {
     },
     //排序篩選
     getSort(status) {
-      if (status === 'new') {
-        this.showTitle = '最近更新'
-        console.log('1')
-        return this.products.sort((a, b) => b.updateTime - a.updateTime)
-      } else if (status === 'priceH2L') {
+      if (status === 'priceH2L') {
         this.showTitle = '價格 - 由高到低'
-        console.log('2')
+        //console.log('1')
         return this.products.sort((a, b) => b.price - a.price)
       } else if (status === 'priceL2H') {
         this.showTitle = '價格 - 由低到高'
-        console.log('2')
+        //console.log('2')
         return this.products.sort((a, b) => a.price - b.price)
       } else if (status === 'timeN2O') {
         this.showTitle = '上架時間 - 由新到舊'
-        console.log('3')
-
+        //console.log('3')
         return this.products.sort((a, b) => b.createTime - a.createTime)
       } else if (status === 'timeO2N') {
         this.showTitle = '上架時間 - 由舊到新'
-        console.log('4')
+        //console.log('4')
         return this.products.sort((a, b) => a.createTime - b.createTime)
       }
     },
     //顯示當前分類及頁數的產品
-    getFilterProducts(category, page = 1, status) {
+    getFilterProducts(category, page = 1, status = 'timeN2O', keyword) {
       this.loadingStatus.loadingFilterProducts = true
+      //將選擇的分類賦值成當前分類
       this.category = category
-      if (category === '全部商品 ALL' || category === '') {
-        this.category = '全部商品 ALL'
+      //將關鍵字賦值成當前關鍵字
+      this.searchWord = keyword
+      if (category === undefined) {
+        this.currentPage = 1
+        //將axios 取得的所有商品篩選關鍵字後成為總商品
+        this.categoryProducts = this.products.filter((item) => item.title.match(this.searchWord))
+        //將總商品依照每頁12筆成為展示商品
+        this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
+        this.loadingStatus.loadingFilterProducts = false
+      } else if (category === '全部商品 ALL') {
         this.currentPage = 1
         this.getSort(status)
-        console.log(this.products)
+        //axios取得的所有商品為總商品
         this.categoryProducts = this.products
+        //將總商品依照每頁12筆成為展示商品
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
         this.loadingStatus.loadingFilterProducts = false
-        console.log('全部商品', this.currentProducts, this.categoryProducts)
-      } else if (category) {
-        console.log('@@@', category)
+        console.log('全部商品', this.currentProducts, this.categoryProducts, this.showTitle)
+      } else {
         this.getSort(status)
+        //將axios 取得的所有商品篩選分類後成為總商品
         this.categoryProducts = this.products.filter((item) => item.category === category)
+        //將總商品依照每頁12筆成為展示商品
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
         this.loadingStatus.loadingFilterProducts = false
+        // console.log(
+        //   '分類',
+        //   this.currentPage,
+        //   this.category,
+        //   this.products,
+        //   this.categoryProducts,
+        //   this.currentProducts
+        // )
       }
     },
 

@@ -39,7 +39,7 @@
             data-aos-once="true"
           >
             <RouterLink
-              to="/products/productsAll"
+              to="/products/全部商品%20ALL"
               class="custom-btn custom-btn-primary shop-now cursor-pointer"
               >SHOP NOW</RouterLink
             >

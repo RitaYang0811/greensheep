@@ -4,7 +4,7 @@
     <h3 class="fs-2 mb-6 text-center text-primary">OUR COLLECTIONS</h3>
     <div class="row gy-5">
       <div class="col-lg-3 col-6">
-        <RouterLink to="/products/productsAll">
+        <RouterLink to="/products/項鍊%20PENDANT">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -24,7 +24,7 @@
         </RouterLink>
       </div>
       <div class="col-lg-3 col-6">
-        <RouterLink to="/products/productsAll">
+        <RouterLink to="/products/戒指%20RING">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -43,7 +43,7 @@
         </RouterLink>
       </div>
       <div class="col-lg-3 col-6">
-        <RouterLink to="/products/productsAll">
+        <RouterLink to="/products/耳環%20EARRINGS">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -62,7 +62,7 @@
         </RouterLink>
       </div>
       <div class="col-lg-3 col-6">
-        <RouterLink to="/products/productsAll">
+        <RouterLink to="/products/手鍊%20BRACELET">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -93,20 +93,20 @@
       <img src="../assets/images/img-introduce.png" alt="" class="img-fluid" />
       <div class="position-relative ms-auto mt-lg-0 mt-22">
         <img src="../assets/images/image-15.png" alt="" class="img-fluid" />
-        <!-- 桌機版定位 -->
+        <!-- 桌機版定位:@greensheep_jewelry -->
         <p
           class="text-primary position-absolute display-7 text-vertical top-60 end-2 d-lg-block d-none"
         >
           @greensheep_jewelry
         </p>
-        <!-- 手機版定位 -->
+        <!-- 手機版定位:@greensheep_jewelry -->
         <p
           class="text-primary position-absolute display-7 text-vertical top-20 end-15 d-lg-none d-block"
         >
           @greensheep_jewelry
         </p>
       </div>
-      <!-- 桌機版定位 -->
+      <!-- 桌機版定位:極致工藝 -->
       <div
         class="card d-lg-block d-none position-absolute py-lg-24 px-lg-12 px-4 py-8 border-radius-80 bg-primary bg-opacity-75 border-1 border-greyF7 backdrop-blur top-15 start-53"
         style="max-width: 536px"
@@ -119,13 +119,13 @@
             每一件珠寶都是一個故事的開端，他們不僅是獨特設計的結晶，更是佩戴者心靈的寄託。以傳統經典風格為基礎，注入優雅的細節和精湛工藝，綻放永恆時尚展現你的自信光芒。
           </p>
           <router-link
-            to="/products/productsAll"
+            to="/products/全部商品%20ALL"
             class="card-link border-bottom py-2 px-3 display-8 text-white custom-btn custom-btn-white shop-now"
             >SHOP NOW</router-link
           >
         </div>
       </div>
-      <!-- 平板版定位 -->
+      <!-- 平板版定位:極致工藝 -->
       <div
         class="card d-sm-block d-none d-lg-none position-absolute px-md-8 py-md-16 px-4 py-8 border-radius-40 bg-primary bg-opacity-75 border-1 border-greyF7 backdrop-blur top-33 start-0"
         style="max-width: 400px"
@@ -136,13 +136,13 @@
             每一件珠寶都是一個故事的開端，他們不僅是獨特設計的結晶，更是佩戴者心靈的寄託。以傳統經典風格為基礎，注入優雅的細節和精湛工藝，綻放永恆時尚展現你的自信光芒。
           </p>
           <router-link
-            to="/products"
+            to="/products/全部商品%20ALL"
             class="card-link border-bottom py-2 px-3 display-8 text-white custom-btn custom-btn-white shop-now"
             >SHOP NOW</router-link
           >
         </div>
       </div>
-      <!-- 手機版定位 -->
+      <!-- 手機版定位:極致工藝 -->
       <div
         class="card d-sm-none d-block position-absolute px-4 py-8 border-radius-40 bg-primary bg-opacity-75 border-1 border-greyF7 backdrop-blur top-27 start-0"
         style="max-width: 259px"
@@ -153,15 +153,12 @@
             每一件珠寶都是一個故事的開端，他們不僅是獨特設計的結晶，更是佩戴者心靈的寄託。以傳統經典風格為基礎，注入優雅的細節和精湛工藝，綻放永恆時尚展現你的自信光芒。
           </p>
           <router-link
-            to="/products/productsAll"
+            to="/products/全部商品%20ALL"
             class="card-link border-bottom py-2 px-3 display-8 text-white custom-btn custom-btn-white shop-now"
             >SHOP NOW</router-link
           >
         </div>
       </div>
-
-      <!-- <p class="text-primary position-absolute display-7 text-vertical top-60 end-2 d-lg-block d-none">@greensheep_jewelry</p> -->
-      <!-- top:236px;right:21px; -->
       <div class="position-absolute top-93 start-n2 d-lg-block d-none">
         <img src="../assets/images/Worlds Best Artistry.png" alt="" />
       </div>
@@ -176,7 +173,7 @@
         <h3 class="fs-2 mb-12 text-primary text-lg-start text-center">OUR BEST SELLERS</h3>
         <div class="position-relative me-auto d-lg-block d-none">
           <router-link
-            to="/products/productsAll"
+            to="/products/全部商品%20ALL"
             class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary"
             >Discover More</router-link
           >
@@ -350,7 +347,7 @@
     <div class="container">
       <div class="my-auto mt-6 mb-20">
         <router-link
-          to="/products/productsAll"
+          to="/products/全部商品%20ALL"
           class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary"
           >Discover More</router-link
         >
