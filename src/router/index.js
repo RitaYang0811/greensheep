@@ -26,40 +26,15 @@ const router = createRouter({
           component: () => import('../views/user/ProductsView.vue'),
           children: [
             {
-              path: 'productsAll',
-              component: () => import('../views/user/ProductsView.vue')
-            },
-            {
-              path: '項鍊 PENDANT',
-              component: () => import('../views/user/ProductsView.vue')
-            },
-
-            {
-              path: '戒指 RING',
-              component: () => import('../views/user/ProductsView.vue')
-            },
-
-            {
-              path: '耳環 EARRINGS',
-              component: () => import('../views/user/ProductsView.vue')
-            },
-            {
-              path: '手鍊 BRACELET',
-              component: () => import('../views/user/ProductsView.vue')
-            },
-            {
-              path: '客製設計 CUSTOMIZED',
-              component: () => import('../views/user/ProductsView.vue')
-            },
-            {
-              path: '其他配件 OTHERS',
-              component: () => import('../views/user/ProductsView.vue')
+              path: ':category',
+              component: () => import('../views/user/ProductsView.vue'),
+              props: true
             }
           ]
         },
 
         {
-          path: 'products/:id',
+          path: 'products/detail/:id',
           name: 'UserProductDetail',
           component: () => import('../views/user/ProductDetailView.vue')
         },

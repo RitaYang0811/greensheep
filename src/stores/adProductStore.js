@@ -8,7 +8,15 @@ export default defineStore('adProductStore', {
     allProducts: [],
     allPagination: {},
     currentTab: '所有商品',
-    loadingStatus: false
+    loadingStatus: false,
+    bestSeller: [
+      //梅川衣服
+      '-NsVQCmAiuvXWHJ9cf1A',
+      //波光淋漓
+      '-NsVL3yywAfe5aYKsTVv',
+      //星空之約
+      '-NsUsi2n1gdOSF0I798e'
+    ]
   }),
   getters: {},
   actions: {

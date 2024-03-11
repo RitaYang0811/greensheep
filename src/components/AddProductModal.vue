@@ -1,7 +1,7 @@
 <template>
   <div class="modal modal-xl" tabindex="-1" ref="addModal">
     <div class="modal-dialog modal-dialog-scrollable">
-      <VForm class="modal-content" v-slot="{ errors }">
+      <VForm class="modal-content" v-slot="{ errors }" @click="clickUpdate">
         <div class="modal-header bg-primary">
           <h5 v-if="isNew === true" class="modal-title fw-medium text-white ps-3 py-2">新增商品</h5>
           <h5 v-else class="modal-title fw-medium text-white ps-3 py-2">編輯商品</h5>
@@ -375,26 +375,14 @@
           </div>
         </div>
         <div class="modal-footer d-block">
-          <button type="button" class="btn btn-primary float-start" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-primary float-start" @click="close()">
             離開編輯
           </button>
 
-          <button
-            v-if="isNew === true"
-            type="button"
-            class="btn btn-deco float-end"
-            @click="$emit('confirmUpdate', isNew)"
-          >
+          <button v-if="isNew === true" type="submit" class="btn btn-deco float-end">
             新增儲存
           </button>
-          <button
-            v-else
-            type="button"
-            class="btn btn-deco float-end"
-            @click="$emit('confirmUpdate', isNew)"
-          >
-            修改儲存
-          </button>
+          <button v-else type="submit" class="btn btn-deco float-end">修改儲存</button>
           <!-- <button
             v-else-if="tempProduct.is_enabled == 0"
             type="button"
@@ -521,6 +509,9 @@ export default {
         .catch((err) => {
           console.log(err)
         })
+    },
+    clickUpdate() {
+      this.$emit('confirmUpdate', this.isNew)
     }
   },
   watch: {

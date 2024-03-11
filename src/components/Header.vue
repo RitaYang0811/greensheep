@@ -1,6 +1,6 @@
 <template>
   <router-link
-    to="/products/productsAll"
+    to="/products/全部商品%20ALL"
     class="d-block accordion fs-8 py-1 bg-primary text-white cursor-pointer"
   >
     即日起，訂單達 2,000元 以上即可享免運費優惠！
@@ -53,18 +53,15 @@
               class="dropdown-menu custom-dropdown-menu shadow-none border-0 font-noto-serif fs-8 start-50"
               ref="dropdownMenu"
             >
-              <li class="d-inline-block py-2 mx-3 position-relative cursor-pointer">
-                <RouterLink to="/products/productsAll" @click="toProductsView"
-                  >全部商品 ALL</RouterLink
-                >
-              </li>
+              <!-- <li class="d-inline-block py-2 mx-3 position-relative cursor-pointer">
+                <a @click.prevent="toCategoryPage('productsAll')">全部商品 ALL</a>
+              </li> -->
               <li v-for="category in categories" :key="category + 123">
-                <RouterLink
-                  :to="{ path: `/products/${category}` }"
+                <a
                   class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
-                  @click="changeCategory(category)"
+                  @click.prevent="toCategoryPage(category)"
                   >{{ category }}
-                </RouterLink>
+                </a>
               </li>
             </ul>
           </li>
@@ -250,29 +247,31 @@ export default {
   methods: {
     ...mapActions(searchStore, ['setSearchWord']),
     ...mapActions(productStore, ['getProducts', 'getFilterProducts']),
-    toProductsView() {
-      this.headerCategory = ''
-      this.isDropdownMenuOpen = !this.isDropdownMenuOpen
-      this.closeDropdownMenu()
-      this.closeMenuOffCanvas()
-      this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
-      this.$router.push({ path: '/products/productsAll' })
-    },
-    changeCategory(category) {
-      console.log('changeCategory', category)
+    //至全部商品
+    // toProductsView(category) {
+    //   this.headerCategory = category
+    //   this.isDropdownMenuOpen = !this.isDropdownMenuOpen
+    //   this.closeDropdownMenu()
+    //   this.closeMenuOffCanvas()
+    //   //this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
+    //   this.$router.push({ path: '/products/productsAll' })
+    // },
+    toCategoryPage(category) {
       this.headerCategory = category
+
       this.isDropdownMenuOpen = !this.isDropdownMenuOpen
       this.closeDropdownMenu()
-      this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
+      //this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
+      this.$router.push({ path: `/products/${category}` })
       this.closeMenuOffCanvas()
     },
-    toCustomPage() {
-      this.headerCategory = '客製設計 CUSTOMIZED'
+    // toCustomPage() {
+    //   this.headerCategory = '客製設計 CUSTOMIZED'
 
-      this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
+    //   this.getFilterProducts(this.headerCategory, this.headerCurrentPage, 'timeN2O')
 
-      this.$router.push({ path: '/products/productsAll' })
-    },
+    //   this.$router.push({ path: '/products/productsAll' })
+    // },
     openMenuOffCanvas() {
       this.menuOffCanvas.show()
     },
