@@ -19,7 +19,10 @@
         </div>
         <div v-else class="text-start">
           <div class="mb-3">
-            <label for="couponCode" class="form-label fs-6 mb-3">優惠碼</label>
+            <div class="d-flex justify-content-between">
+              <label for="couponCode" class="form-label fs-6 mb-3">*優惠碼</label>
+              <p>*為必填</p>
+            </div>
             <VField
               type="text"
               name="優惠碼"
@@ -32,14 +35,16 @@
             <ErrorMessage name="優惠碼" class="invalid-feedback" />
           </div>
           <div class="mb-3">
-            <p class="mb-3 fs-6">優惠方式</p>
+            <p class="mb-3 fs-6">*優惠方式</p>
             <div class="form-check mb-3">
               <input class="form-check-input" type="radio" id="flexRadioDefault1" value="金額折抵" v-model="couponData.title" :checked="isNew || couponData.title === '金額折抵'">
               <label class="form-check-label mb-2" for="flexRadioDefault1">
                 訂單金額折抵
               </label>
               <div class="d-flex flex-column gap-2 mb-3">
-                <p class="fs-8">消費滿 NT$</p>
+                <p class="fs-8">
+                  <template v-if="couponData.title === '金額折抵'">*</template>消費滿 NT$
+                </p>
                 <div>
                   <VField
                     type="number"
@@ -52,7 +57,9 @@
                     :disabled="couponData.title === '訂單折扣'" />
                   <ErrorMessage name="金額" class="invalid-feedback" />
                 </div>
-                <p class="fs-8">折抵金額 NT$</p>
+                <p class="fs-8">
+                  <template v-if="couponData.title === '金額折抵'">*</template>折抵金額 NT$
+                </p>
                 <div>
                   <VField
                     type="number"
@@ -74,7 +81,9 @@
                 訂單折扣
               </label>
               <div class="d-flex flex-column gap-2">
-                <p class="fs-8">消費滿 NT$</p>
+                <p class="fs-8">
+                  <template v-if="couponData.title === '訂單折扣'">*</template>消費滿 NT$
+                </p>
                 <div>
                   <VField
                     type="number"
@@ -87,7 +96,9 @@
                     :disabled="couponData.title === '金額折抵'" />
                   <ErrorMessage name="消費金額" class="invalid-feedback" />
                 </div>
-                <p class="fs-8">折扣</p>
+                <p class="fs-8">
+                  <template v-if="couponData.title === '訂單折扣'">*</template>折扣
+                </p>
                 <div>
                   <VField
                     as="select"
@@ -108,7 +119,7 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="couponCode" class="form-label fs-6 mb-3">開始 / 結束日期</label>
+            <label for="couponCode" class="form-label fs-6 mb-3">*開始 / 結束日期</label>
             <!-- model-type="timestamp": 選擇日期時儲存的資料格式，這邊用 unix timestamp，預設是毫秒單位，所以 v-model 綁定的資料須先換算成毫秒單位
                  :range="{ partialRange: false }": range 模式，partialRange 為 false 需選擇兩個日期
                  :format="format": 後面綁定自定義的 format 方法，呈現在畫面上的是將此方法執行後的回傳結果，不會動到原始資料
