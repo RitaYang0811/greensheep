@@ -543,8 +543,13 @@ export default {
       if (couponData.title === '金額折抵') {
         data.min_buy_price_by_price = couponData.min_buy_price_by_price
         data.discount_price = couponData.discount_price
+        // 清空另一種類的資料
+        data.min_buy_price_by_discount = ''
       } else if (couponData.title === '訂單折扣') {
         data.min_buy_price_by_discount = couponData.min_buy_price_by_discount
+        // 清空另一種類的資料
+        data.min_buy_price_by_price = ''
+        data.discount_price = ''
       }
 
       // 判斷是新增或編輯
