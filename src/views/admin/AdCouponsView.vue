@@ -383,6 +383,7 @@
   <AdCouponModal
     ref="adCouponModal"
     :coupon="coupon"
+    :newCoupon="newCoupon"
     :isNew="isNew"
     :loadingStatus="loadingStatus"
     @update-coupon="updateCoupon"
@@ -408,6 +409,9 @@ export default {
       notYetValidCoupons: [],
       InvalidCoupons: [],
       coupon: {},
+      newCoupon: {
+        title: '金額折抵' // 預設值給 :checked 判斷
+      },
       isNew: true,
       isLoading: false,
       loadingStatus: {
@@ -539,8 +543,13 @@ export default {
       if (couponData.title === '金額折抵') {
         data.min_buy_price_by_price = couponData.min_buy_price_by_price
         data.discount_price = couponData.discount_price
+        // 清空另一種類的資料
+        data.min_buy_price_by_discount = ''
       } else if (couponData.title === '訂單折扣') {
         data.min_buy_price_by_discount = couponData.min_buy_price_by_discount
+        // 清空另一種類的資料
+        data.min_buy_price_by_price = ''
+        data.discount_price = ''
       }
 
       // 判斷是新增或編輯
@@ -602,15 +611,12 @@ export default {
     async openModal(type, id) {
       switch (type) {
         case 'new':
-          // this.$refs.adCouponModal.reset()
+          this.$refs.adCouponModal.reset()
           this.isNew = true
-          this.coupon = {
-            title: '金額折抵' // 預設值給 :checked 判斷
-          }
+          this.$refs.adCouponModal.resetNewCoupon()
           this.$refs.adCouponModal.openModal()
           break
         case 'edit':
-          // this.$refs.adCouponModal.reset()
           this.isNew = false
           this.$refs.adCouponModal.openModal()
           await this.getCoupon(id)
