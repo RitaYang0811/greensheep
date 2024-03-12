@@ -434,9 +434,7 @@ export default {
           return false
         })
     },
-    loadData() {
-      this.getFilterProducts()
-    },
+
     //點選分類改變目前分類
     changeCategory(category) {
       this.currentCategory = category

@@ -347,9 +347,23 @@ export default {
       this.isCollapseOpen = false
     },
     toggleDropdownMenu() {
-      console.log('@@')
       this.isDropdownMenuOpen = !this.isDropdownMenuOpen
       this.isDropdownMenuOpen === true ? this.openDropdownMenu() : this.closeDropdownMenu()
+    },
+    toggleCollapseProduct() {
+      this.isCollapseOpen = !this.isCollapseOpen
+      this.isCollapseOpen === true ? this.openCollapseProduct() : this.closeCollapseProduct()
+    },
+
+    searchProducts(event) {
+      this.closeSearchOffCanvas()
+      console.log('searchProducts', this.searchWord)
+      if (this.searchWord.trim() !== '') {
+        this.$router.push({ path: '/products', query: { keyword: this.searchWord.trim() } })
+        this.searchWord = ''
+      } else {
+        event.preventDefault()
+      }
     },
     // 判斷是否已登入
     async isLogin() {
@@ -400,17 +414,17 @@ export default {
       toggle: false
     })
 
-    // // 監聽滾動事件，滾輪下滑時 header 隱藏，上滑時 header 顯示
-    // window.addEventListener('scroll', () => {
-    //   let currentScrollY = window.scrollY
-    //   // 當前滑動位置小於前一個位置即為滾輪往上滑
-    //   if (currentScrollY < this.previousScrollY) {
-    //     this.$refs.scrollBody.classList.remove('hideUp')
-    //   } else {
-    //     this.$refs.scrollBody.classList.add('hideUp')
-    //   }
-    //   this.previousScrollY = currentScrollY
-    // })
+    // 監聽滾動事件，滾輪下滑時 header 隱藏，上滑時 header 顯示
+    window.addEventListener('scroll', () => {
+      let currentScrollY = window.scrollY
+      // 當前滑動位置小於前一個位置即為滾輪往上滑
+      if (currentScrollY < this.previousScrollY) {
+        this.$refs.scrollBody.classList.remove('hideUp')
+      } else {
+        this.$refs.scrollBody.classList.add('hideUp')
+      }
+      this.previousScrollY = currentScrollY
+    })
 
     // // 点击窗口外的区域关闭菜单
     // window.addEventListener('click', (event) => {
