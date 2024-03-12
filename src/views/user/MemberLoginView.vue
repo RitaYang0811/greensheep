@@ -61,7 +61,7 @@
                 :rules="passwordRule"
                 v-model="user.password"
               ></v-field>
-              <label for="password" class="z-0">請輸入密碼(6-12字元且不連續)</label>
+              <label for="password" class="z-0">請輸入6-12字英數混合密碼，避免連續及重複</label>
               <i
                 class="checkByEye"
                 :class="[
@@ -110,7 +110,7 @@
 
 <script>
 import { googleTokenLogin } from 'vue3-google-login'
-
+import Swal from 'sweetalert2'
 // json-server網址
 const serverUrl = 'https://greensheep-json-server.onrender.com'
 
@@ -157,7 +157,12 @@ export default {
           this.$router.push({ name: 'MemberHome' })
         })
         .catch((err) => {
-          alert('帳號或密碼錯誤!')
+          Swal.fire({
+            icon: 'error',
+            title: '帳號或密碼錯誤，請重新登入',
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
     },
     // google登入

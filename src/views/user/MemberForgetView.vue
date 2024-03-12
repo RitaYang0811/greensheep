@@ -1,156 +1,161 @@
 <template>
-  <div class="d-flex flex-column align-items-center py-15">
-    <div>
-      <h2 class="fs-2">WELCOME</h2>
-      <p class="text-primary">Discover Your Unique Elegance</p>
-    </div>
-    <div class="w-50 member-content">
-      <div class="d-flex flex-column align-items-center py-8">
-        <h1 class="fs-1 mb-8">忘記密碼</h1>
-        <div>
-          <v-form ref="form" class="member-form" v-slot="{ errors }">
-            <!-- 第一步:發送驗證碼 -->
-            <div v-if="stepState.first">
-              <!-- 信箱 -->
-              <div class="form-floating mb-3">
-                <v-field
-                  name="email"
-                  type="email"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors['email'] }"
-                  id="email"
-                  aria-describedby="emailHelp"
-                  placeholder="請輸入Email (Google/Yahoo)"
-                  :rules="emailRule"
-                  v-model="user.email"
-                ></v-field>
-                <label for="email" class="z-0">請輸入Email</label>
-                <error-message name="email" class="invalid-feedback text-start"></error-message>
-              </div>
-
-              <button
-                type="button"
-                class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
-                @click="sendCode"
-              >
-                <div class="button-img-box me-1">
-                  <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+  <main class="container">
+    <div class="d-flex flex-column align-items-center py-40">
+      <div>
+        <h2 class="fs-2">WELCOME</h2>
+        <p class="text-primary">Discover Your Unique Elegance</p>
+      </div>
+      <div class="w-50 member-content">
+        <div class="d-flex flex-column align-items-center py-8">
+          <h1 class="fs-1 mb-8">忘記密碼</h1>
+          <div>
+            <v-form ref="form" class="member-form" v-slot="{ errors }">
+              <!-- 第一步:發送驗證碼 -->
+              <div v-if="stepState.first">
+                <!-- 信箱 -->
+                <div class="form-floating mb-3">
+                  <v-field
+                    name="email"
+                    type="email"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors['email'] }"
+                    id="email"
+                    aria-describedby="emailHelp"
+                    placeholder="請輸入Email (Google/Yahoo)"
+                    :rules="emailRule"
+                    v-model="user.email"
+                  ></v-field>
+                  <label for="email" class="z-0">請輸入Email</label>
+                  <error-message name="email" class="invalid-feedback text-start"></error-message>
                 </div>
 
-                <p>發送驗證碼</p>
-              </button>
-            </div>
-            <!-- 第二步:驗證碼輸入 -->
-            <div v-if="stepState.second">
-              <!-- 驗證碼 -->
-              <div class="form-floating mb-3">
-                <v-field
-                  id="securityCode"
-                  name="驗證碼"
-                  type="text"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors['驗證碼'] }"
-                  placeholder="請輸入驗證碼"
-                  rules="required"
-                  v-model="inputCode"
-                ></v-field>
-                <label for="securityCode" class="z-0">請輸入驗證碼</label>
-                <error-message name="驗證碼" class="invalid-feedback text-start"></error-message>
-              </div>
+                <button
+                  type="button"
+                  class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
+                  @click="sendCode"
+                >
+                  <div class="button-img-box me-1">
+                    <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+                  </div>
 
-              <button
-                type="button"
-                class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
-                @click="checkCode"
-              >
-                <div class="button-img-box me-1">
-                  <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+                  <p>發送驗證碼</p>
+                </button>
+              </div>
+              <!-- 第二步:驗證碼輸入 -->
+              <div v-if="stepState.second">
+                <!-- 驗證碼 -->
+                <div class="form-floating mb-3">
+                  <v-field
+                    id="securityCode"
+                    name="驗證碼"
+                    type="text"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors['驗證碼'] }"
+                    placeholder="請輸入驗證碼"
+                    rules="required"
+                    v-model="inputCode"
+                  ></v-field>
+                  <label for="securityCode" class="z-0">請輸入驗證碼</label>
+                  <error-message name="驗證碼" class="invalid-feedback text-start"></error-message>
                 </div>
 
-                <p>送出驗證碼</p>
-              </button>
-            </div>
+                <button
+                  type="button"
+                  class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
+                  @click="checkCode"
+                >
+                  <div class="button-img-box me-1">
+                    <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+                  </div>
 
-            <!-- 第三步:重設密碼 -->
-            <div v-if="stepState.third">
-              <!-- 密碼 -->
-              <div class="form-floating mb-3">
-                <v-field
-                  name="password"
-                  :type="passwordActive ? 'text' : 'password'"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors['password'] }"
-                  id="password"
-                  aria-describedby="passwordHelp"
-                  placeholder="請輸入密碼(6-12字元且不連續)"
-                  :rules="passwordRule"
-                  v-model="user.password"
-                ></v-field>
-                <label for="password" class="z-0">請輸入密碼(6-12字元且不連續)</label>
-                <i
-                  class="checkByEye"
-                  :class="[
-                    passwordActive ? 'bi-eye' : 'bi-eye-slash',
-                    'bi',
-                    { 'checkByEye-alert': checkEyeState }
-                  ]"
-                  @click="passwordActive = !passwordActive"
-                ></i>
-                <error-message name="password" class="invalid-feedback text-start"></error-message>
-              </div>
-              <!-- 再次確認密碼 -->
-              <div class="form-floating mb-3">
-                <v-field
-                  name="confirmPassword"
-                  :type="confirmActive ? 'text' : 'password'"
-                  class="form-control"
-                  :class="{ 'is-invalid': errors['confirmPassword'] }"
-                  id="confirmPassword"
-                  aria-describedby="passwordHelp"
-                  placeholder="請再次確認密碼"
-                  :rules="confirmPasswordRule"
-                  v-model="confirmPassword"
-                />
-                <label for="password" class="z-0">請再次確認密碼</label>
-                <i
-                  class="checkByEye"
-                  :class="[
-                    confirmActive ? 'bi-eye' : 'bi-eye-slash',
-                    'bi',
-                    { 'checkByEye-alert': confirmEyeState }
-                  ]"
-                  @click="confirmActive = !confirmActive"
-                ></i>
-                <error-message
-                  name="confirmPassword"
-                  class="invalid-feedback text-start"
-                ></error-message>
+                  <p>送出驗證碼</p>
+                </button>
               </div>
 
-              <button
-                type="button"
-                class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
-                @click="onSubmit"
-              >
-                <div class="button-img-box me-1">
-                  <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+              <!-- 第三步:重設密碼 -->
+              <div v-if="stepState.third">
+                <!-- 密碼 -->
+                <div class="form-floating mb-3">
+                  <v-field
+                    name="password"
+                    :type="passwordActive ? 'text' : 'password'"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors['password'] }"
+                    id="password"
+                    aria-describedby="passwordHelp"
+                    placeholder="請輸入密碼(6-12字元且不連續)"
+                    :rules="passwordRule"
+                    v-model="user.password"
+                  ></v-field>
+                  <label for="password" class="z-0">請輸入密碼(6-12字元且不連續)</label>
+                  <i
+                    class="checkByEye"
+                    :class="[
+                      passwordActive ? 'bi-eye' : 'bi-eye-slash',
+                      'bi',
+                      { 'checkByEye-alert': checkEyeState }
+                    ]"
+                    @click="passwordActive = !passwordActive"
+                  ></i>
+                  <error-message
+                    name="password"
+                    class="invalid-feedback text-start"
+                  ></error-message>
+                </div>
+                <!-- 再次確認密碼 -->
+                <div class="form-floating mb-3">
+                  <v-field
+                    name="confirmPassword"
+                    :type="confirmActive ? 'text' : 'password'"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors['confirmPassword'] }"
+                    id="confirmPassword"
+                    aria-describedby="passwordHelp"
+                    placeholder="請再次確認密碼"
+                    :rules="confirmPasswordRule"
+                    v-model="confirmPassword"
+                  />
+                  <label for="password" class="z-0">請再次確認密碼</label>
+                  <i
+                    class="checkByEye"
+                    :class="[
+                      confirmActive ? 'bi-eye' : 'bi-eye-slash',
+                      'bi',
+                      { 'checkByEye-alert': confirmEyeState }
+                    ]"
+                    @click="confirmActive = !confirmActive"
+                  ></i>
+                  <error-message
+                    name="confirmPassword"
+                    class="invalid-feedback text-start"
+                  ></error-message>
                 </div>
 
-                <p>重設密碼</p>
-              </button>
+                <button
+                  type="button"
+                  class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
+                  @click="onSubmit"
+                >
+                  <div class="button-img-box me-1">
+                    <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+                  </div>
+
+                  <p>重設密碼</p>
+                </button>
+              </div>
+            </v-form>
+            <div class="mb-3 d-flex justify-content-end">
+              <p class="mt-1">
+                返回<router-link to="/MemberLogin" class="text-decoration-underline"
+                  >登入</router-link
+                >
+              </p>
             </div>
-          </v-form>
-          <div class="mb-3 d-flex justify-content-end">
-            <p class="mt-1">
-              返回<router-link to="/MemberLogin" class="text-decoration-underline"
-                >登入</router-link
-              >
-            </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>

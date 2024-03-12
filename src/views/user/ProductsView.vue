@@ -6,22 +6,14 @@
       <!-- 側邊目錄 -->
       <aside class="d-none d-lg-block col-lg-2 h-bottom-line">
         <ul class="d-none d-md-block list-unstyled text-dark text-start">
-          <li>
-            <RouterLink
-              to="/products/productsAll"
-              class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
-              @click="changeCategory('all')"
-              >全部商品 ALL</RouterLink
-            >
-          </li>
           <!-- categoryList -->
           <li v-for="category in categories" :key="category">
-            <RouterLink
+            <router-link
               :to="{ path: `/products/${category}` }"
               class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
-              @click="changeCategory(category)"
+              :class="{ active: this.$route.path === `/products/${category}` }"
               >{{ category }}
-            </RouterLink>
+            </router-link>
           </li>
         </ul>
       </aside>
@@ -30,24 +22,17 @@
         <div class="d-flex justify-content-between mb-5">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><router-link :to="`/`">首頁</router-link></li>
               <li class="breadcrumb-item">
-                <routerLink
-                  to="/products/productsAll"
-                  class="cursor-pointer"
-                  @click="changeCategory('all')"
-                  >商品</routerLink
-                >
+                <router-link :to="`/`">首頁</router-link>
+              </li>
+              <li class="breadcrumb-item">
+                <a class="cursor-pointer" @click="changeCategory('全部商品 ALL')">商品</a>
               </li>
 
-              <li
-                v-if="currentCategory"
-                class="breadcrumb-item active"
-                @click="changeCategory(currentCategory)"
-              >
+              <li class="breadcrumb-item active">
                 {{ currentCategory }}
               </li>
-              <li v-else class="breadcrumb-item active">全部商品 ALL</li>
+              <!-- <li v-else class="breadcrumb-item active">全部商品 ALL</li> -->
             </ol>
           </nav>
           <div class="mb-3 position-relative">
@@ -63,12 +48,6 @@
               class="sort-list border border-primary bg-white rounded-2 text-primary list-unstyled position-absolute top-100 end-0 z-3"
               style="width: 200px"
             >
-              <li
-                class="px-4 py-2 border-bottom border-primary cursor-pointer"
-                @click.prevent="sort('new')"
-              >
-                最近更新
-              </li>
               <li
                 class="px-4 py-2 border-bottom border-primary cursor-pointer"
                 @click.prevent="sort('priceL2H')"
@@ -108,6 +87,8 @@
             </a>
           </div>
         </div>
+        <!-- 排序顯示 -->
+        <p class="text-end text-primary mb-5">排序方式：{{ showTitle }}</p>
         <!-- 商品列表:卡片 -->
         <template v-if="currentProducts.length !== 0">
           <div
@@ -119,7 +100,7 @@
               v-for="product in currentProducts"
               :key="product.id"
             >
-              <router-link :to="`/products/${product.id}`" class="card border-0">
+              <router-link :to="`/products/detail/${product.id}`" class="card border-0">
                 <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
                   <span
                     v-if="product.discount !== 10"
@@ -185,7 +166,7 @@
             <table v-if="isList === true" class="table mb-10 mb-lg-15">
               <tbody>
                 <template v-for="item in currentProducts" :key="item.id">
-                  <router-link :to="`/products/${item.id}`"
+                  <router-link :to="`/products/detail/${item.id}`" @click="scrollToTop"
                     ><tr
                       class="product-item row mb-3 bg-white rounded-3 align-content-center py-2 py-lg-1"
                     >
@@ -309,7 +290,7 @@ import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
 import searchStore from '@/stores/searchStore'
 import SwiperAllProducts from '@/components/SwiperAllProducts.vue'
-import PagiNation from '@/components/PagiNation.vue'
+import Swal from 'sweetalert2'
 import { mapState, mapActions } from 'pinia'
 
 // json-server網址
@@ -318,13 +299,16 @@ export default {
   data() {
     return {
       isShow: false,
-      showTitle: '',
+      sortTitle: '',
       isBlock: true,
       isList: false,
-      searchWord: '',
 
+      //當前顯示分類
       currentCategory: '',
-      currentProductsPage: 1
+      //當前顯示分頁
+      currentProductsPage: 1,
+      //當前顯示關鍵字
+      currentSearchWord: ''
     }
   },
   components: {
@@ -333,35 +317,35 @@ export default {
   computed: {
     ...mapState(productStore, [
       'products',
-      'isLoading',
       'categoryProducts',
       'currentProducts',
       'currentPage',
       'category',
       'categories',
+      'showTitle',
+      'isLoading',
       'loadingStatus'
     ]),
     ...mapState(searchStore, ['searchQuery'])
   },
 
   watch: {
-    //監聽路由變化後重新取得分類產品
-    $route(to, from) {
-      this.currentCategory = this.category
-      this.loadData()
-      console.log('路由變化後重新取得分類產品')
+    //監聽路由變化
+    $route() {
+      this.currentCategory = this.$route.params.category
+      this.searchWord = this.$route.query.keyword
+      this.currentProductsPage = 1
+      console.log('路由變化', this.currentCategory, this.searchWord)
+      this.getFilterProducts(this.currentCategory, 1, this.sortTitle, this.searchWord)
     },
+
     currentProductsPage(newVal) {
       console.log(newVal)
       this.changeCurrentPage()
     }
   },
   methods: {
-    ...mapActions(productStore, [
-      'getProducts',
-      'getFilterProducts', //分類頁數關鍵字過濾產品
-      'getSort'
-    ]),
+    ...mapActions(productStore, ['getProducts', 'getFilterProducts', 'getSort']),
     ...mapActions(cartStore, ['addToCart']),
     // 加入最愛
     async addToLike(productId) {
@@ -376,13 +360,27 @@ export default {
       )
       // 這邊預留給移除最愛
       if (res.data.length) {
-        alert('已經加入過最愛囉!')
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: '已經加入過收藏囉!',
+          showConfirmButton: false,
+          toast: true,
+          timer: 1500
+        })
       } else {
         // 加入最愛
         this.$http
           .post(`${serverUrl}/favorites`, likeProduct)
           .then((res) => {
-            alert('成功加入最愛!')
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: '已加入收藏!',
+              showConfirmButton: false,
+              toast: true,
+              timer: 1500
+            })
             this.$refs.favIcon.forEach((item, index) => {
               if (productId === item.id) {
                 this.$refs.favIcon[index].classList.remove('bi-heart')
@@ -400,8 +398,12 @@ export default {
       const user = JSON.parse(localStorage.getItem('userInfo'))
 
       if (user === null) {
-        alert('請先登入會員!')
-        return false
+        Swal.fire({
+          icon: 'warning',
+          title: '請先登入會員喔！',
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
       await this.$http
         .get(`${serverUrl}/600/users/${user.id}`, {
@@ -413,19 +415,22 @@ export default {
           this.addToLike(productId)
         })
         .catch((err) => {
-          alert('請先登入會員!')
+          Swal.fire({
+            icon: 'warning',
+            title: '請先登入會員喔！',
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
     },
-    loadData() {
-      this.getFilterProducts()
-    },
+
     //點選分類改變目前分類
     changeCategory(category) {
+      this.currentCategory = category
       this.currentProductsPage = 1
-      category === 'all' ? (this.currentCategory = '') : (this.currentCategory = category)
       this.getFilterProducts(this.currentCategory, 1)
     },
-    //改變頁碼分頁
+    //點擊頁碼改變分頁
     changeCurrentPage() {
       this.getFilterProducts(this.currentCategory, this.currentProductsPage)
     },
@@ -442,12 +447,20 @@ export default {
     //排列順序切換
     sort(status) {
       this.isShow = false
+      this.sortTitle = status
       this.getFilterProducts(this.currentCategory, this.currentProductsPage, status)
+    },
+    async fetchData() {
+      await this.getProducts()
+      console.log(this.$route)
+      this.currentCategory = this.$route.params.category
+      this.searchWord = this.$route.query.keyword
+      console.log(this.currentCategory, this.searchWord)
+      this.getFilterProducts(this.currentCategory, 1, 'timeN2O', this.searchWord)
     }
   },
-  mounted() {
-    this.getProducts()
-    console.log(this.$route)
+  async mounted() {
+    await this.fetchData()
   }
 }
 </script>

@@ -206,7 +206,7 @@
                   <p class="me-2 pe-2 text-start text-dark grey-border">耳環</p>
                   <p class="text-start text-dark">波光粼離純銀耳環</p>
                 </div>
-                <p class="text-start text-dark">建宏</p>
+                <p class="text-start text-dark">Uli</p>
               </div>
             </div>
           </a>

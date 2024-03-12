@@ -375,7 +375,7 @@
           </div>
         </div>
         <div class="modal-footer d-block">
-          <button type="button" class="btn btn-primary float-start" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-primary float-start" @click="close()">
             離開編輯
           </button>
 
@@ -522,6 +522,9 @@ export default {
           console.log(err)
         })
     }
+    // clickUpdate() {
+    //   this.$emit('confirmUpdate', this.isNew)
+    // }
   },
   watch: {
     tempProduct() {
