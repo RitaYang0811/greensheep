@@ -119,11 +119,7 @@
               v-for="product in currentProducts"
               :key="product.id"
             >
-              <router-link
-                :to="`/products/${product.id}`"
-                class="card border-0"
-                @click="scrollToTop"
-              >
+              <router-link :to="`/products/${product.id}`" class="card border-0">
                 <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
                   <span
                     v-if="product.discount !== 10"
@@ -167,12 +163,10 @@
                     <button
                       type="button"
                       class="custom-btn custom-btn-secondary text-center w-100 border-1 add-to-cart"
-                      @click.prevent="addToLike(product.id)"
+                      @click.prevent="isLogin(product.id)"
                     >
-                      <!-- 匡線愛心 -->
-                      <i class="bi bi-heart fs-5"></i>
-                      <!-- 點擊後變實心 -->
-                      <!-- <i class="bi bi-heart-fill fs-5"></i> -->
+                      <!-- 愛心 -->
+                      <i class="bi bi-heart fs-5" :id="product.id" ref="favIcon"></i>
                     </button>
                     <button
                       type="button"
@@ -191,7 +185,7 @@
             <table v-if="isList === true" class="table mb-10 mb-lg-15">
               <tbody>
                 <template v-for="item in currentProducts" :key="item.id">
-                  <router-link :to="`/products/${item.id}`" @click="scrollToTop"
+                  <router-link :to="`/products/${item.id}`"
                     ><tr
                       class="product-item row mb-3 bg-white rounded-3 align-content-center py-2 py-lg-1"
                     >
@@ -247,12 +241,10 @@
                           <button
                             type="button"
                             class="custom-btn custom-btn-secondary text-center w-60 w-lg-100 border-1 add-to-cart"
-                            @click.prevent="addToLike(item.id)"
+                            @click.prevent="isLogin(item.id)"
                           >
-                            <!-- 匡線愛心 -->
-                            <i class="bi bi-heart fs-5"></i>
-                            <!-- 點擊後變實心 -->
-                            <!-- <i class="bi bi-heart-fill fs-5"></i> -->
+                            <!-- 愛心 -->
+                            <i class="bi bi-heart fs-5" :id="item.id" ref="favIcon"></i>
                           </button>
                           <button
                             href="#"
@@ -373,37 +365,40 @@ export default {
     ...mapActions(cartStore, ['addToCart']),
     // 加入最愛
     async addToLike(productId) {
-      console.log('產品:', productId)
-      // 先判斷有沒有登入會員，沒有會請使用者登入
+      const likeProduct = {
+        productId: `${productId}`,
+        userId: `${JSON.parse(localStorage.getItem('userInfo')).id}`
+      }
 
-      if ((await this.isLogin()) === undefined) {
-        const likeProduct = {
-          productId: `${productId}`,
-          userId: `${JSON.parse(localStorage.getItem('userInfo')).id}`
-        }
-
-        // 確認有沒有加入過
-        const res = await this.$http.get(
-          `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
-        )
-
-        if (res.data.length) {
-          alert('已經加入過最愛囉!')
-        } else {
-          // 加入最愛
-          this.$http
-            .post(`${serverUrl}/favorites`, likeProduct)
-            .then((res) => {
-              alert('成功加入最愛!')
+      // 確認有沒有加入過
+      const res = await this.$http.get(
+        `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
+      )
+      // 這邊預留給移除最愛
+      if (res.data.length) {
+        alert('已經加入過最愛囉!')
+      } else {
+        // 加入最愛
+        this.$http
+          .post(`${serverUrl}/favorites`, likeProduct)
+          .then((res) => {
+            alert('成功加入最愛!')
+            this.$refs.favIcon.forEach((item, index) => {
+              if (productId === item.id) {
+                this.$refs.favIcon[index].classList.remove('bi-heart')
+                this.$refs.favIcon[index].classList.add('bi-heart-fill')
+              }
             })
-            .catch((err) => {
-              console.log(err)
-            })
-        }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     },
-    async isLogin() {
+    // 先判斷有沒有登入會員，沒有會請使用者登入
+    async isLogin(productId) {
       const user = JSON.parse(localStorage.getItem('userInfo'))
+
       if (user === null) {
         alert('請先登入會員!')
         return false
@@ -415,12 +410,10 @@ export default {
           }
         })
         .then((res) => {
-          console.log(123)
-          return true
+          this.addToLike(productId)
         })
         .catch((err) => {
           alert('請先登入會員!')
-          return false
         })
     },
     loadData() {
@@ -450,9 +443,6 @@ export default {
     sort(status) {
       this.isShow = false
       this.getFilterProducts(this.currentCategory, this.currentProductsPage, status)
-    },
-    scrollToTop() {
-      window.scrollTo(0, 0)
     }
   },
   mounted() {
