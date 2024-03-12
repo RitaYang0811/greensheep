@@ -383,6 +383,7 @@
   <AdCouponModal
     ref="adCouponModal"
     :coupon="coupon"
+    :newCoupon="newCoupon"
     :isNew="isNew"
     :loadingStatus="loadingStatus"
     @update-coupon="updateCoupon"
@@ -408,6 +409,9 @@ export default {
       notYetValidCoupons: [],
       InvalidCoupons: [],
       coupon: {},
+      newCoupon: {
+        title: '金額折抵' // 預設值給 :checked 判斷
+      },
       isNew: true,
       isLoading: false,
       loadingStatus: {
@@ -602,15 +606,12 @@ export default {
     async openModal(type, id) {
       switch (type) {
         case 'new':
-          // this.$refs.adCouponModal.reset()
+          this.$refs.adCouponModal.reset()
           this.isNew = true
-          this.coupon = {
-            title: '金額折抵' // 預設值給 :checked 判斷
-          }
+          this.$refs.adCouponModal.resetNewCoupon()
           this.$refs.adCouponModal.openModal()
           break
         case 'edit':
-          // this.$refs.adCouponModal.reset()
           this.isNew = false
           this.$refs.adCouponModal.openModal()
           await this.getCoupon(id)
