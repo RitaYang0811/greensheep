@@ -1,7 +1,7 @@
 <template>
 <div class="modal fade ad-coupon" ref="adCouponCompModal" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
-    <VForm class="modal-content custom-form" ref="couponForm" @submit="updateCoupon" v-slot="{ errors }">
+    <VForm class="modal-content custom-form" ref="couponForm" @submit="updateCoupon" v-slot="{ errors,  meta }">
       <div class="modal-header bg-primary py-2 px-3">
         <h2 class="modal-title fs-5 fw-medium text-white">
           <template v-if="isNew">建立優惠券</template>
@@ -148,7 +148,7 @@
         >
         取消
         </button>
-        <button type="submit" class="btn btn-primary" :disabled="loadingStatus.loadingGetCoupon">確定</button>
+        <button type="submit" class="btn btn-primary" :disabled="loadingStatus.loadingGetCoupon || !meta.valid">確定</button>
       </div>
     </VForm>
   </div>

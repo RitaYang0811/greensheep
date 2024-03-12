@@ -3,7 +3,7 @@
     <template v-if="isNew">建立文章</template>
     <template v-else>編輯文章</template>
   </h1>
-  <VForm ref="articleForm" @submit="updateArticle(articleData, activityIsPublic, editIsPublic)" v-slot="{ errors }">
+  <VForm ref="articleForm" @submit="updateArticle(articleData, activityIsPublic, editIsPublic)" v-slot="{ errors, meta }">
     <div v-if="loadingStatus.loadingItem" class="d-flex justify-content-center align-items-center" style="min-height: 360px;">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -104,11 +104,11 @@
     <div v-if="!loadingStatus.loadingItem" class="d-flex justify-content-end gap-4 mb-4" @click="submitActivity($event)">
       <template v-if="isNew">
         <button type="submit" ref="toPrivate" class="btn btn-outline-primary border-1">儲存草稿</button>
-        <button type="submit" ref="toPublic" class="btn btn-primary">建立文章</button>
+        <button type="submit" ref="toPublic" class="btn btn-primary" :disabled="!meta.valid">建立文章</button>
       </template>
       <template v-else>
         <a href="#" class="btn btn-outline-primary border-1" @click.prevent="$router.go(-1)">取消</a>
-        <button type="submit" ref="toSave" class="btn btn-primary">儲存</button>
+        <button type="submit" ref="toSave" class="btn btn-primary" :disabled="!meta.valid">儲存</button>
       </template>
     </div>
   </VForm>
