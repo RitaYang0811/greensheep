@@ -73,12 +73,28 @@
         </div>
         <div class="mb-3">
           <label for="articleImageFile" class="form-label">圖片上傳</label>
-          <div class="mb-3">
-            <input class="form-control border-1" :class="{ 'is-invalid': !formStatus.hasFormImage }" type="file" ref="articleImageFile" id="articleImageFile" @change="uploadImage" accept=".jpg,.jpeg,.png" />
-            <span class="invalid-feedback">圖片 為必填</span>
+            <input class="form-control border-1" type="file" ref="articleImageFile" id="articleImageFile" @change="uploadImage" accept=".jpg,.jpeg,.png" />
+        </div>
+        <div class="mb-3">
+          <div class="mb-3 d-flex justify-content-between align-items-end">
+            <p>圖片預覽</p>
+            <p class="fs-8 fst-italic">*未上傳圖片將使用預設圖片</p>
           </div>
-          <template v-if="articleData.image">
-            <img class="w-100" :src="articleData.image" :alt="articleData.title">
+          <template v-if="!loadingUploadImage">
+            <img
+              class="col-12 col-md-8 col-lg-12 col-xxl-10 object-fit-cover mx-auto d-block"
+              :src="articleData.image"
+              :alt="articleData.title"
+              style="height: 280px;"
+            >
+          </template>
+          <template v-else>
+            <div class="d-flex flex-column justify-content-center align-items-center" style="height: 280px;">
+              <div class="spinner-border mb-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p>圖片上傳中...</p>
+            </div>
           </template>
         </div>
       </div>
@@ -126,14 +142,16 @@ export default {
   data() {
     return {
       activityIsPublic: '',
+      // 新增文章的初始資料
       articleData: {
         title: '',
-        image: '',
+        image: 'https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710324018252.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=Q8VnQrrKs2bPdV%2FLE8AvdHwtbfs8JJ4yypDmzlfHe%2BnYNqTRbjHyaBnw7F0ytLootayj4rg8uFvlAp5S1cpB3l2130r71eoZnqJblCsDvUQFLtq6G%2FKZBang5b%2FCkmf37IEn1kkNpbwGQgAbLeb87Ms0AUgPyWP0Hb89HEeOe9KtsHBow7rHcBcvt6mV2YNsLFmLmk5ezOsvxpH4rj0vROfTMiHopBuK3Nixp7DoT0mG0vrzm3mEqHjmqRlQ470dU03hxgtufm0TAuKN0mrdGSgezBvaMhKGKvJrl4vJuB53vAiZJsmd92FMMz5Ck4umW6e3jCjm%2Fc0%2BS9JOgFKemA%3D%3D',
         tag: '',
         isPublic: false,
         author: '',
         content: ''
       },
+      loadingUploadImage: false,
       editIsPublic: '',
       editor: ClassicEditor,
       editorConfig: {
@@ -165,21 +183,25 @@ export default {
     },
     // 上傳圖片
     uploadImage() {
-    const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/upload`
+      this.loadingUploadImage = true
+      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/upload`
 
-    const file = this.$refs.articleImageFile.files[0]
+      const file = this.$refs.articleImageFile.files[0]
 
-		// file-to-upload 看文件要求
-    const formData = new FormData()
-    formData.append("file-to-upload", file)
+      // file-to-upload 看文件要求
+      const formData = new FormData()
+      formData.append("file-to-upload", file)
 
-    this.$http.post(url, formData)
-      .then((res) => {
-        this.articleData.image = res.data.imageUrl
-      })
-      .catch((err) => {
-        toastError(err.response.data.message)
-      })
+      this.$http.post(url, formData)
+        .then((res) => {
+          this.articleData.image = res.data.imageUrl
+        })
+        .catch((err) => {
+          toastError(err.response.data.message)
+        })
+        .finally(() => {
+          this.loadingUploadImage = false
+        })
     },
     // 手動觸發 ckeditor 驗證
     blurValidate() {
@@ -188,17 +210,11 @@ export default {
     ...mapActions(adArticlesStore, ['updateArticle', 'getArticle'])
   },
   watch: {
-    // 新增: 賦予初始值、編輯: 觸發 mounted 的 getArticle(id)，取得 id 的 data
+    // 編輯時觸發 mounted 的 getArticle(id)，取得 id 的 data
     article() {
       this.articleData = { ...this.article }
       // 給 radio 選項綁定使用
-      if(!this.isNew) {
         this.articleData.isPublic ? this.editIsPublic = "public" : this.editIsPublic = "private"
-      }
-    },
-    // 根據是否有加入圖片切換狀態
-    'articleData.image'() {
-      this.formStatus.hasFormImage = true
     },
   },
   computed: {

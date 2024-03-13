@@ -26,7 +26,7 @@ export default defineStore('adminArticles',{
     isLoading: false,
     loadingStatus: {
       loadingItem: false,
-      loadingDelete: false
+      loadingDelete: false,
     },
     formStatus: {
       hasFormImage: true,
@@ -125,14 +125,14 @@ export default defineStore('adminArticles',{
           this.deleteArticle(id)
           break
         case 'new':
-          this.article = {
-            title: '',
-            image: '',
-            tag: '',
-            isPublic: false,
-            author: '',
-            content: ''
-          },
+          // this.article = {
+          //   title: '',
+          //   image: 'https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710322210110.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=Pd6PzdkC89aeYvtRC7qukF9THLE6mRy4bEnbqjJwM60Mk78U7R49XF7Vx26kRjVC3yTbJpPe4InW7QC4xcciWRh2%2B0j4LfLhBrl1HlIIVSeAVumaWHTbTJN6dM5irV7jIRUZ2i8T1JwdF8Bzj5osZJRR6l1SJBsCM7KGmL3%2B0Pf2xwjbG8fWxARkvHahKvSFL693wE2YaM05gRiH%2F47yTsQ7XhpkspayLv2%2Fhcn0toMHfQjNtDDy5I%2BDNQvMuwNS63tldYMyKI01FcpMVwKYZQUjiqyYPsOHnar4taCJQ8XJYLTBsZVyfnsZo0B1y%2Fdaou%2BbbzKL4XKpaI4OvF5gsQ%3D%3D',
+          //   tag: '',
+          //   isPublic: false,
+          //   author: '',
+          //   content: ''
+          // },
           this.isNew = true
           this.$router.push('/admin/articles/articleCreate')
           break
