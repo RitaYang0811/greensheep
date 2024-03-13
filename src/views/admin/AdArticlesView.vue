@@ -372,9 +372,7 @@ export default {
   },
   watch: {
     pinnedArticles() {
-      this.selectedPinnedArticle = [...this.pinnedArticles]
-      console.log(123)
-      console.log(this.selectedPinnedArticle)
+      this.selectedPinnedArticle = [ ...this.pinnedArticles ]
     },
     keyword() {
       this.getCurrentPageArticles(1, this.keyword)
