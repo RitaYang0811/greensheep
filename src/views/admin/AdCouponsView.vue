@@ -396,7 +396,6 @@
     :loadingStatus="loadingStatus"
     @update-coupon="updateCoupon"
   />
-    <!-- :key="timer" -->
 </template>
 
 <script>
@@ -435,7 +434,6 @@ export default {
     AdCouponModal, CopyText
   },
   methods: {
-    // ...mapActions(copyTextStore, ['copyText']),
     // 取得全部優惠券資料
     async getCoupons() {
       try {
