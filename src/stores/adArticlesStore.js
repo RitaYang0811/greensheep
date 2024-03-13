@@ -62,7 +62,8 @@ export default defineStore('adminArticles',{
 
         // 文章分類
         this.filterArticles()
-        // 依當前 tab 取得該 tab 的當前頁資料
+        // 依當前 tab 取得該 tab 的當一頁資料
+        this.currentPage = 1
         this.getCurrentPageArticles(this.currentPage)
 
       } catch (err) {
