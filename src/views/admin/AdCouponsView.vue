@@ -48,7 +48,6 @@
     <!-- PC coupons -->
     <div class="table-container table-responsive d-none d-lg-block">
       <table class="table align-middle text-nowrap mb-4">
-        <!-- <thead class="table-head sticky-top"></thead> -->
         <thead class="table-head position-relative">
           <tr>
             <th style="width: 15%">優惠碼</th>
@@ -64,9 +63,10 @@
           <tr v-for="coupon in currentPageCoupons" :key="coupon.id">
             <td>
               {{ coupon.code }}
-              <a href="#" class="ms-1" @click.prevent="copyText(coupon.code, '優惠碼')">
-                <i class="bi bi-copy"></i>
-              </a>
+              <CopyText
+                :copyContent="coupon.code"
+                :type="'優惠碼'"
+              />
             </td>
             <td class="py-5">
               <p class="fw-bold mb-4">{{ coupon.title }}</p>
@@ -401,12 +401,12 @@
 
 <script>
 import AdCouponModal from '@/components/AdCouponModal.vue'
+import CopyText from '@/components/CopyText.vue'
 import { unixToDate } from '@/utils/unixToDate.js'
 import { dateToUnix } from '@/utils/dateToUnix.js'
 import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 import { scrollToTop } from '@/utils/scrollToTop.js'
-import { mapActions } from 'pinia'
-import copyTextStore from '@/stores/copyTextStore.js'
+
 
 export default {
   data() {
@@ -432,10 +432,10 @@ export default {
     }
   },
   components: {
-    AdCouponModal
+    AdCouponModal, CopyText
   },
   methods: {
-    ...mapActions(copyTextStore, ['copyText']),
+    // ...mapActions(copyTextStore, ['copyText']),
     // 取得全部優惠券資料
     async getCoupons() {
       try {
@@ -642,17 +642,7 @@ export default {
     // 取得現在(或其他)時間的 unix 時間戳
     dateToUnix(date = 'now') {
       return dateToUnix(date)
-    },
-    // 複製優惠碼
-    // copyText(content) {
-    //   navigator.clipboard.writeText(content)
-    //     .then(() => {
-    //       toastSuccess('已複製優惠碼')
-    //     })
-    //     .catch(err => {
-    //       toastError('無法複製優惠碼: ', err)
-    //     });
-    // }
+    }
   },
   mounted() {
     this.getCoupons()
