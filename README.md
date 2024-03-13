@@ -13,8 +13,8 @@
 
 # 綠羊珠寶 Green Sheep | 電商網站
 
-> 綠羊珠寶電商 [點我前往網站前台](https://ritayang0811.github.io/greensheep/#/)
-> 綠羊珠寶電商 [點我前往網站前台](https://ritayang0811.github.io/greensheep/#/)
+- [網站前台](https://ritayang0811.github.io/greensheep/#/)
+- [網站後台](https://ritayang0811.github.io/greensheep/#/admin/home)（帳號密碼提示：我們的英文名稱）
 
 # 團隊成員
 
@@ -57,7 +57,7 @@
 9. **表單驗證和文字編輯器：**
    使用 `vee-validate` 實現表單驗證，`ckeditor` 供豐富的文字編輯功能，確保管理者上傳文章時有更好的編輯體驗。
 10. **第三方註冊及登入：**
-    使用google及line 登入API，讓使用者可以更方便地註冊和登入網站。
+    使用google及line 登入API，讓使用者可以更方便註冊和登入網站。
 11. **後台管理系統：**
     開發了一個基礎的後台管理系統，提供管理者取得訂單通知，查看和管理訂單、建立產品、上傳文章、建立優惠券等功能。
 
