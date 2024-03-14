@@ -55,6 +55,13 @@
               >{{ productInfo.discount }}折</span
             >
           </p>
+          <!-- 庫存 -->
+          <p class="text-dark fs-7 mb-4">
+            庫存數量：{{ productInfo.stockNum }} {{ productInfo.unit
+            }}<span v-if="productInfo.stockNum < 5" class="text-danger ms-4 fs-8 fst-italic"
+              >庫存緊張</span
+            >
+          </p>
           <!-- 行銷活動 -->
           <div class="position-relative start-line">
             <div class="d-flex align-items-bottom text-grey66 fs-9 text-start ms-7">
@@ -209,7 +216,11 @@
                 value="1"
                 readonly
               />
-              <button class="btn qty-btn rounded-circle p-0 border-primary" @click.prevent="qty++">
+              <button
+                class="btn qty-btn rounded-circle p-0 border-primary"
+                :disabled="qty === productInfo.stockNum"
+                @click.prevent="qty++"
+              >
                 <i class="bi bi-plus-lg text-primary fs-3"></i>
               </button>
             </div>
@@ -440,7 +451,6 @@ export default {
       await this.$http
         .get(`${serverUrl}/favorites?userId=${user.id}&&productId=${id}`)
         .then((res) => {
-          console.log('回傳:', res.data)
           if (res.data.length) {
             this.isLike = true
           }
@@ -497,6 +507,7 @@ export default {
   },
   mounted() {
     console.log(this.$route)
+    console.log(this.$route.params)
     this.getProductInfo(this.$route.params.id)
     this.getRecommendProducts(this.$route.params.id)
     this.likeInit(this.$route.params.id)

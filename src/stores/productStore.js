@@ -1,6 +1,5 @@
 import { defineStore, storeToRefs } from 'pinia'
 import axios from 'axios'
-import searchStore from '@/stores/searchStore'
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
 export default defineStore('productStore', {
@@ -28,6 +27,15 @@ export default defineStore('productStore', {
     showTitle: '',
     //商品詳細頁資料
     productInfo: {},
+    bestSeller: [
+      //梅川衣服
+      '-NsVQCmAiuvXWHJ9cf1A',
+      //波光淋漓
+      '-NsVL3yywAfe5aYKsTVv',
+      //星空之約
+      '-NsUsi2n1gdOSF0I798e'
+    ],
+    bestSellersProducts: [],
     //推薦商品資料
     recommendProducts: [],
     //載入狀態
@@ -47,7 +55,6 @@ export default defineStore('productStore', {
       try {
         const res = await axios.get(apiUrl)
         this.products = res.data.products
-        //console.log('觸發getProducts', this.products)
       } catch (err) {
         alert(err.data.message)
       }

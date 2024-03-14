@@ -18,10 +18,14 @@
 
 # ✦ 團隊成員
 
+# ✦ 團隊成員
+
 - 依依 Rita [Github](https://github.com/RitaYang0811)
 - 仙貝 [Github](https://github.com/WuWeiTsung)
 - 柯基 Jim [Github](https://github.com/windjim)
 - Uli [Github](https://github.com/Uli1313)
+
+# ✦ 作品簡介
 
 # ✦ 作品簡介
 
@@ -34,6 +38,8 @@
 ### 網站特色
 
 ![特色](https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710235204511.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=mpPGEmu6J1h05P8zFFc8WifXepnaQcIMKlowBF%2FPMj6dQ7DEIWyjCNuNOpEs1JP%2F3pahozfKJ%2BowmlWP7Gzpp05VKep7w4MeFeQMdzem4yFoMdMEm0Y650Ttnrnwn1zAYIzsfffJQl70SJfJwPqWlnrQUCAFpX22rvzm%2F3wpdBGurAqvLfLdG2B1WHTeAY9Rp5k%2Fv60kgfpyjv34UFKLOtv3byDVlu%2B%2BMyAzdWd3GRyH0xEsb3rbpeb5RtmLp9pygAvmQJRMFtRv6gwzb686nLmITklnVqZsGukQ0V2J18KoiuNWr9tytrCoohSZrB9SkqjbXRZO1AXHX%2Bfeup6DLg%3D%3D)
+
+# ✦ 專案說明
 
 # ✦ 專案說明
 

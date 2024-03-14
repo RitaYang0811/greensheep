@@ -1,11 +1,11 @@
 <template>
   <div ref="scrollBody">
-    <router-link
-      to="/products/全部商品%20ALL"
-      class="d-block accordion fs-8 py-1 bg-primary text-white cursor-pointer"
+    <div
+      class="fs-8 py-2 bg-primary text-white cursor-pointer"
+      @click="copyTextMethod('Newfriend95', '首購專屬優惠碼 Newfriend95')"
     >
-      即日起，訂單達 2,000元 以上即可享免運費優惠！
-    </router-link>
+      ✦ 首 購 即 享 9 5 折 優 惠，點 我 複 製 專 屬 折 扣 碼 ！ ✦
+    </div>
 
     <nav
       class="navbar navbar-expand-lg navbar-light navbar-hover py-3 flex-column position-relative"
@@ -287,6 +287,7 @@ import { mapState, mapActions } from 'pinia'
 import cartStore from '@/stores/cartStore'
 import searchStore from '@/stores/searchStore'
 import productStore from '@/stores/productStore'
+import copyTextStore from '@/stores/copyTextStore'
 
 // json-server網址
 const serverUrl = 'https://greensheep-json-server.onrender.com'
@@ -311,7 +312,7 @@ export default {
   methods: {
     ...mapActions(searchStore, ['setSearchWord']),
     ...mapActions(productStore, ['getProducts', 'getFilterProducts']),
-
+    ...mapActions(copyTextStore, ['copyTextMethod']),
     toCategoryPage(category) {
       this.headerCategory = category
       this.isDropdownMenuOpen = !this.isDropdownMenuOpen
@@ -409,7 +410,6 @@ export default {
     //pc dropdown 實例
     this.dropdownMenuPC = new Dropdown(this.$refs.dropdownMenuPC)
     //mobile dropdown 實例
-    // this.dropdownMenu = new Dropdown(this.$refs.dropdownMenu)
     this.collapseProduct = new Collapse(this.$refs.collapseProduct, {
       toggle: false
     })

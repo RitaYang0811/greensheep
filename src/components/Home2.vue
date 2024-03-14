@@ -169,7 +169,7 @@
   <div class="container-lg py-16 d-lg-block d-none">
     <div class="row">
       <div class="col-lg-3 col-12 d-flex flex-column justify-content-center">
-        <h2 class="fs-6 text-primary fw-bold text-lg-start text-cneter">熱賣商品</h2>
+        <h2 class="fs-6 text-primary fw-bold text-lg-start text-center">熱賣商品</h2>
         <h3 class="fs-2 mb-12 text-primary text-lg-start text-center">OUR BEST SELLERS</h3>
         <div class="position-relative me-auto d-lg-block d-none">
           <router-link
@@ -179,8 +179,9 @@
           >
         </div>
       </div>
+
       <div class="col-lg-3">
-        <router-link to="/products/productsAll">
+        <router-link to="/products/detail/-NsVL3yywAfe5aYKsTVv">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border position-relative"
             data-aos="fade-up"
@@ -211,9 +212,8 @@
           </div>
         </router-link>
       </div>
-
       <div class="col-lg-3">
-        <router-link to="/products/productsAll">
+        <router-link to="/products/detail/-NsV1p_2gXiVpBHy2xu6">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -247,9 +247,8 @@
           </div>
         </router-link>
       </div>
-
       <div class="col-lg-3">
-        <router-link to="/products/productsAll">
+        <router-link to="/products/detail/-NsUsi2n1gdOSF0I798e">
           <div
             class="card text-white border-0 bg-primary bg-gradient h-border"
             data-aos="fade-up"
@@ -261,13 +260,11 @@
                 src="../assets/images/img-prod-3.png"
                 class="card-img-top show position-absolute top-0 start-0 object-fit-cover opacity-75"
                 style="width: 100%; height: 100%"
-                alt="天使之愛十字架｜925純銀"
               />
               <img
                 src="../assets/images/product-4-2.jpg"
                 class="card-img-top change position-absolute top-0 start-0 object-fit-cover"
                 style="width: 100%; height: 100%"
-                alt="天使之愛十字架｜925純銀"
               />
             </div>
             <div
@@ -358,6 +355,7 @@
 
 <script>
 import productStore from '@/stores/productStore'
+
 import { mapState, mapActions } from 'pinia'
 export default {
   data() {
