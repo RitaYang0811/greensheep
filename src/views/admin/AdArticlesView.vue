@@ -294,6 +294,8 @@ import adArticlesStore from '@/stores/adArticlesStore.js'
 import { mapActions, mapState } from 'pinia'
 import { toastSuccess, toastError } from '@/utils/sweetalertToast.js'
 
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
+
 export default {
   data() {
     return {
@@ -319,7 +321,7 @@ export default {
         this.isSelectPinnedArticle = false
         this.isLoading = true
 
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article`
+        const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/article`
 
         // ----- 取消置頂 -----
         // 原置頂文章若不在當次選取的文章中則取消置頂狀態

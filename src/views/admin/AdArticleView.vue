@@ -3,8 +3,16 @@
     <template v-if="isNew">建立文章</template>
     <template v-else>編輯文章</template>
   </h1>
-  <VForm ref="articleForm" @submit="updateArticle(articleData, activityIsPublic, editIsPublic)" v-slot="{ errors, meta }">
-    <div v-if="loadingStatus.loadingItem" class="d-flex justify-content-center align-items-center" style="min-height: 360px;">
+  <VForm
+    ref="articleForm"
+    @submit="updateArticle(articleData, activityIsPublic, editIsPublic)"
+    v-slot="{ errors, meta }"
+  >
+    <div
+      v-if="loadingStatus.loadingItem"
+      class="d-flex justify-content-center align-items-center"
+      style="min-height: 360px;"
+    >
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
@@ -56,13 +64,27 @@
               <p class="mb-2">文章狀態</p>
               <div class="d-flex gap-4">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" v-model="editIsPublic" value="public" id="public" :checked="articleData.isPublic">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    v-model="editIsPublic"
+                    value="public"
+                    id="public"
+                    :checked="articleData.isPublic"
+                  />
                   <label class="form-check-label" for="public">
                     公開文章
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" v-model="editIsPublic" value="private" id="private" :checked="!articleData.isPublic">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    v-model="editIsPublic"
+                    value="private"
+                    id="private"
+                    :checked="!articleData.isPublic"
+                  />
                   <label class="form-check-label" for="private">
                     非公開草稿
                   </label>
@@ -73,7 +95,14 @@
         </div>
         <div class="mb-3">
           <label for="articleImageFile" class="form-label">圖片上傳</label>
-            <input class="form-control border-1" type="file" ref="articleImageFile" id="articleImageFile" @change="uploadImage" accept=".jpg,.jpeg,.png" />
+            <input
+              class="form-control border-1"
+              type="file"
+              ref="articleImageFile"
+              id="articleImageFile"
+              @change="uploadImage"
+              accept=".jpg,.jpeg,.png"
+            />
         </div>
         <div class="mb-3">
           <div class="mb-3 d-flex justify-content-between align-items-end">
@@ -89,7 +118,10 @@
             >
           </template>
           <template v-else>
-            <div class="d-flex flex-column justify-content-center align-items-center" style="height: 280px;">
+            <div
+              class="d-flex flex-column justify-content-center align-items-center"
+              style="height: 280px;"
+            >
               <div class="spinner-border mb-3" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
@@ -117,14 +149,45 @@
         <ErrorMessage name="文章內容" class="invalid-feedback text-end"/>
       </div>
     </div>
-    <div v-if="!loadingStatus.loadingItem" class="d-flex justify-content-end gap-4 mb-4" @click="submitActivity($event)">
+    <div
+      v-if="!loadingStatus.loadingItem"
+      class="d-flex justify-content-end gap-4 mb-4"
+      @click="submitActivity($event)"
+    >
       <template v-if="isNew">
-        <button type="submit" ref="toPrivate" class="btn btn-outline-primary border-1">儲存草稿</button>
-        <button type="submit" ref="toPublic" class="btn btn-primary" :disabled="!meta.valid">建立文章</button>
+        <button
+          type="submit"
+          ref="toPrivate"
+          class="btn btn-outline-primary border-1"
+          :disabled="!meta.valid"
+        >
+          儲存草稿
+        </button>
+        <button
+          type="submit"
+          ref="toPublic"
+          class="btn btn-primary"
+          :disabled="!meta.valid"
+        >
+          建立文章
+        </button>
       </template>
       <template v-else>
-        <a href="#" class="btn btn-outline-primary border-1" @click.prevent="$router.go(-1)">取消</a>
-        <button type="submit" ref="toSave" class="btn btn-primary" :disabled="!meta.valid">儲存</button>
+        <a
+          href="#"
+          class="btn btn-outline-primary border-1"
+          @click.prevent="$router.go(-1)"
+        >
+          取消
+        </a>
+        <button
+          type="submit"
+          ref="toSave"
+          class="btn btn-primary"
+          :disabled="!meta.valid"
+        >
+          儲存
+        </button>
       </template>
     </div>
   </VForm>
@@ -137,6 +200,8 @@ import { toastError } from "@/utils/sweetalertToast.js"
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import MyUploadAdapter from '@/utils/uploadImage.js';
+
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
 export default {
   data() {
@@ -188,9 +253,9 @@ export default {
       // 因此判斷是否有選擇到檔案來決定是否繼續執行
       if(!file) return
       
-      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/upload`
+      const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/upload`
       this.loadingUploadImage = true
-      
+
       // file-to-upload 看文件要求
       const formData = new FormData()
       formData.append("file-to-upload", file)
@@ -217,7 +282,7 @@ export default {
     article() {
       this.articleData = { ...this.article }
       // 給 radio 選項綁定使用
-        this.articleData.isPublic ? this.editIsPublic = "public" : this.editIsPublic = "private"
+      this.articleData.isPublic ? this.editIsPublic = "public" : this.editIsPublic = "private"
     },
   },
   computed: {

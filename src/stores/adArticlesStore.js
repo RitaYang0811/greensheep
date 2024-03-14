@@ -4,6 +4,8 @@ import { dateToUnix } from '@/utils/dateToUnix.js'
 import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 import { scrollToTop } from '@/utils/scrollToTop.js'
 
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
+
 export default defineStore('adminArticles',{
   state: () => ({
     currentTab: '公開文章',
@@ -46,11 +48,14 @@ export default defineStore('adminArticles',{
         let currentPageNum
         let totalPagesNum
   
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/articles`
+        const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/articles`
+
         // get 第一頁資料
         const resFirstPage = await axios.get(url)
-        this.articles = resFirstPage.data.articles // 第一頁的 data
-        currentPageNum = resFirstPage.data.pagination.current_page + 1 // +1 給下段的 while 判斷需不需要繼續打 API
+        this.articles = resFirstPage.data.articles
+
+        // +1 給下段的 while 判斷需不需要繼續打 API
+        currentPageNum = resFirstPage.data.pagination.current_page + 1
         totalPagesNum = resFirstPage.data.pagination.total_pages
 
         // 若有 2 頁以上，繼續 get 後續頁碼的資料
@@ -91,7 +96,8 @@ export default defineStore('adminArticles',{
         return bNum - aNum
       })
 
-      // AdArticlesView.vue 中的 watch 監聽無法監聽到陣列 push 的變化，所以宣告新陣列並賦值到 this.pinnedArticles 觸發監聽
+      // AdArticlesView.vue 中的 watch 監聽無法監聽到陣列 push 的變化，
+      // 所以宣告新陣列並賦值到 this.pinnedArticles 觸發監聽
       this.pinnedArticles = filterPinnedArticles
     },
     // 切換 tab
@@ -106,7 +112,8 @@ export default defineStore('adminArticles',{
       switch(this.currentTab) {
         case '公開文章':
           this.searchArticles = this.publicArticles.filter(article => article.title.match(keyword))
-          this.currentPageArticles = this.searchArticles.slice((page - 1) * 10, page * 10) // 10: 一頁顯示幾筆資料
+          this.currentPageArticles = this.searchArticles.slice((page - 1) * 10, page * 10)
+          // 10: 一頁顯示幾筆資料
           // page  articlesSliceIndex
           //  1         0 ~ 9
           //  2        10 ~ 19
@@ -125,14 +132,6 @@ export default defineStore('adminArticles',{
           this.deleteArticle(id)
           break
         case 'new':
-          // this.article = {
-          //   title: '',
-          //   image: 'https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710322210110.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=Pd6PzdkC89aeYvtRC7qukF9THLE6mRy4bEnbqjJwM60Mk78U7R49XF7Vx26kRjVC3yTbJpPe4InW7QC4xcciWRh2%2B0j4LfLhBrl1HlIIVSeAVumaWHTbTJN6dM5irV7jIRUZ2i8T1JwdF8Bzj5osZJRR6l1SJBsCM7KGmL3%2B0Pf2xwjbG8fWxARkvHahKvSFL693wE2YaM05gRiH%2F47yTsQ7XhpkspayLv2%2Fhcn0toMHfQjNtDDy5I%2BDNQvMuwNS63tldYMyKI01FcpMVwKYZQUjiqyYPsOHnar4taCJQ8XJYLTBsZVyfnsZo0B1y%2Fdaou%2BbbzKL4XKpaI4OvF5gsQ%3D%3D',
-          //   tag: '',
-          //   isPublic: false,
-          //   author: '',
-          //   content: ''
-          // },
           this.isNew = true
           this.$router.push('/admin/articles/articleCreate')
           break
@@ -148,7 +147,7 @@ export default defineStore('adminArticles',{
     // 取得單一文章
     getArticle(id) {
       this.loadingStatus.loadingItem = true
-      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article/${id}`
+      const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/article/${id}`
       
       axios.get(url)
         .then(res => {
@@ -163,22 +162,15 @@ export default defineStore('adminArticles',{
     },
     // 新增/編輯文章
 		updateArticle(articleData, isPublic, editIsPublic) {
-      // // 驗證是否有圖圖片
-      // if(!articleData.image || !articleData.content) {
-      //   articleData.image ? this.formStatus.hasFormImage = true : this.formStatus.hasFormImage = false
-      //   articleData.content ? this.formStatus.hasFormContent = true : this.formStatus.hasFormContent = false
-      //   return
-      // }
-
       this.isLoading = true
 
       // 新增產品 API
-      let url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article`
+      let url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/article`
       let http = 'post'
 
       // 編輯產品 api
       if(!this.isNew) { 
-        url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article/${articleData.id}`
+        url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/article/${articleData.id}`
         http = 'put'
       }
 
@@ -217,7 +209,8 @@ export default defineStore('adminArticles',{
         axios[http](url, { data: articleData })
         .then(res => {
           toastSuccess(res.data.message)
-          // push 會觸發該 view 頁面的 mounted，mounted 會執行 getArticles，所以不需再此行後在重新執行 getArticles
+          // push 會觸發該 view 頁面的 mounted，mounted 會執行 getArticles，
+          // 所以不需在此行後在重新執行 getArticles
           this.$router.push('/admin/articles')
         })
         .catch(err => {
@@ -232,7 +225,7 @@ export default defineStore('adminArticles',{
     deleteArticle(id) {
       this.loadingStatus.loadingDelete = true
 
-      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/article/${id}`
+      const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/article/${id}`
 
       axios.delete(url)
         .then(res => {
@@ -250,6 +243,4 @@ export default defineStore('adminArticles',{
       this.currentPage = page
     }
   },
-  getters: {
-  }
 })
