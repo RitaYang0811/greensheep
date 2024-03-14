@@ -11,19 +11,23 @@
 ![Github Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white)
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 
-# 綠羊珠寶 Green Sheep | 電商網站
+# ✦ 綠羊珠寶 Green Sheep | 電商網站
 
-> 綠羊珠寶電商 [點我前往網站前台](https://ritayang0811.github.io/greensheep/#/)
-> 綠羊珠寶電商 [點我前往網站前台](https://ritayang0811.github.io/greensheep/#/)
+- [網站前台](https://ritayang0811.github.io/greensheep/#/)
+- [網站後台](https://ritayang0811.github.io/greensheep/#/admin/home)（帳號密碼提示：我們的英文名稱）
 
-# 團隊成員
+# ✦ 團隊成員
+
+# ✦ 團隊成員
 
 - 依依 Rita [Github](https://github.com/RitaYang0811)
 - 仙貝 [Github](https://github.com/WuWeiTsung)
 - 柯基 Jim [Github](https://github.com/windjim)
 - Uli [Github](https://github.com/Uli1313)
 
-# 作品簡介
+# ✦ 作品簡介
+
+# ✦ 作品簡介
 
 ### 作品說明
 
@@ -35,7 +39,9 @@
 
 ![特色](https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710235204511.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=mpPGEmu6J1h05P8zFFc8WifXepnaQcIMKlowBF%2FPMj6dQ7DEIWyjCNuNOpEs1JP%2F3pahozfKJ%2BowmlWP7Gzpp05VKep7w4MeFeQMdzem4yFoMdMEm0Y650Ttnrnwn1zAYIzsfffJQl70SJfJwPqWlnrQUCAFpX22rvzm%2F3wpdBGurAqvLfLdG2B1WHTeAY9Rp5k%2Fv60kgfpyjv34UFKLOtv3byDVlu%2B%2BMyAzdWd3GRyH0xEsb3rbpeb5RtmLp9pygAvmQJRMFtRv6gwzb686nLmITklnVqZsGukQ0V2J18KoiuNWr9tytrCoohSZrB9SkqjbXRZO1AXHX%2Bfeup6DLg%3D%3D)
 
-# 專案說明
+# ✦ 專案說明
+
+# ✦ 專案說明
 
 ## 使用技術
 
@@ -57,7 +63,7 @@
 9. **表單驗證和文字編輯器：**
    使用 `vee-validate` 實現表單驗證，`ckeditor` 供豐富的文字編輯功能，確保管理者上傳文章時有更好的編輯體驗。
 10. **第三方註冊及登入：**
-    使用google及line 登入API，讓使用者可以更方便地註冊和登入網站。
+    使用google及line 登入API，讓使用者可以更方便註冊和登入網站。
 11. **後台管理系統：**
     開發了一個基礎的後台管理系統，提供管理者取得訂單通知，查看和管理訂單、建立產品、上傳文章、建立優惠券等功能。
 
@@ -81,11 +87,67 @@
 - **優惠券管理：** 新增、刪除、編輯、查閱優惠券、表單驗證
 - **訂單管理：** 刪除、編輯、查閱訂單、勾選商品進度
 
-# 前台介紹
+---
+
+# 畫面展示 - 前台
+
+## ✦ 首頁 ✦
+
+### Menu文字滑動改變
+
+![菜單文字](https://imgur.com/Jsm3CIR.gif)
+
+### AOS 動畫
+
+![AOS動畫](https://imgur.com/GwrzDuI.gif)
+
+### 全站搜尋
+
+![全站搜尋](https://imgur.com/56CzB3j.gif)
 
 ### 客戶評價滑動效果
 
 ![客戶評價](https://imgur.com/TwTMF9G.gif)
+
+## ✦ 商品頁 ✦
+
+### 商品頁展示滑動效果
+
+![商品頁展示滑動效果](https://imgur.com/MpZsZFM.gif)
+
+### 商品排序與顯示方式切換
+
+![商品頁商品排序與顯示方式切換](https://imgur.com/heHMWUv.gif)
+
+### 庫存限制
+
+庫存小於5 會出現提醒文字，數量選擇按鈕 有最高庫存數量限制
+
+![庫存提醒](https://imgur.com/kx8Bh9Q.gif)
+
+## ✦ 購物車 ✦
+
+### 使用優惠券
+
+![使用優惠券](https://imgur.com/nH4nm7d.gif)
+
+### 不同收件地點，可選擇不同的配送及付款方式
+
+![不同收件地點有不同的配送及付款方式可選擇](https://imgur.com/qqk7Em8.gif)
+
+### 訂購資訊驗證
+
+![訂購資訊驗證](https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710407702027.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=AK%2FLxPhvka%2BAvFM5kg%2FcSVzZcx%2BrwgcONIiHUYCrcpzYOVfBe%2BDoyrSyroD6tgdfqE6R8XZd%2FR9%2BOMYL4XHxDtseAb8%2FLXYcK%2Fw1loZUccYFkxpg3BOc6cqA4P6R%2BA1FJ6zVzXMJKVY2iJU6Zp%2B9aDKbKCHktzd%2FQHj2bK4a4N1nrSoBPMecb9%2BngmaVxMnrcR1rx21RXKpfgWu7u2cMEv6HlJEwLk5r%2Fffg%2FplRwfQwcS%2Bmu4nRcYrPzVmiiMkscjvczwap0zuxgMriSmWuGsj05TR6kou70r42oz%2BZ0qZhS%2Bd31IvV9RkyZqY%2BIFMxCsUV2RqgMvsJ%2FnyXrronDQ%3D%3D)
+
+# 畫面展示 - 後台
+
+## 中小型尺寸標頭菜單：往下滑時收起，往上滑時出現
+
+![標頭菜單](https://imgur.com/r2Nqwmn.gif)
+
+## 訂單總數與新訂單通知
+
+![訂單總數與新訂單通知](https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710408029349.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=Vfc0MvFAi9nC7ncZJZx3QIn8IXO0T5dZpR5ywre7zEKqAvjWYO7nQi7NkQuLQBZbyNS6bJlzcggO9toMT9DVEnsbk16tf9VFgfRsGBjcbmrY8ah0qobbTtdBbls7SB60OUuiukQHbaiUBim%2FAylON4cHHVkrkdOrSVTWZFiN2NyupDlL1DcvDBdy8Jda1bhChA2%2BRWrQOskX0T9EjEvzzWheJisGhPO%2BW9X9c8SrQXnvAqTNjOQU8uXqCAzmmn1PKl%2BYQdiPwgAh3a23QPa9fFZfzgSgGJyJf3%2BfSf8t4RQ%2FFQj9dX%2Bae16rtct9tMVVaUhkyt3J7bqOeYZ78h6dPA%3D%3D)
 
 # 安裝與使用
 

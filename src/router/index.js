@@ -25,6 +25,12 @@ const router = createRouter({
           name: 'UserProduct',
           component: () => import('../views/user/ProductsView.vue'),
           children: [
+            // {
+            //   path: 'detail/:id',
+            //   name: 'UserProductDetail',
+            //   component: () => import('../views/user/ProductDetailView.vue')
+            // },
+
             {
               path: ':category',
               component: () => import('../views/user/ProductsView.vue'),
@@ -32,11 +38,11 @@ const router = createRouter({
             }
           ]
         },
-
         {
           path: 'products/detail/:id',
           name: 'UserProductDetail',
-          component: () => import('../views/user/ProductDetailView.vue')
+          component: () => import('../views/user/ProductDetailView.vue'),
+          props: true
         },
         {
           path: 'products/客製設計 CUSTOMIZED',

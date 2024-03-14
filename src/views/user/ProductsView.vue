@@ -242,9 +242,14 @@
             </table>
           </div>
         </template>
+        <div v-else-if="searchWord">
+          <p class="text-dark text-center">
+            搜尋不到「{{ searchWord }}」相關商品，你要不要試試其他關鍵字呢？
+          </p>
+        </div>
         <div v-else>
           <p class="text-dark text-center">
-            目前分類「{{ currentCategory }}」還沒有商品～你可以逛逛其他分類
+            目前「{{ currentCategory }}」還沒有上架商品～您可以逛逛其他分類
           </p>
         </div>
         <!-- 分頁 -->
@@ -302,7 +307,7 @@ export default {
       sortTitle: '',
       isBlock: true,
       isList: false,
-
+      searchWord: '',
       //當前顯示分類
       currentCategory: '',
       //當前顯示分頁
@@ -326,8 +331,7 @@ export default {
       'showTitle',
       'isLoading',
       'loadingStatus'
-    ]),
-    ...mapState(searchStore, ['searchQuery'])
+    ])
   },
 
   watch: {
