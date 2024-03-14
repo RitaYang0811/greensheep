@@ -308,7 +308,8 @@ export default {
       //當前顯示分頁
       currentProductsPage: 1,
       //當前顯示關鍵字
-      currentSearchWord: ''
+      currentSearchWord: '',
+      productsIdArr: []
     }
   },
   components: {
@@ -347,6 +348,20 @@ export default {
   methods: {
     ...mapActions(productStore, ['getProducts', 'getFilterProducts', 'getSort']),
     ...mapActions(cartStore, ['addToCart']),
+    // 收藏初始化
+    async likeInit() {
+      const user = JSON.parse(localStorage.getItem('userInfo'))
+
+      if (user === null) {
+        return false
+      }
+      await this.$http
+        .get(`${serverUrl}/favorites?userId=${user.id}`)
+        .then((res) => {
+          console.log('回傳:', res.data)
+        })
+        .catch((err) => {})
+    },
     // 加入最愛
     async addToLike(productId) {
       const likeProduct = {
@@ -461,6 +476,11 @@ export default {
   },
   async mounted() {
     await this.fetchData()
+
+    this.products.forEach((item) => {
+      this.productsIdArr.push(item.id)
+    })
+    this.likeInit()
   }
 }
 </script>
