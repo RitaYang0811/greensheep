@@ -377,7 +377,8 @@ export default {
       this.selectedPinnedArticle = [ ...this.pinnedArticles ]
     },
     keyword() {
-      this.getCurrentPageArticles(1, this.keyword)
+      this.articlesCurrentPage = 1
+      this.getCurrentPageArticles(this.articlesCurrentPage, this.keyword)
     },
     // articlesCurrentPage()、currentPage() 做類似雙向綁定
     articlesCurrentPage() {
