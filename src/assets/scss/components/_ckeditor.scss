@@ -15,3 +15,7 @@
 .ck.ck-editor__editable > .ck-placeholder::before {
   color: $grey9F;
 }
+
+.is-invalid + .ck-editor .ck-content {
+  border-color: $danger !important;
+}
