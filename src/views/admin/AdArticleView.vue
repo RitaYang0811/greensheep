@@ -183,11 +183,14 @@ export default {
     },
     // 上傳圖片
     uploadImage() {
-      this.loadingUploadImage = true
-      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/upload`
-
       const file = this.$refs.articleImageFile.files[0]
-
+      // 當上傳圖片後，若再次開啟選擇檔案視窗但未選擇檔案的話會觸發此方法，
+      // 因此判斷是否有選擇到檔案來決定是否繼續執行
+      if(!file) return
+      
+      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/upload`
+      this.loadingUploadImage = true
+      
       // file-to-upload 看文件要求
       const formData = new FormData()
       formData.append("file-to-upload", file)
