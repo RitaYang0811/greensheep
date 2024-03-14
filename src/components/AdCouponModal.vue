@@ -54,6 +54,7 @@
                 <div>
                   <VField
                     type="number"
+                    @keydown="preventSpecialKey" 
                     name="金額"
                     :rules="newCouponData.title === '金額折抵' ? 'required|compareWithDiscount:@折抵金額' : ''"
                     class="form-control"
@@ -69,6 +70,7 @@
                 <div>
                   <VField
                     type="number"
+                    @keydown="preventSpecialKey" 
                     name="折抵金額"
                     :rules="newCouponData.title === '金額折抵' ? 'required|compareWithPrice:@金額' : ''"
                     class="form-control"
@@ -99,6 +101,7 @@
                 <div>
                   <VField
                     type="number"
+                    @keydown="preventSpecialKey" 
                     name="消費金額"
                     :rules="{ required: newCouponData.title === '訂單折扣' }"
                     class="form-control"
@@ -221,6 +224,7 @@
                 <div>
                   <VField
                     type="number"
+                    @keydown="preventSpecialKey" 
                     name="金額"
                     :rules="couponData.title === '金額折抵' ? 'required|compareWithDiscount:@折抵金額' : ''"
                     class="form-control"
@@ -236,6 +240,7 @@
                 <div>
                   <VField
                     type="number"
+                    @keydown="preventSpecialKey" 
                     name="折抵金額"
                     :rules="couponData.title === '金額折抵' ? 'required|compareWithPrice:@金額' : ''"
                     class="form-control"
@@ -260,6 +265,7 @@
                 <div>
                   <VField
                     type="number"
+                    @keydown="preventSpecialKey" 
                     name="消費金額"
                     :rules="{ required: couponData.title === '訂單折扣' }"
                     class="form-control"
@@ -404,6 +410,18 @@ export default {
     // 新增優惠券時拷貝初始資料
     resetNewCoupon() {
       this.newCouponData = { ...this.newCoupon }
+    },
+    // type 為 number 禁止輸入特定文字
+    preventSpecialKey(event) {
+      const { code } = event
+      if(
+        code === 'KeyE' || // e E
+        code === 'NumpadAdd'|| // +
+        code === 'NumpadSubtract' || // -
+        code === 'NumpadDecimal' // .
+      ) {
+        event.preventDefault()
+      }
     }
   },
   watch: {
