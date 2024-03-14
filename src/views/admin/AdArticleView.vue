@@ -21,7 +21,7 @@
       <div class="col-lg-4">
         <div class="d-md-flex d-lg-block gap-6">
           <div class="mb-3 w-100">
-            <label for="articleAuthor" class="form-label">作者</label>
+            <label for="articleAuthor" class="form-label h6">*作者</label>
             <VField
               type="text"
               name="作者"
@@ -34,7 +34,7 @@
             <ErrorMessage name="作者" class="invalid-feedback"></ErrorMessage>
           </div>
           <div class="mb-3 w-100">
-            <label for="articleTitle" class="form-label">文章標題</label>
+            <label for="articleTitle" class="form-label h6">*文章標題</label>
             <VField
               type="text"
               name="標題"
@@ -47,7 +47,7 @@
             <ErrorMessage name="標題" class="invalid-feedback"></ErrorMessage>
           </div>
           <div class="mb-3 w-100">
-            <label for="articleCategory" class="form-label">文章分類</label>
+            <label for="articleCategory" class="form-label h6">*文章分類</label>
             <VField
               type="text"
               name="分類"
@@ -61,7 +61,7 @@
           </div>
           <template v-if="!isNew">
             <div class="mb-3 w-100">
-              <p class="mb-2">文章狀態</p>
+              <p class="mb-2 h6">文章狀態</p>
               <div class="d-flex gap-4">
                 <div class="form-check">
                   <input
@@ -94,7 +94,7 @@
           </template>
         </div>
         <div class="mb-3">
-          <label for="articleImageFile" class="form-label">圖片上傳</label>
+          <label for="articleImageFile" class="form-label h6">圖片上傳</label>
             <input
               class="form-control border-1"
               type="file"
@@ -106,7 +106,7 @@
         </div>
         <div class="mb-3">
           <div class="mb-3 d-flex justify-content-between align-items-end">
-            <p>圖片預覽</p>
+            <p class="h6">圖片預覽</p>
             <p class="fs-8 fst-italic">*未上傳圖片將使用預設圖片</p>
           </div>
           <template v-if="!loadingUploadImage">
@@ -131,14 +131,13 @@
         </div>
       </div>
       <div class="col-lg-8">
-        <p class="form-label">文章內容</p>
+        <p class="form-label h6">*文章內容</p>
         <VField
           name="文章內容"
           v-model.lazy="articleData.content"
           rules="required"
         >
           <ckeditor
-            data-test="ckeditor"
             :editor="editor"
             :config="editorConfig"
             v-model.lazy="articleData.content"
@@ -146,7 +145,7 @@
             @blur="blurValidate"
           ></ckeditor>
         </VField>
-        <ErrorMessage name="文章內容" class="invalid-feedback text-end"/>
+        <ErrorMessage name="文章內容" class="invalid-feedback text-end mt-2"/>
       </div>
     </div>
     <div
