@@ -11,19 +11,19 @@
 ![Github Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white)
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 
-# 綠羊珠寶 Green Sheep | 電商網站
+# ✦ 綠羊珠寶 Green Sheep | 電商網站
 
 - [網站前台](https://ritayang0811.github.io/greensheep/#/)
 - [網站後台](https://ritayang0811.github.io/greensheep/#/admin/home)（帳號密碼提示：我們的英文名稱）
 
-# 團隊成員
+# ✦ 團隊成員
 
 - 依依 Rita [Github](https://github.com/RitaYang0811)
 - 仙貝 [Github](https://github.com/WuWeiTsung)
 - 柯基 Jim [Github](https://github.com/windjim)
 - Uli [Github](https://github.com/Uli1313)
 
-# 作品簡介
+# ✦ 作品簡介
 
 ### 作品說明
 
@@ -35,7 +35,7 @@
 
 ![特色](https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710235204511.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=mpPGEmu6J1h05P8zFFc8WifXepnaQcIMKlowBF%2FPMj6dQ7DEIWyjCNuNOpEs1JP%2F3pahozfKJ%2BowmlWP7Gzpp05VKep7w4MeFeQMdzem4yFoMdMEm0Y650Ttnrnwn1zAYIzsfffJQl70SJfJwPqWlnrQUCAFpX22rvzm%2F3wpdBGurAqvLfLdG2B1WHTeAY9Rp5k%2Fv60kgfpyjv34UFKLOtv3byDVlu%2B%2BMyAzdWd3GRyH0xEsb3rbpeb5RtmLp9pygAvmQJRMFtRv6gwzb686nLmITklnVqZsGukQ0V2J18KoiuNWr9tytrCoohSZrB9SkqjbXRZO1AXHX%2Bfeup6DLg%3D%3D)
 
-# 專案說明
+# ✦ 專案說明
 
 ## 使用技術
 
@@ -81,11 +81,39 @@
 - **優惠券管理：** 新增、刪除、編輯、查閱優惠券、表單驗證
 - **訂單管理：** 刪除、編輯、查閱訂單、勾選商品進度
 
-# 前台介紹
+---
+
+# 特點介紹
+
+## ✦ 首頁 ✦
+
+### Menu文字滑動改變
+
+![菜單文字](https://imgur.com/Jsm3CIR.gif)
+
+### AOS 動畫
+
+![AOS動畫](https://imgur.com/GwrzDuI.gif)
 
 ### 客戶評價滑動效果
 
 ![客戶評價](https://imgur.com/TwTMF9G.gif)
+
+## ✦ 商品頁 ✦
+
+### 商品頁展示滑動效果
+
+![商品頁展示滑動效果](https://imgur.com/MpZsZFM.gif)
+
+### 商品排序與顯示方式切換
+
+![商品頁商品排序與顯示方式切換](https://imgur.com/heHMWUv.gif)
+
+### 庫存限制
+
+庫存小於5 會出現提醒文字，數量選擇按鈕 有最高庫存數量限制
+
+![庫存提醒](https://imgur.com/kx8Bh9Q.gif)
 
 # 安裝與使用
 
