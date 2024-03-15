@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column align-items-center py-15">
+  <div class="d-flex flex-column align-items-center py-15 pt-40">
     <div>
       <h2 class="fs-2">WELCOME</h2>
       <p class="text-primary">Discover Your Unique Elegance</p>
@@ -78,11 +78,11 @@
                 :class="{ 'is-invalid': errors['password'] }"
                 id="password"
                 aria-describedby="passwordHelp"
-                placeholder="請輸入密碼(6-12字元且不連續)"
+                placeholder="請輸入6-12字英數混合密碼"
                 :rules="passwordRule"
                 v-model="user.password"
               ></v-field>
-              <label for="password" class="z-0">請輸入密碼(6-12字元且不連續)</label>
+              <label for="password" class="z-0">請輸入6-12字英數混合密碼</label>
               <i
                 class="checkByEye"
                 :class="[
@@ -124,7 +124,11 @@
             </div>
             <!-- 生日 -->
             <div class="mb-3">
-              <p class="mb-1">*生日當月贈送消費金，確認後不可更改</p>
+              <p class="mb-1 text-primary">
+                ✦ 請輸入您的生日，當月贈送消費金 ✦
+                <span class="ms-2 text-danger">請注意：確認後不可更改</span>
+              </p>
+
               <VueDatePicker
                 name="birthdayDate"
                 v-model="date"
@@ -188,8 +192,10 @@
             :userInfo="user"
           ></verification>
           <!-- 回到登入 -->
-          <p class="mt-1 text-end">
-            已經有帳號了嗎？前往<router-link to="/memberLogin" class="text-decoration-underline"
+          <p class="mt-2 text-end">
+            已經有帳號了嗎？前往<router-link
+              to="/memberLogin"
+              class="text-decoration-underline text-primary fw-bold"
               >登入</router-link
             >
           </p>

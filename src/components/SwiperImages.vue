@@ -48,9 +48,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/scss/utils/_mixin.scss';
 .swiper-images {
   height: 400px;
   max-width: 100vw;
+  @include pad {
+    height: 250px;
+  }
 }
 // 引入此元件的 vue 檔案需將此 css 樣式複製到該 vue 檔案
 // .swiper-slide img {

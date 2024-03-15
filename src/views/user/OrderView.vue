@@ -1,41 +1,47 @@
 <template>
-  <div class="container py-20">
+  <div class="container py-20 pt-40">
     <!-- progress -->
     <div class="mb-30">
       <div class="position-relative m-4 w-75 mx-auto">
         <div class="progress">
-          <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0"
-            aria-valuemax="100"></div>
+          <div
+            class="progress-bar"
+            role="progressbar"
+            style="width: 0%"
+            aria-valuenow="50"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
         </div>
-        <button type="button"
+        <button
+          type="button"
           class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
-          style="width: 3rem; height: 3rem">
+          style="width: 3rem; height: 3rem"
+        >
           1
         </button>
-        <button type="button"
+        <button
+          type="button"
           class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
-          style="width: 3rem; height: 3rem">
+          style="width: 3rem; height: 3rem"
+        >
           2
         </button>
-        <button type="button"
+        <button
+          type="button"
           class="position-absolute top-0 start-100 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
-          style="width: 3rem; height: 3rem">
+          style="width: 3rem; height: 3rem"
+        >
           3
         </button>
       </div>
 
       <div class="position-relative mt-15 w-75 mx-auto">
-        <p class="position-absolute top-0 start-0 translate-middle text-primary">
-          確認購買明細
-        </p>
+        <p class="position-absolute top-0 start-0 translate-middle text-primary">確認購買明細</p>
 
-        <p class="position-absolute top-0 start-50 translate-middle text-primary">
-          付款資料填寫
-        </p>
+        <p class="position-absolute top-0 start-50 translate-middle text-primary">付款資料填寫</p>
 
-        <p class="position-absolute top-0 end-n7 translate-middle text-primary">
-          訂單完成
-        </p>
+        <p class="position-absolute top-0 end-n7 translate-middle text-primary">訂單完成</p>
       </div>
     </div>
     <!-- 購物車內容 -->
@@ -56,7 +62,11 @@
                 <div class="row g-0 align-items-center">
                   <div class="col-md-4">
                     <div class="ratio ratio-1x1">
-                      <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover" alt="..." />
+                      <img
+                        :src="cart.product.imageUrl"
+                        class="img-fluid object-fit-cover"
+                        alt="..."
+                      />
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -71,15 +81,24 @@
               </div>
             </th>
             <td class="py-4">
-              <div class="d-flex justify-content-center ">
-                <button class="btn btn-link text-primary" @click.prevent="cart.qty++" @click="updateCart(cart)"><i
-                    class="bi bi-plus-circle fs-3"></i></button>
+              <div class="d-flex justify-content-center">
+                <button
+                  class="btn btn-link text-primary"
+                  @click.prevent="cart.qty++"
+                  @click="updateCart(cart)"
+                >
+                  <i class="bi bi-plus-circle fs-3"></i>
+                </button>
                 <input type="number" class="p-2 w-25" min="1" v-model="cart.qty" disabled />
-                <button class="btn btn-link text-primary" @click.prevent="cart.qty--" @click="updateCart(cart)"
-                  :disabled="cart.qty <= 1"><i class="bi bi-dash-circle fs-3"></i></button>
+                <button
+                  class="btn btn-link text-primary"
+                  @click.prevent="cart.qty--"
+                  @click="updateCart(cart)"
+                  :disabled="cart.qty <= 1"
+                >
+                  <i class="bi bi-dash-circle fs-3"></i>
+                </button>
               </div>
-
-
             </td>
             <td class="py-4 text-primary">NT$ {{ parseInt(cart.total) }}</td>
             <td class="py-4">
@@ -93,13 +112,10 @@
         （共{{ carts.length }}件）
       </h2>
     </div>
-
-
   </div>
 
   <!-- 顧客資料、訂單資料 -->
   <VForm @submit="sendOrder()" v-slot="{ errors }">
-
     <div class="bg-light py-15">
       <div class="container text-start">
         <div class="row justify-content-md-between flex-md-row flex-column mb-8">
@@ -109,28 +125,56 @@
             <div class="bg-greyD4 px-8 py-5">
               <h4 class="fs-6 my-4">已經是會員？登入後更方便管理訂單</h4>
               <div class="d-flex justify-content-between my-5">
-                <router-link to="/memberLogin" class="btn btn-grey66 fs-6 p-5 my-auto w-100">會員登入</router-link>
+                <router-link to="/memberLogin" class="btn btn-grey66 fs-6 p-5 my-auto w-100"
+                  >會員登入</router-link
+                >
               </div>
 
               <form action="" class="text-dark">
-                <label for="name" class="fs-6 mb-1">顧客名稱</label><br />
-                <v-field id="name" name="姓名" type="text" class="form-control p-2 w-100 mb-4 border-0"
-                  :class="{ 'is-invalid': errors['姓名'] }" placeholder="請輸入 姓名" rules="required"
-                  v-model="orderData.user.name"></v-field>
-                <error-message name="姓名" class="invalid-feedback"></error-message>
-
+                <div class="mb-4">
+                  <label for="name" class="fs-6 mb-1">顧客名稱</label><br />
+                  <v-field
+                    id="name"
+                    name="姓名"
+                    type="text"
+                    class="form-control p-2 w-100 mb-1 border-0"
+                    :class="{ 'is-invalid': errors['姓名'] }"
+                    placeholder="請輸入 姓名"
+                    rules="required"
+                    v-model="orderData.user.name"
+                  ></v-field>
+                  <error-message name="姓名" class="invalid-feedback"></error-message>
+                </div>
                 <label for="email" class="fs-6 mb-1">電子信箱</label><br />
-                <v-field id="email" name="Email" type="email" class="form-control p-2 w-100 mb-4 border-0"
-                  :class="{ 'is-invalid': errors['Email'] }" placeholder="請輸入 Email" rules="email|required"
-                  v-model="orderData.user.email"></v-field>
-                <error-message name="Email" class="invalid-feedback"></error-message>
-                <p class="mb-3 text-end">訂單將以此Email通知</p>
+                <div class="mb-4">
+                  <v-field
+                    id="email"
+                    name="Email"
+                    type="email"
+                    class="form-control p-2 w-100 mb-1 border-0"
+                    :class="{ 'is-invalid': errors['Email'] }"
+                    placeholder="請輸入 Email"
+                    rules="email|required"
+                    v-model="orderData.user.email"
+                  ></v-field>
+                  <error-message name="Email" class="invalid-feedback"></error-message>
+                  <p class="mb-3 text-end">訂單將以此Email通知</p>
+                </div>
 
                 <label for="phone" class="fs-6 mb-1">電話號碼</label><br />
-                <v-field id="phone" name="電話" type="tel" class="form-control p-2 w-100 mb-4 border-0"
-                  :class="{ 'is-invalid': errors['電話'] }" placeholder="請輸入電話" rules="required|numeric|min:7"
-                  v-model="orderData.user.tel"></v-field>
-                <error-message name="電話" class="invalid-feedback"></error-message>
+                <div class="mb-4">
+                  <v-field
+                    id="phone"
+                    name="電話"
+                    type="tel"
+                    class="form-control p-2 w-100 mb-1 border-0"
+                    :class="{ 'is-invalid': errors['電話'] }"
+                    placeholder="請輸入電話"
+                    rules="required|numeric|min:7"
+                    v-model="orderData.user.tel"
+                  ></v-field>
+                  <error-message name="電話" class="invalid-feedback"></error-message>
+                </div>
               </form>
             </div>
           </div>
@@ -138,40 +182,75 @@
           <div class="col-12 col-md-6 mt-md-0 mt-5 d-flex flex-column">
             <h3 class="fs-4 fw-medium text-start mb-4">送貨資料</h3>
             <div class="bg-greyD4 px-8 py-5 text-dark flex-grow-1">
-              <h5 class="fs-5 my-4 font-notosans">已選擇的送貨方式：{{ orderDeliverData.deliver }}</h5>
+              <h5 class="fs-5 my-4 font-notosans">
+                已選擇的送貨方式：{{ orderDeliverData.deliver }}
+              </h5>
 
-              <input type="checkbox" id="data" class="form-check-input my-4" v-model="recipientAsOrderData" />
-              <label for="data" class="form-check-label my-4 fs-6 ms-2">收件人資料與顧客資料相同</label>
+              <input
+                type="checkbox"
+                id="data"
+                class="form-check-input my-4"
+                v-model="recipientAsOrderData"
+              />
+              <label for="data" class="form-check-label my-4 fs-6 ms-2"
+                >收件人資料與顧客資料相同</label
+              >
 
               <form class="my-3">
-                <label for="recipient" class="fs-6 mb-1">收件人名稱</label><br />
-                <v-field id="recipient" name="收件人姓名" type="text" class="form-control p-2 w-100 mb-4 border-0"
-                  :class="{ 'is-invalid': errors['收件人姓名'] }" placeholder="請輸入收件人姓名" rules="required"
-                  v-model="recipient.name" :disabled="recipientAsOrderData"></v-field>
-                <error-message name="收件人姓名" class="invalid-feedback"></error-message>
-                <p class="mb-3 text-end">
-                  請填入收件人真實姓名，以確保順利收件
-                </p>
-
+                <div class="mb-4">
+                  <label for="recipient" class="fs-6 mb-1">收件人名稱</label><br />
+                  <v-field
+                    id="recipient"
+                    name="收件人姓名"
+                    type="text"
+                    class="form-control p-2 w-100 mb-1 border-0"
+                    :class="{ 'is-invalid': errors['收件人姓名'] }"
+                    placeholder="請輸入收件人姓名"
+                    rules="required"
+                    v-model="recipient.name"
+                    :disabled="recipientAsOrderData"
+                  ></v-field>
+                  <error-message name="收件人姓名" class="invalid-feedback"></error-message>
+                  <p class="mb-3 text-end">請填入收件人真實姓名，以確保順利收件</p>
+                </div>
                 <label for="recipient-phone" class="fs-6 mb-1">收件人電話號碼</label><br />
-                <v-field id="recipient-phone" name="收件人電話" type="tel" class="form-control p-2 w-100 mb-4 border-0"
-                  :class="{ 'is-invalid': errors['收件人電話'] }" placeholder="請輸入收件人電話" rules="required|numeric|min:7"
-                  v-model="recipient.tel" :disabled="recipientAsOrderData"></v-field>
-                <error-message name="收件人電話" class="invalid-feedback"></error-message>
-
-                <label for="recipient-address" class="fs-6 mb-1" v-if="showAddress()">收件人地址</label><br />
-                <v-field id="recipient-address" name="收件人地址" type="text" class="form-control p-2 w-100 mb-4 border-0"
-                  :class="{ 'is-invalid': errors['收件人地址'] }" placeholder="請輸入收件人地址" rules="required"
-                  v-model="recipient.address" v-if="showAddress()"></v-field>
-                <error-message name="收件人地址" class="invalid-feedback"></error-message>
-
+                <div class="mb-4">
+                  <v-field
+                    id="recipient-phone"
+                    name="收件人電話"
+                    type="tel"
+                    class="form-control p-2 w-100 mb-1 border-0"
+                    :class="{ 'is-invalid': errors['收件人電話'] }"
+                    placeholder="請輸入收件人電話"
+                    rules="required|numeric|min:7"
+                    v-model="recipient.tel"
+                    :disabled="recipientAsOrderData"
+                  ></v-field>
+                  <error-message name="收件人電話" class="invalid-feedback"></error-message>
+                </div>
+                <label for="recipient-address" class="fs-6 mb-1" v-if="showAddress()"
+                  >收件人地址</label
+                ><br />
+                <div class="mb-4">
+                  <v-field
+                    id="recipient-address"
+                    name="收件人地址"
+                    type="text"
+                    class="form-control p-2 w-100 mb-1 border-0"
+                    :class="{ 'is-invalid': errors['收件人地址'] }"
+                    placeholder="請輸入收件人地址"
+                    rules="required"
+                    v-model="recipient.address"
+                    v-if="showAddress()"
+                  ></v-field>
+                  <error-message name="收件人地址" class="invalid-feedback"></error-message>
+                </div>
               </form>
               <div class="" v-if="showStore()">
                 <h4 class="fs-5 fw-medium py-4 mt-2">選擇門市</h4>
 
                 <button type="button" class="btn btn-primary fs-5 p-5 w-100 mb-3">搜尋門市</button>
               </div>
-
             </div>
           </div>
         </div>
@@ -184,37 +263,63 @@
               <div class="">
                 <form action="" class="">
                   <div class="form-floating">
-                    <v-field id="Card-number" name="卡號" type="tel" class="form-control mb-5"
-                      :class="{ 'is-invalid': errors['卡號'] }" placeholder="請輸入卡號"
+                    <v-field
+                      id="Card-number"
+                      name="卡號"
+                      type="tel"
+                      class="form-control mb-2"
+                      :class="{ 'is-invalid': errors['卡號'] }"
+                      placeholder="請輸入卡號"
                       :rules="showCreditCard() ? '' : 'required|numeric|digits:16'"
-                      :disabled="showCreditCard()"></v-field>
-                    <error-message name="卡號" class="invalid-feedback"></error-message>
+                      :disabled="showCreditCard()"
+                    ></v-field>
+                    <error-message name="卡號" class="invalid-feedback mb-2"></error-message>
+
                     <label for="Card-number">卡號</label>
                   </div>
 
                   <div class="form-floating">
-                    <v-field id="Card-name" name="持卡人姓名" type="text" class="form-control mb-5"
-                      :class="{ 'is-invalid': errors['持卡人姓名'] }" placeholder="請輸入持卡人姓名"
-                      :rules="showCreditCard() ? '' : 'required'" :disabled="showCreditCard()"></v-field>
-                    <error-message name="持卡人姓名" class="invalid-feedback"></error-message>
+                    <v-field
+                      id="Card-name"
+                      name="持卡人姓名"
+                      type="text"
+                      class="form-control mb-2"
+                      :class="{ 'is-invalid': errors['持卡人姓名'] }"
+                      placeholder="請輸入持卡人姓名"
+                      :rules="showCreditCard() ? '' : 'required'"
+                      :disabled="showCreditCard()"
+                    ></v-field>
+                    <error-message name="持卡人姓名" class="invalid-feedback mb-2"></error-message>
                     <label for="Card-name">持卡人姓名</label>
                   </div>
 
                   <div class="form-floating">
-                    <v-field id="Card-date" name="有效期限" type="text" class="form-control mb-5"
-                      :class="{ 'is-invalid': errors['有效期限'] }" placeholder="請輸入有效期限"
+                    <v-field
+                      id="Card-date"
+                      name="有效期限"
+                      type="text"
+                      class="form-control mb-2"
+                      :class="{ 'is-invalid': errors['有效期限'] }"
+                      placeholder="請輸入有效期限"
                       :rules="showCreditCard() ? '' : 'required|numeric|digits:4'"
-                      :disabled="showCreditCard()"></v-field>
-                    <error-message name="有效期限" class="invalid-feedback"></error-message>
+                      :disabled="showCreditCard()"
+                    ></v-field>
+                    <error-message name="有效期限" class="invalid-feedback mb-2"></error-message>
                     <label for="Card-date">有效期限(MM/YY)</label>
                   </div>
 
                   <div class="form-floating">
-                    <v-field id="Card-pin" name="安全碼" type="text" class="form-control mb-5"
-                      :class="{ 'is-invalid': errors['安全碼'] }" placeholder="請輸入安全碼"
+                    <v-field
+                      id="Card-pin"
+                      name="安全碼"
+                      type="text"
+                      class="form-control mb-2"
+                      :class="{ 'is-invalid': errors['安全碼'] }"
+                      placeholder="請輸入安全碼"
                       :rules="showCreditCard() ? '' : 'required|numeric|digits:3'"
-                      :disabled="showCreditCard()"></v-field>
-                    <error-message name="安全碼" class="invalid-feedback"></error-message>
+                      :disabled="showCreditCard()"
+                    ></v-field>
+                    <error-message name="安全碼" class="invalid-feedback mb-2"></error-message>
                     <label for="Card-pin">安全碼</label>
                   </div>
                 </form>
@@ -223,9 +328,7 @@
                   本金流服務由 SHOPLINE Payments 提供,通過 PCI-DSS
                   國際信用卡組織最高等級認證,提供安全的交易服務,支援國內外信用卡刷卡。
                 </p>
-
               </div>
-
             </div>
           </div>
 
@@ -234,8 +337,13 @@
             <div class="bg-greyD4 px-8 py-5">
               <h4 class="fs-5 my-4">有什麼要對賣家說的話：</h4>
               <form action="" class="form-floating">
-                <textarea name="" id="" rows="15" class="mb-4 w-100 no-resize border-0"
-                  v-model="orderData.message"></textarea>
+                <textarea
+                  name=""
+                  id=""
+                  rows="15"
+                  class="mb-4 w-100 no-resize border-0"
+                  v-model="orderData.message"
+                ></textarea>
               </form>
             </div>
           </div>
@@ -246,23 +354,44 @@
     <div class="container py-8 text-start text-primary">
       <div class="row">
         <div class="col-lg-6 col-12">
-          <router-link to="/cart" class="d-flex align-items-center p-8 fs-5 fw-medium text-primary"><span
-              class="material-icons fs-5 me-2"> arrow_back_ios_new </span><span>返回購物車</span></router-link>
+          <router-link to="/cart" class="d-flex align-items-center p-8 fs-5 fw-medium text-primary"
+            ><span class="material-icons fs-5 me-2"> arrow_back_ios_new </span
+            ><span>返回購物車</span></router-link
+          >
         </div>
 
         <div class="col-lg-6 col-12 p-8">
           <div class="d-flex mb-4">
-            <input type="checkbox" id="subscribe" style="width: 1em; height: 1em" class="form-check-input" checked />
+            <input
+              type="checkbox"
+              id="subscribe"
+              style="width: 1em; height: 1em"
+              class="form-check-input"
+              checked
+            />
             <label for="subscribe" class="form-check-label fs-6 ms-2">訂閱最新消息</label>
           </div>
           <div class="d-flex mb-8">
-            <input type="checkbox" id="private" style="width: 1em; height: 1em" class="form-check-input" required
-              checked />
+            <input
+              type="checkbox"
+              id="private"
+              style="width: 1em; height: 1em"
+              class="form-check-input"
+              required
+              checked
+            />
 
-            <label for="private" class="form-check-label fs-6 ms-2">本人同意網站
-              <a href="#" class="text-decoration-underline" @click.prevent="openModal('條款')">網站服務條款</a>
+            <label for="private" class="form-check-label fs-6 ms-2"
+              >本人同意網站
+              <a href="#" class="text-decoration-underline" @click.prevent="openModal('條款')"
+                >網站服務條款</a
+              >
               及
-              <a href="#" class="text-decoration-underline" @click.prevent="openModal('政策')">隱私權政策</a></label> <br>
+              <a href="#" class="text-decoration-underline" @click.prevent="openModal('政策')"
+                >隱私權政策</a
+              ></label
+            >
+            <br />
             <div class="invalid-feedback">Example invalid feedback text</div>
           </div>
 
@@ -270,18 +399,28 @@
         </div>
       </div>
     </div>
-
   </VForm>
 
   <!-- 網站服務條款與政策Modal -->
-  <div class="modal fade" id="policyModal" tabindex="-1" aria-labelledby="policyModalLabel" aria-hidden="true"
-    ref="policyModal">
+  <div
+    class="modal fade"
+    id="policyModal"
+    tabindex="-1"
+    aria-labelledby="policyModalLabel"
+    aria-hidden="true"
+    ref="policyModal"
+  >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" v-if="policy.DOCState">網站服務條款</h1>
           <h1 class="modal-title fs-5" v-else>隱私權政策</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body text-start">
           <!-- 網站服務條款 -->
@@ -343,15 +482,13 @@
       </div>
     </div>
   </div>
-
-
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia';
-import cartStore from '@/stores/cartStore';
-import Modal from 'bootstrap/js/dist/modal';
-import Swal from 'sweetalert2';
+import { mapState, mapActions } from 'pinia'
+import cartStore from '@/stores/cartStore'
+import Modal from 'bootstrap/js/dist/modal'
+import Swal from 'sweetalert2'
 
 export default {
   data() {
@@ -361,24 +498,24 @@ export default {
       recipient: {
         name: '',
         tel: '',
-        address: '',
+        address: ''
       },
       orderData: {
         user: {
           name: '',
           email: '',
           tel: '',
-          address: '',
+          address: ''
         },
         message: '',
-        birthday: '',
+        birthday: ''
       },
       orderDeliverData: {},
       policy: {
         DOCState: true,
         Modal: '',
         Check: false
-      },
+      }
     }
   },
   methods: {
@@ -439,48 +576,41 @@ export default {
       this.orderData.user.name = this.recipient.name
       this.orderData.user.tel = this.recipient.tel
       this.orderData.user.address = this.recipient.address
-      const postOrderUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/order`;
-      this.$http.post(postOrderUrl, { data: this.orderData })
-        .then(() => {
-          this.getCarts()
-          this.$router.push('/success')
-        })
+      const postOrderUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/order`
+      this.$http.post(postOrderUrl, { data: this.orderData }).then(() => {
+        this.getCarts()
+        this.$router.push('/success')
+      })
     },
 
     checkLogin() {
-      let user = localStorage.getItem("userInfo")
+      let user = localStorage.getItem('userInfo')
 
-      const getUserUrl = 'https://greensheep-json-server.onrender.com/users';
+      const getUserUrl = 'https://greensheep-json-server.onrender.com/users'
       if (user) {
         const loginUserId = JSON.parse(user).id
         console.log(loginUserId)
-        this.$http.get(getUserUrl)
-          .then((res) => {
-            console.log(res.data)
-            res.data.forEach((item) => {
-              if (item.id == loginUserId) {
-                this.orderData.user.name = item.nickName
-                this.orderData.user.email = item.email
-                this.orderData.user.tel = item.phone
-                this.orderData.user.address = item.location
-                console.log(item)
-
-              }
-            })
+        this.$http.get(getUserUrl).then((res) => {
+          console.log(res.data)
+          res.data.forEach((item) => {
+            if (item.id == loginUserId) {
+              this.orderData.user.name = item.nickName
+              this.orderData.user.email = item.email
+              this.orderData.user.tel = item.phone
+              this.orderData.user.address = item.location
+              console.log(item)
+            }
           })
-
+        })
       }
 
-
       // console.log(user)
-
     },
 
     openModal(state) {
       state === '條款' ? (this.policy.DOCState = true) : (this.policy.DOCState = false)
       this.policy.Modal.show()
-    },
-
+    }
   },
   computed: {
     ...mapState(cartStore, ['carts', 'deliverData']),
@@ -490,7 +620,7 @@ export default {
         total += item.final_total
       })
       return total
-    },
+    }
   },
   watch: {
     recipientAsOrderData(value) {
@@ -499,7 +629,6 @@ export default {
         this.recipient.tel = this.orderData.user.tel
         this.recipient.address = this.orderData.user.address
       }
-
     }
   },
 
@@ -507,10 +636,8 @@ export default {
     this.policy.Modal = new Modal(this.$refs.policyModal)
     this.orderDeliverData = { ...this.deliverData }
     this.checkLogin()
-  },
-
+  }
 }
-
 </script>
 
 <style lang="scss"></style>

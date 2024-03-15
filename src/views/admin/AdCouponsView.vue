@@ -48,7 +48,6 @@
     <!-- PC coupons -->
     <div class="table-container table-responsive d-none d-lg-block">
       <table class="table align-middle text-nowrap mb-4">
-        <!-- <thead class="table-head sticky-top"></thead> -->
         <thead class="table-head position-relative">
           <tr>
             <th style="width: 15%">優惠碼</th>
@@ -62,7 +61,13 @@
         </thead>
         <tbody>
           <tr v-for="coupon in currentPageCoupons" :key="coupon.id">
-            <td>{{ coupon.code }}</td>
+            <td>
+              {{ coupon.code }}
+              <CopyText
+                :copyContent="coupon.code"
+                :type="'優惠碼'"
+              />
+            </td>
             <td class="py-5">
               <p class="fw-bold mb-4">{{ coupon.title }}</p>
               <p v-if="coupon.title === '金額折抵'">
@@ -175,7 +180,10 @@
           <div class="row g-0">
             <div class="col-12">
               <div class="bg-primary d-flex justify-content-between align-items-center px-2 py-2">
-                <div class="bg-primary text-white fw-bold">{{ coupon.code }}</div>
+                <div class="bg-primary text-white fw-bold">
+                  {{ coupon.code }}
+                  <i class="bi bi-copy"></i>
+                </div>
                 <div class="text-end bg-white rounded-pill px-2 py-1 fs-8">
                   <template v-if="currentTab === '所有優惠券'">
                     <span
@@ -383,19 +391,21 @@
   <AdCouponModal
     ref="adCouponModal"
     :coupon="coupon"
+    :newCoupon="newCoupon"
     :isNew="isNew"
     :loadingStatus="loadingStatus"
     @update-coupon="updateCoupon"
-    />
-    <!-- :key="timer" -->
+  />
 </template>
 
 <script>
 import AdCouponModal from '@/components/AdCouponModal.vue'
+import CopyText from '@/components/CopyText.vue'
 import { unixToDate } from '@/utils/unixToDate.js'
 import { dateToUnix } from '@/utils/dateToUnix.js'
 import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 import { scrollToTop } from '@/utils/scrollToTop.js'
+
 
 export default {
   data() {
@@ -408,6 +418,9 @@ export default {
       notYetValidCoupons: [],
       InvalidCoupons: [],
       coupon: {},
+      newCoupon: {
+        title: '金額折抵' // 預設值給 :checked 判斷
+      },
       isNew: true,
       isLoading: false,
       loadingStatus: {
@@ -418,7 +431,7 @@ export default {
     }
   },
   components: {
-    AdCouponModal
+    AdCouponModal, CopyText
   },
   methods: {
     // 取得全部優惠券資料
@@ -539,8 +552,13 @@ export default {
       if (couponData.title === '金額折抵') {
         data.min_buy_price_by_price = couponData.min_buy_price_by_price
         data.discount_price = couponData.discount_price
+        // 清空另一種類的資料
+        data.min_buy_price_by_discount = ''
       } else if (couponData.title === '訂單折扣') {
         data.min_buy_price_by_discount = couponData.min_buy_price_by_discount
+        // 清空另一種類的資料
+        data.min_buy_price_by_price = ''
+        data.discount_price = ''
       }
 
       // 判斷是新增或編輯
@@ -602,15 +620,12 @@ export default {
     async openModal(type, id) {
       switch (type) {
         case 'new':
-          // this.$refs.adCouponModal.reset()
+          this.$refs.adCouponModal.reset()
           this.isNew = true
-          this.coupon = {
-            title: '金額折抵' // 預設值給 :checked 判斷
-          }
+          this.$refs.adCouponModal.resetNewCoupon()
           this.$refs.adCouponModal.openModal()
           break
         case 'edit':
-          // this.$refs.adCouponModal.reset()
           this.isNew = false
           this.$refs.adCouponModal.openModal()
           await this.getCoupon(id)

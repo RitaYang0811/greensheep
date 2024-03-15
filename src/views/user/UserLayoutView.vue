@@ -1,7 +1,9 @@
 <template>
   <Header></Header>
   <CartComponent></CartComponent>
-  <RouterView />
+  <div class="main">
+    <RouterView />
+  </div>
   <Footer></Footer>
 </template>
 
@@ -18,3 +20,14 @@ export default {
   }
 }
 </script>
+<style scoped lang="scss">
+@import '@/assets/scss/utils/mixin.scss';
+
+.main {
+  min-height: calc(100vh - 185.4px);
+
+  @include mobile {
+    min-height: calc(100vh - 270.19px);
+  }
+}
+</style>

@@ -1,13 +1,12 @@
 .main-banner {
   max-width: 1440px;
-  //margin: -64px auto;
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
-  top: 24.79px;
-  width: 100%; /* 充满整个容器 */
-  height: 100%; /* 充满整个容器 */
-  z-index: 0; /* 确保照片在底层 */
+  top: 32.79px;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 //標題後半圓弧型
@@ -29,14 +28,25 @@
     height: 530px;
     top: 640px;
   }
-  @include mobile {
-    width: 375px;
-    height: 400px;
-    top: 400px;
-  }
+  // @include mobile {
+
+  //   width: 375px;
+  //   height: 400px;
+  //   top: 500px;
+  // }
 }
 
 .banner {
+  //首頁標題區
+  &-content {
+    padding-top: 400px;
+    @include pad {
+      padding-top: 800px;
+    }
+    @include mobile {
+      padding-top: 500px;
+    }
+  }
   // 首頁文字
   &-title {
     text-align: start;
@@ -54,16 +64,7 @@
       padding-top: 0px;
     }
   }
-  //首頁標題
-  &-content {
-    padding-top: 400px;
-    @include pad {
-      padding-top: 700px;
-    }
-    @include mobile {
-      padding-top: 400px;
-    }
-  }
+
   //社群icon
   &-icon {
     padding-top: 600px;
@@ -149,39 +150,3 @@
     left: 0px;
   }
 }
-
-//裝飾圈圈滑過抖動
-// .deco-spin {
-//   &:hover {
-//     .deco-circle {
-//       animation: headShake 1s linear infinite;
-//     }
-//   }
-// }
-
-// @keyframes headShake {
-//   0% {
-//     -webkit-transform: translateX(0);
-//     transform: translateX(0);
-//   }
-//   6.5% {
-//     -webkit-transform: translateX(-6px) rotateY(-9deg);
-//     transform: translateX(-6px) rotateY(-9deg);
-//   }
-//   18.5% {
-//     -webkit-transform: translateX(5px) rotateY(7deg);
-//     transform: translateX(5px) rotateY(7deg);
-//   }
-//   31.5% {
-//     -webkit-transform: translateX(-3px) rotateY(-5deg);
-//     transform: translateX(-3px) rotateY(-5deg);
-//   }
-//   43.5% {
-//     -webkit-transform: translateX(2px) rotateY(3deg);
-//     transform: translateX(2px) rotateY(3deg);
-//   }
-//   50% {
-//     -webkit-transform: translateX(0);
-//     transform: translateX(0);
-//   }
-// }

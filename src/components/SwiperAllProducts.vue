@@ -7,7 +7,7 @@
     :slides-per-view="1"
     :modules="modules"
     :centeredSlides="true"
-    :navigation="true"
+    :navigation="false"
     :pagination="{
       clickable: true
     }"
@@ -58,9 +58,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/scss/utils/mixin.scss';
+
 .mySwiper {
   height: 400px;
   max-width: calc(100vw - 1rem);
+  @include pad {
+    height: 200px;
+  }
 }
 .swiper-slide img {
   display: block;

@@ -1,6 +1,26 @@
 <template>
   <!-- swiper -->
-  <Swiper-All-Products></Swiper-All-Products>
+  <!-- <Swiper-All-Products></Swiper-All-Products> -->
+  <SwiperImages>
+    <template #firstImage>
+      <img
+        src="https://images.unsplash.com/photo-1512163143273-bde0e3cc7407?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+        alt="swiperImage"
+      />
+    </template>
+    <template #secondImage>
+      <img
+        src="https://images.unsplash.com/photo-1450297166380-cabe503887e5?q=80&w=1730&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="swiperImage"
+      />
+    </template>
+    <template #thirdImage>
+      <img
+        src="https://images.unsplash.com/photo-1514927465065-bbdc86c7a76c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+        alt="swiperImage"
+      />
+    </template>
+  </SwiperImages>
   <main class="container">
     <div class="row py-7 py-lg-10">
       <!-- 側邊目錄 -->
@@ -100,11 +120,7 @@
               v-for="product in currentProducts"
               :key="product.id"
             >
-              <router-link
-                :to="`/products/detail/${product.id}`"
-                class="card border-0"
-                @click="scrollToTop"
-              >
+              <router-link :to="{ path: `/products/detail/${product.id}` }" class="card border-0">
                 <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
                   <span
                     v-if="product.discount !== 10"
@@ -148,12 +164,10 @@
                     <button
                       type="button"
                       class="custom-btn custom-btn-secondary text-center w-100 border-1 add-to-cart"
-                      @click.prevent="addToLike(product.id)"
+                      @click.prevent="isLogin(product.id)"
                     >
-                      <!-- 匡線愛心 -->
-                      <i class="bi bi-heart fs-5"></i>
-                      <!-- 點擊後變實心 -->
-                      <!-- <i class="bi bi-heart-fill fs-5"></i> -->
+                      <!-- 愛心 -->
+                      <i class="bi bi-heart fs-5" :id="product.id" ref="favIcon"></i>
                     </button>
                     <button
                       type="button"
@@ -172,7 +186,7 @@
             <table v-if="isList === true" class="table mb-10 mb-lg-15">
               <tbody>
                 <template v-for="item in currentProducts" :key="item.id">
-                  <router-link :to="`/products/detail/${item.id}`" @click="scrollToTop"
+                  <router-link :to="{ path: `/products/detail/${item.id}` }"
                     ><tr
                       class="product-item row mb-3 bg-white rounded-3 align-content-center py-2 py-lg-1"
                     >
@@ -228,12 +242,10 @@
                           <button
                             type="button"
                             class="custom-btn custom-btn-secondary text-center w-60 w-lg-100 border-1 add-to-cart"
-                            @click.prevent="addToLike(item.id)"
+                            @click.prevent="isLogin(item.id)"
                           >
-                            <!-- 匡線愛心 -->
-                            <i class="bi bi-heart fs-5"></i>
-                            <!-- 點擊後變實心 -->
-                            <!-- <i class="bi bi-heart-fill fs-5"></i> -->
+                            <!-- 愛心 -->
+                            <i class="bi bi-heart fs-5" :id="item.id" ref="favIcon"></i>
                           </button>
                           <button
                             href="#"
@@ -250,9 +262,14 @@
             </table>
           </div>
         </template>
+        <div v-else-if="searchWord">
+          <p class="text-dark text-center">
+            搜尋不到「{{ searchWord }}」相關商品，你要不要試試其他關鍵字呢？
+          </p>
+        </div>
         <div v-else>
           <p class="text-dark text-center">
-            目前分類「{{ currentCategory }}」還沒有商品～你可以逛逛其他分類
+            目前「{{ currentCategory }}」還沒有上架商品～您可以逛逛其他分類
           </p>
         </div>
         <!-- 分頁 -->
@@ -296,31 +313,39 @@
 <script>
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
-import searchStore from '@/stores/searchStore'
-import SwiperAllProducts from '@/components/SwiperAllProducts.vue'
+//import SwiperAllProducts from '@/components/SwiperAllProducts.vue'
+import SwiperImages from '@/components/SwiperImages.vue'
 import Swal from 'sweetalert2'
 import { mapState, mapActions } from 'pinia'
 
 // json-server網址
 const serverUrl = 'https://greensheep-json-server.onrender.com'
 export default {
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       isShow: false,
       sortTitle: '',
       isBlock: true,
       isList: false,
-
+      searchWord: '',
       //當前顯示分類
       currentCategory: '',
       //當前顯示分頁
       currentProductsPage: 1,
       //當前顯示關鍵字
-      currentSearchWord: ''
+      currentSearchWord: '',
+      productsIdArr: []
     }
   },
   components: {
-    SwiperAllProducts
+    // SwiperAllProducts
+    SwiperImages
   },
   computed: {
     ...mapState(productStore, [
@@ -333,8 +358,7 @@ export default {
       'showTitle',
       'isLoading',
       'loadingStatus'
-    ]),
-    ...mapState(searchStore, ['searchQuery'])
+    ])
   },
 
   watch: {
@@ -355,53 +379,70 @@ export default {
   methods: {
     ...mapActions(productStore, ['getProducts', 'getFilterProducts', 'getSort']),
     ...mapActions(cartStore, ['addToCart']),
+    // 收藏初始化
+    async likeInit() {
+      const user = JSON.parse(localStorage.getItem('userInfo'))
+
+      if (user === null) {
+        return false
+      }
+      await this.$http
+        .get(`${serverUrl}/favorites?userId=${user.id}`)
+        .then((res) => {
+          console.log('回傳:', res.data)
+        })
+        .catch((err) => {})
+    },
     // 加入最愛
     async addToLike(productId) {
-      console.log('產品:', productId)
-      // 先判斷有沒有登入會員，沒有會請使用者登入
+      const likeProduct = {
+        productId: `${productId}`,
+        userId: `${JSON.parse(localStorage.getItem('userInfo')).id}`
+      }
 
-      if ((await this.isLogin()) === undefined) {
-        const likeProduct = {
-          productId: `${productId}`,
-          userId: `${JSON.parse(localStorage.getItem('userInfo')).id}`
-        }
-
-        // 確認有沒有加入過
-        const res = await this.$http.get(
-          `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
-        )
-
-        if (res.data.length) {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: '已經加入過收藏囉!',
-            showConfirmButton: false,
-            toast: true,
-            timer: 1500
+      // 確認有沒有加入過
+      const res = await this.$http.get(
+        `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
+      )
+      // 這邊預留給移除最愛
+      if (res.data.length) {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: '已經加入過收藏囉!',
+          showConfirmButton: false,
+          toast: true,
+          timer: 1500
+        })
+      } else {
+        // 加入最愛
+        this.$http
+          .post(`${serverUrl}/favorites`, likeProduct)
+          .then((res) => {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: '已加入收藏!',
+              showConfirmButton: false,
+              toast: true,
+              timer: 1500
+            })
+            this.$refs.favIcon.forEach((item, index) => {
+              if (productId === item.id) {
+                this.$refs.favIcon[index].classList.remove('bi-heart')
+                this.$refs.favIcon[index].classList.add('bi-heart-fill')
+              }
+            })
           })
-        } else {
-          // 加入最愛
-          this.$http
-            .post(`${serverUrl}/favorites`, likeProduct)
-            .then((res) => {
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: '已加入收藏!',
-                showConfirmButton: false,
-                toast: true,
-                timer: 1500
-              })
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        }
+          .catch((err) => {
+            console.log(err)
+          })
       }
     },
-    async isLogin() {
+    // 先判斷有沒有登入會員，沒有會請使用者登入
+    async isLogin(productId) {
       const user = JSON.parse(localStorage.getItem('userInfo'))
+
       if (user === null) {
         Swal.fire({
           icon: 'warning',
@@ -409,10 +450,6 @@ export default {
           showConfirmButton: false,
           timer: 1500
         })
-        this.$router.push({
-          path: '/memberLogin'
-        })
-        return false
       }
       await this.$http
         .get(`${serverUrl}/600/users/${user.id}`, {
@@ -421,8 +458,7 @@ export default {
           }
         })
         .then((res) => {
-          console.log(123)
-          return true
+          this.addToLike(productId)
         })
         .catch((err) => {
           Swal.fire({
@@ -431,7 +467,6 @@ export default {
             showConfirmButton: false,
             timer: 1500
           })
-          return false
         })
     },
 
@@ -461,10 +496,6 @@ export default {
       this.sortTitle = status
       this.getFilterProducts(this.currentCategory, this.currentProductsPage, status)
     },
-    scrollToTop() {
-      window.scrollTo(0, 0)
-    },
-
     async fetchData() {
       await this.getProducts()
       console.log(this.$route)
@@ -476,12 +507,23 @@ export default {
   },
   async mounted() {
     await this.fetchData()
+
+    this.products.forEach((item) => {
+      this.productsIdArr.push(item.id)
+    })
+    this.likeInit()
   }
 }
 </script>
 
 <style scoped lang="scss">
 @import '@/assets/scss/utils/_mixin.scss';
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .add-like {
   top: 10px;
   left: 14px;

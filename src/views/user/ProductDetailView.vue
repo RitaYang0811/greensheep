@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-7 pt-lg-10">
+  <div class="container pt-30">
     <!-- breadcrumb -->
     <div class="row justify-content-center">
       <nav aria-label="breadcrumb">
@@ -30,8 +30,12 @@
             <h1 class="fw-bold fs-3 fs-lg-2 me-5">{{ productInfo.title }}</h1>
             <!-- 愛心收藏 -->
 
-            <i class="bi bi-heart fs-4 text-primary" @click="addToLike(productInfo.id)"></i>
-            <!-- <i class="bi bi-heart-fill fs-4 text-primary"></i> -->
+            <i
+              class="bi fs-4 text-primary"
+              @click.prevent="isLogin(productInfo.id)"
+              ref="favIcon"
+              :class="[isLike ? 'bi-heart-fill' : 'bi-heart']"
+            ></i>
           </div>
           <!-- v-if 無折扣 -->
           <p
@@ -49,6 +53,13 @@
             </span>
             <span v-if="productInfo.discount !== 10" class="bg-deco p-1 text-dark fs-8 my-1"
               >{{ productInfo.discount }}折</span
+            >
+          </p>
+          <!-- 庫存 -->
+          <p class="text-dark fs-7 mb-4">
+            庫存數量：{{ productInfo.stockNum }} {{ productInfo.unit
+            }}<span v-if="productInfo.stockNum < 5" class="text-danger ms-4 fs-8 fst-italic"
+              >庫存緊張</span
             >
           </p>
           <!-- 行銷活動 -->
@@ -205,7 +216,11 @@
                 value="1"
                 readonly
               />
-              <button class="btn qty-btn rounded-circle p-0 border-primary" @click.prevent="qty++">
+              <button
+                class="btn qty-btn rounded-circle p-0 border-primary"
+                :disabled="qty === productInfo.stockNum"
+                @click.prevent="qty++"
+              >
                 <i class="bi bi-plus-lg text-primary fs-3"></i>
               </button>
             </div>
@@ -338,7 +353,7 @@
           v-for="product in recommendProducts"
           :key="product.id"
         >
-          <router-link :to="`/products/${product.id}`" class="card border-0">
+          <router-link :to="{ path: `/products/detail/${product.id}` }" class="card border-0">
             <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
               <span
                 v-if="product.discount !== 10"
@@ -401,13 +416,14 @@ export default {
   data() {
     return {
       isLoading: false,
-      qty: 1
+      qty: 1,
+      isLike: false
     }
   },
   components: { ProductSwiper },
 
   computed: {
-    ...mapState(productStore, ['productInfo', 'recommendProducts'])
+    ...mapState(productStore, ['products', 'productInfo', 'recommendProducts'])
   },
   watch: {
     routeData: {
@@ -418,7 +434,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(productStore, ['getProductInfo', 'getRecommendProducts']),
+    ...mapActions(productStore, ['getProducts', 'getProductInfo', 'getRecommendProducts']),
     ...mapActions(cartStore, ['addToCart']),
     scrollTo() {
       const productContent = this.$refs.productContent
@@ -426,38 +442,50 @@ export default {
         productContent.scrollIntoView({ behavior: 'smooth' }) // 使用平滑滾動到元素
       }
     },
+    // 收藏初始化
+    async likeInit(id) {
+      const user = JSON.parse(localStorage.getItem('userInfo'))
+      if (user === null) {
+        return false
+      }
+      await this.$http
+        .get(`${serverUrl}/favorites?userId=${user.id}&&productId=${id}`)
+        .then((res) => {
+          if (res.data.length) {
+            this.isLike = true
+          }
+        })
+        .catch((err) => {})
+    },
     // 加入最愛
     async addToLike(productId) {
-      console.log('產品:', productId)
-      // 先判斷有沒有登入會員，沒有會請使用者登入
+      const likeProduct = {
+        productId: `${productId}`,
+        userId: `${JSON.parse(localStorage.getItem('userInfo')).id}`
+      }
 
-      if ((await this.isLogin()) === undefined) {
-        const likeProduct = {
-          productId: `${productId}`,
-          userId: `${JSON.parse(localStorage.getItem('userInfo')).id}`
-        }
-
-        // 確認有沒有加入過
-        const res = await this.$http.get(
-          `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
-        )
-
-        if (res.data.length) {
-          alert('已經加入過最愛囉!')
-        } else {
-          // 加入最愛
-          this.$http
-            .post(`${serverUrl}/favorites`, likeProduct)
-            .then((res) => {
-              alert('成功加入最愛!')
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        }
+      // 確認有沒有加入過
+      const res = await this.$http.get(
+        `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
+      )
+      // 這邊預留給移除最愛
+      if (res.data.length) {
+        alert('已經加入過最愛囉!')
+      } else {
+        // 加入最愛
+        this.$http
+          .post(`${serverUrl}/favorites`, likeProduct)
+          .then((res) => {
+            alert('成功加入最愛!')
+            this.isLike = true
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     },
-    async isLogin() {
+    // 先判斷有沒有登入會員，沒有會請使用者登入
+    async isLogin(productId) {
       const user = JSON.parse(localStorage.getItem('userInfo'))
       if (user === null) {
         alert('請先登入會員!')
@@ -470,24 +498,24 @@ export default {
           }
         })
         .then((res) => {
-          console.log(123)
-          return true
+          this.addToLike(productId)
         })
         .catch((err) => {
           alert('請先登入會員!')
-          return false
         })
     }
   },
-  mounted() {
-    console.log(this.$route)
+  async mounted() {
+    await this.getProducts()
     this.getProductInfo(this.$route.params.id)
     this.getRecommendProducts(this.$route.params.id)
+    this.likeInit(this.$route.params.id)
+    console.log(this.products)
+    console.log(this.productInfo)
   },
   beforeRouteUpdate(to, from) {
     this.getProductInfo(to.params.id)
     this.getRecommendProducts(to.params.id)
-
     this.$nextTick(() => {
       window.scrollTo(0, 0)
     })
