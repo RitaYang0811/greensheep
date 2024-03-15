@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-20">
+  <div class="container py-20 pt-40">
     <!-- progress -->
     <div class="mb-30">
       <div class="position-relative m-4 w-75 mx-auto">
