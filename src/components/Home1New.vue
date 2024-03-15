@@ -12,7 +12,7 @@
   </div>
 
   <div class="container">
-    <div class="bg-banner-blur d-flex d-md-flex"></div>
+    <div class="bg-banner-blur d-none d-md-flex"></div>
     <div class="d-flex justify-content-between">
       <!-- Banner標題 -->
       <div class="banner-content row justify-content-between align-items-end">
