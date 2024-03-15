@@ -1,0 +1,1 @@
+import{_ as t,c as o,e as s,o as r,k as c}from"./index-CtjhObmR.js";const a={data(){return{}},methods:{}},n={class:"px-lg-10 pt-3 pt-lg-10 text-start"};function p(_,d,i,l,u,m){const e=c("RouterView");return r(),o("div",n,[s(e)])}const x=t(a,[["render",p]]);export{x as default};
