@@ -100,7 +100,7 @@
               v-for="product in currentProducts"
               :key="product.id"
             >
-              <router-link :to="`/products/detail/${product.id}`" class="card border-0">
+              <router-link :to="{ path: `/products/detail/${product.id}` }" class="card border-0">
                 <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
                   <span
                     v-if="product.discount !== 10"
@@ -166,7 +166,7 @@
             <table v-if="isList === true" class="table mb-10 mb-lg-15">
               <tbody>
                 <template v-for="item in currentProducts" :key="item.id">
-                  <router-link :to="`/products/detail/${item.id}`" @click="scrollToTop"
+                  <router-link :to="{ path: `/products/detail/${item.id}` }"
                     ><tr
                       class="product-item row mb-3 bg-white rounded-3 align-content-center py-2 py-lg-1"
                     >
@@ -301,6 +301,12 @@ import { mapState, mapActions } from 'pinia'
 // json-server網址
 const serverUrl = 'https://greensheep-json-server.onrender.com'
 export default {
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       isShow: false,
