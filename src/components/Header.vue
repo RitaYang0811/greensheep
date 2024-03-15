@@ -454,7 +454,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .searchOffCanvas {
-  margin-top: 24px;
+  margin-top: 32.8px;
   height: 64px;
 }
 .collapse-more {
