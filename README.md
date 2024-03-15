@@ -93,11 +93,11 @@
 
 #### 菜單往下滑時收起，往上滑時出現 及中小型尺寸折疊菜單樣式
 
-![表頭](https://imgur.com/gozut4s.gif)
+![表頭](https://imgur.com/n0cQ1Ka.gif)
 
 #### 全站搜尋
 
-![搜尋](https://imgur.com/gzgDn1g.gif)
+![搜尋](https://imgur.com/GDOPSKI.gif)
 
 #### 客戶評價滑動效果
 
