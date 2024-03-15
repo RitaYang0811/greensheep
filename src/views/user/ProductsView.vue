@@ -1,6 +1,26 @@
 <template>
   <!-- swiper -->
-  <Swiper-All-Products></Swiper-All-Products>
+  <!-- <Swiper-All-Products></Swiper-All-Products> -->
+  <SwiperImages>
+    <template #firstImage>
+      <img
+        src="https://images.unsplash.com/photo-1512163143273-bde0e3cc7407?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+        alt="swiperImage"
+      />
+    </template>
+    <template #secondImage>
+      <img
+        src="https://images.unsplash.com/photo-1450297166380-cabe503887e5?q=80&w=1730&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="swiperImage"
+      />
+    </template>
+    <template #thirdImage>
+      <img
+        src="https://images.unsplash.com/photo-1514927465065-bbdc86c7a76c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+        alt="swiperImage"
+      />
+    </template>
+  </SwiperImages>
   <main class="container">
     <div class="row py-7 py-lg-10">
       <!-- 側邊目錄 -->
@@ -293,8 +313,8 @@
 <script>
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
-import searchStore from '@/stores/searchStore'
-import SwiperAllProducts from '@/components/SwiperAllProducts.vue'
+//import SwiperAllProducts from '@/components/SwiperAllProducts.vue'
+import SwiperImages from '@/components/SwiperImages.vue'
 import Swal from 'sweetalert2'
 import { mapState, mapActions } from 'pinia'
 
@@ -324,7 +344,8 @@ export default {
     }
   },
   components: {
-    SwiperAllProducts
+    // SwiperAllProducts
+    SwiperImages
   },
   computed: {
     ...mapState(productStore, [
@@ -497,6 +518,12 @@ export default {
 
 <style scoped lang="scss">
 @import '@/assets/scss/utils/_mixin.scss';
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .add-like {
   top: 10px;
   left: 14px;
