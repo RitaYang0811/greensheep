@@ -91,17 +91,17 @@
 
 ![菜單文字](https://imgur.com/Jsm3CIR.gif)
 
-#### 客戶評價滑動效果
-
-![客戶評價](https://imgur.com/TwTMF9G.gif)
-
 #### 菜單往下滑時收起，往上滑時出現 及中小型尺寸折疊菜單樣式
 
-![表頭](https://imgur.com/Dw9x9Fc.gif)
+![表頭](https://imgur.com/gozut4s.gif)
 
 #### 全站搜尋
 
-![全站搜尋](https://imgur.com/BPC2flr.gif)
+![搜尋](https://imgur.com/gzgDn1g.gif)
+
+#### 客戶評價滑動效果
+
+![客戶評價](https://imgur.com/TwTMF9G.gif)
 
 ### ✦ 商品頁 ✦
 
