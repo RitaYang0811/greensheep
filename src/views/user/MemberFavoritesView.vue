@@ -1,30 +1,14 @@
 <template>
-  <!-- <nav aria-label="breadcrumb">
-    <ol class="breadcrumb mb-7 mb-md-15">
-      <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-      <li class="breadcrumb-item">
-        <a href="9-1.memberInfo.html"> 會員資料</a>
-      </li>
-      <li class="breadcrumb-item active" aria-current="page">我的收藏</li>
-    </ol>
-  </nav> -->
 
   <h1 class="fs-3 fs-lg-2 text-start mb-6 fw-bold">我的收藏</h1>
   <!-- 商品頁面 -->
   <div class="d-flex flex-wrap row row-cols-2 row-cols-md-4">
-    {{ console.log(myFavoriteProducts) }}
-    <router-link
-      :to="`/products/detail/${product.id}`"
-      class="col d-flex flex-column product-item mb-6"
-      v-for="product in myFavoriteProducts"
-      :key="product.id"
-    >
-      <div class="position-relative" style="width: 100%; padding-top: 100%">
-        <img
-          :src="product.imageUrl"
-          class="card-img-top position-absolute top-0 start-0 object-fit-cover h-100"
-        />
-      </div>
+    <div class="col d-flex flex-column product-item mb-6" v-for="product in myFavoriteProducts" :key="product.id">
+      <!-- 點擊圖片可以連結到產品詳細頁面 -->
+      <router-link :to="`/products/detail/${product.id}`" class="position-relative"
+        style="width: 100%; padding-top: 100%">
+        <img :src="product.imageUrl" class="card-img-top position-absolute top-0 start-0 object-fit-cover h-100" />
+      </router-link>
       <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
         <h5 class="card-title display-8 text-dark pt-2">
           <div class="mb-2">{{ product.title }}</div>
@@ -32,32 +16,12 @@
         </h5>
         <p class="card-text display-8 text-primary py-2">NT${{ product.price }}</p>
       </div>
-    </router-link>
+      <div class="card-footer">
+        <button class="btn btn-primary w-100" type="button" @click="deleteFavoriteProduct(product.id)">移除最愛</button>
+      </div>
+    </div>
   </div>
 
-  <!-- <nav aria-label="Page navigation ">
-    <ul class="cus-pagination list-unstyled mb-20 mb-lg-25">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span class="material-icons fs-8 p-1"> navigate_before </span>
-        </a>
-      </li>
-      <li class="page-item fs-8">
-        <a class="page-link active" href="#" aria-current="page">1</a>
-      </li>
-      <li class="page-item fs-8">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item fs-8">
-        <a class="page-link" href="#">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span class="material-icons fs-8 p-1"> navigate_next </span>
-        </a>
-      </li>
-    </ul>
-  </nav> -->
 </template>
 
 <script>
@@ -68,15 +32,16 @@ export default {
   data() {
     return {
       myFavoritesId: [],
-      myFavoriteProducts: []
+      myFavoriteProducts: [],
+      deleteId: '',
     }
   },
   methods: {
+    //檢查是否登入
     checkLogin() {
       let loginUser = localStorage.getItem('userInfo')
       if (loginUser) {
         this.getFavorites()
-        // return
       } else {
         Swal.fire({
           title: '您尚未登入?',
@@ -89,34 +54,35 @@ export default {
         })
       }
     },
-
+    //取得該登入使用者的最愛名單(將最愛中UserID是該user的全部找出來放入myFavoritesId中)
     getFavorites() {
+      this.myFavoritesId = []
+      //找出使用者ID
       let loginUser = localStorage.getItem('userInfo')
       const loginUserId = JSON.parse(loginUser).id
-      // console.log(loginUserId)
+      //從favorite中篩出該使用者ID
       const getFavoritesUrl = 'https://greensheep-json-server.onrender.com/favorites'
       this.$http
         .get(getFavoritesUrl)
         .then((res) => {
-          // console.log(res.data)
           res.data.forEach((item) => {
             if (item.userId == loginUserId) {
               this.myFavoritesId.push(item)
             }
           })
-          // console.log(this.myFavoritesId)
           this.getFavoriteProducts()
         })
         .catch((err) => {
           console.log(err)
         })
     },
+    //找出最愛中的porduct(從所有產品中撈出有在最愛中的產品)
     getFavoriteProducts() {
+      this.myFavoriteProducts = []
       const getProductsUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products/all`
       this.$http
         .get(getProductsUrl)
         .then((res) => {
-          // console.log(res.data.products)
           res.data.products.forEach((item) => {
             this.myFavoritesId.forEach((item2) => {
               if (item.id == item2.productId) {
@@ -124,16 +90,42 @@ export default {
               }
             })
           })
-          // console.log(this.myFavoriteProducts)
         })
         .catch((err) => {
           console.log(err)
         })
-    }
+    },
+    //刪除最愛功能
+    deleteFavoriteProduct(id) {
+      this.myFavoritesId.forEach((item) => {
+        if (item.productId == id) {
+          this.deleteId = item.id
+        }
+      })
+      Swal.fire({
+        title: '是否刪除該最愛?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#566b5a',
+        cancelButtonText: '  否  ',
+        confirmButtonText: '  是  '
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const deletefavoriteUrl = `https://greensheep-json-server.onrender.com/favorites/${this.deleteId}`
+          this.$http.delete(deletefavoriteUrl)
+            .then(() => {
+              this.getFavorites()
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }
+      })
+    },
   },
   mounted() {
     this.checkLogin()
-    // this.getFavorites()
   }
 }
 </script>

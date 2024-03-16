@@ -5,23 +5,23 @@
     <nav>
       <div class="nav nav-tabs border-button border-3" id="nav-tab" role="tablist">
         <button class="nav-link active w-10" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#allOrders"
-          type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+          type="button" role="tab" aria-controls="nav-home" aria-selected="true" @click="changeCategory(allOrders)">
           全部訂單
         </button>
         <button class="nav-link w-10" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#unpaid" type="button"
-          role="tab" aria-controls="nav-profile" aria-selected="false">
+          role="tab" aria-controls="nav-profile" aria-selected="false" @click="changeCategory(unpaidOrders)">
           未付款
         </button>
         <button class="nav-link w-10" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#paid" type="button"
-          role="tab" aria-controls="nav-contact" aria-selected="false">
+          role="tab" aria-controls="nav-contact" aria-selected="false" @click="changeCategory(paidOrders)">
           已付款
         </button>
         <button class="nav-link w-10" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#delete" type="button"
-          role="tab" aria-controls="nav-contact" aria-selected="false">
+          role="tab" aria-controls="nav-contact" aria-selected="false" @click="changeCategory(deletedOrders)">
           已刪除
         </button>
         <button class="nav-link w-10" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#done" type="button"
-          role="tab" aria-controls="nav-contact" aria-selected="false">
+          role="tab" aria-controls="nav-contact" aria-selected="false" @click="changeCategory(doneOrders)">
           已完成
         </button>
       </div>
@@ -33,7 +33,14 @@
         <button type="button" class="btn btn-deco" @click="deleteAllOrders">刪除全部訂單</button>
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
-          <Accordion :orders="allOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
+          <Accordion :orders="allOrdersPage" :openModal="openModal" :deleteOrder="deleteOrder"
+            :confirmDelete="confirmDelete"></Accordion>
+
+          <!-- pagination -->
+          <AdOrderPagination :pagination="pagination" @update-page="changePage"></AdOrderPagination>
+          <!-- pagination -->
+
+
           <!-- Accordion -->
         </div>
       </div>
@@ -43,6 +50,9 @@
           <!-- Accordion -->
           <Accordion :orders="unpaidOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
           <!-- Accordion -->
+          <!-- pagination -->
+          <AdOrderPagination :pagination="paginations" @update-page="changePage"></AdOrderPagination>
+          <!-- pagination -->
         </div>
       </div>
       <!-- tabs 已付款 -->
@@ -51,6 +61,9 @@
           <!-- Accordion -->
           <Accordion :orders="paidOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
           <!-- Accordion -->
+          <!-- pagination -->
+          <AdOrderPagination :pagination="paginations" @update-page="changePage"></AdOrderPagination>
+          <!-- pagination -->
         </div>
       </div>
       <!-- tab 已刪除 -->
@@ -61,6 +74,9 @@
           <Accordion :orders="deletedOrders" :openModal="openModal" :deleteOrder="deleteOrder"
             :confirmDelete="confirmDelete"></Accordion>
           <!-- Accordion -->
+          <!-- pagination -->
+          <AdOrderPagination :pagination="paginations" @update-page="changePage"></AdOrderPagination>
+          <!-- pagination -->
         </div>
       </div>
       <!-- tab 已完成 -->
@@ -70,6 +86,9 @@
           <!-- Accordion -->
           <Accordion :orders="doneOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
           <!-- Accordion -->
+          <!-- pagination -->
+          <AdOrderPagination :pagination="paginations" @update-page="changePage"></AdOrderPagination>
+          <!-- pagination -->
         </div>
       </div>
     </div>
@@ -123,10 +142,10 @@
                 <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" v-model="orderStatus.done"
                   :disabled="!modalData.is_paid || !orderStatus.sendProduct" />
                 <label class="btn border-2 rounded-circle" :class="[
-          modalData.is_paid && orderStatus.sendProduct
-            ? 'btn-outline-primary'
-            : 'btn-outline-light'
-        ]" for="btncheck4"><i class="bi bi-check-lg fs-2 text-light"></i></label>
+            modalData.is_paid && orderStatus.sendProduct
+              ? 'btn-outline-primary'
+              : 'btn-outline-light'
+          ]" for="btncheck4"><i class="bi bi-check-lg fs-2 text-light"></i></label>
                 <p class="mt-3 fs-6">已完成</p>
               </div>
             </div>
@@ -193,8 +212,8 @@
             <p class="fs-6">
               優惠券：
               <span class="ms-2 fs-6 badge rounded-pill text-bg-deco" v-if="modalData?.products">{{
-          Object.values(modalData?.products)[0]?.coupon?.code
-        }}</span>
+            Object.values(modalData?.products)[0]?.coupon?.code
+          }}</span>
             </p>
             <p class="fs-5 me-4 text-primary fw-bold">總金額：{{ parseInt(modalData?.total) }}</p>
           </div>
@@ -214,13 +233,13 @@
 import axios from 'axios'
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 import Accordion from '@/components/AdOrderAccordion.vue'
+import AdOrderPagination from '@/components/AdOrderPagination.vue'
 import Swal from 'sweetalert2'
-// import orderStore from '@/stores/orderStore.js'
-// import { mapState, mapActions } from 'pinia'
 
 export default {
   components: {
-    Accordion
+    Accordion,
+    AdOrderPagination,
   },
   data() {
     return {
@@ -229,6 +248,9 @@ export default {
       paidOrders: [],
       deletedOrders: [],
       doneOrders: [],
+      pagination: {},
+      allOrdersPage: [],
+      nowOrders: [],
       modalData: {},
       modalProducts: [],
       //訂單狀態資料
@@ -241,35 +263,56 @@ export default {
     }
   },
   computed: {
-    // ...mapState(orderStore, [
-    //   'allOrders',
-    //   'unpaidOrders',
-    //   'paidOrders',
-    //   'deletedOrders',
-    //   'doneOrders',
-    //   'orderStatus'
-    // ])
+    paginations() {
+      let pagination = {}
+      if (this.nowOrders.length > 10) {
+        if (this.nowOrders.length % 10) {
+          pagination.total_pages = Math.floor(this.nowOrders.length / 10) + 1
+        } else {
+          pagination.total_pages = Math.floor(this.nowOrders.length / 10)
+        }
+        pagination.has_next = true
+      } else {
+        pagination.total_pages = 1
+        pagination.has_next = false
+      }
+      pagination.current_page = 1
+      pagination.has_pre = false
+      return pagination
+    },
+
+  },
+  watch: {
+
   },
   methods: {
-    // ...mapActions(orderStore, [
-    //   'getAllOrders',
-    //   'updateOrder',
-    //   'deleteOrder',
-    //   'recoverDelete',
-    //   'confirmDelete',
-    //   'deleteAllOrders',
-    //   'openModal'
-    // ]),
-
     getAllOrders() {
       this.allOrders = []
       this.unpaidOrders = []
       this.paidOrders = []
+      this.nowPage = []
       const getOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/orders`
-      axios
-        .get(getOrdersUrl)
+      axios.get(getOrdersUrl)
         .then((res) => {
-          this.allOrders = res.data.orders
+          this.pagination = res.data.pagination
+          res.data.orders.forEach((item) => {
+            this.allOrders.push(item)
+            this.allOrdersPage.push(item)
+          })
+          if (res.data.pagination.current_page < res.data.pagination.total_pages) {
+            const times = res.data.pagination.total_pages
+            for (let i = 2; i <= times; i++) {
+              axios.get(`${getOrdersUrl}?page=${i}`)
+                .then((res) => {
+                  res.data.orders.forEach((item) => {
+                    this.allOrders.push(item)
+                  })
+                })
+                .catch((err) => {
+                  console.log(err)
+                })
+            }
+          }
           this.allOrders.forEach((item) => {
             //若該訂單沒有orderStatus時，代表為新訂單，加入orderStatus。
             if (!item.orderStatus) {
@@ -411,9 +454,49 @@ export default {
       })
     },
 
+    pageOrders() {
+
+    },
+    changeCategory(category) {
+      // this.nowPage = category
+      // if (category.length > 10) {
+      //   if (category.length % 10) {
+      //     this.paginetion.total_pages = Math.floor(category.length / 10) + 1
+      //   } else {
+      //     this.paginetion.total_pages = Math.floor(category.length / 10)
+      //   }
+      //   this.pagination.has_next = true
+      // }
+      // this.pagination.current_page = 1
+      // this.pagination.has_pre = false
+      // this.pagination: {
+      //   total_pages: 2,
+      //     current_page: 1,
+      //       has_pre: true,
+      //         has_next: false,
+      //           category: ""
+      // },
+      console.log(category)
+      this.nowOrders = category
+    },
+
+    changePage(page) {
+      this.allOrdersPage = []
+      const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/orders?page=${page}`
+      axios.get(url)
+        .then((res) => {
+          res.data.orders.forEach((item) => {
+            this.allOrdersPage.push(item)
+          })
+          this.pagination = res.data.pagination
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
     openModal(order) {
       this.modalData = { ...order }
-
       this.modalProducts = Object.values(order.products)
       //將訂單狀態塞入
       this.orderStatus = { ...order.orderStatus }

@@ -5,7 +5,7 @@
     <VForm v-if="isNew" class="modal-content custom-form" ref="couponForm" @submit="updateCoupon" v-slot="{ errors,  meta }">
       <div class="modal-header bg-primary py-2 px-3">
         <h2 class="modal-title fs-5 fw-medium text-white">
-          建立優惠券1
+          建立優惠券
         </h2>
         <a role="button" aria-label="Close" @click.prevent="closeModal">
           <i class="bi bi-x-lg text-white"></i>
@@ -54,7 +54,8 @@
                 <div>
                   <VField
                     type="number"
-                    @keydown="preventSpecialKey" 
+                    @keydown="preventKeydownSpecialKey"
+                    @paste="preventPasteSpecialKey"
                     name="金額"
                     :rules="newCouponData.title === '金額折抵' ? 'required|compareWithDiscount:@折抵金額' : ''"
                     class="form-control"
@@ -70,7 +71,8 @@
                 <div>
                   <VField
                     type="number"
-                    @keydown="preventSpecialKey" 
+                    @keydown="preventKeydownSpecialKey"
+                    @paste="preventPasteSpecialKey" 
                     name="折抵金額"
                     :rules="newCouponData.title === '金額折抵' ? 'required|compareWithPrice:@金額' : ''"
                     class="form-control"
@@ -101,7 +103,8 @@
                 <div>
                   <VField
                     type="number"
-                    @keydown="preventSpecialKey" 
+                    @keydown="preventKeydownSpecialKey"
+                    @paste="preventPasteSpecialKey" 
                     name="消費金額"
                     :rules="{ required: newCouponData.title === '訂單折扣' }"
                     class="form-control"
@@ -224,7 +227,8 @@
                 <div>
                   <VField
                     type="number"
-                    @keydown="preventSpecialKey" 
+                    @keydown="preventKeydownSpecialKey"
+                    @paste="preventPasteSpecialKey" 
                     name="金額"
                     :rules="couponData.title === '金額折抵' ? 'required|compareWithDiscount:@折抵金額' : ''"
                     class="form-control"
@@ -240,7 +244,8 @@
                 <div>
                   <VField
                     type="number"
-                    @keydown="preventSpecialKey" 
+                    @keydown="preventKeydownSpecialKey"
+                    @paste="preventPasteSpecialKey" 
                     name="折抵金額"
                     :rules="couponData.title === '金額折抵' ? 'required|compareWithPrice:@金額' : ''"
                     class="form-control"
@@ -265,7 +270,8 @@
                 <div>
                   <VField
                     type="number"
-                    @keydown="preventSpecialKey" 
+                    @keydown="preventKeydownSpecialKey"
+                    @paste="preventPasteSpecialKey" 
                     name="消費金額"
                     :rules="{ required: couponData.title === '訂單折扣' }"
                     class="form-control"
@@ -411,17 +417,15 @@ export default {
     resetNewCoupon() {
       this.newCouponData = { ...this.newCoupon }
     },
-    // type 為 number 禁止輸入特定文字
-    preventSpecialKey(event) {
-      const { code } = event
-      if(
-        code === 'KeyE' || // e E
-        code === 'NumpadAdd'|| // +
-        code === 'NumpadSubtract' || // -
-        code === 'NumpadDecimal' // .
-      ) {
-        event.preventDefault()
-      }
+    // 只可輸入數字、倒退鍵、Tab 鍵或貼上 (避免輸入 + - e E .)
+    preventKeydownSpecialKey(event) {
+      const { key } = event
+      if (!/\d|Backspace|Tab|Control|v/.test(key)) event.preventDefault()
+    },
+    // 只可貼上一個或多個連續數字
+    preventPasteSpecialKey(event) {
+      const text = event.clipboardData.getData('text')
+      if (!/^\d+$/.test(text)) event.preventDefault()
     }
   },
   watch: {
@@ -454,3 +458,15 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+/* 隱藏 input number 上下箭頭  */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  appearance: none;
+  margin: 0; 
+}
+input[type=number] {
+  appearance:textfield;
+}
+</style>
