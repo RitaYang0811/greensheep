@@ -5,7 +5,7 @@
     <VForm v-if="isNew" class="modal-content custom-form" ref="couponForm" @submit="updateCoupon" v-slot="{ errors,  meta }">
       <div class="modal-header bg-primary py-2 px-3">
         <h2 class="modal-title fs-5 fw-medium text-white">
-          建立優惠券1
+          建立優惠券
         </h2>
         <a role="button" aria-label="Close" @click.prevent="closeModal">
           <i class="bi bi-x-lg text-white"></i>
@@ -454,3 +454,15 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+/* 隱藏 input number 上下箭頭  */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  appearance: none;
+  margin: 0; 
+}
+input[type=number] {
+  appearance:textfield;
+}
+</style>
