@@ -7,7 +7,7 @@
   --ck-focus-outer-shadow-geometry: 0 0 0 0 !important;
 }
 
-.ck-content {
+.ck-editor__main .ck-content {
   height: 72vh;
   line-height: 2;
 }
@@ -16,6 +16,6 @@
   color: $grey9F;
 }
 
-.is-invalid + .ck-editor .ck-content {
+.is-invalid + .ck-editor .ck-editor__main {
   border-color: $danger !important;
 }
