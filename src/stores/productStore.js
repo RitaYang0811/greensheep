@@ -111,15 +111,6 @@ export default defineStore('productStore', {
         //將總商品依照每頁12筆成為展示商品
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
         this.loadingStatus.loadingFilterProducts = false
-
-        // console.log(
-        //   '分類',
-        //   this.currentPage,
-        //   this.category,
-        //   this.products,
-        //   this.categoryProducts,
-        //   this.currentProducts
-        // )
       }
     },
     //取得單一產品
@@ -141,7 +132,10 @@ export default defineStore('productStore', {
       this.recommendProducts = []
       while (this.recommendProducts.length < 4) {
         const randomProduct = this.products[Math.floor(Math.random() * this.products.length)]
-        if (!this.recommendProducts.includes(randomProduct) || id === this.recommendProducts.id) {
+        if (
+          !this.recommendProducts.some((product) => product.id === randomProduct.id) &&
+          randomProduct.id !== id
+        ) {
           this.recommendProducts.push(randomProduct)
         }
       }

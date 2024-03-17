@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column align-items-center py-15">
+  <div class="d-flex flex-column align-items-center py-15 pt-40">
     <div>
       <h2 class="fs-2">WELCOME</h2>
       <p class="text-primary">Discover Your Unique Elegance</p>
@@ -61,7 +61,7 @@
                 :rules="passwordRule"
                 v-model="user.password"
               ></v-field>
-              <label for="password" class="z-0">請輸入6-12字英數混合密碼，避免連續及重複</label>
+              <label for="password" class="z-0">請輸入6-12字英數混合密碼</label>
               <i
                 class="checkByEye"
                 :class="[
@@ -91,11 +91,12 @@
             </button>
           </v-form>
           <div class="mb-3 d-flex justify-content-between">
-            <p class="mt-1 text-start">
+            <p class="mt-2 text-start text-primary">
               <router-link to="/memberForget">忘記密碼</router-link>
             </p>
-            <p class="mt-1 text-end">
-              還沒有帳號嗎？前往<router-link to="/memberSignUp" class="text-decoration-underline"
+            <p class="mt-2 text-end">
+              還沒有帳號嗎？前往
+              <router-link to="/memberSignUp" class="text-decoration-underline text-primary fw-bold"
                 >註冊</router-link
               >
             </p>

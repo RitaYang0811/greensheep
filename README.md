@@ -1,6 +1,6 @@
 ![首圖](https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710235284309.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=RG%2FF33F203VF2uaY%2BmKsxJAelZc%2FKJFXSb6yRpaWwsYiWFiUMzqLW1dflXfu5W3XVFHCbjWiEn1RnxV7pI905QkoNZCdUCjlwFCAYZ1aXxczqFiohzcSygBGC84x6zkciuRe3HQ3ZS%2Ff%2FRBTEYkc7ycWNUG1ipyhSjIF4D9OwCC8VK2Orq0n%2FpjjdmP3zhOwkngJWcwnlt%2FbfHQgcNgm9JyaQy1jzaDkoX4WQm7zEDhOrfv7UCg0Xg8id9IACcANxk8SBeiYFpdooGxrOnEOi60E2EeQ1esQg81hsEbiMFbvGeRUVIuuW6tl%2FLclhXlGs%2BDOs4mNseDGXHEpCN8Tow%3D%3D)
 
-## 使用技術
+### 使用技術
 
 ![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
@@ -16,34 +16,28 @@
 - [網站前台](https://ritayang0811.github.io/greensheep/#/)
 - [網站後台](https://ritayang0811.github.io/greensheep/#/admin/home)（帳號密碼提示：我們的英文名稱）
 
-# ✦ 團隊成員
-
-# ✦ 團隊成員
+## ✦ 團隊成員
 
 - 依依 Rita [Github](https://github.com/RitaYang0811)
 - 仙貝 [Github](https://github.com/WuWeiTsung)
 - 柯基 Jim [Github](https://github.com/windjim)
 - Uli [Github](https://github.com/Uli1313)
 
-# ✦ 作品簡介
+## ✦ 作品簡介
 
-# ✦ 作品簡介
-
-### 作品說明
+#### 作品說明
 
 爲團隊成員依依的自有品牌 -「綠羊珠寶GreenSheep」所開發的珠寶電商網站。品牌希望透過獨一無二的設計，讓每一位佩戴者能感受到自身的獨特及魅力。
 
 > 在這個世界只有黑羊與白羊世界，身為一隻綠羊，我們就是最獨特的存在。
 
-### 網站特色
+#### 網站特色
 
 ![特色](https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710235204511.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=mpPGEmu6J1h05P8zFFc8WifXepnaQcIMKlowBF%2FPMj6dQ7DEIWyjCNuNOpEs1JP%2F3pahozfKJ%2BowmlWP7Gzpp05VKep7w4MeFeQMdzem4yFoMdMEm0Y650Ttnrnwn1zAYIzsfffJQl70SJfJwPqWlnrQUCAFpX22rvzm%2F3wpdBGurAqvLfLdG2B1WHTeAY9Rp5k%2Fv60kgfpyjv34UFKLOtv3byDVlu%2B%2BMyAzdWd3GRyH0xEsb3rbpeb5RtmLp9pygAvmQJRMFtRv6gwzb686nLmITklnVqZsGukQ0V2J18KoiuNWr9tytrCoohSZrB9SkqjbXRZO1AXHX%2Bfeup6DLg%3D%3D)
 
-# ✦ 專案說明
+## ✦ 專案說明
 
-# ✦ 專案說明
-
-## 使用技術
+### 使用技術
 
 1. **技術堆疊：**
    這是一個使用 `Vue.js` 和 `Vite` 建置的網站，以提供高效的前端開發和更好的性能。
@@ -67,7 +61,7 @@
 11. **後台管理系統：**
     開發了一個基礎的後台管理系統，提供管理者取得訂單通知，查看和管理訂單、建立產品、上傳文章、建立優惠券等功能。
 
-## 前台
+### 前台
 
 - **電商展示：** 首頁、產品列表、產品詳細介紹、商品顯示方式切換、商品排序更換、推薦商品、商品全站搜尋、分類檢索、加入收藏
 - **關於品牌：** 關於品牌故事及精神
@@ -78,7 +72,7 @@
 - **登入註冊：** 一般會員註冊登入、google/line註冊登入、忘記密碼、驗證碼發送
 - **會員中心：** 會員資料修改、查看歷史訂單、查看最愛收藏
 
-## 後台
+### 後台
 
 - 管理者登入
 - **首頁：** 全部訂單數量、未付款訂單數、新訂單提醒
@@ -89,69 +83,83 @@
 
 ---
 
-# 畫面展示 - 前台
+## 畫面展示 - 前台
 
-## ✦ 首頁 ✦
+### ✦ 首頁 ✦
 
-### Menu文字滑動改變
+#### Menu文字滑動改變
 
 ![菜單文字](https://imgur.com/Jsm3CIR.gif)
 
-### AOS 動畫
+#### 菜單往下滑時收起，往上滑時出現 及中小型尺寸折疊菜單樣式
 
-![AOS動畫](https://imgur.com/GwrzDuI.gif)
+![表頭](https://imgur.com/n0cQ1Ka.gif)
 
-### 全站搜尋
+#### 全站搜尋
 
-![全站搜尋](https://imgur.com/56CzB3j.gif)
+![搜尋](https://imgur.com/GDOPSKI.gif)
 
-### 客戶評價滑動效果
+#### 客戶評價滑動效果
 
 ![客戶評價](https://imgur.com/TwTMF9G.gif)
 
-## ✦ 商品頁 ✦
+### ✦ 商品頁 ✦
 
-### 商品頁展示滑動效果
+#### 商品頁展示滑動效果
 
 ![商品頁展示滑動效果](https://imgur.com/MpZsZFM.gif)
 
-### 商品排序與顯示方式切換
+#### 商品排序與顯示方式切換
 
 ![商品頁商品排序與顯示方式切換](https://imgur.com/heHMWUv.gif)
 
-### 庫存限制
+#### 庫存限制
 
 庫存小於5 會出現提醒文字，數量選擇按鈕 有最高庫存數量限制
 
 ![庫存提醒](https://imgur.com/kx8Bh9Q.gif)
 
-## ✦ 購物車 ✦
+### ✦ 購物車 ✦
 
-### 使用優惠券
+#### 使用優惠券
 
 ![使用優惠券](https://imgur.com/nH4nm7d.gif)
 
-### 不同收件地點，可選擇不同的配送及付款方式
+#### 不同收件地點，可選擇不同的配送及付款方式
 
 ![不同收件地點有不同的配送及付款方式可選擇](https://imgur.com/qqk7Em8.gif)
 
-### 訂購資訊驗證
+#### 訂購資訊驗證
 
 ![訂購資訊驗證](https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710407702027.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=AK%2FLxPhvka%2BAvFM5kg%2FcSVzZcx%2BrwgcONIiHUYCrcpzYOVfBe%2BDoyrSyroD6tgdfqE6R8XZd%2FR9%2BOMYL4XHxDtseAb8%2FLXYcK%2Fw1loZUccYFkxpg3BOc6cqA4P6R%2BA1FJ6zVzXMJKVY2iJU6Zp%2B9aDKbKCHktzd%2FQHj2bK4a4N1nrSoBPMecb9%2BngmaVxMnrcR1rx21RXKpfgWu7u2cMEv6HlJEwLk5r%2Fffg%2FplRwfQwcS%2Bmu4nRcYrPzVmiiMkscjvczwap0zuxgMriSmWuGsj05TR6kou70r42oz%2BZ0qZhS%2Bd31IvV9RkyZqY%2BIFMxCsUV2RqgMvsJ%2FnyXrronDQ%3D%3D)
 
-# 畫面展示 - 後台
+## 畫面展示 - 後台
 
-## 中小型尺寸標頭菜單：往下滑時收起，往上滑時出現
+### ✦ 後台首頁 ✦
 
-![標頭菜單](https://imgur.com/r2Nqwmn.gif)
-
-## 訂單總數與新訂單通知
+#### 訂單總數與新訂單通知
 
 ![訂單總數與新訂單通知](https://storage.googleapis.com/vue-course-api.appspot.com/greensheep/1710408029349.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=Vfc0MvFAi9nC7ncZJZx3QIn8IXO0T5dZpR5ywre7zEKqAvjWYO7nQi7NkQuLQBZbyNS6bJlzcggO9toMT9DVEnsbk16tf9VFgfRsGBjcbmrY8ah0qobbTtdBbls7SB60OUuiukQHbaiUBim%2FAylON4cHHVkrkdOrSVTWZFiN2NyupDlL1DcvDBdy8Jda1bhChA2%2BRWrQOskX0T9EjEvzzWheJisGhPO%2BW9X9c8SrQXnvAqTNjOQU8uXqCAzmmn1PKl%2BYQdiPwgAh3a23QPa9fFZfzgSgGJyJf3%2BfSf8t4RQ%2FFQj9dX%2Bae16rtct9tMVVaUhkyt3J7bqOeYZ78h6dPA%3D%3D)
 
-# 安裝與使用
+### ✦ 商品管理 ✦
 
-### 取得專案
+#### 相簿上傳：照片可以拖曳及刪除
+
+![照片拖曳及刪除](https://imgur.com/0K9zZTP.gif)
+
+### ✦ 訂單管理 ✦
+
+####
+
+![修改訂單狀態](https://imgur.com/G6mmVlJ.gif)
+
+### ✦ 文章管理 ✦
+
+### ✦ 優惠管理 ✦
+
+## 安裝與使用
+
+#### 取得專案
 
 ```bash
 git clone https://github.com/RitaYang0811/greensheep.git

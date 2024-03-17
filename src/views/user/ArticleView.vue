@@ -25,8 +25,7 @@
       data-aos-delay="200"
       data-aos-once="true"
     >
-      <div class="col-lg-5 ms-4 mb-2" style="float: right;"><img :src="article.image" :alt="article.title"></div>
-      <div class="col-12 lh-lg text-primary">
+      <div class="col-12 lh-lg text-primary ck-content">
         <div v-html="article.content"></div>
       </div>
     </div>
@@ -107,6 +106,9 @@ import cartStore from '@/stores/cartStore.js'
 import { mapState, mapActions } from 'pinia'
 import { useRoute } from 'vue-router'
 import { toastError } from "@/utils/sweetalertToast.js"
+
+import '@ckeditor/ckeditor5-image/theme/image.css'
+import '@ckeditor/ckeditor5-image/theme/imagestyle.css'
 
 export default {
   data() {

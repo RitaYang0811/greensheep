@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-7 pt-lg-10">
+  <div class="container pt-30">
     <!-- breadcrumb -->
     <div class="row justify-content-center">
       <nav aria-label="breadcrumb">
@@ -353,7 +353,7 @@
           v-for="product in recommendProducts"
           :key="product.id"
         >
-          <router-link :to="`/products/${product.id}`" class="card border-0">
+          <router-link :to="{ path: `/products/detail/${product.id}` }" class="card border-0">
             <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
               <span
                 v-if="product.discount !== 10"
@@ -424,7 +424,7 @@ export default {
   components: { ProductSwiper },
 
   computed: {
-    ...mapState(productStore, ['productInfo', 'recommendProducts'])
+    ...mapState(productStore, ['products', 'productInfo', 'recommendProducts'])
   },
   watch: {
     routeData: {
@@ -435,7 +435,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(productStore, ['getProductInfo', 'getRecommendProducts', 'getProducts']),
+    ...mapActions(productStore, ['getProducts', 'getProductInfo', 'getRecommendProducts']),
     ...mapActions(cartStore, ['addToCart']),
     scrollTo() {
       const productContent = this.$refs.productContent
@@ -528,11 +528,12 @@ export default {
     this.getProductInfo(this.$route.params.id)
     this.getRecommendProducts(this.$route.params.id)
     this.likeInit(this.$route.params.id)
+    console.log(this.products)
+    console.log(this.productInfo)
   },
   beforeRouteUpdate(to, from) {
     this.getProductInfo(to.params.id)
     this.getRecommendProducts(to.params.id)
-
     this.$nextTick(() => {
       window.scrollTo(0, 0)
     })

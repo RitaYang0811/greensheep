@@ -230,6 +230,23 @@ export default {
           ],
           shouldNotGroupWhenFull: true // 工具列寬度不足時換行
         },
+        image: {
+          toolbar: [
+            {
+              name: 'imageStyle:矩形',
+              title: '矩形',
+              items: [ 'imageStyle:alignLeft', 'imageStyle:alignRight' ],
+              defaultItem: 'imageStyle:alignLeft'
+            },
+            {
+              name: 'imageStyle:上及下',
+              title: '上及下',
+              items: [ 'imageStyle:alignBlockLeft', 'imageStyle:alignCenter', 'imageStyle:alignBlockRight' ],
+              defaultItem: 'imageStyle:alignBlockLeft'
+            },
+            '|', 'imageTextAlternative',
+            '|', 'toggleImageCaption']
+        },
         extraPlugins: [
           function(editor) {
             editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {

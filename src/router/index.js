@@ -41,8 +41,7 @@ const router = createRouter({
         {
           path: 'products/detail/:id',
           name: 'UserProductDetail',
-          component: () => import('../views/user/ProductDetailView.vue'),
-          props: true
+          component: () => import('../views/user/ProductDetailView.vue')
         },
         {
           path: 'products/客製設計 CUSTOMIZED',

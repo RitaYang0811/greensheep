@@ -1,41 +1,47 @@
 <template>
-  <div class="container py-20">
+  <div class="container py-20 pt-40">
     <!-- progress -->
     <div class="mb-30">
       <div class="position-relative m-4 w-75 mx-auto">
         <div class="progress" style="height: 1px">
-          <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0"
-            aria-valuemax="100"></div>
+          <div
+            class="progress-bar"
+            role="progressbar"
+            style="width: 100%"
+            aria-valuenow="50"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
         </div>
-        <button type="button"
+        <button
+          type="button"
           class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
-          style="width: 3rem; height: 3rem">
+          style="width: 3rem; height: 3rem"
+        >
           1
         </button>
-        <button type="button"
+        <button
+          type="button"
           class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
-          style="width: 3rem; height: 3rem">
+          style="width: 3rem; height: 3rem"
+        >
           2
         </button>
-        <button type="button"
+        <button
+          type="button"
           class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
-          style="width: 3rem; height: 3rem">
+          style="width: 3rem; height: 3rem"
+        >
           3
         </button>
       </div>
 
       <div class="position-relative mt-15 w-75 mx-auto">
-        <p class="position-absolute top-0 start-0 translate-middle text-primary">
-          確認購買明細
-        </p>
+        <p class="position-absolute top-0 start-0 translate-middle text-primary">確認購買明細</p>
 
-        <p class="position-absolute top-0 start-50 translate-middle text-primary">
-          付款資料填寫
-        </p>
+        <p class="position-absolute top-0 start-50 translate-middle text-primary">付款資料填寫</p>
 
-        <p class="position-absolute top-0 end-n7 translate-middle text-primary">
-          訂單完成
-        </p>
+        <p class="position-absolute top-0 end-n7 translate-middle text-primary">訂單完成</p>
       </div>
     </div>
   </div>
@@ -62,7 +68,9 @@
       了解訂單最新狀態
     </p>
     <p class="fs-5">
-      有任何問題請加入<a href="https://lin.ee/bYROr08" target="_blank" class="underline">官方Line客服</a>
+      有任何問題請加入<a href="https://lin.ee/bYROr08" target="_blank" class="underline"
+        >官方Line客服</a
+      >
     </p>
   </div>
 </template>
@@ -70,12 +78,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {}
   },
-  methods: {
-  },
-  mounted() {
-
-  },
+  methods: {},
+  mounted() {}
 }
 </script>
