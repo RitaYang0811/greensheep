@@ -455,7 +455,7 @@ export default {
             this.isLike = true
           }
         })
-        .catch((err) => {})
+        .catch(() => {})
     },
     // 加入最愛
     async addToLike(productId) {
@@ -475,7 +475,7 @@ export default {
         // 加入最愛
         this.$http
           .post(`${serverUrl}/favorites`, likeProduct)
-          .then((res) => {
+          .then(() => {
             alert('成功加入最愛!')
             this.isLike = true
           })
@@ -497,10 +497,10 @@ export default {
             Authorization: `Bearer ${user.token}`
           }
         })
-        .then((res) => {
+        .then(() => {
           this.addToLike(productId)
         })
-        .catch((err) => {
+        .catch(() => {
           alert('請先登入會員!')
         })
     }
@@ -513,7 +513,7 @@ export default {
     console.log(this.products)
     console.log(this.productInfo)
   },
-  beforeRouteUpdate(to, from) {
+  beforeRouteUpdate(to) {
     this.getProductInfo(to.params.id)
     this.getRecommendProducts(to.params.id)
     this.$nextTick(() => {

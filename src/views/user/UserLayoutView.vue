@@ -1,21 +1,21 @@
 <template>
-  <Header></Header>
+  <HeaderComp></HeaderComp>
   <CartComponent></CartComponent>
   <div class="main">
     <RouterView />
   </div>
-  <Footer></Footer>
+  <FooterComp></FooterComp>
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
+import HeaderComp from '@/components/HeaderComp.vue'
+import FooterComp from '@/components/FooterComp.vue'
 import CartComponent from '@/components/CartComponent.vue'
 
 export default {
   components: {
-    Header,
-    Footer,
+    HeaderComp,
+    FooterComp,
     CartComponent
   }
 }

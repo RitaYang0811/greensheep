@@ -391,7 +391,7 @@ export default {
         .then((res) => {
           console.log('回傳:', res.data)
         })
-        .catch((err) => {})
+        .catch(() => {})
     },
     // 加入最愛
     async addToLike(productId) {
@@ -418,7 +418,7 @@ export default {
         // 加入最愛
         this.$http
           .post(`${serverUrl}/favorites`, likeProduct)
-          .then((res) => {
+          .then(() => {
             Swal.fire({
               position: 'top-end',
               icon: 'success',
@@ -457,10 +457,10 @@ export default {
             Authorization: `Bearer ${user.token}`
           }
         })
-        .then((res) => {
+        .then(() => {
           this.addToLike(productId)
         })
-        .catch((err) => {
+        .catch(() => {
           Swal.fire({
             icon: 'warning',
             title: '請先登入會員喔！',

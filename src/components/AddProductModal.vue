@@ -421,7 +421,6 @@
 import Modal from 'bootstrap/js/dist/modal'
 import axios from 'axios'
 import draggable from 'vuedraggable'
-import { defineRule } from 'vee-validate'
 
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default {
