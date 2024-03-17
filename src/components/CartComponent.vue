@@ -27,7 +27,6 @@
                           {{ cart.product.title }}
                         </h5>
                       </div>
-
                       <div class="">
                         <button class="btn btn-link text-primary pe-1" @click.prevent="cart.qty--"
                           @click="updateCart(cart)" :disabled="cart.qty <= 1"><i
@@ -36,9 +35,6 @@
                         <button class="btn btn-link text-primary ps-0 ps-1" @click.prevent="cart.qty++"
                           @click="updateCart(cart)"><i class="bi bi-plus-circle fs-4"></i></button>
                       </div>
-
-
-
                       <p class="card-text text-small text-dark">NT$ {{ parseInt(cart.total) }}</p>
                     </div>
                   </div>
@@ -53,7 +49,6 @@
           </ul>
         </div>
       </div>
-
       <div class="my-2">
         <p class="text-success text-end fs-4 p-4 text-dark border-top">總計：$ <span>{{ parseInt(total) }}</span> 元</p>
         <router-link to="/cart" class="btn btn-primary w-100 fs-4 p-4" @click="closeOffcanvas"> 立即結帳
@@ -89,7 +84,6 @@ export default {
 
   mounted() {
     this.cartOffcanvas = new Offcanvas(document.querySelector("#cartOffcanvasRight"));
-    // console.log(this.cartOffcanvas);
     this.getCarts()
   },
 
