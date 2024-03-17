@@ -389,12 +389,12 @@ export default {
             Authorization: `Bearer ${user.token}`
           }
         })
-        .then((res) => {
+        .then(() => {
           this.$router.push({
             name: 'MemberHome'
           })
         })
-        .catch((err) => {
+        .catch(() => {
           this.$router.push({
             path: '/memberLogin'
           })
