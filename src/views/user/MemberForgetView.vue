@@ -1,6 +1,6 @@
 <template>
   <main class="container">
-    <div class="d-flex flex-column align-items-center py-40">
+    <div class="d-flex flex-column align-items-center mt-40">
       <div>
         <h2 class="fs-2">WELCOME</h2>
         <p class="text-primary">Discover Your Unique Elegance</p>

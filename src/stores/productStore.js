@@ -102,6 +102,7 @@ export default defineStore('productStore', {
         //將總商品依照每頁12筆成為展示商品
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
         this.loadingStatus.loadingFilterProducts = false
+
         console.log('全部商品', this.currentProducts, this.categoryProducts, this.showTitle)
       } else {
         this.getSort(status)
@@ -110,6 +111,7 @@ export default defineStore('productStore', {
         //將總商品依照每頁12筆成為展示商品
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
         this.loadingStatus.loadingFilterProducts = false
+
         // console.log(
         //   '分類',
         //   this.currentPage,
@@ -120,7 +122,6 @@ export default defineStore('productStore', {
         // )
       }
     },
-
     //取得單一產品
     async getProductInfo(id) {
       this.loadingStatus.loadingGetProduct = true
@@ -136,7 +137,7 @@ export default defineStore('productStore', {
       }
     },
     //取得推薦商品
-    async getRecommendProducts(id) {
+    getRecommendProducts(id) {
       this.recommendProducts = []
       while (this.recommendProducts.length < 4) {
         const randomProduct = this.products[Math.floor(Math.random() * this.products.length)]

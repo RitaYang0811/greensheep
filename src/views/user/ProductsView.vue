@@ -314,6 +314,7 @@ export default {
       currentProductsPage: 1,
       //當前顯示關鍵字
       currentSearchWord: '',
+      // 所有產品id
       productsIdArr: []
     }
   },
@@ -342,11 +343,13 @@ export default {
       this.currentProductsPage = 1
       console.log('路由變化', this.currentCategory, this.searchWord)
       this.getFilterProducts(this.currentCategory, 1, this.sortTitle, this.searchWord)
+      this.likeInit()
     },
 
     currentProductsPage(newVal) {
       console.log(newVal)
       this.changeCurrentPage()
+      this.likeInit()
     }
   },
   methods: {
@@ -355,38 +358,58 @@ export default {
     // 收藏初始化
     async likeInit() {
       const user = JSON.parse(localStorage.getItem('userInfo'))
-
       if (user === null) {
         return false
       }
       await this.$http
         .get(`${serverUrl}/favorites?userId=${user.id}`)
         .then((res) => {
-          console.log('回傳:', res.data)
+          this.$refs.favIcon.forEach((item, index) => {
+            res.data.forEach((product) => {
+              if (product.productId === item.id) {
+                this.$refs.favIcon[index].classList.remove('bi-heart')
+                this.$refs.favIcon[index].classList.add('bi-heart-fill')
+              }
+            })
+          })
         })
-        .catch((err) => {})
+        .catch((err) => {
+          console.log(err)
+        })
     },
     // 加入最愛
     async addToLike(productId) {
       const likeProduct = {
         productId: `${productId}`,
-        userId: `${JSON.parse(localStorage.getItem('userInfo')).id}`
+        userId: Number(JSON.parse(localStorage.getItem('userInfo')).id)
       }
-
       // 確認有沒有加入過
       const res = await this.$http.get(
         `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
       )
-      // 這邊預留給移除最愛
+      // 移除最愛
       if (res.data.length) {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'warning',
-          title: '已經加入過收藏囉!',
-          showConfirmButton: false,
-          toast: true,
-          timer: 1500
-        })
+        this.$http
+          .delete(`${serverUrl}/favorites/${res.data[0].id}`)
+          .then((res) => {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: '已經移除收藏囉!',
+              showConfirmButton: false,
+              toast: true,
+              timer: 1500
+            })
+            this.$refs.favIcon.forEach((item, index) => {
+              if (productId === item.id) {
+                this.$refs.favIcon[index].classList.remove('bi-heart-fill')
+                this.$refs.favIcon[index].classList.add('bi-heart')
+              }
+            })
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       } else {
         // 加入最愛
         this.$http
@@ -455,6 +478,7 @@ export default {
     },
     //切換卡片、條列顯示
     toggleDisplay(status) {
+      this.likeInit()
       if (status === 'isBlock') {
         this.isBlock = true
         this.isList = false

@@ -408,6 +408,7 @@
 import ProductSwiper from '@/components/ProductSwiper.vue'
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
+import Swal from 'sweetalert2'
 import { mapState, mapActions } from 'pinia'
 
 // json-server網址
@@ -434,7 +435,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(productStore, ['getProductInfo', 'getRecommendProducts']),
+    ...mapActions(productStore, ['getProductInfo', 'getRecommendProducts', 'getProducts']),
     ...mapActions(cartStore, ['addToCart']),
     scrollTo() {
       const productContent = this.$refs.productContent
@@ -468,15 +469,32 @@ export default {
       const res = await this.$http.get(
         `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
       )
-      // 這邊預留給移除最愛
+      // 移除最愛
       if (res.data.length) {
-        alert('已經加入過最愛囉!')
+        this.$http.delete(`${serverUrl}/favorites/${res.data[0].id}`).then((res) => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '已經移除收藏囉!',
+            showConfirmButton: false,
+            toast: true,
+            timer: 1500
+          })
+          this.isLike = false
+        })
       } else {
         // 加入最愛
         this.$http
           .post(`${serverUrl}/favorites`, likeProduct)
           .then((res) => {
-            alert('成功加入最愛!')
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: '已加入收藏!',
+              showConfirmButton: false,
+              toast: true,
+              timer: 1500
+            })
             this.isLike = true
           })
           .catch((err) => {
@@ -505,9 +523,8 @@ export default {
         })
     }
   },
-  mounted() {
-    console.log(this.$route)
-    console.log(this.$route.params)
+  async mounted() {
+    await this.getProducts()
     this.getProductInfo(this.$route.params.id)
     this.getRecommendProducts(this.$route.params.id)
     this.likeInit(this.$route.params.id)
