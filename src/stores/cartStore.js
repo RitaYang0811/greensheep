@@ -105,8 +105,6 @@ export default defineStore('cartStore', {
     },
     getDeliverData(data){
       this.deliverData = {...data};
-
-      console.log(this.deliverData)
     }
   },
 

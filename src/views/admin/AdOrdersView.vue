@@ -35,13 +35,8 @@
           <!-- Accordion -->
           <Accordion :orders="allOrdersPage" :openModal="openModal" :deleteOrder="deleteOrder"
             :confirmDelete="confirmDelete"></Accordion>
-
           <!-- pagination -->
           <AdOrderPagination :pagination="pagination" @update-page="changePage"></AdOrderPagination>
-          <!-- pagination -->
-
-
-          <!-- Accordion -->
         </div>
       </div>
       <!-- tabs 未付款 -->
@@ -49,10 +44,8 @@
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
           <Accordion :orders="unpaidOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
-          <!-- Accordion -->
           <!-- pagination -->
           <AdOrderPagination :pagination="paginations" @update-page="changePage"></AdOrderPagination>
-          <!-- pagination -->
         </div>
       </div>
       <!-- tabs 已付款 -->
@@ -60,23 +53,18 @@
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
           <Accordion :orders="paidOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
-          <!-- Accordion -->
           <!-- pagination -->
           <AdOrderPagination :pagination="paginations" @update-page="changePage"></AdOrderPagination>
-          <!-- pagination -->
         </div>
       </div>
       <!-- tab 已刪除 -->
       <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-        <!-- <h2>已刪除頁面</h2> -->
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
           <Accordion :orders="deletedOrders" :openModal="openModal" :deleteOrder="deleteOrder"
             :confirmDelete="confirmDelete"></Accordion>
-          <!-- Accordion -->
           <!-- pagination -->
           <AdOrderPagination :pagination="paginations" @update-page="changePage"></AdOrderPagination>
-          <!-- pagination -->
         </div>
       </div>
       <!-- tab 已完成 -->
@@ -85,10 +73,8 @@
         <div class="accordion" id="accordionPanelsStayOpenExample">
           <!-- Accordion -->
           <Accordion :orders="doneOrders" :openModal="openModal" :deleteOrder="deleteOrder"></Accordion>
-          <!-- Accordion -->
           <!-- pagination -->
           <AdOrderPagination :pagination="paginations" @update-page="changePage"></AdOrderPagination>
-          <!-- pagination -->
         </div>
       </div>
     </div>
@@ -282,9 +268,7 @@ export default {
     },
 
   },
-  watch: {
 
-  },
   methods: {
     getAllOrders() {
       this.allOrders = []
@@ -377,12 +361,10 @@ export default {
         confirmButtonText: '  是  '
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log('delete')
           data.is_deleted = true
           axios
             .put(updateOrdersUrl, { data })
-            .then((res) => {
-              console.log(res)
+            .then(() => {
               location.reload()
             })
             .catch((err) => {
@@ -390,18 +372,14 @@ export default {
             })
         }
       })
-      console.log(data)
     },
     recoverDelete(data) {
       const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`
       data.is_deleted = false
       axios
         .put(updateOrdersUrl, { data })
-        .then((res) => {
-          console.log(res)
+        .then(() => {
           location.reload()
-          // this.getAllOrders();
-          console.log('Rocover Delete')
         })
         .catch((err) => {
           console.log(err)
@@ -454,32 +432,9 @@ export default {
       })
     },
 
-    pageOrders() {
-
-    },
     changeCategory(category) {
-      // this.nowPage = category
-      // if (category.length > 10) {
-      //   if (category.length % 10) {
-      //     this.paginetion.total_pages = Math.floor(category.length / 10) + 1
-      //   } else {
-      //     this.paginetion.total_pages = Math.floor(category.length / 10)
-      //   }
-      //   this.pagination.has_next = true
-      // }
-      // this.pagination.current_page = 1
-      // this.pagination.has_pre = false
-      // this.pagination: {
-      //   total_pages: 2,
-      //     current_page: 1,
-      //       has_pre: true,
-      //         has_next: false,
-      //           category: ""
-      // },
-      console.log(category)
       this.nowOrders = category
     },
-
     changePage(page) {
       this.allOrdersPage = []
       const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/orders?page=${page}`
@@ -494,7 +449,6 @@ export default {
           console.log(err)
         })
     },
-
     openModal(order) {
       this.modalData = { ...order }
       this.modalProducts = Object.values(order.products)

@@ -69,7 +69,6 @@ export default {
               this.userOrders.push(item)
             }
           })
-          console.log(this.userOrders)
         })
         .catch((err) => {
           console.log(err)
@@ -82,7 +81,6 @@ export default {
       productsArr.forEach((item) => {
         productTitle = productTitle + `${item.product.title}, `
       })
-
       return productTitle
     },
 
@@ -94,12 +92,7 @@ export default {
       year = date.getFullYear()
       mouth = date.getMonth()
       day = date.getDate()
-
       return `${year} / ${mouth + 1} / ${day}`
-    },
-
-    getDate(data) {
-      console.log(new Date(data * 1000).getFullYear())
     },
 
     printStatus(data) {

@@ -356,7 +356,7 @@
 <script>
 import productStore from '@/stores/productStore'
 
-import { mapState, mapActions } from 'pinia'
+import { mapActions } from 'pinia'
 export default {
   data() {
     return {

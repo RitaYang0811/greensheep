@@ -35,10 +35,6 @@ export default {
       this.$emit('update-page', p)
     }
   },
-  computed: {
-
-  },
-
   mounted() {
   }
 }
