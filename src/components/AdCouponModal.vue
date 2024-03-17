@@ -2,7 +2,12 @@
 <div class="modal fade ad-coupon" ref="adCouponCompModal" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <!-- 新增優惠券 -->
-    <VForm v-if="isNew" class="modal-content custom-form" ref="couponForm" @submit="updateCoupon" v-slot="{ errors,  meta }">
+    <VForm
+      v-if="isNew"
+      class="modal-content custom-form"
+      ref="couponForm"
+      @submit="updateCoupon" v-slot="{ errors,  meta }"
+    >
       <div class="modal-header bg-primary py-2 px-3">
         <h2 class="modal-title fs-5 fw-medium text-white">
           建立優惠券
@@ -12,7 +17,11 @@
         </a>
       </div>
       <div class="modal-body py-4 px-6">
-        <div v-if="loadingStatus.loadingGetCoupon" class="d-flex justify-content-center align-items-center" style="min-height: 360px;">
+        <div
+          v-if="loadingStatus.loadingGetCoupon"
+          class="d-flex justify-content-center align-items-center"
+          style="min-height: 360px;"
+        >
           <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
@@ -129,7 +138,12 @@
                     :disabled="newCouponData.title === '金額折抵'"
                   >
                     <option value="">請選擇折扣</option>
-                    <option v-for="discountOption in discountsOption" :key="discountOption[0]" :value="discountOption[1]">{{ discountOption[0] }}</option>
+                    <option
+                      v-for="discountOption in discountsOption"
+                      :key="discountOption[0]" :value="discountOption[1]"
+                    >
+                      {{ discountOption[0] }}
+                    </option>
                   </VField>
                   <ErrorMessage name="折扣" class="invalid-feedback" />
                 </div>
@@ -177,11 +191,23 @@
         >
         取消
         </button>
-        <button type="submit" class="btn btn-primary" :disabled="loadingStatus.loadingGetCoupon || !meta.valid">確定</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          :disabled="loadingStatus.loadingGetCoupon || !meta.valid"
+        >
+          確定
+        </button>
       </div>
     </VForm>
     <!-- 編輯優惠券 -->
-    <VForm v-else class="modal-content custom-form" ref="couponForm" @submit="updateCoupon" v-slot="{ errors,  meta }">
+    <VForm
+      v-else
+      class="modal-content custom-form"
+      ref="couponForm"
+      @submit="updateCoupon"
+      v-slot="{ errors,  meta }"
+    >
       <div class="modal-header bg-primary py-2 px-3">
         <h2 class="modal-title fs-5 fw-medium text-white">
           編輯優惠券
@@ -191,7 +217,11 @@
         </a>
       </div>
       <div class="modal-body py-4 px-6">
-        <div v-if="loadingStatus.loadingGetCoupon" class="d-flex justify-content-center align-items-center" style="min-height: 360px;">
+        <div
+          v-if="loadingStatus.loadingGetCoupon"
+          class="d-flex justify-content-center align-items-center"
+          style="min-height: 360px;"
+        >
           <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
@@ -216,7 +246,13 @@
           <div class="mb-3">
             <p class="mb-3 fs-6">*優惠方式</p>
             <div class="form-check mb-3">
-              <input class="form-check-input" type="radio" id="flexRadioDefault1" value="金額折抵" v-model="couponData.title" />
+              <input
+                class="form-check-input"
+                type="radio"
+                id="flexRadioDefault1"
+                value="金額折抵"
+                v-model="couponData.title"
+              />
               <label class="form-check-label mb-2" for="flexRadioDefault1">
                 訂單金額折抵
               </label>
@@ -259,7 +295,13 @@
               
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="flexRadioDefault2" value="訂單折扣" v-model="couponData.title" >
+              <input
+                class="form-check-input"
+                type="radio"
+                id="flexRadioDefault2"
+                value="訂單折扣"
+                v-model="couponData.title"
+              />
               <label class="form-check-label mb-2" for="flexRadioDefault2">
                 訂單折扣
               </label>
@@ -296,7 +338,10 @@
                     :disabled="couponData.title === '金額折抵'"
                   >
                     <option value="">請選擇折扣</option>
-                    <option v-for="discountOption in discountsOption" :key="discountOption[0]" :value="discountOption[1]">{{ discountOption[0] }}</option>
+                    <option
+                      v-for="discountOption in discountsOption"
+                      :key="discountOption[0]" :value="discountOption[1]">{{ discountOption[0] }}
+                    </option>
                   </VField>
                   <ErrorMessage name="折扣" class="invalid-feedback" />
                 </div>
@@ -344,7 +389,13 @@
         >
         取消
         </button>
-        <button type="submit" class="btn btn-primary" :disabled="loadingStatus.loadingGetCoupon || !meta.valid">確定</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          :disabled="loadingStatus.loadingGetCoupon || !meta.valid"
+        >
+          確定
+        </button>
       </div>
     </VForm>
   </div>

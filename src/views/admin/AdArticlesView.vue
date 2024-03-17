@@ -341,7 +341,7 @@ export default {
           const data = { ...article?.data?.article, isPinned: false }
           return this.$http.put(`${url}/${id}`, { data: data })
         })
-        const resPutCancelArticle = await Promise.all(apiUrlsPutCancelArticle)
+        await Promise.all(apiUrlsPutCancelArticle)
 
         // ----- 新增置頂 -----
         // 當次選取的文章中若不在原置頂文章中則需要去取得資料
@@ -361,7 +361,7 @@ export default {
           const data = { ...article?.data?.article, isPinned: true }
           return this.$http.put(`${url}/${id}`, { data: data })
         })
-        const resPutArticle = await Promise.all(apiUrlsPutArticle)
+        await Promise.all(apiUrlsPutArticle)
 
         toastSuccess('已更新置頂文章')
         this.getArticles()
