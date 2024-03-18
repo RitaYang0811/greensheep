@@ -1,15 +1,17 @@
 <template>
   <!-- mx my 可以修改購物車彈出時旁邊的留白 -->
-  <div class="offcanvas offcanvas-end my-3 mx-sm-5 mx-0 p-3 rounded-3" data-bs-backdrop="false" data-bs-scroll="true"
-    tabindex="-1" id="cartOffcanvasRight" aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header ">
+  <div class="offcanvas offcanvas-end mx-sm-5 mx-0 p-3" data-bs-backdrop="false" data-bs-scroll="true" tabindex="-1"
+    id="cartOffcanvasRight" aria-labelledby="offcanvasRightLabel" style="max-width: 90%">
+    <div class="offcanvas-header">
       <h3 class="offcanvas-title" id="offcanvasRightLabel"></h3>
-      <button type="button" class="btn-close p-5" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button type="button" class="btn-close p-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body d-flex flex-column justify-content-between">
       <div class="">
-        <h3 class="text-center mb-5">購物車</h3>
-        <p class="fs-2 text-primary mt-10" v-if="!carts.length">目前購物車沒有商品</p>
+        <h3 class="text-center mb-5 fw-bold">購物車</h3>
+        <p class="fs-4 text-primary mt-10" v-if="!carts.length">
+          目前購物車沒有商品，<br />趕緊去購物吧！
+        </p>
         <div class="overflow-y-auto" v-else>
           <ul class="list-group list-group-flush">
             <li class="list-group-item mt-3" v-for="cart in carts" :key="cart.id">
@@ -17,23 +19,28 @@
                 <div class="row g-0 d-md-flex flex-wrap justify-content-center ">
                   <div class="col-md-4 d-flex align-items-center justify-content-center"
                     style="max-width: 120px;max-height: 120px;">
-                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover rounded-2 w-100 h-100"  alt="...">
+                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover rounded-2 w-100 h-100"
+                      alt="...">
                   </div>
-                  <div class="col-md-7 d-flex align-items-center ">
+                  <div class="col-md-7 d-flex align-items-center">
                     <div class="card-body text-md-start text-center my-2 my-md-0">
                       <div class="">
-                        <span class="mb-2 badge rounded-pill text-bg-primary">{{ cart.product.category }} </span>
+                        <span class="mb-2 badge rounded-pill text-bg-primary">{{ cart.product.category }}
+                        </span>
                         <h5 class="card-title text-primary">
                           {{ cart.product.title }}
                         </h5>
                       </div>
                       <div class="">
                         <button class="btn btn-link text-primary pe-1" @click.prevent="cart.qty--"
-                          @click="updateCart(cart)" :disabled="cart.qty <= 1"><i
-                            class="bi bi-dash-circle fs-4"></i></button>
-                        <input type="number" min="1" class="w-25 my-2 fs-5" v-model="cart.qty" disabled>
+                          @click="updateCart(cart)" :disabled="cart.qty <= 1">
+                          <i class="bi bi-dash-circle fs-4"></i>
+                        </button>
+                        <input type="number" min="1" class="w-25 my-2 fs-5" v-model="cart.qty" disabled />
                         <button class="btn btn-link text-primary ps-0 ps-1" @click.prevent="cart.qty++"
-                          @click="updateCart(cart)"><i class="bi bi-plus-circle fs-4"></i></button>
+                          @click="updateCart(cart)">
+                          <i class="bi bi-plus-circle fs-4"></i>
+                        </button>
                       </div>
                       <p class="card-text text-small text-dark">NT$ {{ parseInt(cart.total) }}</p>
                     </div>
@@ -45,13 +52,15 @@
                 </div>
               </div>
             </li>
-
           </ul>
         </div>
       </div>
       <div class="my-2">
-        <p class="text-success text-end fs-4 p-4 text-dark border-top">總計：$ <span>{{ parseInt(total) }}</span> 元</p>
-        <router-link to="/cart" class="btn btn-primary w-100 fs-4 p-4" @click="closeOffcanvas"> 立即結帳
+        <p class="text-success text-end fs-4 p-4 text-dark border-top">
+          總計：$ <span>{{ parseInt(total) }}</span> 元
+        </p>
+        <router-link to="/cart" class="btn btn-primary w-100 fs-4 p-4" @click="closeOffcanvas">
+          立即結帳
         </router-link>
       </div>
     </div>
@@ -60,37 +69,36 @@
 
 <script>
 //pinia
-import { mapActions, mapState } from 'pinia';
-import cartStore from '@/stores/cartStore';
+import { mapActions, mapState } from 'pinia'
+import cartStore from '@/stores/cartStore'
 //bootstrap.js
-import { Offcanvas } from 'bootstrap';
+import { Offcanvas } from 'bootstrap'
 
 export default {
   data() {
     return {
-      cartOffcanvas: "",
+      cartOffcanvas: ''
     }
   },
   methods: {
     ...mapActions(cartStore, ['getCarts', 'updateCart', 'deleteCart']),
 
     closeOffcanvas() {
-      this.cartOffcanvas.hide();
+      this.cartOffcanvas.hide()
     }
   },
   computed: {
-    ...mapState(cartStore, ['carts', 'total']),
+    ...mapState(cartStore, ['carts', 'total'])
   },
 
   mounted() {
-    this.cartOffcanvas = new Offcanvas(document.querySelector("#cartOffcanvasRight"));
+    this.cartOffcanvas = new Offcanvas(document.querySelector('#cartOffcanvasRight'))
     this.getCarts()
-  },
-
+  }
 }
 </script>
 
 <style lang="scss">
 // bootstrap icon
-@import "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css";
+@import 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css';
 </style>
