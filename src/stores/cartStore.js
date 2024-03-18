@@ -115,7 +115,7 @@ export default defineStore('cartStore', {
       this.carts.forEach((item) => {
         total += item.final_total
       })
-      return total
+      return parseInt(total)
     }
   }
 })

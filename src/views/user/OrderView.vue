@@ -84,7 +84,7 @@
         </tbody>
       </table>
       <h2 class="fs-5 font-notosans mt-6">
-        合計：NT${{ total }}<br />
+        合計：NT${{ carts[0].coupon ? total - carts[0]?.coupon?.discount_price : total }}<br />
         （共{{ carts.length }}件）
       </h2>
     </div>
@@ -474,14 +474,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(cartStore, ['carts', 'deliverData']),
-    total() {
-      let total = 0
-      this.carts.forEach((item) => {
-        total += item.final_total
-      })
-      return total
-    }
+    ...mapState(cartStore, ['carts', 'deliverData', 'total']),
+    // total() {
+    //   let total = 0
+    //   this.carts.forEach((item) => {
+    //     total += item.final_total
+    //   })
+    //   return parseInt(total)
+    // }
   },
   watch: {
     recipientAsOrderData(value) {
