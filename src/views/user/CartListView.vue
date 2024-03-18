@@ -161,7 +161,7 @@
           <div class="border border-primary border-1 mb-5"></div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">合計：</p>
-            <p class="fw-bold">NT$ {{ carts[0].coupon ? parseInt(total) - carts[0]?.coupon?.discount_price :
+            <p class="fw-bold">NT$ {{ carts[0]?.coupon ? parseInt(total) - carts[0]?.coupon?.discount_price :
       parseInt(total) }}</p>
           </div>
           <button class="btn btn-primary p-5 fs-5 w-100 text-white" @click="goCheckout">
