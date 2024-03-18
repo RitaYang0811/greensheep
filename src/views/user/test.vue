@@ -10,7 +10,9 @@ export default {
   methods: {
     lineGetOrder() {
       const LINE_CLIENT_ID = 'x9iTcS6m9Fdlz8XFfAbkqs'
-      const LINE_REDIRECT_URI = encodeURIComponent('http://localhost:5173/greensheep/#/test')
+      const LINE_REDIRECT_URI = encodeURIComponent(
+        'https://ritayang0811.github.io/greensheep/#/test'
+      )
       const STATE = '12345'
       const loginUrl = `https://notify-bot.line.me/oauth/authorize?response_type=code&client_id=${LINE_CLIENT_ID}&redirect_uri=${LINE_REDIRECT_URI}&state=${STATE}&scope=notify`
 
@@ -19,7 +21,9 @@ export default {
     lineGetAccessToken(code) {
       const LINE_CLIENT_ID = 'x9iTcS6m9Fdlz8XFfAbkqs'
       const LINE_CLIENT_SECRET = 'oRpCYWXDYgFqAXqBpUxLRwMWhdop4AGaN0l8RwNe0am'
-      const LINE_REDIRECT_URI = encodeURIComponent('http://localhost:5173/greensheep/#/test')
+      const LINE_REDIRECT_URI = encodeURIComponent(
+        'https://ritayang0811.github.io/greensheep/#/test'
+      )
       const tokenUrl = 'https://notify-bot.line.me/oauth/token'
 
       const params = Qs.stringify({
