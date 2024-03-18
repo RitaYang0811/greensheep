@@ -1,25 +1,37 @@
 <template>
-  <div class="container pt-20 mb-4">
+  <div class="container pt-40">
     <!-- progress -->
     <div class="mb-30">
       <div class="position-relative m-4 w-75 mx-auto">
         <div class="progress">
-          <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0"
-            aria-valuemax="100"></div>
+          <div
+            class="progress-bar"
+            role="progressbar"
+            style="width: 0%"
+            aria-valuenow="50"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
         </div>
-        <button type="button"
+        <button
+          type="button"
           class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
-          style="width: 3rem; height: 3rem">
+          style="width: 3rem; height: 3rem"
+        >
           1
         </button>
-        <button type="button"
+        <button
+          type="button"
           class="position-absolute top-0 start-50 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
-          style="width: 3rem; height: 3rem">
+          style="width: 3rem; height: 3rem"
+        >
           2
         </button>
-        <button type="button"
+        <button
+          type="button"
           class="position-absolute top-0 start-100 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
-          style="width: 3rem; height: 3rem">
+          style="width: 3rem; height: 3rem"
+        >
           3
         </button>
       </div>
@@ -52,7 +64,11 @@
               <div class="row g-0 align-items-center">
                 <div class="col-md-4">
                   <div class="ratio ratio-1x1">
-                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover" alt="..." />
+                    <img
+                      :src="cart.product.imageUrl"
+                      class="img-fluid object-fit-cover"
+                      alt="..."
+                    />
                   </div>
                 </div>
                 <div class="col-md-8">
@@ -68,13 +84,27 @@
           </th>
           <td class="py-4">
             <div class="d-flex justify-content-center">
-              <button class="btn btn-link text-primary" @click.prevent="cart.qty--" @click="updateCart(cart)"
-                :disabled="cart.qty <= 1">
+              <button
+                class="btn btn-link text-primary"
+                @click.prevent="cart.qty--"
+                @click="updateCart(cart)"
+                :disabled="cart.qty <= 1"
+              >
                 <i class="bi bi-dash-circle fs-3"></i>
               </button>
-              <input type="number" class="p-2 w-20 text-center" min="1" v-model="cart.qty" disabled />
+              <input
+                type="number"
+                class="p-2 w-20 text-center"
+                min="1"
+                v-model="cart.qty"
+                disabled
+              />
 
-              <button class="btn btn-link text-primary" @click.prevent="cart.qty++" @click="updateCart(cart)">
+              <button
+                class="btn btn-link text-primary"
+                @click.prevent="cart.qty++"
+                @click="updateCart(cart)"
+              >
                 <i class="bi bi-plus-circle fs-3"></i>
               </button>
             </div>
@@ -88,17 +118,19 @@
     </table>
   </div>
   <!-- 免運 -->
-  <div class="py-10">
-    <div class="container">
+  <div v-if="carts[0]?.coupon?.title" class="container pt-10">
+    <div class="">
       <div class="row">
-        <div class="col-md-2 text-primary fw-medium">已使用優惠</div>
-        <div class="col-md-10 text-start" v-if="carts[0]?.coupon">
-          <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4">{{
-      carts[0]?.coupon?.title }}</span>
+        <div class="col-md-2 text-primary fw-medium mb-2">已使用優惠</div>
+        <div class="col-md-10 text-center text-md-start" v-if="carts[0]?.coupon">
+          <span
+            class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4"
+            >{{ carts[0]?.coupon?.title }}</span
+          >
           <span class="fs-7 text-primary">{{
-      `消費滿 NT$ ${carts[0]?.coupon?.min_buy_price_by_discount}，享
+            `消費滿 NT$ ${carts[0]?.coupon?.min_buy_price_by_discount}，享
             ${carts[0]?.coupon?.percent / 10} 折`
-    }}</span>
+          }}</span>
         </div>
       </div>
     </div>
@@ -110,7 +142,12 @@
 
       <div class="col-md-10">
         <form class="text-md-start text-center">
-          <input type="text" class="teat-start p-2 w-50" placeholder="請輸入優惠代碼" v-model="coupon" />
+          <input
+            type="text"
+            class="teat-start p-2 w-50"
+            placeholder="請輸入優惠代碼"
+            v-model="coupon"
+          />
           <button type="button" class="btn btn-primary p-3" @click="sendCoupon(coupon)">
             送出優惠券
           </button>
@@ -155,13 +192,12 @@
           <div class="d-flex justify-content-between mb-5">
             <p class="">優惠券：</p>
             <span v-if="carts[0]?.coupon">{{
-      `消費滿 NT$ ${carts[0]?.coupon?.min_buy_price_by_discount}，享
+              `消費滿 NT$ ${carts[0]?.coupon?.min_buy_price_by_discount}，享
               ${carts[0]?.coupon?.percent / 10} 折`
-    }}</span>
+            }}</span>
           </div>
 
-          <div class=" border border-primary border-1 mb-5">
-          </div>
+          <div class="border border-primary border-1 mb-5"></div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">合計：</p>
             <p class="fw-bold">NT$ {{ parseInt(total) }}</p>
