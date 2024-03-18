@@ -25,12 +25,6 @@ const router = createRouter({
           name: 'UserProduct',
           component: () => import('../views/user/ProductsView.vue'),
           children: [
-            // {
-            //   path: 'detail/:id',
-            //   name: 'UserProductDetail',
-            //   component: () => import('../views/user/ProductDetailView.vue')
-            // },
-
             {
               path: ':category',
               component: () => import('../views/user/ProductsView.vue'),
