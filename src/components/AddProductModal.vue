@@ -481,7 +481,7 @@ export default {
       const discountPrice = parseInt(
         this.tempProduct.origin_price * (this.tempProduct.discount / 10)
       )
-      this.tempProduct.price = discountPrice
+
       return discountPrice
     }
   },

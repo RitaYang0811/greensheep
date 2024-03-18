@@ -367,12 +367,10 @@ export default {
       this.currentCategory = this.$route.params.category
       this.searchWord = this.$route.query.keyword
       this.currentProductsPage = 1
-      console.log('路由變化', this.currentCategory, this.searchWord)
       this.getFilterProducts(this.currentCategory, 1, this.sortTitle, this.searchWord)
     },
 
     currentProductsPage(newVal) {
-      console.log(newVal)
       this.changeCurrentPage()
     }
   },
