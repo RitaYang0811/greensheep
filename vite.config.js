@@ -12,4 +12,13 @@ export default defineConfig({
     }
   },
   assetsInclude: ['**/*.JPG'],
+  server: {
+    proxy: {
+      '/oauth/token': {
+        target: 'https://notify-bot.line.me',
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  }
 })

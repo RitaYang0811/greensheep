@@ -44,10 +44,15 @@ const router = createRouter({
           component: () => import('../views/user/ProductDetailView.vue')
         },
         {
-          path: 'products/客製設計 CUSTOMIZED',
-          name: 'UserCustom',
-          component: () => import('../views/user/ProductsView.vue')
+          path: 'test',
+
+          component: () => import('../views/user/test.vue')
         },
+        // {
+        //   path: 'products/客製設計 CUSTOMIZED',
+        //   name: 'UserCustom',
+        //   component: () => import('../views/user/ProductsView.vue')
+        // },
 
         {
           path: 'story',
