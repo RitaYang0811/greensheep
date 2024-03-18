@@ -10,7 +10,7 @@
             <div class="d-flex mb-lg-0 align-items-lg-center mb-4">
               <li>
                 <RouterLink
-                  to="/products/productsAll"
+                  to="/products/全部商品%20ALL"
                   class="fs-8 text-white me-lg-6"
                   @click="scrollToTop"
                   >全部商品</RouterLink
