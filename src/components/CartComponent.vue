@@ -17,7 +17,7 @@
                 <div class="row g-0 d-md-flex flex-wrap justify-content-center ">
                   <div class="col-md-4 d-flex align-items-center justify-content-center"
                     style="max-width: 120px;max-height: 120px;">
-                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover  rounded-2" alt="...">
+                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover rounded-2 w-100 h-100"  alt="...">
                   </div>
                   <div class="col-md-7 d-flex align-items-center ">
                     <div class="card-body text-md-start text-center my-2 my-md-0">
