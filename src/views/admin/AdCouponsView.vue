@@ -182,7 +182,10 @@
               <div class="bg-primary d-flex justify-content-between align-items-center px-2 py-2">
                 <div class="bg-primary text-white fw-bold">
                   {{ coupon.code }}
-                  <i class="bi bi-copy"></i>
+                  <CopyText
+                    :copyContent="coupon.code"
+                    :type="'優惠碼'"
+                  />
                 </div>
                 <div class="text-end bg-white rounded-pill px-2 py-1 fs-8">
                   <template v-if="currentTab === '所有優惠券'">
