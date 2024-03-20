@@ -456,7 +456,9 @@ export default {
             this.isLike = true
           }
         })
-        .catch((err) => {})
+        .catch((err) => {
+          console.log(err)
+        })
     },
     // 加入最愛
     async addToLike(productId) {
@@ -471,7 +473,7 @@ export default {
       )
       // 移除最愛
       if (res.data.length) {
-        this.$http.delete(`${serverUrl}/favorites/${res.data[0].id}`).then((res) => {
+        this.$http.delete(`${serverUrl}/favorites/${res.data[0].id}`).then(() => {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -486,7 +488,7 @@ export default {
         // 加入最愛
         this.$http
           .post(`${serverUrl}/favorites`, likeProduct)
-          .then((res) => {
+          .then(() => {
             Swal.fire({
               position: 'top-end',
               icon: 'success',
@@ -506,7 +508,12 @@ export default {
     async isLogin(productId) {
       const user = JSON.parse(localStorage.getItem('userInfo'))
       if (user === null) {
-        alert('請先登入會員!')
+        Swal.fire({
+          icon: 'warning',
+          title: '請先登入會員喔！',
+          showConfirmButton: false,
+          timer: 1500
+        })
         return false
       }
       await this.$http
@@ -515,11 +522,16 @@ export default {
             Authorization: `Bearer ${user.token}`
           }
         })
-        .then((res) => {
+        .then(() => {
           this.addToLike(productId)
         })
-        .catch((err) => {
-          alert('請先登入會員!')
+        .catch(() => {
+          Swal.fire({
+            icon: 'warning',
+            title: '請先登入會員喔！',
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
     }
   },
@@ -531,7 +543,7 @@ export default {
     console.log(this.products)
     console.log(this.productInfo)
   },
-  beforeRouteUpdate(to, from) {
+  beforeRouteUpdate(to) {
     this.getProductInfo(to.params.id)
     this.getRecommendProducts(to.params.id)
     this.$nextTick(() => {

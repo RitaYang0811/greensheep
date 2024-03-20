@@ -189,7 +189,7 @@ export default {
     // 第一步
     // 信箱規則
     emailRule(value) {
-      const email = /^[\w\.-]+@(gmail\.com|yahoo\.com\.tw)$/
+      const email = /^[\w.-]+@(gmail\.com|yahoo\.com\.tw)$/
       return email.test(value) ? true : '請輸入Gmail/Yahoo帳號'
     },
     async sendCode() {
@@ -224,7 +224,7 @@ export default {
         From: 'greensheep0619@gmail.com',
         Subject: '親愛的會員您好，GreenSheep客服中心寄送驗證碼來囉~',
         Body: body
-      }).then((message) => {
+      }).then(() => {
         alert('已發送驗證碼到信箱囉!')
         this.stepState.first = false
         this.stepState.second = true
@@ -285,7 +285,7 @@ export default {
     onSubmit() {
       this.$http
         .patch(`${serverUrl}/users/${this.userId}`, this.user)
-        .then((res) => {
+        .then(() => {
           alert('修改成功囉!')
           this.$router.push({ name: 'MemberLogin' })
         })

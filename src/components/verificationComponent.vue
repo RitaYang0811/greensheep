@@ -63,7 +63,7 @@ export default {
 
       this.$http
         .post(`${serverUrl}/users`, this.user)
-        .then((res) => {
+        .then(() => {
           alert('註冊成功囉!')
           this.$router.push({ name: 'MemberLogin' })
         })
@@ -74,3 +74,4 @@ export default {
   }
 }
 </script>
+./verifiCation.vue
