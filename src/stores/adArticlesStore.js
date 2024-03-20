@@ -141,7 +141,7 @@ export default defineStore('adminArticles',{
           this.$router.push(`/admin/articles/${id}`)
           break
         default:
-          console.log('default')
+          toastError('操作錯誤')
       }
     },
     // 取得單一文章

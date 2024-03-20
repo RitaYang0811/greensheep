@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-20 mb-4">
+  <div class="container pt-40">
     <!-- progress -->
     <div class="mb-30">
       <div class="position-relative m-4 w-75 mx-auto">
@@ -88,17 +88,16 @@
     </table>
   </div>
   <!-- 免運 -->
-  <div class="py-10">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-2 text-primary fw-medium">已使用優惠</div>
-        <div class="col-md-10 text-start" v-if="carts[0]?.coupon">
+  <div v-if="carts[0]?.coupon?.title" class="container pt-10">
+    <div class="">
+      <div class="row" v-if="carts[0]?.coupon">
+        <div class="col-md-2 text-primary fw-medium mb-2">已使用優惠</div>
+        <div class="col-md-10 text-center text-md-start">
           <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4">{{
-      carts[0]?.coupon?.title }}</span>
-          <span class="fs-7 text-primary">{{
-      `消費滿 NT$ ${carts[0]?.coupon?.min_buy_price_by_discount}，享
-            ${carts[0]?.coupon?.percent / 10} 折`
-    }}</span>
+            carts[0]?.coupon?.title }}</span>
+          <span class="fs-7 text-primary">
+            {{ showCoupon(carts[0]?.coupon) }}
+          </span>
         </div>
       </div>
     </div>
@@ -154,17 +153,17 @@
           </div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">優惠券：</p>
-            <span v-if="carts[0]?.coupon">{{
-      `消費滿 NT$ ${carts[0]?.coupon?.min_buy_price_by_discount}，享
-              ${carts[0]?.coupon?.percent / 10} 折`
-    }}</span>
+            <span v-if="carts[0]?.coupon">
+              {{ showCoupon(carts[0]?.coupon) }}
+            </span>
           </div>
 
-          <div class=" border border-primary border-1 mb-5">
-          </div>
+          <div class="border border-primary border-1 mb-5"></div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">合計：</p>
-            <p class="fw-bold">NT$ {{ parseInt(total) }}</p>
+            {{ parseInt(total) }}{{ carts[0]?.coupon?.discount_price }}
+            <p class="fw-bold">NT$ {{ carts[0]?.coupon ? parseInt(total) - carts[0]?.coupon?.discount_price :
+              parseInt(total) }}</p>
           </div>
           <button class="btn btn-primary p-5 fs-5 w-100 text-white" @click="goCheckout">
             前往結帳
@@ -237,9 +236,10 @@ export default {
       this.axios
         .post(sendCouponUrl, sendData)
         .then((res) => {
-          if (res.data.data.final_total == this.rawTotal) {
+
+          if (res.data.success) {
             Swal.fire({
-              title: '優惠券有誤，請重新輸入',
+              title: res.data.message,
               confirmButtonColor: '#566B5A',
               icon: 'warning'
             })
@@ -255,6 +255,15 @@ export default {
           })
           console.log(err)
         })
+    },
+    showCoupon(coupon) {
+      // console.log(coupon)
+      if (coupon?.percent == 100) {
+        return `消費滿 NT$ ${coupon?.min_buy_price_by_price}，享 ${coupon?.discount_price} 折扣`
+      } else {
+        return `消費滿 NT$ ${coupon?.min_buy_price_by_price}，享
+            ${coupon?.percent / 10} 折`
+      }
     },
 
     goCheckout() {
@@ -324,7 +333,7 @@ export default {
       this.carts.forEach((item) => {
         total += item.total
       })
-      return total
+      return parseInt(total)
     }
   },
 

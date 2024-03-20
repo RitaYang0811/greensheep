@@ -293,7 +293,6 @@
 import { Offcanvas, Dropdown, Collapse } from 'bootstrap'
 import { mapState, mapActions } from 'pinia'
 import cartStore from '@/stores/cartStore'
-import searchStore from '@/stores/searchStore'
 import productStore from '@/stores/productStore'
 import copyTextStore from '@/stores/copyTextStore'
 
@@ -318,7 +317,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(searchStore, ['setSearchWord']),
     ...mapActions(productStore, ['getProducts', 'getFilterProducts']),
     ...mapActions(copyTextStore, ['copyTextMethod']),
     toCategoryPage(category) {
@@ -389,12 +387,12 @@ export default {
             Authorization: `Bearer ${user.token}`
           }
         })
-        .then((res) => {
+        .then(() => {
           this.$router.push({
             name: 'MemberHome'
           })
         })
-        .catch((err) => {
+        .catch(() => {
           this.$router.push({
             path: '/memberLogin'
           })
@@ -403,7 +401,6 @@ export default {
   },
   computed: {
     ...mapState(cartStore, ['carts']),
-    ...mapState(searchStore, ['searchQuery']),
     ...mapState(productStore, ['category', 'categories'])
   },
   mounted() {
@@ -427,7 +424,7 @@ export default {
       if (this.$refs.scrollBody) {
         let currentScrollY = window.scrollY
 
-        if (currentScrollY < this.previousScrollY) {
+        if (currentScrollY <= this.previousScrollY) {
           this.$refs.scrollBody.classList.remove('hideUp')
         } else {
           this.$refs.scrollBody.classList.add('hideUp')

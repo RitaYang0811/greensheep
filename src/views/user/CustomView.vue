@@ -253,7 +253,7 @@ export default {
     this.getProductInfo(this.$route.params.id)
     this.getRecommendProducts(this.$route.params.id)
   },
-  beforeRouteUpdate(to, from) {
+  beforeRouteUpdate(to) {
     this.getProductInfo(to.params.id)
     this.getRecommendProducts(to.params.id)
 

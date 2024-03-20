@@ -1,13 +1,13 @@
 <script setup lang="js" name="HomeView">
 import HomeOne from '../../components/HomeOne.vue'
-import Home2 from '../../components/Home2.vue'
-import Home3 from '../../components/Home3.vue'
+import HomeTwo from '../../components/HomeTwo.vue'
+import HomeThree from '../../components/HomeThree.vue'
 import HomeFour from '../../components/HomeFour.vue'
 </script>
 
 <template>
   <HomeOne></HomeOne>
-  <Home2></Home2>
-  <Home3></Home3>
+  <HomeTwo></HomeTwo>
+  <HomeThree></HomeThree>
   <HomeFour></HomeFour>
 </template>

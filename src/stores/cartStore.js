@@ -82,8 +82,8 @@ export default defineStore('cartStore', {
         title: '是否刪除該商品?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#566b5a',
         cancelButtonText: '  否  ',
         confirmButtonText: '  是  '
       }).then((result) => {
@@ -105,8 +105,6 @@ export default defineStore('cartStore', {
     },
     getDeliverData(data){
       this.deliverData = {...data};
-
-      console.log(this.deliverData)
     }
   },
 
@@ -117,7 +115,7 @@ export default defineStore('cartStore', {
       this.carts.forEach((item) => {
         total += item.final_total
       })
-      return total
+      return parseInt(total)
     }
   }
 })

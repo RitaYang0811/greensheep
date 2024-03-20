@@ -293,7 +293,7 @@
 
     <div class="overflow-x-auto container-fluid">
       <div class="d-flex justify-content-between list-unstyled py-2" style="min-width: 992px">
-        <router-link to="/products/productsAll">
+        <router-link to="/products/detail/-NsVL3yywAfe5aYKsTVv">
           <div class="card text-white border-0 bg-primary bg-gradient h-border">
             <img src="../assets/images/img-prod-1.png" class="card-img opacity-75" alt="" />
             <div
@@ -306,7 +306,7 @@
           </div>
         </router-link>
 
-        <router-link to="/products/productsAll">
+        <router-link to="/products/detail/-NsV1p_2gXiVpBHy2xu6">
           <div class="card text-white border-0 bg-primary bg-gradient h-border">
             <img src="../assets/images/img-prod-2.png" class="card-img opacity-75" alt="" />
             <div
@@ -322,7 +322,7 @@
           </div>
         </router-link>
 
-        <router-link to="/products/productsAll">
+        <router-link to="/products/detail/-NsUsi2n1gdOSF0I798e">
           <div class="card text-white border-0 bg-primary bg-gradient h-border">
             <img src="../assets/images/img-prod-3.png" class="card-img opacity-75" alt="" />
             <div
@@ -356,7 +356,7 @@
 <script>
 import productStore from '@/stores/productStore'
 
-import { mapState, mapActions } from 'pinia'
+import { mapActions } from 'pinia'
 export default {
   data() {
     return {
