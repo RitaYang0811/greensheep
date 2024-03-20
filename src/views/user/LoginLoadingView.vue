@@ -55,7 +55,7 @@ export default {
           localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
           this.$router.push({ name: 'MemberHome' })
         })
-        .catch((err) => {
+        .catch(() => {
           Swal.fire({
             icon: 'error',
             title: '帳號或密碼錯誤!請重新登入',
