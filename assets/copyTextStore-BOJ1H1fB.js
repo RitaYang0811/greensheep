@@ -1,0 +1,1 @@
+import{y as r}from"./index-BZ6VGQXF.js";import{a as e,t as a}from"./sweetalertToast-DTT4yTy8.js";const p=r("copyTextStore",{actions:{copyTextMethod(o,t){navigator.clipboard.writeText(o).then(()=>{e(`已複製${t}`)}).catch(c=>{a(`無法複製${t}: `)})}}});export{p as c};
