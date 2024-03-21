@@ -408,6 +408,7 @@
 import ProductSwiper from '@/components/ProductSwiper.vue'
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
+import Swal from 'sweetalert2'
 import { mapState, mapActions } from 'pinia'
 
 // json-server網址
@@ -455,7 +456,9 @@ export default {
             this.isLike = true
           }
         })
-        .catch(() => {})
+        .catch((err) => {
+          console.log(err)
+        })
     },
     // 加入最愛
     async addToLike(productId) {
@@ -468,15 +471,32 @@ export default {
       const res = await this.$http.get(
         `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
       )
-      // 這邊預留給移除最愛
+      // 移除最愛
       if (res.data.length) {
-        alert('已經加入過最愛囉!')
+        this.$http.delete(`${serverUrl}/favorites/${res.data[0].id}`).then(() => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '已經移除收藏囉!',
+            showConfirmButton: false,
+            toast: true,
+            timer: 1500
+          })
+          this.isLike = false
+        })
       } else {
         // 加入最愛
         this.$http
           .post(`${serverUrl}/favorites`, likeProduct)
           .then(() => {
-            alert('成功加入最愛!')
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: '已加入收藏!',
+              showConfirmButton: false,
+              toast: true,
+              timer: 1500
+            })
             this.isLike = true
           })
           .catch((err) => {
@@ -488,7 +508,12 @@ export default {
     async isLogin(productId) {
       const user = JSON.parse(localStorage.getItem('userInfo'))
       if (user === null) {
-        alert('請先登入會員!')
+        Swal.fire({
+          icon: 'warning',
+          title: '請先登入會員喔！',
+          showConfirmButton: false,
+          timer: 1500
+        })
         return false
       }
       await this.$http
@@ -501,7 +526,12 @@ export default {
           this.addToLike(productId)
         })
         .catch(() => {
-          alert('請先登入會員!')
+          Swal.fire({
+            icon: 'warning',
+            title: '請先登入會員喔！',
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
     }
   },
