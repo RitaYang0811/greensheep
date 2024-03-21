@@ -102,6 +102,7 @@ export default defineStore('productStore', {
         //將總商品依照每頁12筆成為展示商品
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
         this.loadingStatus.loadingFilterProducts = false
+
         console.log('全部商品', this.currentProducts, this.categoryProducts, this.showTitle)
       } else {
         this.getSort(status)
@@ -112,7 +113,6 @@ export default defineStore('productStore', {
         this.loadingStatus.loadingFilterProducts = false
       }
     },
-
     //取得單一產品
     async getProductInfo(id) {
       this.loadingStatus.loadingGetProduct = true

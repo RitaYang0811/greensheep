@@ -31,8 +31,8 @@ var Email = {
     return (
       'withCredentials' in t
         ? t.open(e, n, !0)
-        : 'undefined' != typeof XDomainRequest
-          ? (t = new XDomainRequest()).open(e, n)
+        : 'undefined' != typeof XMLHttpRequest
+          ? (t = new XMLHttpRequest()).open(e, n)
           : (t = null),
       t
     )

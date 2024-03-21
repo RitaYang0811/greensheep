@@ -130,7 +130,7 @@ export default {
   methods: {
     // 信箱規則
     emailRule(value) {
-      const email = /^[\w\.-]+@(gmail\.com|yahoo\.com\.tw)$/
+      const email = /^[\w.-]+@(gmail\.com|yahoo\.com\.tw)$/
       return email.test(value) ? true : '請輸入Gmail/Yahoo帳號'
     },
     // 密碼規則
@@ -189,7 +189,7 @@ export default {
           query: { googleEmail: response.data.email }
         })
       } catch (error) {
-        console.error('獲取聯絡人信息時出錯:', error)
+        console.error('獲取聯絡人訊息時出錯:', error)
       }
     },
     // Line 登入

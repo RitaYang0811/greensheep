@@ -73,6 +73,7 @@
 <script>
 import axios from 'axios'
 import Qs from 'qs'
+import Swal from 'sweetalert2'
 import { jwtDecode } from 'jwt-decode'
 
 // json-server網址
@@ -122,8 +123,13 @@ export default {
 
       axios
         .post(`${serverUrl}/users`, this.user)
-        .then((res) => {
-          alert('註冊成功囉!')
+        .then(() => {
+          Swal.fire({
+            icon: 'warning',
+            title: '註冊成功囉!',
+            showConfirmButton: false,
+            timer: 2000
+          })
           this.$router.push({ name: 'MemberLogin' })
         })
         .catch((err) => {
@@ -135,7 +141,12 @@ export default {
     // google登入
     if (Object.keys(this.$route.query).length) {
       if (await this.checkAccounts(this.$route.query.googleEmail.toLowerCase())) {
-        alert('此信箱已經註冊過囉!')
+        Swal.fire({
+          icon: 'warning',
+          title: '此信箱已經註冊過囉!',
+          showConfirmButton: false,
+          timer: 2000
+        })
         this.$router.push({ name: 'MemberLogin' })
         return
       } else {
@@ -168,7 +179,12 @@ export default {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
       if (await this.checkAccounts(jwtDecode(lineRes.data.id_token).email.toLowerCase())) {
-        alert('此信箱已經註冊過囉!')
+        Swal.fire({
+          icon: 'warning',
+          title: '此信箱已經註冊過囉!',
+          showConfirmButton: false,
+          timer: 2000
+        })
         this.$router.push({ name: 'MemberLogin' })
       } else {
         this.user.email = jwtDecode(lineRes.data.id_token).email
@@ -176,7 +192,12 @@ export default {
         this.accountState = 'line-'
       }
     } catch {
-      alert('請重新註冊')
+      Swal.fire({
+        icon: 'warning',
+        title: '請重新註冊!',
+        showConfirmButton: false,
+        timer: 2000
+      })
       this.$router.push({ name: 'MemberSignUp' })
     }
   }

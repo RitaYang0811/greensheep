@@ -298,7 +298,8 @@ import Modal from 'bootstrap/js/dist/modal'
 import Email from '../../utils/smtp'
 import { googleTokenLogin } from 'vue3-google-login'
 import axios from 'axios'
-import verification from '../../components/Verification.vue'
+import verification from '../../components/verificationComponent.vue'
+import Swal from 'sweetalert2'
 
 // json-server網址
 const serverUrl = 'https://greensheep-json-server.onrender.com'
@@ -336,7 +337,7 @@ export default {
     },
     // 信箱規則
     emailRule(value) {
-      const email = /^[\w\.-]+@(gmail\.com|yahoo\.com\.tw)$/
+      const email = /^[\w.-]+@(gmail\.com|yahoo\.com\.tw)$/
       return email.test(value) ? true : '請輸入Gmail/Yahoo帳號'
     },
     // 密碼規則
@@ -401,8 +402,14 @@ export default {
     },
     async onSubmit() {
       this.policyRule('註冊')
+      console.log(await this.checkAccounts(this.user.email))
       if (await this.checkAccounts(this.user.email)) {
-        alert('此信箱已經註冊過囉!')
+        Swal.fire({
+          icon: 'warning',
+          title: '此信箱已經註冊過囉!',
+          showConfirmButton: false,
+          timer: 2000
+        })
         this.$router.push({ name: 'MemberLogin' })
       } else {
         if (this.policy.Check) {
@@ -421,8 +428,13 @@ export default {
         From: 'greensheep0619@gmail.com',
         Subject: '親愛的會員您好，GreenSheep客服中心寄送驗證碼來囉~',
         Body: body
-      }).then((message) => {
-        alert('已發送驗證碼到信箱囉!')
+      }).then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: '已發送驗證碼到信箱囉!',
+          showConfirmButton: false,
+          timer: 2000
+        })
       })
     },
     securityCode(length = 5) {
