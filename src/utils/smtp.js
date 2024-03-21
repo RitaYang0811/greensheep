@@ -1,7 +1,7 @@
 ﻿/* SmtpJS.com - v3.0.0 */
 var Email = {
   send: function (a) {
-    return new Promise(function (n, e) {
+    return new Promise(function (n) {
       ;(a.nocache = Math.floor(1e6 * Math.random() + 1)), (a.Action = 'Send')
       var t = JSON.stringify(a)
       Email.ajaxPost('https://smtpjs.com/v3/smtpjs.aspx?', t, function (e) {
@@ -31,8 +31,8 @@ var Email = {
     return (
       'withCredentials' in t
         ? t.open(e, n, !0)
-        : 'undefined' != typeof XDomainRequest
-          ? (t = new XDomainRequest()).open(e, n)
+        : 'undefined' != typeof XMLHttpRequest
+          ? (t = new XMLHttpRequest()).open(e, n)
           : (t = null),
       t
     )
