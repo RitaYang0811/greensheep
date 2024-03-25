@@ -3,11 +3,72 @@
 </template>
 
 <script>
+import axios from 'axios'
+import lineNotifyStore from '@/stores/lineNotifyStore'
 import { mapActions } from 'pinia'
-import lineNotifyStore from '@/stores/lineNotifyStore.js'
 export default {
   methods: {
     ...mapActions(lineNotifyStore, ['lineGetOrder', 'lineGetAccessToken', 'sendLineNotification'])
+    //綁定裝置
+    // lineGetOrder() {
+    //   const LINE_REDIRECT_ID = 'x9iTcS6m9Fdlz8XFfAbkqs'
+    //   const LINE_REDIRECT_URI = encodeURIComponent('http://localhost:5173/greensheep/#/test')
+    //   const STATE = '12345'
+
+    //   const loginUrl = `https://notify-bot.line.me/oauth/authorize?response_type=code&client_id=${LINE_REDIRECT_ID}&redirect_uri=${LINE_REDIRECT_URI}&state=${STATE}&scope=notify`
+
+    //   window.location.href = loginUrl
+    // },
+    // lineGetAccessToken(code) {
+    //   const params = {
+    //     fn: 'getToken',
+    //     code: code,
+    //     redirect_uri: 'http://localhost:5173/greensheep/#/test',
+    //     client_id: 'x9iTcS6m9Fdlz8XFfAbkqs',
+    //     client_secret: 'iGiOLRLmU2aNTDuObVQlcP5XzPYSbUzJ9gvUl4YvPzx'
+    //   }
+    //   const notifyAppsURL =
+    //     'https://script.google.com/macros/s/AKfycby69L8bb5Lyr19qsQavViPUVAvG7WVW3X9t7Ss1rvdZA5zZw9Nn7WuTvD7Ep5fWD_ev1g/exec'
+    //   axios
+    //     .post(notifyAppsURL, params, {
+    //       headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //       }
+    //     })
+    //     .then((response) => {
+    //       const { data } = response
+    //       // data.access_token
+    //       // 在這裡可以保存access token，並使用它來發送通知'
+    //       if (data.status === 200) {
+    //         this.sendLineNotification(data.access_token)
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.error(error)
+    //     })
+    // },
+    // sendLineNotification(accessToken) {
+    //   console.log(accessToken)
+    //   const notifyAppsURL =
+    //     'https://script.google.com/macros/s/AKfycby69L8bb5Lyr19qsQavViPUVAvG7WVW3X9t7Ss1rvdZA5zZw9Nn7WuTvD7Ep5fWD_ev1g/exec'
+    //   const params = {
+    //     message: '訊息在這裡通知拉~~~~',
+    //     accessToken: accessToken
+    //   }
+    //   axios
+    //     .post(notifyAppsURL, params, {
+    //       headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //       }
+    //     })
+    //     .then((response) => {
+    //       console.log(response.data)
+    //       // 在這裡處理通知發送成功的響應
+    //     })
+    //     .catch((error) => {
+    //       console.error(error)
+    //     })
+    // }
   },
 
   // #region

@@ -1,16 +1,15 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-const { VITE_LINE_CLIENT_ID, VITE_LINE_REDIRECT_URI, VITE_LINE_CLIENT_SECRET } = import.meta.env
+const { VITE_LINE_CLIENT_ID, VITE_LINE_CLIENT_SECRET } = import.meta.env
 
 export default defineStore('lineNotifyStore', {
   actions: {
     //綁定
     lineGetOrder() {
-      const LINE_REDIRECT_URI = encodeURIComponent(VITE_LINE_REDIRECT_URI)
-      console.log(VITE_LINE_CLIENT_ID, LINE_REDIRECT_URI, VITE_LINE_CLIENT_SECRET)
+      const LINE_REDIRECT_URI = encodeURIComponent('http://localhost:5173/greensheep/#/admin/home')
       const STATE = '12345'
+
       const loginUrl = `https://notify-bot.line.me/oauth/authorize?response_type=code&client_id=${VITE_LINE_CLIENT_ID}&redirect_uri=${LINE_REDIRECT_URI}&state=${STATE}&scope=notify`
-      console.log('!!', loginUrl)
       window.location.href = loginUrl
     },
     lineGetAccessToken(code) {
@@ -18,9 +17,9 @@ export default defineStore('lineNotifyStore', {
       const params = {
         fn: 'getToken', // 告訴 API 我要執行取 Token 的Function
         code: code, // Line Notify 回傳的 code
-        LINE_REDIRECT_URI: VITE_LINE_REDIRECT_URI,
-        LINE_CLIENT_ID: VITE_LINE_CLIENT_ID,
-        LINE_CLIENT_SECRET: VITE_LINE_CLIENT_SECRET
+        redirect_uri: 'http://localhost:5173/greensheep/#/admin/home',
+        client_id: VITE_LINE_CLIENT_ID,
+        client_secret: VITE_LINE_CLIENT_SECRET
       }
       console.log('##', params)
       const notifyAppsURL =
