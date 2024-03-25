@@ -6,7 +6,9 @@ export default defineStore('lineNotifyStore', {
   actions: {
     //綁定
     lineGetOrder() {
-      const LINE_REDIRECT_URI = encodeURIComponent('http://localhost:5173/greensheep/#/admin/home')
+      const LINE_REDIRECT_URI = encodeURIComponent(
+        'https://ritayang0811.github.io/greensheep/#/admin/home'
+      )
       const STATE = '12345'
 
       const loginUrl = `https://notify-bot.line.me/oauth/authorize?response_type=code&client_id=${VITE_LINE_CLIENT_ID}&redirect_uri=${LINE_REDIRECT_URI}&state=${STATE}&scope=notify`
@@ -17,7 +19,7 @@ export default defineStore('lineNotifyStore', {
       const params = {
         fn: 'getToken', // 告訴 API 我要執行取 Token 的Function
         code: code, // Line Notify 回傳的 code
-        redirect_uri: 'http://localhost:5173/greensheep/#/admin/home',
+        redirect_uri: 'https://ritayang0811.github.io/greensheep/#/admin/home',
         client_id: VITE_LINE_CLIENT_ID,
         client_secret: VITE_LINE_CLIENT_SECRET
       }
