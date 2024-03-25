@@ -59,6 +59,9 @@
     </span>
     <h2 class="fs-3 my-10">恭喜你完成訂單</h2>
     <router-link to="/products" class="fs-3 my-10 underline text-primary"> 繼續選購</router-link>
+    <button type="button" class="d-block mx-auto mt-4 btn btn-primary" @click="lineGetOrder">
+      點我取得出貨通知
+    </button>
   </div>
 
   <div class="container text-primary mb-20 py-20">
@@ -76,11 +79,22 @@
 </template>
 
 <script>
+import lineNotifyStore from '@/stores/lineNotifyStore'
+import { mapActions } from 'pinia'
 export default {
   data() {
     return {}
   },
-  methods: {},
-  mounted() {}
+  methods: {
+    ...mapActions(lineNotifyStore, ['lineGetOrder', 'lineGetAccessToken', 'sendLineNotification'])
+  },
+  created() {
+    // 從URL中獲取授權碼
+    const urlParams = new URLSearchParams(window.location.search)
+    const code = urlParams.get('code')
+    if (code) {
+      this.lineGetAccessToken(code)
+    }
+  }
 }
 </script>

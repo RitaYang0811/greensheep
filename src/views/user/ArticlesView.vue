@@ -9,21 +9,26 @@
       </nav>
       <h1
         class="h2 text-primary mb-12 fw-bold"
-        data-aos="fade-up" data-aos-duration="1200" data-aos-once="true"
-      >專欄文章</h1>
+        data-aos="fade-up"
+        data-aos-duration="1200"
+        data-aos-once="true"
+      >
+        專欄文章
+      </h1>
     </div>
     <!-- PC article list -->
-    <ul class="row list-unstyled mb-10 mb-lg-20 d-none d-lg-flex" style="row-gap: 24px;">
+    <ul class="row list-unstyled mb-10 mb-lg-20 d-none d-lg-flex" style="row-gap: 24px">
       <li
-        class="col-12" v-for="article in currentPageArticles.slice(0, 1)" :key="article.id"
-        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200" data-aos-once="true"
+        class="col-12"
+        v-for="article in currentPageArticles.slice(0, 1)"
+        :key="article.id"
+        data-aos="fade-up"
+        data-aos-duration="1200"
+        data-aos-delay="200"
+        data-aos-once="true"
       >
         <div class="articles-item position-relative h-100">
-          <img
-            :src="article.image"
-            :alt="article.title"
-            class="w-100 h-100 object-fit-cover"
-          />
+          <img :src="article.image" :alt="article.title" class="w-100 h-100 object-fit-cover" />
           <div
             class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100 p-4"
           >
@@ -37,15 +42,16 @@
         </div>
       </li>
       <li
-        class="col-4" v-for="article in currentPageArticles.slice(1, 7)" :key="article.id"
-        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="400" data-aos-once="true"
+        class="col-4"
+        v-for="article in currentPageArticles.slice(1, 7)"
+        :key="article.id"
+        data-aos="fade-up"
+        data-aos-duration="1200"
+        data-aos-delay="400"
+        data-aos-once="true"
       >
         <div class="articles-item position-relative h-100">
-          <img
-            :src="article.image"
-            :alt="article.title"
-            class="w-100 h-100 object-fit-cover"
-          />
+          <img :src="article.image" :alt="article.title" class="w-100 h-100 object-fit-cover" />
           <div
             class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100 p-4"
           >
@@ -59,15 +65,16 @@
         </div>
       </li>
       <li
-        class="col-3" v-for="article in currentPageArticles.slice(7, 11)" :key="article.id"
-        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="600" data-aos-once="true"
+        class="col-3"
+        v-for="article in currentPageArticles.slice(7, 11)"
+        :key="article.id"
+        data-aos="fade-up"
+        data-aos-duration="1200"
+        data-aos-delay="600"
+        data-aos-once="true"
       >
         <div class="articles-item position-relative h-100">
-          <img
-            :src="article.image"
-            :alt="article.title"
-            class="w-100 h-100 object-fit-cover"
-          />
+          <img :src="article.image" :alt="article.title" class="w-100 h-100 object-fit-cover" />
           <div
             class="black-overlay position-absolute top-0 start-0 d-flex flex-column justify-content-center align-items-center w-100 h-100 p-4"
           >
@@ -82,17 +89,18 @@
       </li>
     </ul>
     <!-- mobile article list -->
-    <ul class="row list-unstyled mb-10 mb-lg-20 d-lg-none" style="row-gap: 24px;">
+    <ul class="row list-unstyled mb-10 mb-lg-20 d-lg-none" style="row-gap: 24px">
       <li
-        class="col-12" v-for="article in currentPageArticles.slice(0, 1)" :key="article.id"
-        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100" data-aos-once="true"
+        class="col-12"
+        v-for="article in currentPageArticles.slice(0, 1)"
+        :key="article.id"
+        data-aos="fade-up"
+        data-aos-duration="1200"
+        data-aos-delay="100"
+        data-aos-once="true"
       >
         <div class="articles-item position-relative h-100">
-          <img
-            :src="article.image"
-            :alt="article.title"
-            class="w-100 h-100 object-fit-cover"
-          />
+          <img :src="article.image" :alt="article.title" class="w-100 h-100 object-fit-cover" />
           <div
             class="black-overlay opacity-100 position-absolute top-50 translate-middle-y d-flex flex-column justify-content-center align-items-center w-100 p-4"
           >
@@ -106,15 +114,16 @@
         </div>
       </li>
       <li
-        class="col-12 col-sm-6" v-for="article in currentPageArticles.slice(1, 11)" :key="article.id"
-        data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100" data-aos-once="true"
+        class="col-12 col-sm-6"
+        v-for="article in currentPageArticles.slice(1, 11)"
+        :key="article.id"
+        data-aos="fade-up"
+        data-aos-duration="1200"
+        data-aos-delay="100"
+        data-aos-once="true"
       >
         <div class="articles-item position-relative h-100">
-          <img
-            :src="article.image"
-            :alt="article.title"
-            class="w-100 h-100 object-fit-cover"
-          />
+          <img :src="article.image" :alt="article.title" class="w-100 h-100 object-fit-cover" />
           <div
             class="black-overlay opacity-100 position-absolute top-50 translate-middle-y d-flex flex-column justify-content-center align-items-center w-100 p-4"
           >
@@ -159,7 +168,7 @@ import articleStore from '@/stores/articleStore.js'
 export default {
   data() {
     return {
-      articlesCurrentPage: 1,
+      articlesCurrentPage: 1
     }
   },
   methods: {

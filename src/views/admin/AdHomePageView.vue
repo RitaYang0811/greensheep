@@ -28,9 +28,9 @@
       </div>
       <div class="col-12 col-lg-7">
         <h2 class="display-3 fw-bold mb-4 text-start">通知</h2>
-        <button type="button" class="btn btn-primary my-3" @click="lineGetOrder">
+        <!-- <button type="button" class="btn btn-primary my-3" @click="lineGetOrder">
           管理員綁定新訂單通知
-        </button>
+        </button> -->
         <div class="d-flex">
           <div class="notice-board w-100 bg-white m-2">
             <div class="p-3">
@@ -64,8 +64,6 @@
 import orderStore from '@/stores/orderStore.js'
 import lineNotifyStore from '@/stores/lineNotifyStore.js'
 import { mapState, mapActions } from 'pinia'
-import axios from 'axios'
-//const { VITE_LINE_CLIENT_ID, VITE_LINE_CLIENT_SECRET } = import.meta.env
 export default {
   data() {
     return {
@@ -121,8 +119,6 @@ export default {
       const code = urlParams.get('code')
       if (code) {
         this.lineGetAccessToken(code)
-      } else {
-        console.error('未獲取到授權碼')
       }
     }
   },
