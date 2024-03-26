@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="my-40" click="lineGetOrder">點我</button>
+  <button type="button" class="my-40" @click="lineGetOrder">點我</button>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
   methods: {
     lineGetOrder() {
       const LINE_REDIRECT_URI = encodeURIComponent(
-        'https://ritayang0811.github.io/greensheep/#/success'
+        'https://ritayang0811.github.io/greensheep/#/test'
       )
       const STATE = '12345'
 
@@ -21,7 +21,7 @@ export default {
       const params = {
         fn: 'getToken', // 告訴 API 我要執行取 Token 的Function
         code: code, // Line Notify 回傳的 code
-        redirect_uri: 'https://ritayang0811.github.io/greensheep/#/success',
+        redirect_uri: 'https://ritayang0811.github.io/greensheep/#/test',
         client_id: VITE_LINE_CLIENT_ID,
         client_secret: VITE_LINE_CLIENT_SECRET
       }
@@ -77,6 +77,7 @@ export default {
     // 檢查是否存在授權碼並調用相應的函數
     if (code) {
       console.log('@@', code)
+      this.lineGetAccessToken(code)
     }
   }
 }
