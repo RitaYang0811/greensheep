@@ -10,7 +10,7 @@ export default defineStore('lineNotifyStore', {
     //綁定
     lineGetOrder() {
       const LINE_REDIRECT_URI = encodeURIComponent(
-        'https://ritayang0811.github.io/greensheep/#/admin/home'
+        'https://ritayang0811.github.io/greensheep/#/lineNotify'
       )
       const STATE = '12345'
 
@@ -18,15 +18,14 @@ export default defineStore('lineNotifyStore', {
       window.location.href = loginUrl
     },
     lineGetAccessToken(code) {
-      console.log('code', code)
       const params = {
         fn: 'getToken', // 告訴 API 我要執行取 Token 的Function
         code: code, // Line Notify 回傳的 code
-        redirect_uri: 'https://ritayang0811.github.io/greensheep/#/admin/home',
+        redirect_uri: 'https://ritayang0811.github.io/greensheep/#/lineNotify',
         client_id: VITE_LINE_CLIENT_ID,
         client_secret: VITE_LINE_CLIENT_SECRET
       }
-      console.log('params', params)
+
       const notifyAppsURL =
         'https://script.google.com/macros/s/AKfycbyWxX2sYUoAdDTD7LHdivBF_PuaEjvaUMVjqdSOnzlPo2fNoxICBCbe7UTDh3k_g_7r/exec'
 
@@ -40,6 +39,7 @@ export default defineStore('lineNotifyStore', {
           console.log(response)
           const { data } = response
           this.accessToken = data.access_token
+          localStorage.setItem('accessToken', this.accessToken)
           // 在這裡可以保存access token，並使用它來發送通知'
           if (data.status === 200) {
             this.sendLineNotification(data.access_token)
@@ -54,7 +54,7 @@ export default defineStore('lineNotifyStore', {
       const notifyAppsURL =
         'https://script.google.com/macros/s/AKfycbyWxX2sYUoAdDTD7LHdivBF_PuaEjvaUMVjqdSOnzlPo2fNoxICBCbe7UTDh3k_g_7r/exec'
       const params = {
-        message: '已經收到您的訂單囉！',
+        message: '系統可以順利發訊息給你囉！',
         accessToken: accessToken
       }
       axios
@@ -70,31 +70,11 @@ export default defineStore('lineNotifyStore', {
           console.error(error)
         })
     },
-    sendMakingNotification(accessToken) {
+    sendNewOrderNotification(accessToken) {
       const notifyAppsURL =
         'https://script.google.com/macros/s/AKfycbyWxX2sYUoAdDTD7LHdivBF_PuaEjvaUMVjqdSOnzlPo2fNoxICBCbe7UTDh3k_g_7r/exec'
       const params = {
-        message: '您的訂單正在努力製作中囉，敬請期待',
-        accessToken: accessToken
-      }
-      axios
-        .post(notifyAppsURL, params, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-        .then((response) => {
-          console.log(response.data)
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-    },
-    sendDeliverNotification(accessToken) {
-      const notifyAppsURL =
-        'https://script.google.com/macros/s/AKfycbyWxX2sYUoAdDTD7LHdivBF_PuaEjvaUMVjqdSOnzlPo2fNoxICBCbe7UTDh3k_g_7r/exec'
-      const params = {
-        message: '感謝您的耐心等待，您的訂單已經出貨，祝您收禮愉快！',
+        message: '恭喜你，收到新訂單囉！',
         accessToken: accessToken
       }
       axios

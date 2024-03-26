@@ -72,16 +72,16 @@ export default {
       homeOrderInfo: []
     }
   },
+
   methods: {
     ...mapActions(orderStore, ['getAllOrders', 'getNewOrders']),
-    ...mapActions(lineNotifyStore, ['lineGetOrder', 'lineGetAccessToken', 'sendLineNotification']),
+    ...mapActions(lineNotifyStore, ['lineGetOrder']),
     toOrderPage() {
       this.$router.push('/admin/orders')
     },
     getHomeOrders() {
-      console.log('3', this.allOrders, this.unpaidOrders)
       const nowTime = Math.floor(new Date().getTime() / 1000)
-      console.log(nowTime)
+
       // 使用 map 方法從 allOrders 中提取 id 和 create_at
       const homeOrderInfo = this.unpaidOrders.map((order) => ({
         id: order.create_at,
@@ -112,14 +112,6 @@ export default {
         const remainingHours = Math.floor((diff % (24 * 60 * 60)) / (60 * 60))
         return daysPassed + '天' + remainingHours + '小時前'
       }
-    },
-    // 取得授權碼
-    getLineCode() {
-      const urlParams = new URLSearchParams(window.location.search)
-      const code = urlParams.get('code')
-      if (code) {
-        this.lineGetAccessToken(code)
-      }
     }
   },
   computed: {
@@ -134,7 +126,6 @@ export default {
   async mounted() {
     await this.getAllOrders()
     this.getHomeOrders()
-    this.getLineCode()
   }
 }
 </script>

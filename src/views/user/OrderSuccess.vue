@@ -59,9 +59,9 @@
     </span>
     <h2 class="fs-3 my-10">恭喜你完成訂單</h2>
     <router-link to="/products" class="fs-3 my-10 underline text-primary"> 繼續選購</router-link>
-    <button type="button" class="d-block mx-auto mt-4 btn btn-primary" @click="lineGetOrder">
+    <!-- <button type="button" class="d-block mx-auto mt-4 btn btn-primary" @click="lineGetOrder">
       點我取得出貨通知
-    </button>
+    </button> -->
   </div>
 
   <div class="container text-primary mb-20 py-20">
@@ -86,15 +86,18 @@ export default {
     return {}
   },
   methods: {
-    ...mapActions(lineNotifyStore, ['lineGetOrder', 'lineGetAccessToken', 'sendLineNotification'])
-  },
-  created() {
-    // 從URL中獲取授權碼
-    const urlParams = new URLSearchParams(window.location.search)
-    const code = urlParams.get('code')
-    if (code) {
-      this.lineGetAccessToken(code)
+    ...mapActions(lineNotifyStore, ['sendNewOrderNotification']),
+    //從localStorage 獲取token
+    sendNewOrder() {
+      const accessToken = localStorage.getItem('accessToken')
+
+      if (accessToken) {
+        this.sendNewOrderNotification(accessToken)
+      }
     }
+  },
+  mounted() {
+    this.sendNewOrder()
   }
 }
 </script>

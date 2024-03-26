@@ -38,9 +38,10 @@ const router = createRouter({
           component: () => import('../views/user/ProductDetailView.vue')
         },
         {
-          path: 'test',
-          component: () => import('../views/user/testLine.vue')
+          path: 'lineNotify',
+          component: () => import('../views/user/lineNotify.vue')
         },
+
         // {
         //   path: 'products/客製設計 CUSTOMIZED',
         //   name: 'UserCustom',

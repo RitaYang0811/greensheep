@@ -403,8 +403,6 @@ const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 import Accordion from '@/components/AdOrderAccordion.vue'
 import AdOrderPagination from '@/components/AdOrderPagination.vue'
 import Swal from 'sweetalert2'
-import lineNotifyStore from '@/stores/lineNotifyStore'
-import { mapActions, mapState } from 'pinia'
 
 export default {
   components: {
@@ -433,7 +431,6 @@ export default {
     }
   },
   computed: {
-    ...mapState(lineNotifyStore, ['accessToken']),
     paginations() {
       let pagination = {}
       if (this.nowOrders.length > 10) {
@@ -454,11 +451,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(lineNotifyStore, [
-      'sendLineNotification',
-      'sendMakingNotification',
-      'sendDeliverNotification'
-    ]),
     getAllOrders() {
       this.allOrders = []
       this.unpaidOrders = []
@@ -524,14 +516,7 @@ export default {
       //更新訂單中塞入訂單狀態，用以處理訂單狀態
       data.orderStatus = this.orderStatus
       console.log(data.orderStatus)
-      if (data.orderStatus.making === true && data.orderStatus.sendProduct === false) {
-        console.log('111', this.accessToken)
-        // this.sendMakingNotification()
-      }
-      if (data.orderStatus.making === true && data.orderStatus.sendProduct === true) {
-        // this.sendDeliverNotification()
-        console.log('222')
-      }
+
       axios
         .put(updateOrdersUrl, { data })
         .then(() => {
