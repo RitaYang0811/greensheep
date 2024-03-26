@@ -32,7 +32,8 @@
 @import './components/pseudoElement.scss';
 @import './components/swiper';
 @import './components/datepicker';
-@import './components/ckeditor';
+@import './components/ckeditor-content-styles'; // 前台渲染
+@import './components/ckeditor'; // 客製
 @import './components/vue-awesome-paginate';
 @import './components/g-login';
 @import './components/checkbyeye';

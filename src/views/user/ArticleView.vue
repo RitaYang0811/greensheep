@@ -107,9 +107,6 @@ import { mapState, mapActions } from 'pinia'
 import { useRoute } from 'vue-router'
 import { toastError } from "@/utils/sweetalertToast.js"
 
-import '@ckeditor/ckeditor5-image/theme/image.css'
-import '@ckeditor/ckeditor5-image/theme/imagestyle.css'
-
 export default {
   data() {
     return {
