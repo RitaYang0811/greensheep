@@ -1,0 +1,1 @@
+import{S as o}from"./sweetalert2.all-BpO3uanp.js";function i(t){o.fire({position:"top-end",icon:"success",title:t,showConfirmButton:!1,toast:!0,timer:1500})}function r(t){o.fire({position:"top-end",icon:"error",title:t,showConfirmButton:!1,toast:!0,timer:1500})}export{i as a,r as t};
