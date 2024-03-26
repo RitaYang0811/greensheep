@@ -28,9 +28,9 @@
       </div>
       <div class="col-12 col-lg-7">
         <h2 class="display-3 fw-bold mb-4 text-start">通知</h2>
-        <!-- <button type="button" class="btn btn-primary my-3" @click="lineGetOrder">
+        <button type="button" class="btn btn-primary my-3" @click="lineGetOrder">
           管理員綁定新訂單通知
-        </button> -->
+        </button>
         <div class="d-flex">
           <div class="notice-board w-100 bg-white m-2">
             <div class="p-3">
