@@ -39,8 +39,7 @@ const router = createRouter({
         },
         {
           path: 'test',
-
-          component: () => import('../views/user/test.vue')
+          component: () => import('../views/user/testLine.vue')
         },
         // {
         //   path: 'products/客製設計 CUSTOMIZED',
