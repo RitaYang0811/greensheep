@@ -1,7 +1,7 @@
 <template>
   <div class="modal modal-xl" tabindex="-1" ref="addModal">
     <div class="modal-dialog modal-dialog-scrollable">
-      <VForm class="modal-content" v-slot="{ errors }">
+      <VForm class="modal-content" @submit="$emit('confirmUpdate', isNew)" v-slot="{ errors }">
         <div class="modal-header bg-primary">
           <h5 v-if="isNew === true" class="modal-title fw-medium text-white ps-3 py-2">新增商品</h5>
           <h5 v-else class="modal-title fw-medium text-white ps-3 py-2">編輯商品</h5>
@@ -20,16 +20,15 @@
                   <div class="col">
                     <div class="d-flex flex-column gap-2">
                       <div>第一張</div>
-                      <VField
+                      <input
                         name="商品首圖-1"
                         rules="required"
                         class="form-control mb-2"
-                        :class="{ 'is-invalid': errors['商品首圖-1'] }"
                         type="file"
                         id="formFile"
                         @change="uploadImage('main1', $event)"
                       />
-                      <ErrorMessage name="商品首圖-1" class="invalid-feedback" />
+                      <!-- <ErrorMessage name="商品首圖-1" class="invalid-feedback" /> -->
                       <img
                         v-if="tempProduct.imageUrl"
                         :src="tempProduct.imageUrl"
@@ -42,16 +41,15 @@
                   <div class="col">
                     <div class="d-flex flex-column gap-2">
                       <div>第二張</div>
-                      <VField
+                      <input
                         name="商品首圖-2"
                         rules="required"
                         class="form-control mb-2"
-                        :class="{ 'is-invalid': errors['商品首圖-2'] }"
                         type="file"
                         id="formFile"
                         @change="uploadImage('main2', $event)"
                       />
-                      <ErrorMessage name="商品首圖-2" class="invalid-feedback" />
+                      <!-- <ErrorMessage name="商品首圖-2" class="invalid-feedback" /> -->
                       <img
                         v-if="tempProduct.imageUrl2"
                         :src="tempProduct.imageUrl2"
@@ -343,19 +341,6 @@
                       {{ tempProduct.is_enabled ? '上架' : '未上架' }}
                     </label>
                   </div>
-                  <!-- <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="isEnabledRadio"
-                      id="isEnabledFalse"
-                      false-value="0"
-                      v-model="tempProduct.is_enabled"
-                    />
-                    <label class="form-check-label text-grey66" for="isEnabledFalse">
-                      先存成草稿
-                    </label>
-                  </div> -->
                 </div>
               </div>
             </div>
@@ -379,38 +364,10 @@
             離開編輯
           </button>
 
-          <button
-            v-if="isNew === true"
-            type="button"
-            class="btn btn-deco float-end"
-            @click="$emit('confirmUpdate', isNew)"
-          >
+          <button v-if="isNew === true" type="submit" class="btn btn-deco float-end">
             新增儲存
           </button>
-          <button
-            v-else
-            type="button"
-            class="btn btn-deco float-end"
-            @click="$emit('confirmUpdate', isNew)"
-          >
-            修改儲存
-          </button>
-          <!-- <button
-            v-else-if="tempProduct.is_enabled == 0"
-            type="button"
-            class="btn btn-deco float-end"
-            @click="$emit('confirmUpdate', isNew)"
-          >
-            儲存草稿
-          </button>
-          <button
-            v-else
-            type="button"
-            class="btn btn-deco float-end"
-            @click="$emit('confirmUpdate', isNew)"
-          >
-            請確認是否上架
-          </button> -->
+          <button v-else type="submit" class="btn btn-deco float-end">修改儲存</button>
         </div>
       </VForm>
     </div>
@@ -485,6 +442,11 @@ export default {
       return discountPrice
     }
   },
+  watch: {
+    discountPrice() {
+      this.tempProduct.price = this.discountPrice
+    }
+  },
 
   methods: {
     open() {
@@ -521,15 +483,8 @@ export default {
           console.log(err)
         })
     }
-    // clickUpdate() {
-    //   this.$emit('confirmUpdate', this.isNew)
-    // }
   },
-  watch: {
-    tempProduct() {
-      console.log('tempProduct內容', this.tempProduct)
-    }
-  },
+
   mounted() {
     this.addModal = new Modal(this.$refs.addModal, {
       keyboard: false,
