@@ -43,11 +43,10 @@
       <li class="nav-item">
         <a
           class="nav-link px-3 px-md-6 py-2 py-lg-4"
-          :class="{ active: currentTab === '未上架/草稿' }"
+          :class="{ active: currentTab === '未上架' }"
           href="#"
-          @click.prevent="getProducts('未上架/草稿')"
-        >
-          未上架/草稿
+          @click.prevent="getProducts('未上架')"
+          >未上架
         </a>
       </li>
     </ul>
@@ -305,12 +304,6 @@ export default {
         return this.allProducts.sort((a, b) => a.createTime - b.createTime)
       }
     },
-
-    //編輯主打商品
-    // highLight() {
-    //   this.hightLightInput = true
-    //   console.log(this.hightLightInput)
-    // },
     //確認編輯
     confirmUpdate(isNew) {
       console.log('confirmUpdate', isNew, this.tempProduct)
