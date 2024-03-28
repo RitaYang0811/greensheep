@@ -42,11 +42,11 @@ const router = createRouter({
           component: () => import('../views/user/lineNotify.vue')
         },
 
-        // {
-        //   path: 'products/客製設計 CUSTOMIZED',
-        //   name: 'UserCustom',
-        //   component: () => import('../views/user/ProductsView.vue')
-        // },
+        {
+          path: 'custom',
+          name: 'UserCustom',
+          component: () => import('../views/user/CustomView.vue')
+        },
 
         {
           path: 'story',
