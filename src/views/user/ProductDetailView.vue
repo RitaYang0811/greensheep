@@ -5,10 +5,10 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb col-12">
           <li class="breadcrumb-item">
-            <router-link to="/">首頁</router-link>
+            <RouterLink to="/">首頁</RouterLink>
           </li>
           <li class="breadcrumb-item" aria-current="page">
-            <router-link to="/products/全部商品%20ALL">全部商品</router-link>
+            <RouterLink to="/products/全部商品%20ALL">全部商品</RouterLink>
           </li>
           <li class="breadcrumb-item" aria-current="page">
             <routerLink :to="{ path: `/products/${productInfo.category}` }"
@@ -58,8 +58,12 @@
           <!-- 庫存 -->
           <p class="text-dark fs-7 mb-4">
             庫存數量：{{ productInfo.stockNum }} {{ productInfo.unit
-            }}<span v-if="productInfo.stockNum < 5" class="text-danger ms-4 fs-8 fst-italic"
+            }}<span
+              v-if="productInfo.stockNum < 5 && productInfo.stockNum > 0"
+              class="text-danger ms-4 fs-8 fst-italic"
               >庫存緊張</span
+            ><span v-else-if="productInfo.stockNum === 0" class="text-danger ms-4 fs-8 fst-italic"
+              >售完補貨中</span
             >
           </p>
           <!-- 行銷活動 -->
@@ -203,7 +207,7 @@
               <button
                 type="button"
                 class="btn qty-btn rounded-circle border-primary p-0"
-                :disabled="qty === 1"
+                :disabled="qty === 1 || productInfo.stockNum === 0"
                 @click.prevent="qty--"
               >
                 <i class="bi bi-dash-lg text- fs-3"></i>
@@ -218,16 +222,28 @@
               />
               <button
                 class="btn qty-btn rounded-circle p-0 border-primary"
-                :disabled="qty === productInfo.stockNum"
+                :disabled="qty === productInfo.stockNum || productInfo.stockNum === 0"
                 @click.prevent="qty++"
               >
                 <i class="bi bi-plus-lg text-primary fs-3"></i>
               </button>
             </div>
 
-            <button
+            <!-- <button
+              v-if="productInfo.stockNum === 0"
               href="#"
+              class="custom-btn custom-btn-primary text-center border-1 no-stock fw-bold w-80 mx-auto"
+              :class="{ 'no-stock': productInfo.stockNum === 0 }"
+              :disabled="productInfo.stockNum === 0"
+              
+              style="height: 40px"
+             
+            ></button> -->
+            <button
+              type="button"
               class="custom-btn custom-btn-primary text-center border-1 add-to-cart fw-bold w-80 mx-auto"
+              :class="{ 'no-stock': productInfo.stockNum === 0 }"
+              :disabled="productInfo.stockNum === 0"
               style="height: 40px"
               @click.prevent="addToCart(productInfo.id, qty)"
             ></button>
@@ -353,7 +369,7 @@
           v-for="product in recommendProducts"
           :key="product.id"
         >
-          <router-link :to="{ path: `/products/detail/${product.id}` }" class="card border-0">
+          <RouterLink :to="{ path: `/products/detail/${product.id}` }" class="card border-0">
             <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
               <span
                 v-if="product.discount !== 10"
@@ -396,7 +412,7 @@
                 <i class="bi bi-bag-check fs-6"></i>
               </button>
             </div>
-          </router-link>
+          </RouterLink>
         </li>
       </ul>
     </div>
@@ -424,7 +440,7 @@ export default {
   components: { ProductSwiper },
 
   computed: {
-    ...mapState(productStore, ['products', 'productInfo', 'recommendProducts'])
+    ...mapState(productStore, ['products', 'productInfo', 'recommendProducts', 'loadingStatus'])
   },
   watch: {
     routeData: {
@@ -440,7 +456,7 @@ export default {
     scrollTo() {
       const productContent = this.$refs.productContent
       if (productContent) {
-        productContent.scrollIntoView({ behavior: 'smooth' }) // 使用平滑滾動到元素
+        productContent.scrollIntoView({ behavior: 'smooth' })
       }
     },
     // 收藏初始化
@@ -536,12 +552,12 @@ export default {
     }
   },
   async mounted() {
+    this.isLoading = true
     await this.getProducts()
-    this.getProductInfo(this.$route.params.id)
+    await this.getProductInfo(this.$route.params.id)
     this.getRecommendProducts(this.$route.params.id)
     this.likeInit(this.$route.params.id)
-    console.log(this.products)
-    console.log(this.productInfo)
+    this.isLoading = false
   },
   beforeRouteUpdate(to) {
     this.getProductInfo(to.params.id)
@@ -565,6 +581,17 @@ export default {
 .add-to-cart {
   &::after {
     content: '加入購物車';
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%);
+  }
+  &:hover::after {
+    color: #566b5a;
+  }
+}
+.no-stock {
+  &::after {
+    content: '售完補貨中';
     left: 50%;
     top: 25%;
     transform: translate(-50%);
