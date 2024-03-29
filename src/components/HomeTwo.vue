@@ -369,7 +369,6 @@ export default {
     changeCategory(category) {
       this.currentCategory = category
       this.getFilterProducts(this.headerCategory, this.page, 'timeN2O')
-      console.log(this.currentCategory)
     }
   }
 }

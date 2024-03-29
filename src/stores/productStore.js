@@ -22,20 +22,11 @@ export default defineStore('productStore', {
       '戒指 RING',
       '耳環 EARRINGS',
       '手鍊 BRACELET',
-      '其他配件 OTHERS'
+      '客製設計 CUSTOMIZED'
     ],
     showTitle: '',
     //商品詳細頁資料
     productInfo: {},
-    bestSeller: [
-      //梅川衣服
-      '-NsVQCmAiuvXWHJ9cf1A',
-      //波光淋漓
-      '-NsVL3yywAfe5aYKsTVv',
-      //星空之約
-      '-NsUsi2n1gdOSF0I798e'
-    ],
-    bestSellersProducts: [],
     //推薦商品資料
     recommendProducts: [],
     //載入狀態

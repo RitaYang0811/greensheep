@@ -57,16 +57,18 @@
                   </li>
                 </ul>
               </li>
-              <!-- <li class="nav-item" style="min-width: 130px" @click="closeMenuOffCanvas()">
-            <a class="nav-link nav-item-en py-2 py-lg-1 px-2" @click.prevent="toCustomPage"
-              >CUSTOMIZED</a
-            >
-            <a
-              class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              @click.prevent="toCustomPage"
-              >客製設計
-            </a>
-          </li> -->
+              <li class="nav-item" style="min-width: 130px">
+                <RouterLink
+                  to="/products/客製設計%20CUSTOMIZED"
+                  class="nav-link nav-item-en py-2 py-lg-1 px-2"
+                  >CUSTOMIZED</RouterLink
+                >
+                <RouterLink
+                  to="/products/客製設計%20CUSTOMIZED"
+                  class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
+                  >客製設計
+                </RouterLink>
+              </li>
               <li class="nav-item" style="min-width: 81px">
                 <RouterLink to="/story" class="nav-link nav-item-en py-2 py-lg-1 px-2"
                   >ABOUT</RouterLink
@@ -258,16 +260,11 @@
                 </li>
               </ul>
 
-              <!-- <li class="nav-item" style="min-width: 130px" @click="closeMenuOffCanvas()">
-            <a class="nav-link nav-item-en py-2 py-lg-1 px-2" @click.prevent="toCustomPage"
-              >CUSTOMIZED</a
-            >
-            <a
-              class="nav-link nav-item-ch py-2 py-lg-1 px-2 text-start text-lg-center"
-              @click.prevent="toCustomPage"
-              >客製設計
-            </a>
-          </li> -->
+              <li class="border-bottom py-5 text-white fs-6" @click="closeMenuOffCanvas()">
+                <RouterLink to="/products/客製設計%20CUSTOMIZED" class="text-center fw-medium"
+                  >客製設計
+                </RouterLink>
+              </li>
               <li class="border-bottom py-5 text-white fs-6" @click="closeMenuOffCanvas()">
                 <RouterLink to="/story" class="text-center fw-medium">關於品牌 </RouterLink>
               </li>

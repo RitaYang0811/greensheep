@@ -41,11 +41,15 @@ const router = createRouter({
           path: 'lineNotify',
           component: () => import('../views/user/lineNotify.vue')
         },
-
         {
-          path: 'custom',
-          name: 'UserCustom',
-          component: () => import('../views/user/CustomView.vue')
+          path: 'customGem/:id',
+          name: 'UserCustomGem',
+          component: () => import('../views/user/CustomGemView.vue')
+        },
+        {
+          path: 'customText/:id',
+          name: 'UserCustomText',
+          component: () => import('../views/user/CustomTextView.vue')
         },
 
         {

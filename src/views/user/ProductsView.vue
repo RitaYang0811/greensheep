@@ -52,7 +52,6 @@
               <li class="breadcrumb-item active">
                 {{ currentCategory }}
               </li>
-              <!-- <li v-else class="breadcrumb-item active">全部商品 ALL</li> -->
             </ol>
           </nav>
           <div class="mb-3 position-relative">
@@ -318,13 +317,10 @@
 <script>
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
-//import SwiperAllProducts from '@/components/SwiperAllProducts.vue'
+import likeStore from '@/stores/likeStore'
 import SwiperImages from '@/components/SwiperImages.vue'
-import Swal from 'sweetalert2'
 import { mapState, mapActions } from 'pinia'
 
-// json-server網址
-const serverUrl = 'https://greensheep-json-server.onrender.com'
 export default {
   props: {
     id: {
@@ -350,7 +346,6 @@ export default {
     }
   },
   components: {
-    // SwiperAllProducts
     SwiperImages
   },
   computed: {
@@ -364,7 +359,8 @@ export default {
       'showTitle',
       'isLoading',
       'loadingStatus'
-    ])
+    ]),
+    ...mapState(likeStore, ['isLike'])
   },
 
   watch: {
@@ -385,116 +381,7 @@ export default {
   methods: {
     ...mapActions(productStore, ['getProducts', 'getFilterProducts', 'getSort']),
     ...mapActions(cartStore, ['addToCart']),
-    // 收藏初始化
-    async likeInit() {
-      const user = JSON.parse(localStorage.getItem('userInfo'))
-      if (user === null) {
-        return false
-      }
-      await this.$http
-        .get(`${serverUrl}/favorites?userId=${user.id}`)
-        .then((res) => {
-          this.$refs.favIcon.forEach((item, index) => {
-            res.data.forEach((product) => {
-              if (product.productId === item.id) {
-                this.$refs.favIcon[index].classList.remove('bi-heart')
-                this.$refs.favIcon[index].classList.add('bi-heart-fill')
-              }
-            })
-          })
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
-    // 加入最愛
-    async addToLike(productId) {
-      const likeProduct = {
-        productId: `${productId}`,
-        userId: Number(JSON.parse(localStorage.getItem('userInfo')).id)
-      }
-      // 確認有沒有加入過
-      const res = await this.$http.get(
-        `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
-      )
-      // 移除最愛
-      if (res.data.length) {
-        this.$http
-          .delete(`${serverUrl}/favorites/${res.data[0].id}`)
-          .then(() => {
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: '已經移除收藏囉!',
-              showConfirmButton: false,
-              toast: true,
-              timer: 1500
-            })
-            this.$refs.favIcon.forEach((item, index) => {
-              if (productId === item.id) {
-                this.$refs.favIcon[index].classList.remove('bi-heart-fill')
-                this.$refs.favIcon[index].classList.add('bi-heart')
-              }
-            })
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      } else {
-        // 加入最愛
-        this.$http
-          .post(`${serverUrl}/favorites`, likeProduct)
-          .then(() => {
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: '已加入收藏!',
-              showConfirmButton: false,
-              toast: true,
-              timer: 1500
-            })
-            this.$refs.favIcon.forEach((item, index) => {
-              if (productId === item.id) {
-                this.$refs.favIcon[index].classList.remove('bi-heart')
-                this.$refs.favIcon[index].classList.add('bi-heart-fill')
-              }
-            })
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      }
-    },
-    // 先判斷有沒有登入會員，沒有會請使用者登入
-    async isLogin(productId) {
-      const user = JSON.parse(localStorage.getItem('userInfo'))
-
-      if (user === null) {
-        Swal.fire({
-          icon: 'warning',
-          title: '請先登入會員喔！',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-      await this.$http
-        .get(`${serverUrl}/600/users/${user.id}`, {
-          headers: {
-            Authorization: `Bearer ${user.token}`
-          }
-        })
-        .then(() => {
-          this.addToLike(productId)
-        })
-        .catch(() => {
-          Swal.fire({
-            icon: 'warning',
-            title: '請先登入會員喔！',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        })
-    },
+    ...mapActions(likeStore, ['likeInit', 'addToLike', 'isLogin']),
 
     //點選分類改變目前分類
     changeCategory(category) {

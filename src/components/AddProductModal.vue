@@ -392,8 +392,7 @@ export default {
         '戒指 RING',
         '耳環 EARRINGS',
         '手鍊 BRACELET',
-
-        '其他配件 OTHERS'
+        '客製設計 CUSTOMIZED'
       ],
       materials: [
         '925銀 925-Silver',
