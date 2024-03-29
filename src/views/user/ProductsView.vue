@@ -28,12 +28,12 @@
         <ul class="d-none d-md-block list-unstyled text-dark text-start">
           <!-- categoryList -->
           <li v-for="category in categories" :key="category">
-            <router-link
+            <RouterLink
               :to="{ path: `/products/${category}` }"
               class="d-inline-block py-2 mx-3 position-relative cursor-pointer"
               :class="{ active: this.$route.path === `/products/${category}` }"
               >{{ category }}
-            </router-link>
+            </RouterLink>
           </li>
         </ul>
       </aside>
@@ -43,7 +43,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
-                <router-link :to="`/`">首頁</router-link>
+                <RouterLink :to="`/`">首頁</RouterLink>
               </li>
               <li class="breadcrumb-item">
                 <a class="cursor-pointer" @click="changeCategory('全部商品 ALL')">商品</a>
@@ -116,11 +116,14 @@
             class="row row-cols-2 row-cols-lg-4 gx-4 gy-6 mb-10 mb-lg-20"
           >
             <li
-              class="col list-unstyled h-100 column"
+              class="col list-unstyled d-flex"
               v-for="product in currentProducts"
               :key="product.id"
             >
-              <router-link :to="{ path: `/products/detail/${product.id}` }" class="card border-0">
+              <RouterLink
+                :to="{ path: `/products/detail/${product.id}` }"
+                class="card border-0 flex-grow-1"
+              >
                 <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
                   <span
                     v-if="product.discount !== 10"
@@ -137,8 +140,10 @@
                     class="change position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
                   />
                 </div>
-                <div class="card-body text-start">
-                  <h5 class="card-title display-7 text-dark my-2">{{ product.title }}</h5>
+                <div class="card-body text-start d-flex flex-column">
+                  <h5 class="card-title flex-grow-1 display-7 text-dark my-2">
+                    {{ product.title }}
+                  </h5>
                   <!-- v-if 無折扣 -->
                   <p
                     v-if="product.origin_price === product.price"
@@ -178,7 +183,7 @@
                     </button>
                   </div>
                 </div>
-              </router-link>
+              </RouterLink>
             </li>
           </div>
           <!-- 商品列表:列表 -->
@@ -186,7 +191,7 @@
             <table v-if="isList === true" class="table mb-10 mb-lg-15">
               <tbody>
                 <template v-for="item in currentProducts" :key="item.id">
-                  <router-link :to="{ path: `/products/detail/${item.id}` }"
+                  <RouterLink :to="{ path: `/products/detail/${item.id}` }"
                     ><tr
                       class="product-item row mb-3 bg-white rounded-3 align-content-center py-2 py-lg-1"
                     >
@@ -256,7 +261,7 @@
                           </button>
                         </td>
                       </div></tr
-                  ></router-link>
+                  ></RouterLink>
                 </template>
               </tbody>
             </table>
@@ -520,16 +525,13 @@ export default {
     },
     async fetchData() {
       await this.getProducts()
-      console.log(this.$route)
       this.currentCategory = this.$route.params.category
       this.searchWord = this.$route.query.keyword
-      console.log(this.currentCategory, this.searchWord)
       this.getFilterProducts(this.currentCategory, 1, 'timeN2O', this.searchWord)
     }
   },
   async mounted() {
     await this.fetchData()
-
     this.products.forEach((item) => {
       this.productsIdArr.push(item.id)
     })
