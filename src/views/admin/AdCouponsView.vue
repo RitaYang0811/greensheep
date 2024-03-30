@@ -310,6 +310,8 @@
           paginate-buttons-class="page-link"
           number-buttons-class="fs-8"
           active-page-class="active"
+          :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
+          :nextButtonClass="currentPage === Math.ceil(coupons.length / 10) ? 'disabled' : 'next-button'"
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -330,6 +332,8 @@
           paginate-buttons-class="page-link"
           number-buttons-class="fs-8"
           active-page-class="active"
+          :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
+          :nextButtonClass="currentPage === Math.ceil(validCoupons.length / 10) ? 'disabled' : 'next-button'"
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -350,6 +354,8 @@
           paginate-buttons-class="page-link"
           number-buttons-class="fs-8"
           active-page-class="active"
+          :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
+          :nextButtonClass="currentPage === Math.ceil(notYetValidCoupons.length / 10) ? 'disabled' : 'next-button'"
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -361,7 +367,7 @@
       </template>
       <template v-else-if="currentTab === '已失效' && !loadingStatus.loadingGetCoupons">
         <vue-awesome-paginate
-          :total-items="InvalidCoupons.length"
+          :total-items="invalidCoupons.length"
           :items-per-page="10"
           :max-pages-shown="3"
           v-model="currentPage"
@@ -370,6 +376,8 @@
           paginate-buttons-class="page-link"
           number-buttons-class="fs-8"
           active-page-class="active"
+          :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
+          :nextButtonClass="currentPage === Math.ceil(invalidCoupons.length / 10) ? 'disabled' : 'next-button'"
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -419,7 +427,7 @@ export default {
       coupons: [],
       validCoupons: [],
       notYetValidCoupons: [],
-      InvalidCoupons: [],
+      invalidCoupons: [],
       coupon: {},
       newCoupon: {
         title: '金額折抵' // 預設值給 :checked 判斷
@@ -445,7 +453,7 @@ export default {
         // 清空資料
         this.coupons = []
         this.validCoupons = []
-        this.InvalidCoupons = []
+        this.invalidCoupons = []
         this.notYetValidCoupons = []
         this.currentPageCoupons = []
 
@@ -487,7 +495,7 @@ export default {
         if (dateToUnix('now') > coupon.start_date && dateToUnix('now') < coupon.due_date) {
           this.validCoupons.push(coupon)
         } else if (dateToUnix('now') > coupon.due_date) {
-          this.InvalidCoupons.push(coupon)
+          this.invalidCoupons.push(coupon)
         } else if (dateToUnix('now') < coupon.start_date) {
           this.notYetValidCoupons.push(coupon)
         }
@@ -509,7 +517,7 @@ export default {
           this.currentPageCoupons = this.notYetValidCoupons.slice((page - 1) * 10, page * 10)
           break
         case '已失效':
-          this.currentPageCoupons = this.InvalidCoupons.slice((page - 1) * 10, page * 10)
+          this.currentPageCoupons = this.invalidCoupons.slice((page - 1) * 10, page * 10)
           break
       }
       scrollToTop()

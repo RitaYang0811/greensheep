@@ -149,6 +149,8 @@
         paginate-buttons-class="page-link"
         number-buttons-class="fs-8"
         active-page-class="active"
+        :backButtonClass="articlesCurrentPage === 1 ? 'disabled' : 'back-button'"
+        :nextButtonClass="articlesCurrentPage === Math.ceil(articles.length / 11) ? 'disabled' : 'next-button'"
       >
         <template #prev-button>
           <span class="material-icons fs-8 p-1"> navigate_before </span>

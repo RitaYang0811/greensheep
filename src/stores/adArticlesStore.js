@@ -161,7 +161,7 @@ export default defineStore('adminArticles',{
         })
     },
     // 新增/編輯文章
-		updateArticle(articleData, isPublic, editIsPublic) {
+    updateArticle(articleData, isPublic, editIsPublic) {
       this.isLoading = true
 
       // 新增產品 API
@@ -220,7 +220,7 @@ export default defineStore('adminArticles',{
           this.isLoading = false
         })
       }
-		},
+    },
     // 刪除文章
     deleteArticle(id) {
       this.loadingStatus.loadingDelete = true
