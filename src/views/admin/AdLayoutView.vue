@@ -139,6 +139,8 @@
 import { Offcanvas } from 'bootstrap'
 import { toastSuccess, toastError } from '@/utils/sweetalertToast.js'
 
+const { VITE_APP_API_URL } = import.meta.env
+
 export default {
   data() {
     return {
@@ -162,7 +164,7 @@ export default {
       // token 存在則執行驗證
       if (token) {
         this.$http.defaults.headers.common.Authorization = token
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/user/check`
+        const url = `${VITE_APP_API_URL}/api/user/check`
         this.$http
           .post(url)
           .then(() => {

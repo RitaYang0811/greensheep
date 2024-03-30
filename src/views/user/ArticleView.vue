@@ -88,8 +88,10 @@
                   NT$ {{ product.price }}
                 </span>
               </div>
+
+              <!-- 加入購物車 -->
               <button
-                href="#"
+                type="button"
                 class="custom-btn custom-btn-toGreen text-center w-100 border-1"
                 @click.prevent="addToCart(product.id)"
               >
@@ -109,6 +111,8 @@ import { mapState, mapActions } from 'pinia'
 import { useRoute } from 'vue-router'
 import { toastError } from "@/utils/sweetalertToast.js"
 
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
+
 export default {
   data() {
     return {
@@ -123,7 +127,7 @@ export default {
     getArticle() {
       this.isLoading = true
       const id = this.$route.params.id
-      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/article/${id}`
+      const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/article/${id}`
       
       this.$http.get(url)
         .then(res => {
@@ -144,7 +148,7 @@ export default {
     const route = useRoute()
     this.getArticle()
     await this.getProducts(route)
-    await this.getRecommendProducts()
+    this.getRecommendProducts()
   }
 }
 </script>

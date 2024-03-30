@@ -417,6 +417,7 @@ import { dateToUnix } from '@/utils/dateToUnix.js'
 import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 import { scrollToTop } from '@/utils/scrollToTop.js'
 
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
 export default {
   data() {
@@ -462,7 +463,7 @@ export default {
         let currentPageNum
         let totalPagesNum
 
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupons`
+        const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupons`
 
         // get 第一頁資料
         const resFirstPage = await this.$http.get(url)
@@ -534,7 +535,7 @@ export default {
       try {
         this.loadingStatus.loadingGetCoupon = true
 
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupons`
+        const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupons`
 
         const res = await this.$http.get(url)
         this.coupon = res.data.coupons.find((coupon) => coupon.id === id)
@@ -575,7 +576,7 @@ export default {
       // 判斷是新增或編輯
       if (this.isNew) {
         // 新增優惠券
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupon`
+        const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupon`
 
         this.$http
           .post(url, { data: data })
@@ -592,7 +593,7 @@ export default {
           })
       } else if (!this.isNew) { // 編輯優惠券
         const id = couponData.id
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupon/${id}`
+        const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupon/${id}`
 
         this.$http
           .put(url, { data: data })
@@ -612,7 +613,7 @@ export default {
     // 刪除優惠券
     deleteCoupon(id) {
       this.loadingStatus.loadingDelCoupon = id
-      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupon/${id}`
+      const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupon/${id}`
 
       this.$http
         .delete(url)

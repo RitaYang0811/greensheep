@@ -54,6 +54,8 @@ import { toastSuccess, toastError } from '@/utils/sweetalertToast.js'
 import { mapActions } from 'pinia'
 import copyTextStore from '@/stores/copyTextStore'
 
+const { VITE_APP_API_URL } = import.meta.env
+
 export default {
   data() {
     return {
@@ -68,7 +70,7 @@ export default {
     ...mapActions(copyTextStore, ['copyTextMethod']),
     login() {
       this.isLoading = true
-      const url = `${import.meta.env.VITE_APP_API_URL}/admin/signin`
+      const url = `${VITE_APP_API_URL}/admin/signin`
       const data = this.user
 
       this.$http
