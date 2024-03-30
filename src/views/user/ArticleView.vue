@@ -60,10 +60,12 @@
               >
               <img
                 :src="product.imageUrl"
+                :alt="product.title"
                 class="show position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
               />
               <img
                 :src="product.imageUrl2"
+                :alt="product.title"
                 class="change position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
               />
             </div>
