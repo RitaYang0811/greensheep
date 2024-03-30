@@ -170,7 +170,7 @@
                 cancelText="取消"
                 selectText="選擇"
                 @blur="blurValidate"
-              ></VueDatePicker>
+              />
             </VField>
             <ErrorMessage name="日期" class="invalid-feedback"/>
           </div>
@@ -362,7 +362,7 @@
                 cancelText="取消"
                 selectText="選擇"
                 @blur="blurValidate"
-              ></VueDatePicker>
+              />
             </VField>
             <ErrorMessage name="日期" class="invalid-feedback"/>
           </div>

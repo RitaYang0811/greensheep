@@ -100,7 +100,7 @@
         </li>
     </ul>
   </div>
-    <VueLoading :active="isLoading" />
+  <VueLoading :active="isLoading" />
 </template>
 <script>
 import productStore from '@/stores/productStore.js'

@@ -1,36 +1,3 @@
-<script>
-import Popover from 'bootstrap/js/dist/popover'
-
-export default {
-  data() {
-    return {
-      popoverRing: '',
-      popoverNecklace: ''
-    }
-  },
-  methods: {
-    closePopover() {
-      this.popoverRing.hide()
-      this.popoverNecklace.hide()
-    }
-  },
-  mounted() {
-    this.popoverRing = new Popover(this.$refs.ringPopoverBtn, {
-      container: '.home3', // 指定要在哪個位置渲染
-      html: true,
-      content: this.$refs.ringPopoverContent,
-      placement: 'top'
-    })
-    this.popoverNecklace = new Popover(this.$refs.necklacePopoverBtn, {
-      container: '.home3',
-      html: true,
-      content: this.$refs.necklacePopoverContent,
-      placement: 'top'
-    })
-  }
-}
-</script>
-
 <template>
   <div class="home3">
     <!-- 客製化 -->
@@ -267,3 +234,35 @@ export default {
     </div>
   </div>
 </template>
+<script>
+import Popover from 'bootstrap/js/dist/popover'
+
+export default {
+  data() {
+    return {
+      popoverRing: '',
+      popoverNecklace: ''
+    }
+  },
+  methods: {
+    closePopover() {
+      this.popoverRing.hide()
+      this.popoverNecklace.hide()
+    }
+  },
+  mounted() {
+    this.popoverRing = new Popover(this.$refs.ringPopoverBtn, {
+      container: '.home3', // 指定要在哪個位置渲染
+      html: true,
+      content: this.$refs.ringPopoverContent,
+      placement: 'top'
+    })
+    this.popoverNecklace = new Popover(this.$refs.necklacePopoverBtn, {
+      container: '.home3',
+      html: true,
+      content: this.$refs.necklacePopoverContent,
+      placement: 'top'
+    })
+  }
+}
+</script>

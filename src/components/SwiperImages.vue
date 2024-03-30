@@ -1,5 +1,5 @@
 <template>
-  <swiper
+  <Swiper
     :slides-per-view="1"
     :modules="modules"
     :centeredSlides="true"
@@ -14,16 +14,16 @@
     :speed="1000"
     class="swiper-images"
   >
-    <swiper-slide>
+    <SwiperSlide>
       <slot name="firstImage"></slot>
-    </swiper-slide>
-    <swiper-slide>
+    </SwiperSlide>
+    <SwiperSlide>
       <slot name="secondImage"></slot>
-    </swiper-slide>
-    <swiper-slide>
+    </SwiperSlide>
+    <SwiperSlide>
       <slot name="thirdImage"></slot>
-    </swiper-slide>
-  </swiper>
+    </SwiperSlide>
+  </Swiper>
 </template>
 
 <script>

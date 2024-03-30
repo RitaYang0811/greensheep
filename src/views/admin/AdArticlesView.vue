@@ -258,7 +258,7 @@
       v-if="!loadingStatus.loadingItem && searchArticles.length"
       class="text-center va-pagination"
     >
-      <vue-awesome-paginate
+      <VueAwesomePaginate
         :total-items="searchArticles.length"
         :items-per-page="10"
         :max-pages-shown="3"
@@ -277,7 +277,7 @@
         <template #next-button>
           <span class="material-icons fs-8 p-1"> navigate_next </span>
         </template>
-      </vue-awesome-paginate>
+      </VueAwesomePaginate>
     </div>
     <div
       v-if="loadingStatus.loadingItem"

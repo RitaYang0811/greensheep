@@ -300,7 +300,7 @@
     <!-- pagination -->
     <div class="text-center va-pagination">
       <template v-if="currentTab === '所有優惠券' && !loadingStatus.loadingGetCoupons">
-        <vue-awesome-paginate
+        <VueAwesomePaginate
           :total-items="coupons.length"
           :items-per-page="10"
           :max-pages-shown="3"
@@ -319,10 +319,10 @@
           <template #next-button>
             <span class="material-icons fs-8 p-1"> navigate_next </span>
           </template>
-        </vue-awesome-paginate>
+        </VueAwesomePaginate>
       </template>
       <template v-else-if="currentTab === '有效' && !loadingStatus.loadingGetCoupons">
-        <vue-awesome-paginate
+        <VueAwesomePaginate
           :total-items="validCoupons.length"
           :items-per-page="10"
           :max-pages-shown="3"
@@ -341,10 +341,10 @@
           <template #next-button>
             <span class="material-icons fs-8 p-1"> navigate_next </span>
           </template>
-        </vue-awesome-paginate>
+        </VueAwesomePaginate>
       </template>
       <template v-else-if="currentTab === '尚未生效' && !loadingStatus.loadingGetCoupons">
-        <vue-awesome-paginate
+        <VueAwesomePaginate
           :total-items="notYetValidCoupons.length"
           :items-per-page="10"
           :max-pages-shown="3"
@@ -363,10 +363,10 @@
           <template #next-button>
             <span class="material-icons fs-8 p-1"> navigate_next </span>
           </template>
-        </vue-awesome-paginate>
+        </VueAwesomePaginate>
       </template>
       <template v-else-if="currentTab === '已失效' && !loadingStatus.loadingGetCoupons">
-        <vue-awesome-paginate
+        <VueAwesomePaginate
           :total-items="invalidCoupons.length"
           :items-per-page="10"
           :max-pages-shown="3"
@@ -385,7 +385,7 @@
           <template #next-button>
             <span class="material-icons fs-8 p-1"> navigate_next </span>
           </template>
-        </vue-awesome-paginate>
+        </VueAwesomePaginate>
       </template>
     </div>
     <div

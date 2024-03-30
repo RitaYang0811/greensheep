@@ -137,13 +137,13 @@
           v-model.lazy="articleData.content"
           rules="required"
         >
-          <ckeditor
+          <Ckeditor
             :editor="editor"
             :config="editorConfig"
             v-model.lazy="articleData.content"
             :class="{ 'is-invalid': errors['文章內容'] }"
             @blur="blurValidate"
-          ></ckeditor>
+          ></Ckeditor>
         </VField>
         <ErrorMessage name="文章內容" class="invalid-feedback text-end mt-2"/>
       </div>
