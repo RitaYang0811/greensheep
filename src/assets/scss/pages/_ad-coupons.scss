@@ -1,6 +1,5 @@
 .ad-coupon {
   .table-head {
-    // background-color: #f4ede1;
     &::after {
       content: "";
       position: absolute;
@@ -12,7 +11,6 @@
     }
   }
   .table-container{
-    // height: calc(100vh - 220px);
     &::-webkit-scrollbar{
     display:none;
     }

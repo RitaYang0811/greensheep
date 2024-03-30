@@ -485,7 +485,6 @@ export default {
       currentTab: '常見問題'
     }
   },
-
   components: {
     SwiperImages
   }

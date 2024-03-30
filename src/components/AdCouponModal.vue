@@ -152,12 +152,6 @@
           </div>
           <div class="mb-3">
             <label for="couponCode" class="form-label fs-6 mb-3">*開始 / 結束日期</label>
-            <!-- model-type="timestamp": 選擇日期時儲存的資料格式，這邊用 unix timestamp，預設是毫秒單位，所以 v-model 綁定的資料須先換算成毫秒單位
-                 :range="{ partialRange: false }": range 模式，partialRange 為 false 需選擇兩個日期
-                 :format="format": 後面綁定自定義的 format 方法，呈現在畫面上的是將此方法執行後的回傳結果，不會動到原始資料
-                 :enable-time-picker="false": 預設 true 可以選擇到更細部的時和分，這邊關閉，以日為最小單位
-                 locale="zh-TW" cancelText="取消" selectText="選擇": 語系以及顯示文字設定
-            -->
             <VField
               name="日期"
               v-model="newCouponData.dates"
@@ -350,12 +344,6 @@
           </div>
           <div class="mb-3">
             <label for="couponCode" class="form-label fs-6 mb-3">*開始 / 結束日期</label>
-            <!-- model-type="timestamp": 選擇日期時儲存的資料格式，這邊用 unix timestamp，預設是毫秒單位，所以 v-model 綁定的資料須先換算成毫秒單位
-                 :range="{ partialRange: false }": range 模式，partialRange 為 false 需選擇兩個日期
-                 :format="format": 後面綁定自定義的 format 方法，呈現在畫面上的是將此方法執行後的回傳結果，不會動到原始資料
-                 :enable-time-picker="false": 預設 true 可以選擇到更細部的時和分，這邊關閉，以日為最小單位
-                 locale="zh-TW" cancelText="取消" selectText="選擇": 語系以及顯示文字設定
-            -->
             <VField
               name="日期"
               v-model="couponData.dates"
@@ -409,7 +397,6 @@ import { unixToDate } from '@/utils/unixToDate.js'
 import { defineRule } from 'vee-validate'
 
 // 自定義規則
-// https://vee-validate.logaretm.com/v4/guide/global-validators/#cross-field-validation
 // value: 訂單金額, target: 折抵金額
 defineRule('compareWithDiscount', (value, [target]) => {
   if(typeof value === 'number' && typeof target === 'number') {
