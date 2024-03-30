@@ -58,7 +58,6 @@
         <div class="row justify-content-center z-0 mb-6">
           <span class="col-5 col-lg-4 deco-spin position-relative">
             <img class="deco-circle" src="@/assets/images/img-about-font-bg.svg" alt="裝飾圈圈" />
-
             <div class="position-absolute top-50 start-50 translate-middle">
               <span class="h5 mb-2 opacity-75 d-flex flex-column">自信</span>
               <span class="h4">CONFIDENCE</span>
@@ -66,7 +65,6 @@
           </span>
           <span class="col-5 col-lg-4 deco-spin position-relative">
             <img class="deco-circle" src="@/assets/images/img-about-font-bg.svg" alt="裝飾圈圈" />
-
             <div class="position-absolute top-50 start-50 translate-middle">
               <span class="h5 mb-2 opacity-75 d-flex flex-column">獨特</span>
               <span class="h4">UNIQUE</span>
@@ -74,7 +72,6 @@
           </span>
           <span class="col-5 col-lg-4 deco-spin position-relative">
             <img class="deco-circle" src="@/assets/images/img-about-font-bg.svg" alt="裝飾圈圈" />
-
             <div class="position-absolute top-50 start-50 translate-middle">
               <span class="h5 mb-2 opacity-75 d-flex flex-column">優雅</span>
               <span class="h4">ELEGANT</span>
@@ -101,8 +98,8 @@
       <div class="col-lg-4 col-12">
         <img
           class="mt-4 mt-lg-0"
-          src="@/assets/images/product-8-1.jpg"
-          alt=""
+          src="@/assets/images/IMG_5672-sm.jpg"
+          alt="珠寶"
           data-aos="fade-out"
           data-aos-duration="1000"
           data-aos-delay="200"
@@ -130,8 +127,8 @@
       <div class="col-lg-5 col-12">
         <img
           class="mb-4 mb-lg-0"
-          src="@/assets/images/lucio-patone-ssJoxTDiUPg-unsplash.jpg"
-          alt=""
+          src="@/assets/images/lucio-patone-ssJoxTDiUPg-unsplash-sm.jpg"
+          alt="精湛工藝"
           data-aos="fade-out"
           data-aos-duration="1000"
           data-aos-delay="200"

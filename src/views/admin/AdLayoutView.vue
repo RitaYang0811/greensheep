@@ -53,7 +53,6 @@
               >優惠管理</RouterLink
             >
           </li>
-          <!-- <li class=""><a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a></li> -->
         </ul>
         <ul class="list-unstyled d-flex justify-content-center gap-6">
           <li class="mt-auto">
@@ -121,9 +120,6 @@
             >優惠管理</RouterLink
           >
         </li>
-        <!-- <li @click="closeOffcanvas">
-          <a href="##" class="admin-sidebar-hover d-block py-6">數據中心</a>
-        </li> -->
       </ul>
       <a
         href="##"
@@ -142,6 +138,8 @@
 <script>
 import { Offcanvas } from 'bootstrap'
 import { toastSuccess, toastError } from '@/utils/sweetalertToast.js'
+
+const { VITE_APP_API_URL } = import.meta.env
 
 export default {
   data() {
@@ -166,7 +164,7 @@ export default {
       // token 存在則執行驗證
       if (token) {
         this.$http.defaults.headers.common.Authorization = token
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/user/check`
+        const url = `${VITE_APP_API_URL}/api/user/check`
         this.$http
           .post(url)
           .then(() => {
@@ -221,5 +219,3 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="scss"></style>

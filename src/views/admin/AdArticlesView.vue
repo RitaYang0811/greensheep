@@ -117,7 +117,7 @@
     </div>
 
     <!-- article list -->
-    <template v-if="!loadingStatus.loadingItem">
+    <template v-if="!loadingStatus.loadingItem && currentPageArticles.length">
       <!-- article list 卡片模式 -->
       <ul
         v-if="!isList"
@@ -253,12 +253,18 @@
         </li>
       </ul>
     </template>
+    <template v-else-if="!loadingStatus.loadingItem">
+      <div class="d-flex justify-content-center align-items-center" style="height: 360px;">
+        <p class="fs-5">尚無文章資料</p>
+      </div>
+    </template>
+
     <!-- pagination -->
     <div
       v-if="!loadingStatus.loadingItem && searchArticles.length"
       class="text-center va-pagination"
     >
-      <vue-awesome-paginate
+      <VueAwesomePaginate
         :total-items="searchArticles.length"
         :items-per-page="10"
         :max-pages-shown="3"
@@ -268,6 +274,8 @@
         paginate-buttons-class="page-link"
         number-buttons-class="fs-8"
         active-page-class="active"
+        :backButtonClass="articlesCurrentPage === 1 ? 'disabled' : 'back-button'"
+        :nextButtonClass="articlesCurrentPage === Math.ceil(searchArticles.length / 10) ? 'disabled' : 'next-button'"
       >
         <template #prev-button>
           <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -275,8 +283,10 @@
         <template #next-button>
           <span class="material-icons fs-8 p-1"> navigate_next </span>
         </template>
-      </vue-awesome-paginate>
+      </VueAwesomePaginate>
     </div>
+
+    <!-- loading -->
     <div
       v-if="loadingStatus.loadingItem"
       class="d-flex justify-content-center align-items-center"
@@ -403,4 +413,3 @@ export default {
   }
 }
 </script>
-<style scoped></style>

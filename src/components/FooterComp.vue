@@ -45,11 +45,6 @@
                 >
               </li>
               <li>
-                <RouterLink to="/admin/home" target="_blank" class="fs-8 text-white me-12 me-lg-6"
-                  >前往後台 <i class="bi bi-box-arrow-right d-none d-lg-inline-block"></i>
-                </RouterLink>
-              </li>
-              <li>
                 <a href="#" target="_blank" class="fs-8 text-white" @click.prevent="isLogout"
                   >登出
                 </a>
