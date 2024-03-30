@@ -117,7 +117,7 @@
     </div>
 
     <!-- article list -->
-    <template v-if="!loadingStatus.loadingItem">
+    <template v-if="!loadingStatus.loadingItem && currentPageArticles.length">
       <!-- article list 卡片模式 -->
       <ul
         v-if="!isList"
@@ -253,6 +253,12 @@
         </li>
       </ul>
     </template>
+    <template v-else-if="!loadingStatus.loadingItem">
+      <div class="d-flex justify-content-center align-items-center" style="height: 360px;">
+        <p class="fs-5">尚無文章資料</p>
+      </div>
+    </template>
+
     <!-- pagination -->
     <div
       v-if="!loadingStatus.loadingItem && searchArticles.length"
@@ -279,6 +285,8 @@
         </template>
       </VueAwesomePaginate>
     </div>
+
+    <!-- loading -->
     <div
       v-if="loadingStatus.loadingItem"
       class="d-flex justify-content-center align-items-center"

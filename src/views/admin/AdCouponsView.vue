@@ -47,7 +47,7 @@
     <a href="#" class="btn btn-primary mb-4" @click.prevent="openModal('new')">新增優惠券</a>
     <!-- PC coupons -->
     <div class="table-container table-responsive d-none d-lg-block">
-      <table class="table align-middle text-nowrap mb-4">
+      <table v-if="!loadingStatus.loadingGetCoupons && currentPageCoupons.length" class="table align-middle text-nowrap mb-4">
         <thead class="table-head position-relative">
           <tr>
             <th style="width: 15%">優惠碼</th>
@@ -172,7 +172,13 @@
           </tr>
         </tbody>
       </table>
+      <template v-else-if="!loadingStatus.loadingGetCoupons">
+        <div class="d-flex justify-content-center align-items-center" style="height: 360px;">
+          <p class="fs-5">尚無優惠券資料</p>
+        </div>
+      </template>
     </div>
+
     <!-- mobile coupons -->
     <ul class="row list-unstyled text-dark d-lg-none" style="row-gap: 12px;">
       <li class="col-12" v-for="coupon in currentPageCoupons" :key="coupon.id">
@@ -297,8 +303,9 @@
         </div>
       </li>
     </ul>
+
     <!-- pagination -->
-    <div class="text-center va-pagination">
+    <div v-if="currentPageCoupons.length" class="text-center va-pagination">
       <template v-if="currentTab === '所有優惠券' && !loadingStatus.loadingGetCoupons">
         <VueAwesomePaginate
           :total-items="coupons.length"
@@ -388,6 +395,8 @@
         </VueAwesomePaginate>
       </template>
     </div>
+
+    <!-- loading -->
     <div
       v-if="loadingStatus.loadingGetCoupons"
       class="d-flex justify-content-center align-items-center"
