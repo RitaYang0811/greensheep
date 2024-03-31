@@ -3,6 +3,8 @@ import axios from 'axios'
 import { toastError } from '@/utils/sweetalertToast.js'
 import { scrollToTop } from '@/utils/scrollToTop.js'
 
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
+
 export default defineStore('articleStore', {
   state: () => ({
     articles: [],
@@ -20,7 +22,7 @@ export default defineStore('articleStore', {
         let currentPageNum
         let totalPagesNum
 
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/articles`
+        const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/articles`
 
         // get 第一頁資料
         const resFirstPage = await axios.get(url)

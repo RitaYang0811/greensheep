@@ -58,7 +58,9 @@
       card_giftcard
     </span>
     <h2 class="fs-3 my-10">恭喜你完成訂單</h2>
-    <router-link to="/products" class="fs-3 my-10 underline text-primary"> 繼續選購</router-link>
+    <router-link to="/products/全部商品%20ALL" class="fs-3 my-10 underline text-primary">
+      繼續選購</router-link
+    >
     <!-- <button type="button" class="d-block mx-auto mt-4 btn btn-primary" @click="lineGetOrder">
       點我取得出貨通知
     </button> -->

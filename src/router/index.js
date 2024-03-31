@@ -7,6 +7,7 @@ const router = createRouter({
     return { top: 0 }
   },
   routes: [
+    // 前台
     {
       path: '/',
       name: 'UserLayout',
@@ -42,12 +43,16 @@ const router = createRouter({
           path: 'lineNotify',
           component: () => import('../views/user/lineNotify.vue')
         },
-
-        // {
-        //   path: 'products/客製設計 CUSTOMIZED',
-        //   name: 'UserCustom',
-        //   component: () => import('../views/user/ProductsView.vue')
-        // },
+        {
+          path: 'customGem/:id',
+          name: 'UserCustomGem',
+          component: () => import('../views/user/CustomGemView.vue')
+        },
+        {
+          path: 'customText/:id',
+          name: 'UserCustomText',
+          component: () => import('../views/user/CustomTextView.vue')
+        },
 
         {
           path: 'story',
@@ -145,11 +150,13 @@ const router = createRouter({
         }
       ]
     },
+    // 後台登入
     {
       path: '/login',
       name: 'AdminLogin',
       component: () => import('../views/admin/AdLogin.vue')
     },
+    // 後台
     {
       path: '/admin',
       name: 'Admin',
@@ -199,6 +206,11 @@ const router = createRouter({
           component: () => import('../views/admin/AdOrdersView.vue')
         }
       ]
+    },
+    // 404
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import('@/views/NotFoundView.vue')
     }
   ]
 })

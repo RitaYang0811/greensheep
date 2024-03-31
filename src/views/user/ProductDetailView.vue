@@ -1,14 +1,14 @@
 <template>
   <div class="container pt-30">
-    <!-- breadcrumb -->
     <div class="row justify-content-center">
+      <!-- breadcrumb -->
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb col-12">
           <li class="breadcrumb-item">
-            <router-link to="/">首頁</router-link>
+            <RouterLink to="/">首頁</RouterLink>
           </li>
           <li class="breadcrumb-item" aria-current="page">
-            <router-link to="/products/全部商品%20ALL">全部商品</router-link>
+            <RouterLink to="/products/全部商品%20ALL">全部商品</RouterLink>
           </li>
           <li class="breadcrumb-item" aria-current="page">
             <routerLink :to="{ path: `/products/${productInfo.category}` }"
@@ -29,9 +29,8 @@
           <div class="d-flex align-items-center mb-2">
             <h1 class="fw-bold fs-3 fs-lg-2 me-5">{{ productInfo.title }}</h1>
             <!-- 愛心收藏 -->
-
             <i
-              class="bi fs-4 text-primary"
+              class="bi fs-4 text-primary cursor-pointer"
               @click.prevent="isLogin(productInfo.id)"
               ref="favIcon"
               :class="[isLike ? 'bi-heart-fill' : 'bi-heart']"
@@ -45,7 +44,6 @@
             NT$ {{ productInfo.origin_price }}
           </p>
           <!-- v-else 打折 -->
-
           <p v-else class="mb-4 mb-lg-5 d-flex align-item-center gap-4">
             <span class="text-primary fs-4 fs-lg-3 fw-medium"> NT$ {{ productInfo.price }}</span>
             <span class="text-grey9F fs-6 fs-lg-5 fw-medium text-decoration-line-through my-1">
@@ -56,10 +54,14 @@
             >
           </p>
           <!-- 庫存 -->
-          <p class="text-dark fs-7 mb-4">
+          <p v-if="productInfo.category !== '客製設計 CUSTOMIZED'" class="text-dark fs-7 mb-4">
             庫存數量：{{ productInfo.stockNum }} {{ productInfo.unit
-            }}<span v-if="productInfo.stockNum < 5" class="text-danger ms-4 fs-8 fst-italic"
+            }}<span
+              v-if="productInfo.stockNum < 5 && productInfo.stockNum > 0"
+              class="text-danger ms-4 fs-8 fst-italic"
               >庫存緊張</span
+            ><span v-else-if="productInfo.stockNum === 0" class="text-danger ms-4 fs-8 fst-italic"
+              >售完補貨中</span
             >
           </p>
           <!-- 行銷活動 -->
@@ -157,7 +159,7 @@
               </div>
               <img
                 src="@/assets/images/package-sm.jpg"
-                alt=""
+                alt="包裝"
                 data-bs-toggle="modal"
                 data-bs-target="#packageModal"
                 style="width: 60px; height: 60px; cursor: pointer"
@@ -198,12 +200,14 @@
           </div>
           <div class="d-flex gap-5 my-5 flex-column justify-content-center">
             <!-- 數量選擇 -->
-
-            <div class="d-flex gap-4 align-content-center justify-content-center">
+            <div
+              v-if="productInfo.category !== '客製設計 CUSTOMIZED'"
+              class="d-flex gap-4 align-content-center justify-content-center"
+            >
               <button
                 type="button"
                 class="btn qty-btn rounded-circle border-primary p-0"
-                :disabled="qty === 1"
+                :disabled="qty === 1 || productInfo.stockNum === 0"
                 @click.prevent="qty--"
               >
                 <i class="bi bi-dash-lg text- fs-3"></i>
@@ -218,7 +222,7 @@
               />
               <button
                 class="btn qty-btn rounded-circle p-0 border-primary"
-                :disabled="qty === productInfo.stockNum"
+                :disabled="qty === productInfo.stockNum || productInfo.stockNum === 0"
                 @click.prevent="qty++"
               >
                 <i class="bi bi-plus-lg text-primary fs-3"></i>
@@ -226,8 +230,20 @@
             </div>
 
             <button
-              href="#"
+              v-if="productInfo.category === '客製設計 CUSTOMIZED'"
+              type="button"
+              class="custom-btn custom-btn-primary text-center border-1 start-custom fw-bold w-80 mx-auto"
+              :class="{ 'no-stock': productInfo.stockNum === 0 }"
+              :disabled="productInfo.stockNum === 0"
+              style="height: 40px"
+              @click.prevent="toCustomGem(productInfo.id)"
+            ></button>
+            <button
+              v-else
+              type="button"
               class="custom-btn custom-btn-primary text-center border-1 add-to-cart fw-bold w-80 mx-auto"
+              :class="{ 'no-stock': productInfo.stockNum === 0 }"
+              :disabled="productInfo.stockNum === 0"
               style="height: 40px"
               @click.prevent="addToCart(productInfo.id, qty)"
             ></button>
@@ -236,7 +252,7 @@
       </div>
     </div>
   </div>
-  <!-- <a href="" @click.prevent="scrollTo">查看更多</a> -->
+
   <div
     class="position-relative m-auto cursor-pointer my-10 my-lg-0 mb-lg-20"
     @click.prevent="scrollTo"
@@ -256,11 +272,6 @@
   </div>
   <!-- 下半部 -->
   <div class="container py-10" ref="productContent">
-    <!-- <div data-aos="fade-up" data-aos-duration="1000" data-aos-offset="50" class="mb-5">
-      <h2 class="fs-lg-2 fw-medium">{{ productInfo.title }}</h2>
-      <p class="text-primary">The Angel Love Cross</p>
-    </div> -->
-
     <p
       class="product-content mb-5 text-primary lh-lg w-100 w-lg-80 mx-auto"
       data-aos="fade-up"
@@ -295,15 +306,6 @@
           台灣原創設計 & 手工製作
         </p>
       </div>
-      <!-- <div class="row w-100 w-lg-80 mx-auto ratio ratio-16x9">
-        <iframe
-          src="https://www.youtube.com/embed/eu7bo9X8CAA?si=sejTvcciBg3SjSPQ"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
-      </div> -->
       <!-- 圖片區 -->
       <div class="row py-10 mb-20 mb-lg-25 w-lg-80 mx-auto justify-content-center">
         <div
@@ -347,13 +349,12 @@
     <div class="container mb-20">
       <h2 class="h4 text-primary mb-10 fw-bold">猜你也喜歡</h2>
       <ul class="row row-cols-2 row-cols-md-4 g-4 mb-20 ps-0">
-        <!-- 放相同分類隨機商品 -->
         <li
           class="col list-unstyled h-100 column"
           v-for="product in recommendProducts"
           :key="product.id"
         >
-          <router-link :to="{ path: `/products/detail/${product.id}` }" class="card border-0">
+          <RouterLink :to="{ path: `/products/detail/${product.id}` }" class="card border-0">
             <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
               <span
                 v-if="product.discount !== 10"
@@ -389,14 +390,13 @@
                 </span>
               </div>
               <button
-                href="#"
                 class="custom-btn custom-btn-toGreen text-center w-100 border-1"
                 @click.prevent="addToCart(product.id)"
               >
                 <i class="bi bi-bag-check fs-6"></i>
               </button>
             </div>
-          </router-link>
+          </RouterLink>
         </li>
       </ul>
     </div>
@@ -408,23 +408,21 @@
 import ProductSwiper from '@/components/ProductSwiper.vue'
 import productStore from '@/stores/productStore'
 import cartStore from '@/stores/cartStore'
-import Swal from 'sweetalert2'
+import likeStore from '@/stores/likeStore'
 import { mapState, mapActions } from 'pinia'
 
-// json-server網址
-const serverUrl = 'https://greensheep-json-server.onrender.com'
 export default {
   data() {
     return {
       isLoading: false,
-      qty: 1,
-      isLike: false
+      qty: 1
     }
   },
   components: { ProductSwiper },
 
   computed: {
-    ...mapState(productStore, ['products', 'productInfo', 'recommendProducts'])
+    ...mapState(productStore, ['products', 'productInfo', 'recommendProducts', 'loadingStatus']),
+    ...mapState(likeStore, ['isLike'])
   },
   watch: {
     routeData: {
@@ -437,111 +435,27 @@ export default {
   methods: {
     ...mapActions(productStore, ['getProducts', 'getProductInfo', 'getRecommendProducts']),
     ...mapActions(cartStore, ['addToCart']),
+    ...mapActions(likeStore, ['likeInit', 'addToLike', 'isLogin']),
     scrollTo() {
       const productContent = this.$refs.productContent
       if (productContent) {
-        productContent.scrollIntoView({ behavior: 'smooth' }) // 使用平滑滾動到元素
+        productContent.scrollIntoView({ behavior: 'smooth' })
       }
     },
-    // 收藏初始化
-    async likeInit(id) {
-      const user = JSON.parse(localStorage.getItem('userInfo'))
-      if (user === null) {
-        return false
-      }
-      await this.$http
-        .get(`${serverUrl}/favorites?userId=${user.id}&&productId=${id}`)
-        .then((res) => {
-          if (res.data.length) {
-            this.isLike = true
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
-    // 加入最愛
-    async addToLike(productId) {
-      const likeProduct = {
-        productId: `${productId}`,
-        userId: `${JSON.parse(localStorage.getItem('userInfo')).id}`
-      }
-
-      // 確認有沒有加入過
-      const res = await this.$http.get(
-        `${serverUrl}/favorites?userId=${likeProduct.userId}&&productId=${likeProduct.productId}`
-      )
-      // 移除最愛
-      if (res.data.length) {
-        this.$http.delete(`${serverUrl}/favorites/${res.data[0].id}`).then(() => {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: '已經移除收藏囉!',
-            showConfirmButton: false,
-            toast: true,
-            timer: 1500
-          })
-          this.isLike = false
-        })
-      } else {
-        // 加入最愛
-        this.$http
-          .post(`${serverUrl}/favorites`, likeProduct)
-          .then(() => {
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: '已加入收藏!',
-              showConfirmButton: false,
-              toast: true,
-              timer: 1500
-            })
-            this.isLike = true
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      }
-    },
-    // 先判斷有沒有登入會員，沒有會請使用者登入
-    async isLogin(productId) {
-      const user = JSON.parse(localStorage.getItem('userInfo'))
-      if (user === null) {
-        Swal.fire({
-          icon: 'warning',
-          title: '請先登入會員喔！',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        return false
-      }
-      await this.$http
-        .get(`${serverUrl}/600/users/${user.id}`, {
-          headers: {
-            Authorization: `Bearer ${user.token}`
-          }
-        })
-        .then(() => {
-          this.addToLike(productId)
-        })
-        .catch(() => {
-          Swal.fire({
-            icon: 'warning',
-            title: '請先登入會員喔！',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        })
+    //導航至選擇寶石頁
+    toCustomGem(id) {
+      this.$router.push({
+        path: `/customGem/${id}`
+      })
     }
   },
   async mounted() {
+    this.isLoading = true
     await this.getProducts()
-    this.getProductInfo(this.$route.params.id)
+    await this.getProductInfo(this.$route.params.id)
     this.getRecommendProducts(this.$route.params.id)
     this.likeInit(this.$route.params.id)
-    console.log(this.products)
-    console.log(this.productInfo)
+    this.isLoading = false
   },
   beforeRouteUpdate(to) {
     this.getProductInfo(to.params.id)
@@ -565,6 +479,28 @@ export default {
 .add-to-cart {
   &::after {
     content: '加入購物車';
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%);
+  }
+  &:hover::after {
+    color: #566b5a;
+  }
+}
+.no-stock {
+  &::after {
+    content: '售完補貨中';
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%);
+  }
+  &:hover::after {
+    color: #566b5a;
+  }
+}
+.start-custom {
+  &::after {
+    content: '開始製作';
     left: 50%;
     top: 25%;
     transform: translate(-50%);

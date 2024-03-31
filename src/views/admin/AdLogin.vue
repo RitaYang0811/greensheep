@@ -4,16 +4,20 @@
       <div class="col col-sm-8 col-md-6 col-xl-3 mx-auto text-end">
         <h1 class="fs-2 mb-4 text-center">後台登入</h1>
         <RouterLink to="/" class="d-inline-block mb-3">回前台</RouterLink>
-        <form @submit.prevent="login" class="text-start">
+        <VForm @submit="login" class="text-start" v-slot="{ errors }">
           <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input
+            <VField
+              name="email"
               type="email"
-              class="form-control"
+              rules="required|email"
+              class="form-control border-1"
+              :class="{ 'is-invalid': errors['email'] }"
               id="email"
               placeholder="name@example.com"
               v-model="user.username"
             />
+            <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
             <button
               type="button"
               class="btn btn-outline-primary mt-3 ms-auto"
@@ -24,13 +28,17 @@
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">password</label>
-            <input
+            <VField
+              name="密碼"
               type="password"
-              class="form-control"
+              rules="required"
+              class="form-control border-1"
+              :class="{ 'is-invalid': errors['密碼'] }"
               id="password"
               placeholder="password"
               v-model="user.password"
             />
+            <ErrorMessage name="密碼" class="invalid-feedback"></ErrorMessage>
             <button
               type="button"
               class="btn btn-outline-primary mt-3 ms-auto"
@@ -42,7 +50,7 @@
           <div class="text-end">
             <button type="submit" class="btn btn-primary">登入</button>
           </div>
-        </form>
+        </VForm>
       </div>
     </div>
   </div>
@@ -53,6 +61,8 @@
 import { toastSuccess, toastError } from '@/utils/sweetalertToast.js'
 import { mapActions } from 'pinia'
 import copyTextStore from '@/stores/copyTextStore'
+
+const { VITE_APP_API_URL } = import.meta.env
 
 export default {
   data() {
@@ -68,7 +78,7 @@ export default {
     ...mapActions(copyTextStore, ['copyTextMethod']),
     login() {
       this.isLoading = true
-      const url = `${import.meta.env.VITE_APP_API_URL}/admin/signin`
+      const url = `${VITE_APP_API_URL}/admin/signin`
       const data = this.user
 
       this.$http
