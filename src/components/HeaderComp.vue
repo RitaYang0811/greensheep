@@ -429,20 +429,6 @@ export default {
         this.previousScrollY = currentScrollY
       }
     })
-
-    // // 点击窗口外的区域关闭菜单
-    // window.addEventListener('click', (event) => {
-    //   if (
-    //     this.$refs.menuOffCanvas &&
-    //     this.$refs.dropdownMenuPC &&
-    //     !this.$refs.menuOffCanvas.contains(event.target) &&
-    //     !this.$refs.dropdownMenuPC.contains(event.target) &&
-    //     !this.$refs.menuBtn.contains(event.target)
-    //   ) {
-    //     this.closeMenuOffCanvas()
-    //     this.closeCollapseProduct()
-    //   }
-    // })
   }
 }
 </script>
