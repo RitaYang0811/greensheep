@@ -1,45 +1,45 @@
-//style
+// style
 import '@/assets/scss/all.scss'
 
 import { createApp, markRaw } from 'vue'
-//pinia
+// pinia
 import { createPinia } from 'pinia'
 
-//axios
+// axios
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-//vue-loading-overlay
+// vue-loading-overlay
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 
-//vue-datepicker
+// vue-datepicker
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
-//VeeValidate
+// VeeValidate
 import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate'
 import * as AllRules from '@vee-validate/rules'
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 
-//  google第三方登入
+// google第三方登入
 import vue3GoogleLogin from 'vue3-google-login'
-//CKEditor5
+// CKEditor5
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import '@ckeditor/ckeditor5-build-classic/build/translations/zh' // 語言
 
-//vue-awesome-paginate
+// vue-awesome-paginate
 import VueAwesomePaginate from 'vue-awesome-paginate'
 import 'vue-awesome-paginate/dist/style.css'
 
-//bootstrap
+// bootstrap
 import 'bootstrap/dist/js/bootstrap.min.js'
 
 import App from './App.vue'
 import router from './router'
 
-//VeeValidate 驗證規則設定
+// VeeValidate 驗證規則設定
 Object.keys(AllRules).forEach((rule) => {
   defineRule(rule, AllRules[rule])
 })
