@@ -12,10 +12,10 @@
           </li>
           <li class="breadcrumb-item" aria-current="page">
             <routerLink :to="{ path: `/products/${productInfo.category}` }"
-              >{{ productInfo.category }}
+              >客製設計 COSTOMIZED
             </routerLink>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">{{ productInfo.title }}</li>
+          <li class="breadcrumb-item active" aria-current="page">星球寶石 生日石訂製項鍊</li>
         </ol>
       </nav>
       <div class="row justify-content-between align-items-center mb-10">
@@ -34,7 +34,7 @@
                   fontFamily: selectedFont
                 }"
               >
-                <p>{{ productInfo.text }}</p>
+                <p class="fs-5">{{ product.text }}</p>
               </div>
             </div>
           </div>
@@ -86,22 +86,22 @@
                     name="輸入文字"
                     rules="max:10"
                     class="form-control no-box-shadow bg-white"
-                    :class="{ 'is-invalid': errors['商品名稱'] }"
+                    :class="{ 'is-invalid': errors['輸入文字'] }"
                     id="inputText"
                     placeholder="請輸入雷刻文字內容"
-                    v-model="productInfo.text"
+                    v-model="product.text"
                   />
                   <label for="inputText">請輸入雷刻文字內容</label>
                 </div>
+                <ErrorMessage name="輸入文字" class="invalid-feedback" />
                 <div id="step2HelpBlock" class="form-text text-start">
                   (中文最多5個字，英文最多10個字母)
                 </div>
               </div>
               <!-- <button class="col-2 btn btn-primary" id="previewButton">預覽</button> -->
-              <ErrorMessage name="輸入文字" class="invalid-feedback" />
             </VForm>
             <div class="row mx-auto py-4">
-              <div class="col-4">
+              <div class="col-6 col-md-4">
                 <label
                   for="Montserrat"
                   class="fs-2 fw-medium text-dark"
@@ -126,7 +126,7 @@
                 >
               </div>
 
-              <div class="col-4">
+              <div class="col-6 col-md-4">
                 <label
                   for="NotoSerif"
                   class="fs-2 fw-medium text-dark"
@@ -150,7 +150,7 @@
                 >
               </div>
 
-              <div class="col-4">
+              <div class="col-12 col-md-4 mx-auto">
                 <label
                   for="Script"
                   class="fs-2 fw-medium text-dark"
@@ -176,16 +176,16 @@
               </div>
             </div>
           </div>
-          <div class="d-flex justify-content-center gap-0 gap-lg-3">
+          <div class="d-flex w-80 w-lg-90 justify-content-center gap-0 gap-lg-3 mx-auto">
             <a
-              class="custom-btn bg-white text-primary fw-bold py-4 px-8"
+              class="custom-btn bg-white text-primary fw-bold py-4 px-8 w-40"
               @click.prevent="toPreviousPage"
               >上一步</a
             >
             <button
               type="button"
-              class="custom-btn custom-btn-primary text-center border-1 add-to-cart fw-bold w-70 mx-auto"
-              @click.prevent="addToCart(product.id)"
+              class="custom-btn custom-btn-primary text-center border-1 add-to-cart fw-bold w-60 mx-auto"
+              @click.prevent="addToCart(productInfo.id)"
             ></button>
           </div>
         </div>
@@ -203,7 +203,7 @@ import { mapState, mapActions } from 'pinia'
 export default {
   data() {
     return {
-      productInfo: {
+      product: {
         text: ''
       },
       selectedFont: 'Montserrat',
