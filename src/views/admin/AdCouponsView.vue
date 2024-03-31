@@ -47,7 +47,7 @@
     <a href="#" class="btn btn-primary mb-4" @click.prevent="openModal('new')">新增優惠券</a>
     <!-- PC coupons -->
     <div class="table-container table-responsive d-none d-lg-block">
-      <table class="table align-middle text-nowrap mb-4">
+      <table v-if="!loadingStatus.loadingGetCoupons && currentPageCoupons.length" class="table align-middle text-nowrap mb-4">
         <thead class="table-head position-relative">
           <tr>
             <th style="width: 15%">優惠碼</th>
@@ -172,7 +172,13 @@
           </tr>
         </tbody>
       </table>
+      <template v-else-if="!loadingStatus.loadingGetCoupons">
+        <div class="d-flex justify-content-center align-items-center" style="height: 360px;">
+          <p class="fs-5">尚無優惠券資料</p>
+        </div>
+      </template>
     </div>
+
     <!-- mobile coupons -->
     <ul class="row list-unstyled text-dark d-lg-none" style="row-gap: 12px;">
       <li class="col-12" v-for="coupon in currentPageCoupons" :key="coupon.id">
@@ -297,10 +303,11 @@
         </div>
       </li>
     </ul>
+
     <!-- pagination -->
-    <div class="text-center va-pagination">
+    <div v-if="currentPageCoupons.length" class="text-center va-pagination">
       <template v-if="currentTab === '所有優惠券' && !loadingStatus.loadingGetCoupons">
-        <vue-awesome-paginate
+        <VueAwesomePaginate
           :total-items="coupons.length"
           :items-per-page="10"
           :max-pages-shown="3"
@@ -310,6 +317,8 @@
           paginate-buttons-class="page-link"
           number-buttons-class="fs-8"
           active-page-class="active"
+          :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
+          :nextButtonClass="currentPage === Math.ceil(coupons.length / 10) ? 'disabled' : 'next-button'"
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -317,10 +326,10 @@
           <template #next-button>
             <span class="material-icons fs-8 p-1"> navigate_next </span>
           </template>
-        </vue-awesome-paginate>
+        </VueAwesomePaginate>
       </template>
       <template v-else-if="currentTab === '有效' && !loadingStatus.loadingGetCoupons">
-        <vue-awesome-paginate
+        <VueAwesomePaginate
           :total-items="validCoupons.length"
           :items-per-page="10"
           :max-pages-shown="3"
@@ -330,6 +339,8 @@
           paginate-buttons-class="page-link"
           number-buttons-class="fs-8"
           active-page-class="active"
+          :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
+          :nextButtonClass="currentPage === Math.ceil(validCoupons.length / 10) ? 'disabled' : 'next-button'"
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -337,10 +348,10 @@
           <template #next-button>
             <span class="material-icons fs-8 p-1"> navigate_next </span>
           </template>
-        </vue-awesome-paginate>
+        </VueAwesomePaginate>
       </template>
       <template v-else-if="currentTab === '尚未生效' && !loadingStatus.loadingGetCoupons">
-        <vue-awesome-paginate
+        <VueAwesomePaginate
           :total-items="notYetValidCoupons.length"
           :items-per-page="10"
           :max-pages-shown="3"
@@ -350,6 +361,8 @@
           paginate-buttons-class="page-link"
           number-buttons-class="fs-8"
           active-page-class="active"
+          :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
+          :nextButtonClass="currentPage === Math.ceil(notYetValidCoupons.length / 10) ? 'disabled' : 'next-button'"
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -357,11 +370,11 @@
           <template #next-button>
             <span class="material-icons fs-8 p-1"> navigate_next </span>
           </template>
-        </vue-awesome-paginate>
+        </VueAwesomePaginate>
       </template>
       <template v-else-if="currentTab === '已失效' && !loadingStatus.loadingGetCoupons">
-        <vue-awesome-paginate
-          :total-items="InvalidCoupons.length"
+        <VueAwesomePaginate
+          :total-items="invalidCoupons.length"
           :items-per-page="10"
           :max-pages-shown="3"
           v-model="currentPage"
@@ -370,6 +383,8 @@
           paginate-buttons-class="page-link"
           number-buttons-class="fs-8"
           active-page-class="active"
+          :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
+          :nextButtonClass="currentPage === Math.ceil(invalidCoupons.length / 10) ? 'disabled' : 'next-button'"
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -377,9 +392,11 @@
           <template #next-button>
             <span class="material-icons fs-8 p-1"> navigate_next </span>
           </template>
-        </vue-awesome-paginate>
+        </VueAwesomePaginate>
       </template>
     </div>
+
+    <!-- loading -->
     <div
       v-if="loadingStatus.loadingGetCoupons"
       class="d-flex justify-content-center align-items-center"
@@ -409,6 +426,7 @@ import { dateToUnix } from '@/utils/dateToUnix.js'
 import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
 import { scrollToTop } from '@/utils/scrollToTop.js'
 
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
 export default {
   data() {
@@ -419,7 +437,7 @@ export default {
       coupons: [],
       validCoupons: [],
       notYetValidCoupons: [],
-      InvalidCoupons: [],
+      invalidCoupons: [],
       coupon: {},
       newCoupon: {
         title: '金額折抵' // 預設值給 :checked 判斷
@@ -445,7 +463,7 @@ export default {
         // 清空資料
         this.coupons = []
         this.validCoupons = []
-        this.InvalidCoupons = []
+        this.invalidCoupons = []
         this.notYetValidCoupons = []
         this.currentPageCoupons = []
 
@@ -454,7 +472,7 @@ export default {
         let currentPageNum
         let totalPagesNum
 
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupons`
+        const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupons`
 
         // get 第一頁資料
         const resFirstPage = await this.$http.get(url)
@@ -487,7 +505,7 @@ export default {
         if (dateToUnix('now') > coupon.start_date && dateToUnix('now') < coupon.due_date) {
           this.validCoupons.push(coupon)
         } else if (dateToUnix('now') > coupon.due_date) {
-          this.InvalidCoupons.push(coupon)
+          this.invalidCoupons.push(coupon)
         } else if (dateToUnix('now') < coupon.start_date) {
           this.notYetValidCoupons.push(coupon)
         }
@@ -509,7 +527,7 @@ export default {
           this.currentPageCoupons = this.notYetValidCoupons.slice((page - 1) * 10, page * 10)
           break
         case '已失效':
-          this.currentPageCoupons = this.InvalidCoupons.slice((page - 1) * 10, page * 10)
+          this.currentPageCoupons = this.invalidCoupons.slice((page - 1) * 10, page * 10)
           break
       }
       scrollToTop()
@@ -526,7 +544,7 @@ export default {
       try {
         this.loadingStatus.loadingGetCoupon = true
 
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupons`
+        const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupons`
 
         const res = await this.$http.get(url)
         this.coupon = res.data.coupons.find((coupon) => coupon.id === id)
@@ -567,7 +585,7 @@ export default {
       // 判斷是新增或編輯
       if (this.isNew) {
         // 新增優惠券
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupon`
+        const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupon`
 
         this.$http
           .post(url, { data: data })
@@ -584,7 +602,7 @@ export default {
           })
       } else if (!this.isNew) { // 編輯優惠券
         const id = couponData.id
-        const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupon/${id}`
+        const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupon/${id}`
 
         this.$http
           .put(url, { data: data })
@@ -604,7 +622,7 @@ export default {
     // 刪除優惠券
     deleteCoupon(id) {
       this.loadingStatus.loadingDelCoupon = id
-      const url = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/admin/coupon/${id}`
+      const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupon/${id}`
 
       this.$http
         .delete(url)

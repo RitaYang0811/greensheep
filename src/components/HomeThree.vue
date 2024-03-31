@@ -1,36 +1,3 @@
-<script>
-import Popover from 'bootstrap/js/dist/popover'
-
-export default {
-  data() {
-    return {
-      popoverRing: '',
-      popoverNecklace: ''
-    }
-  },
-  methods: {
-    closePopover() {
-      this.popoverRing.hide()
-      this.popoverNecklace.hide()
-    }
-  },
-  mounted() {
-    this.popoverRing = new Popover(this.$refs.ringPopoverBtn, {
-      container: '.home3', // 指定要在哪個位置渲染
-      html: true,
-      content: this.$refs.ringPopoverContent,
-      placement: 'top'
-    })
-    this.popoverNecklace = new Popover(this.$refs.necklacePopoverBtn, {
-      container: '.home3',
-      html: true,
-      content: this.$refs.necklacePopoverContent,
-      placement: 'top'
-    })
-  }
-}
-</script>
-
 <template>
   <div class="home3">
     <!-- 客製化 -->
@@ -64,8 +31,8 @@ export default {
                 <p class="text-decolight mb-4 ls-2">Step 1：選擇專屬寶石</p>
                 <p class="text-decolight mb-4 ls-2">Step 2：輸入你想說的話</p>
               </div>
-              <router-link
-                to="/products/productsAll"
+              <RouterLink
+                to="/products/全部商品 ALL"
                 class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary ls-2"
                 data-aos="fade-left"
                 data-aos-duration="1200"
@@ -73,7 +40,7 @@ export default {
                 data-aos-once="true"
               >
                 Start Now
-              </router-link>
+              </RouterLink>
             </div>
             <!-- 客製化戒指 -->
             <div class="col-8 col-md-6 col-lg-4 position-relative">
@@ -106,7 +73,7 @@ export default {
                       placeholder="hello world !"
                     />
                     <!-- 待修改路由，需加上 method: closePopover -->
-                    <a href="##">
+                    <a href="#" @click.prevent="">
                       <span class="material-icons text-secondary">send</span>
                     </a>
                   </div>
@@ -134,13 +101,13 @@ export default {
                   <p class="mb-3 text-dark">選擇寶石</p>
                   <div class="d-flex gap-2">
                     <!-- 待修改路由，需加上 method: closePopover -->
-                    <a href="##">
+                    <a href="#" @click.prevent="">
                       <img src="@/assets/images/stoneBox.png" alt="寶石 1" />
                     </a>
-                    <a href="##">
+                    <a href="#" @click.prevent="">
                       <img src="@/assets/images/stoneBox1.png" alt="寶石 2" />
                     </a>
-                    <a href="##">
+                    <a href="#" @click.prevent="">
                       <img src="@/assets/images/stoneBox2.png" alt="寶石 3" />
                     </a>
                   </div>
@@ -267,5 +234,35 @@ export default {
     </div>
   </div>
 </template>
+<script>
+import Popover from 'bootstrap/js/dist/popover'
 
-<style scoped></style>
+export default {
+  data() {
+    return {
+      popoverRing: '',
+      popoverNecklace: ''
+    }
+  },
+  methods: {
+    closePopover() {
+      this.popoverRing.hide()
+      this.popoverNecklace.hide()
+    }
+  },
+  mounted() {
+    this.popoverRing = new Popover(this.$refs.ringPopoverBtn, {
+      container: '.home3', // 指定要在哪個位置渲染
+      html: true,
+      content: this.$refs.ringPopoverContent,
+      placement: 'top'
+    })
+    this.popoverNecklace = new Popover(this.$refs.necklacePopoverBtn, {
+      container: '.home3',
+      html: true,
+      content: this.$refs.necklacePopoverContent,
+      placement: 'top'
+    })
+  }
+}
+</script>

@@ -84,29 +84,28 @@
   
   // 品牌故事區塊
   .bg-image2 {
-    background-image: url('@/assets/images/img-scroll-view-bg.jpg'); /* 背景圖片*/
+    background-image: url('@/assets/images/img-scroll-view-bg.jpg');
     max-width: 100%;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    height: 562px; /* 可依需求調整高度 */
+    height: 562px;
   }
   
   .bg-image3 {
-    background-image: url('@/assets/images/img-scroll-view-bg.jpg'); /* 背景圖片*/
+    background-image: url('@/assets/images/img-scroll-view-bg.jpg');
     max-width: 100%;
     background-repeat: no-repeat;
     background-size: cover;
   }
   
   .bg-image2-mobile {
-    background-image: url('@/assets/images/img-scrollView-m.png'); /* 手機板背景圖片*/
+    background-image: url('@/assets/images/img-scrollView-m.png');
     max-width: 100%;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    /* 可依需求調整高度 */
   }
 }

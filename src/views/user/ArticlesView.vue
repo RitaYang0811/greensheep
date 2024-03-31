@@ -139,7 +139,7 @@
     </ul>
     <!-- pagination -->
     <template v-if="!isLoading">
-      <vue-awesome-paginate
+      <VueAwesomePaginate
         :total-items="articles.length"
         :items-per-page="11"
         :max-pages-shown="3"
@@ -149,6 +149,8 @@
         paginate-buttons-class="page-link"
         number-buttons-class="fs-8"
         active-page-class="active"
+        :backButtonClass="articlesCurrentPage === 1 ? 'disabled' : 'back-button'"
+        :nextButtonClass="articlesCurrentPage === Math.ceil(articles.length / 11) ? 'disabled' : 'next-button'"
       >
         <template #prev-button>
           <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -156,7 +158,7 @@
         <template #next-button>
           <span class="material-icons fs-8 p-1"> navigate_next </span>
         </template>
-      </vue-awesome-paginate>
+      </VueAwesomePaginate>
     </template>
   </div>
   <VueLoading :active="isLoading" />
@@ -191,4 +193,3 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss"></style>
