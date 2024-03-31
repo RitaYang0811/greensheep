@@ -8,7 +8,7 @@ export default defineStore('cartStore', {
   state: () => ({
     carts: [],
     cart: {},
-    deliverData:{},
+    deliverData: {}
   }),
   actions: {
     addToCart(id, qty = 1) {
@@ -66,8 +66,7 @@ export default defineStore('cartStore', {
             showConfirmButton: false,
             toast: true,
             timer: 1500
-          });
-
+          })
         })
         .catch((err) => {
           console.log(err)
@@ -92,8 +91,12 @@ export default defineStore('cartStore', {
             .delete(deleteCartUrl)
             .then(() => {
               Swal.fire({
-                title: '刪除成功!',
-                icon: 'success'
+                position: 'top-end',
+                icon: 'success',
+                title: '商品刪除成功',
+                showConfirmButton: false,
+                toast: true,
+                timer: 1500
               })
               this.getCarts()
             })
@@ -103,8 +106,8 @@ export default defineStore('cartStore', {
         }
       })
     },
-    getDeliverData(data){
-      this.deliverData = {...data};
+    getDeliverData(data) {
+      this.deliverData = { ...data }
     }
   },
 
