@@ -32,7 +32,7 @@
                 <p class="text-decolight mb-4 ls-2">Step 2：輸入你想說的話</p>
               </div>
               <router-link
-                to="/products/productsAll"
+                to="/products/全部商品 ALL"
                 class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary ls-2"
                 data-aos="fade-left"
                 data-aos-duration="1200"
@@ -73,7 +73,7 @@
                       placeholder="hello world !"
                     />
                     <!-- 待修改路由，需加上 method: closePopover -->
-                    <a href="##">
+                    <a href="#" @click.prevent="">
                       <span class="material-icons text-secondary">send</span>
                     </a>
                   </div>
@@ -101,13 +101,13 @@
                   <p class="mb-3 text-dark">選擇寶石</p>
                   <div class="d-flex gap-2">
                     <!-- 待修改路由，需加上 method: closePopover -->
-                    <a href="##">
+                    <a href="#" @click.prevent="">
                       <img src="@/assets/images/stoneBox.png" alt="寶石 1" />
                     </a>
-                    <a href="##">
+                    <a href="#" @click.prevent="">
                       <img src="@/assets/images/stoneBox1.png" alt="寶石 2" />
                     </a>
-                    <a href="##">
+                    <a href="#" @click.prevent="">
                       <img src="@/assets/images/stoneBox2.png" alt="寶石 3" />
                     </a>
                   </div>
