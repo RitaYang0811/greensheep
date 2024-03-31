@@ -31,7 +31,7 @@
                 <p class="text-decolight mb-4 ls-2">Step 1：選擇專屬寶石</p>
                 <p class="text-decolight mb-4 ls-2">Step 2：輸入你想說的話</p>
               </div>
-              <router-link
+              <RouterLink
                 to="/products/全部商品 ALL"
                 class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary ls-2"
                 data-aos="fade-left"
@@ -40,7 +40,7 @@
                 data-aos-once="true"
               >
                 Start Now
-              </router-link>
+              </RouterLink>
             </div>
             <!-- 客製化戒指 -->
             <div class="col-8 col-md-6 col-lg-4 position-relative">
