@@ -1,37 +1,32 @@
 <template>
   <div class="container pt-40">
     <!-- progress -->
-    <div class="mb-30">
-      <div class="position-relative m-4 w-75 mx-auto">
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0"
-            aria-valuemax="100"></div>
+    <div>
+      <div class="p-10 d-flex justify-content-center" style="z-index: 10">
+        <div class="">
+          <div class="btn btn-outline-primary border-2 rounded-circle bg-primary pe-none"><i
+              class="bi bi-check-lg fs-2 text-light"></i>
+          </div>
+          <p class="mt-3 fs-6 text-primary">確認購買明細</p>
         </div>
-        <button type="button"
-          class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
-          style="width: 3rem; height: 3rem">
-          1
-        </button>
-        <button type="button"
-          class="position-absolute top-0 start-50 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
-          style="width: 3rem; height: 3rem">
-          2
-        </button>
-        <button type="button"
-          class="position-absolute top-0 start-100 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
-          style="width: 3rem; height: 3rem">
-          3
-        </button>
-      </div>
-
-      <div class="position-relative mt-15 w-75 mx-auto">
-        <p class="position-absolute top-0 start-0 translate-middle text-primary">確認購買明細</p>
-
-        <p class="position-absolute top-0 start-50 translate-middle text-primary">付款資料填寫</p>
-
-        <p class="position-absolute top-0 end-n7 translate-middle text-primary">訂單完成</p>
+        <div class="mt-5 bg-light border border-greyD4" style="height: 8px; width: 35%">
+        </div>
+        <div class="opacity-50">
+          <div class="btn btn-outline-primary border-2 rounded-circle pe-none"><i
+              class="bi bi-check-lg fs-2 text-primary"></i>
+          </div>
+          <p class="mt-3 fs-6 text-primary">付款資料填寫</p>
+        </div>
+        <div class="mt-5 bg-light border border-greyD4" style="height: 8px; width: 35%"></div>
+        <div class="opacity-50">
+          <div class="btn btn-outline-primary border-2 rounded-circle pe-none"><i
+              class="bi bi-check-lg fs-2 text-primary"></i>
+          </div>
+          <p class="mt-3 fs-6 text-primary">訂單完成</p>
+        </div>
       </div>
     </div>
+
 
     <h1 class="fs-4 fs-lg-2 py-20 text-center fw-bold">購物車</h1>
     <Loading v-model:active="isLoading"></Loading>
@@ -177,7 +172,7 @@
       carts[0]?.coupon
         ? parseInt(total) - carts[0]?.coupon?.discount_price
         : parseInt(total)
-              }}
+    }}
             </p>
           </div>
           <button type="button" class="btn btn-primary p-5 fs-5 w-100 text-white" @click="goCheckout">

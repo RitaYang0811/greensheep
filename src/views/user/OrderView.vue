@@ -1,7 +1,7 @@
 <template>
   <div class="container py-20 pt-40">
     <!-- progress -->
-    <div class="mb-30">
+    <!-- <div class="mb-30">
       <div class="position-relative m-4 w-75 mx-auto">
         <div class="progress">
           <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0"
@@ -31,7 +31,36 @@
 
         <p class="position-absolute top-0 end-n7 translate-middle text-primary">訂單完成</p>
       </div>
+    </div> -->
+
+    <div>
+      <div class="p-10 d-flex justify-content-center" style="z-index: 10">
+        <div class="">
+          <!-- <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" checked /> -->
+          <div class="btn btn-outline-primary border-2 rounded-circle bg-primary pe-none"><i
+              class="bi bi-check-lg fs-2 text-light"></i>
+          </div>
+          <p class="mt-3 fs-6 text-primary">確認購買明細</p>
+        </div>
+        <div class="mt-5 bg-primary border border-greyD4" style="height: 8px; width: 35%">
+        </div>
+        <div class="">
+          <!-- <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" checked disabled /> -->
+          <div class="btn btn-outline-primary border-2 rounded-circle bg-primary pe-none"><i
+              class="bi bi-check-lg fs-2 text-light"></i>
+          </div>
+          <p class="mt-3 fs-6 text-primary">付款資料填寫</p>
+        </div>
+        <div class="mt-5 bg-light border border-greyD4" style="height: 8px; width: 35%"></div>
+        <div class="opacity-50">
+          <div class="btn btn-outline-primary border-2 rounded-circle pe-none"><i
+              class="bi bi-check-lg fs-2 text-primary"></i>
+          </div>
+          <p class="mt-3 fs-6 text-primary">訂單完成</p>
+        </div>
+      </div>
     </div>
+
     <!-- 購物車內容 -->
     <div class="">
       <table class="table align-middle border-primary">
