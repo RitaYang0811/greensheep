@@ -48,16 +48,18 @@ export default defineStore('cartStore', {
     },
     //修改購物車(修改數量)
     updateCart(cart) {
-      const updateCartUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/cart/${cart.id}`
+      const updateCartUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart/${cart.id}`
       const cartData = {
         data: {
-          product_id: cart.id,
+          product_id: cart.product.id,
           qty: cart.qty
         }
       }
-      axios
+      setTimeout(() => {
+        axios
         .put(updateCartUrl, cartData)
-        .then(() => {
+        .then((res) => {
+          console.log(res)
           this.getCarts()
           Swal.fire({
             position: 'top-end',
@@ -71,11 +73,31 @@ export default defineStore('cartStore', {
         .catch((err) => {
           console.log(err)
         })
+  
+      }, 1500)
+     
+      // axios
+      //   .put(updateCartUrl, cartData)
+      //   .then((res) => {
+      //     console.log(res)
+      //     this.getCarts()
+      //     Swal.fire({
+      //       position: 'top-end',
+      //       icon: 'success',
+      //       title: '修改數量成功',
+      //       showConfirmButton: false,
+      //       toast: true,
+      //       timer: 1500
+      //     })
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
     },
     //刪除購物車中單筆資料
     deleteCart(id) {
       this.isLoading = true
-      const deleteCartUrl = `${import.meta.env.VITE_APP_API_URL}/api/${import.meta.env.VITE_APP_API_NAME}/cart/${id}`
+      const deleteCartUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart/${id}`
       //加入sweetalert
       Swal.fire({
         title: '是否刪除該商品?',
@@ -105,6 +127,40 @@ export default defineStore('cartStore', {
             })
         }
       })
+    },
+    //刪除所有購物車內容
+    deleteAllCarts(){
+      const deleteAllCartsUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/carts`
+      Swal.fire({
+        title: '是否刪除購物車全部商品?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#566b5a',
+        cancelButtonText: '  否  ',
+        confirmButtonText: '  是  '
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(deleteAllCartsUrl)
+            .then(() => {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '所有商品刪除成功',
+                showConfirmButton: false,
+                toast: true,
+                timer: 1500
+              })
+              this.getCarts()
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }
+      })
+
+
     },
     getDeliverData(data) {
       this.deliverData = { ...data }
