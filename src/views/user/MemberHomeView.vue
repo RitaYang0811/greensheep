@@ -44,7 +44,8 @@
         v-model="user.phone" />
     </div>
     <div class="w-75 px-25 mx-auto d-flex justify-content-end">
-      <button class="px-4 py-3 fs-7 fs-md-6 bg-light border-0 text-white" disabled @click.prevent="updateUser()">
+      <button type="button" class="px-4 py-3 fs-7 fs-md-6 bg-light border-0 text-white" disabled
+        @click.prevent="updateUser()">
         修改資料
       </button>
     </div>
@@ -72,13 +73,17 @@ export default {
       let loginUser = localStorage.getItem('userInfo')
       const loginUserId = JSON.parse(loginUser).id
       const url = 'https://greensheep-json-server.onrender.com/users'
-      this.$http.get(url).then((res) => {
-        res.data.forEach((item) => {
-          if (item.id == loginUserId) {
-            this.user = item
-          }
+      this.$http.get(url)
+        .then((res) => {
+          res.data.forEach((item) => {
+            if (item.id == loginUserId) {
+              this.user = item
+            }
+          })
         })
-      })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     //更新使用者資料
     // updateUser() {
@@ -90,5 +95,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss"></style>
