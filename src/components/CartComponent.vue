@@ -9,9 +9,12 @@
     <div class="offcanvas-body d-flex flex-column justify-content-between">
       <div class="">
         <h3 class="text-center mb-5 fw-bold">購物車</h3>
-        <p class="fs-4 text-primary mt-10" v-if="!carts.length">
-          目前購物車沒有商品，<br />趕緊去購物吧！
-        </p>
+        <div class="fs-4 text-primary mt-10" v-if="!carts.length">
+          <p>目前購物車沒有商品</p>
+          <router-link to="/products/全部商品%20ALL" @click="closeOffcanvas"
+            class="mt-2 link-secondary">趕緊去購物吧！</router-link>
+
+        </div>
         <div class="overflow-y-auto" v-else>
           <ul class="list-group list-group-flush">
             <li class="list-group-item mt-3" v-for="cart in carts" :key="cart.id">
@@ -59,7 +62,8 @@
         <p class="text-success text-end fs-4 p-4 text-dark border-top">
           總計：$ <span>{{ parseInt(total) }}</span> 元
         </p>
-        <router-link to="/cart" class="btn btn-primary w-100 fs-4 p-4" @click="closeOffcanvas">
+        <router-link to="/cart" class="btn btn-primary w-100 fs-4 p-4" @click="closeOffcanvas"
+          :class="carts.length ? '' : 'disabled'">
           立即結帳
         </router-link>
       </div>
@@ -97,8 +101,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-// bootstrap icon
-@import 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css';
-</style>
