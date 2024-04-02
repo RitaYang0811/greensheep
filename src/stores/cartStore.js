@@ -58,8 +58,7 @@ export default defineStore('cartStore', {
       setTimeout(() => {
         axios
         .put(updateCartUrl, cartData)
-        .then((res) => {
-          console.log(res)
+        .then(() => {
           this.getCarts()
           Swal.fire({
             position: 'top-end',
@@ -75,24 +74,7 @@ export default defineStore('cartStore', {
         })
   
       }, 1500)
-     
-      // axios
-      //   .put(updateCartUrl, cartData)
-      //   .then((res) => {
-      //     console.log(res)
-      //     this.getCarts()
-      //     Swal.fire({
-      //       position: 'top-end',
-      //       icon: 'success',
-      //       title: '修改數量成功',
-      //       showConfirmButton: false,
-      //       toast: true,
-      //       timer: 1500
-      //     })
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   })
+    
     },
     //刪除購物車中單筆資料
     deleteCart(id) {
@@ -159,8 +141,6 @@ export default defineStore('cartStore', {
             })
         }
       })
-
-
     },
     getDeliverData(data) {
       this.deliverData = { ...data }

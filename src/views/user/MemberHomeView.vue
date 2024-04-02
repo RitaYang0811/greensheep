@@ -1,16 +1,4 @@
 <template>
-  <!-- <h1>Member Home Page</h1> -->
-
-  <!-- <nav aria-label="breadcrumb">
-    <ol class="breadcrumb mb-7 mb-md-15">
-      <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-      <li class="breadcrumb-item active" aria-current="page">
-        會員資料
-      </li>
-    </ol>
-  </nav> -->
-  <!-- 暱稱、信箱、密碼、生日、最愛 、地址、電話、最愛 -->
-
   <h1 class="fs-3 fs-lg-2 text-start mb-6 fw-bold">會員資料</h1>
   <form action="" class="py-8 border border-1 border-primary w-100 text-start" style="border-radius: 30px 0">
     <div class="d-flex w-75 mb-5 mx-auto align-items-center">

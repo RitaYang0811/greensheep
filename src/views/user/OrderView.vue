@@ -1,42 +1,9 @@
 <template>
   <div class="container py-20 pt-40">
     <!-- progress -->
-    <!-- <div class="mb-30">
-      <div class="position-relative m-4 w-75 mx-auto">
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0"
-            aria-valuemax="100"></div>
-        </div>
-        <button type="button"
-          class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
-          style="width: 3rem; height: 3rem">
-          1
-        </button>
-        <button type="button"
-          class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
-          style="width: 3rem; height: 3rem">
-          2
-        </button>
-        <button type="button"
-          class="position-absolute top-0 start-100 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
-          style="width: 3rem; height: 3rem">
-          3
-        </button>
-      </div>
-
-      <div class="position-relative mt-15 w-75 mx-auto">
-        <p class="position-absolute top-0 start-0 translate-middle text-primary">確認購買明細</p>
-
-        <p class="position-absolute top-0 start-50 translate-middle text-primary">付款資料填寫</p>
-
-        <p class="position-absolute top-0 end-n7 translate-middle text-primary">訂單完成</p>
-      </div>
-    </div> -->
-
     <div>
       <div class="p-10 d-flex justify-content-center" style="z-index: 10">
         <div class="">
-          <!-- <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" checked /> -->
           <div class="btn btn-outline-primary border-2 rounded-circle bg-primary pe-none"><i
               class="bi bi-check-lg fs-2 text-light"></i>
           </div>
@@ -45,7 +12,6 @@
         <div class="mt-5 bg-primary border border-greyD4" style="height: 8px; width: 35%">
         </div>
         <div class="">
-          <!-- <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" checked disabled /> -->
           <div class="btn btn-outline-primary border-2 rounded-circle bg-primary pe-none"><i
               class="bi bi-check-lg fs-2 text-light"></i>
           </div>
