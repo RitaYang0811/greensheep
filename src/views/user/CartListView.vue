@@ -165,14 +165,13 @@
           <div class="border border-primary border-1 mb-5"></div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">合計：</p>
-            {{ carts[0]?.coupon?.discount_price }}
             <p class="fw-bold">
               NT$
               {{
       carts[0]?.coupon
         ? parseInt(total) - carts[0]?.coupon?.discount_price
         : parseInt(total)
-    }}
+              }}
             </p>
           </div>
           <button type="button" class="btn btn-primary p-5 fs-5 w-100 text-white" @click="goCheckout">
@@ -269,7 +268,7 @@ export default {
       if (coupon?.percent == 100) {
         return `消費滿 NT$ ${coupon?.min_buy_price_by_price}，享 ${coupon?.discount_price} 折扣`
       } else {
-        return `消費滿 NT$ ${coupon?.min_buy_price_by_price}，享
+        return `消費滿 NT$ ${coupon?.min_buy_price_by_discount}，享
             ${coupon?.percent / 10} 折`
       }
     },
