@@ -8,7 +8,8 @@ export default defineStore('cartStore', {
   state: () => ({
     carts: [],
     cart: {},
-    deliverData: {}
+    deliverData: {},
+    isLoading: false,
   }),
   actions: {
     addToCart(id, qty = 1) {
@@ -55,11 +56,13 @@ export default defineStore('cartStore', {
           qty: cart.qty
         }
       }
-      setTimeout(() => {
-        axios
+      this.isLoading = true
+
+      axios
         .put(updateCartUrl, cartData)
         .then(() => {
           this.getCarts()
+          this.isLoading = false
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -72,9 +75,26 @@ export default defineStore('cartStore', {
         .catch((err) => {
           console.log(err)
         })
-  
-      }, 1500)
-    
+
+
+      // setTimeout(() => {
+      //   axios
+      //   .put(updateCartUrl, cartData)
+      //   .then(() => {
+      //     this.getCarts()
+      //     Swal.fire({
+      //       position: 'top-end',
+      //       icon: 'success',
+      //       title: '修改數量成功',
+      //       showConfirmButton: false,
+      //       toast: true,
+      //       timer: 1500
+      //     })
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   }) 
+      // }, 1500)    
     },
     //刪除購物車中單筆資料
     deleteCart(id) {

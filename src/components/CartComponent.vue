@@ -69,6 +69,7 @@
       </div>
     </div>
   </div>
+  <VueLoading :active="isLoading" />
 </template>
 
 <script>
@@ -92,7 +93,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(cartStore, ['carts', 'total'])
+    ...mapState(cartStore, ['carts', 'total', 'isLoading'])
   },
 
   mounted() {

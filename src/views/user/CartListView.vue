@@ -171,7 +171,7 @@
       carts[0]?.coupon
         ? parseInt(total) - carts[0]?.coupon?.discount_price
         : parseInt(total)
-              }}
+    }}
             </p>
           </div>
           <button type="button" class="btn btn-primary p-5 fs-5 w-100 text-white" @click="goCheckout">
@@ -184,6 +184,7 @@
 
   <!--  訂 購 前 請 詳 閱  -->
   <OrderRules></OrderRules>
+  <VueLoading :active="isLoading" />
 </template>
 
 <script>
@@ -334,7 +335,7 @@ export default {
   },
 
   computed: {
-    ...mapState(cartStore, ['carts', 'total']),
+    ...mapState(cartStore, ['carts', 'total', 'isLoading']),
     rawTotal() {
       let total = 0
       this.carts.forEach((item) => {
