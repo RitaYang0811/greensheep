@@ -34,7 +34,6 @@ export default defineStore('cartStore', {
           console.log(err)
         })
     },
-
     //取得購物車資料
     getCarts() {
       const getCartUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart`
@@ -57,7 +56,6 @@ export default defineStore('cartStore', {
         }
       }
       this.isLoading = true
-
       axios
         .put(updateCartUrl, cartData)
         .then(() => {
@@ -74,31 +72,10 @@ export default defineStore('cartStore', {
         })
         .catch((err) => {
           console.log(err)
-        })
-
-
-      // setTimeout(() => {
-      //   axios
-      //   .put(updateCartUrl, cartData)
-      //   .then(() => {
-      //     this.getCarts()
-      //     Swal.fire({
-      //       position: 'top-end',
-      //       icon: 'success',
-      //       title: '修改數量成功',
-      //       showConfirmButton: false,
-      //       toast: true,
-      //       timer: 1500
-      //     })
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   }) 
-      // }, 1500)    
+        })  
     },
     //刪除購物車中單筆資料
     deleteCart(id) {
-      this.isLoading = true
       const deleteCartUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart/${id}`
       //加入sweetalert
       Swal.fire({
@@ -111,9 +88,11 @@ export default defineStore('cartStore', {
         confirmButtonText: '  是  '
       }).then((result) => {
         if (result.isConfirmed) {
+          this.isLoading = true
           axios
             .delete(deleteCartUrl)
             .then(() => {
+              this.isLoading = false
               Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -121,7 +100,7 @@ export default defineStore('cartStore', {
                 showConfirmButton: false,
                 toast: true,
                 timer: 1500
-              })
+              })              
               this.getCarts()
             })
             .catch((err) => {
@@ -143,9 +122,11 @@ export default defineStore('cartStore', {
         confirmButtonText: '  是  '
       }).then((result) => {
         if (result.isConfirmed) {
+          this.isLoading = true
           axios
             .delete(deleteAllCartsUrl)
             .then(() => {
+              this.isLoading = false
               Swal.fire({
                 position: 'top-end',
                 icon: 'success',
