@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-
+  <VueLoading :active="isLoading" />
 </template>
 
 <script>
@@ -31,6 +31,7 @@ const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default {
   data() {
     return {
+      isLoading: false,
       myFavoritesId: [],
       myFavoriteProducts: [],
       deleteId: '',
@@ -56,6 +57,7 @@ export default {
     },
     //取得該登入使用者的最愛名單(將最愛中UserID是該user的全部找出來放入myFavoritesId中)
     getFavorites() {
+      this.isLoading = true
       this.myFavoritesId = []
       //找出使用者ID
       let loginUser = localStorage.getItem('userInfo')
@@ -65,6 +67,7 @@ export default {
       this.$http
         .get(getFavoritesUrl)
         .then((res) => {
+          this.isLoading = false
           res.data.forEach((item) => {
             if (item.userId == loginUserId) {
               this.myFavoritesId.push(item)
@@ -80,9 +83,11 @@ export default {
     getFavoriteProducts() {
       this.myFavoriteProducts = []
       const getProductsUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products/all`
+      this.isLoading = true
       this.$http
         .get(getProductsUrl)
         .then((res) => {
+          this.isLoading = false
           res.data.products.forEach((item) => {
             this.myFavoritesId.forEach((item2) => {
               if (item.id == item2.productId) {
@@ -112,10 +117,20 @@ export default {
         confirmButtonText: '  是  '
       }).then((result) => {
         if (result.isConfirmed) {
+          this.isLoading = true
           const deletefavoriteUrl = `https://greensheep-json-server.onrender.com/favorites/${this.deleteId}`
           this.$http.delete(deletefavoriteUrl)
             .then(() => {
+              this.isLoading = false
               this.getFavorites()
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '刪除最愛成功',
+                showConfirmButton: false,
+                toast: true,
+                timer: 1500
+              })
             })
             .catch((err) => {
               console.log(err)

@@ -1,49 +1,32 @@
 <template>
   <div class="container pt-40">
     <!-- progress -->
-    <div class="mb-30">
-      <div class="position-relative m-4 w-75 mx-auto">
-        <div class="progress">
-          <div
-            class="progress-bar"
-            role="progressbar"
-            style="width: 0%"
-            aria-valuenow="50"
-            aria-valuemin="0"
-            aria-valuemax="100"
-          ></div>
+    <div>
+      <div class="p-10 d-flex justify-content-center" style="z-index: 10">
+        <div class="">
+          <div class="btn btn-outline-primary border-2 rounded-circle bg-primary pe-none"><i
+              class="bi bi-check-lg fs-2 text-light"></i>
+          </div>
+          <p class="mt-3 fs-6 text-primary">確認購買明細</p>
         </div>
-        <button
-          type="button"
-          class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill pe-none"
-          style="width: 3rem; height: 3rem"
-        >
-          1
-        </button>
-        <button
-          type="button"
-          class="position-absolute top-0 start-50 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
-          style="width: 3rem; height: 3rem"
-        >
-          2
-        </button>
-        <button
-          type="button"
-          class="position-absolute top-0 start-100 translate-middle btn btn-sm bg-white rounded-pill border border-1 border-primary text-primary pe-none"
-          style="width: 3rem; height: 3rem"
-        >
-          3
-        </button>
-      </div>
-
-      <div class="position-relative mt-15 w-75 mx-auto">
-        <p class="position-absolute top-0 start-0 translate-middle text-primary">確認購買明細</p>
-
-        <p class="position-absolute top-0 start-50 translate-middle text-primary">付款資料填寫</p>
-
-        <p class="position-absolute top-0 end-n7 translate-middle text-primary">訂單完成</p>
+        <div class="mt-5 bg-light border border-greyD4" style="height: 8px; width: 35%">
+        </div>
+        <div class="opacity-50">
+          <div class="btn btn-outline-primary border-2 rounded-circle pe-none"><i
+              class="bi bi-check-lg fs-2 text-primary"></i>
+          </div>
+          <p class="mt-3 fs-6 text-primary">付款資料填寫</p>
+        </div>
+        <div class="mt-5 bg-light border border-greyD4" style="height: 8px; width: 35%"></div>
+        <div class="opacity-50">
+          <div class="btn btn-outline-primary border-2 rounded-circle pe-none"><i
+              class="bi bi-check-lg fs-2 text-primary"></i>
+          </div>
+          <p class="mt-3 fs-6 text-primary">訂單完成</p>
+        </div>
       </div>
     </div>
+
 
     <h1 class="fs-4 fs-lg-2 py-20 text-center fw-bold">購物車</h1>
     <Loading v-model:active="isLoading"></Loading>
@@ -64,11 +47,7 @@
               <div class="row g-0 align-items-center">
                 <div class="col-md-4">
                   <div class="ratio ratio-1x1">
-                    <img
-                      :src="cart.product.imageUrl"
-                      class="img-fluid object-fit-cover"
-                      alt="..."
-                    />
+                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover" alt="product-image" />
                   </div>
                 </div>
                 <div class="col-md-8">
@@ -84,49 +63,42 @@
           </th>
           <td class="py-4">
             <div class="d-flex justify-content-center">
-              <button
-                class="btn btn-link text-primary"
-                @click.prevent="cart.qty--"
-                @click="updateCart(cart)"
-                :disabled="cart.qty <= 1"
-              >
+              <button type="button" class="btn btn-link text-primary" @click.prevent="cart.qty--"
+                @click="updateCart(cart)" :disabled="cart.qty <= 1">
                 <i class="bi bi-dash-circle fs-3"></i>
               </button>
-              <input
-                type="number"
-                class="p-2 w-20 text-center"
-                min="1"
-                v-model="cart.qty"
-                disabled
-              />
+              <input type="number" class="p-lg-2 w-20 text-center" min="1" v-model="cart.qty" disabled />
 
-              <button
-                class="btn btn-link text-primary"
-                @click.prevent="cart.qty++"
-                @click="updateCart(cart)"
-              >
+              <button type="button" class="btn btn-link text-primary" @click.prevent="cart.qty++"
+                @click="updateCart(cart)">
                 <i class="bi bi-plus-circle fs-3"></i>
               </button>
             </div>
           </td>
-          <td class="py-4 text-primary">NT$ {{ parseInt(cart.total) }}</td>
+          <td class="py-4 text-primary">
+            <small class="text-center">單價：NT$ {{ cart.product.price }}</small>
+            <p class="text-center fw-medium">總價：NT$ {{ parseInt(cart.total) }}</p>
+          </td>
           <td class="py-4">
-            <button class="btn btn-primary" @click="deleteCart(cart.id)">刪除</button>
+            <button type="button" class="btn btn-primary" @click="deleteCart(cart.id)">刪除</button>
           </td>
         </tr>
       </tbody>
     </table>
+    <div class="d-flex my-4 mx-2">
+      <button type="button" class="btn btn-danger" @click="deleteAllCarts">刪除全部商品</button>
+    </div>
+
   </div>
+
   <!-- 免運 -->
   <div v-if="carts[0]?.coupon?.title" class="container pt-10">
     <div class="">
       <div class="row" v-if="carts[0]?.coupon">
         <div class="col-md-2 text-primary fw-medium mb-2">已使用優惠</div>
         <div class="col-md-10 text-center text-md-start">
-          <span
-            class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4"
-            >{{ carts[0]?.coupon?.title }}</span
-          >
+          <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4">{{
+      carts[0]?.coupon?.title }}</span>
           <span class="fs-7 text-primary">
             {{ showCoupon(carts[0]?.coupon) }}
           </span>
@@ -141,13 +113,8 @@
 
       <div class="col-md-10">
         <form class="text-md-start text-center">
-          <input
-            type="text"
-            class="teat-start p-2 w-50"
-            placeholder="請輸入優惠代碼"
-            v-model="coupon"
-          />
-          <button type="button" class="btn btn-primary p-3" @click="sendCoupon(coupon)">
+          <input type="text" class="teat-start p-2 w-50" placeholder="請輸入優惠代碼" v-model="coupon" />
+          <button type="button" class="btn btn-primary p-3" @click="sendCoupon(coupon)" :disabled="!coupon">
             送出優惠券
           </button>
         </form>
@@ -198,17 +165,16 @@
           <div class="border border-primary border-1 mb-5"></div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">合計：</p>
-            {{ carts[0]?.coupon?.discount_price }}
             <p class="fw-bold">
               NT$
               {{
-                carts[0]?.coupon
-                  ? parseInt(total) - carts[0]?.coupon?.discount_price
-                  : parseInt(total)
-              }}
+      carts[0]?.coupon
+        ? parseInt(total) - carts[0]?.coupon?.discount_price
+        : parseInt(total)
+    }}
             </p>
           </div>
-          <button class="btn btn-primary p-5 fs-5 w-100 text-white" @click="goCheckout">
+          <button type="button" class="btn btn-primary p-5 fs-5 w-100 text-white" @click="goCheckout">
             前往結帳
           </button>
         </div>
@@ -218,6 +184,7 @@
 
   <!--  訂 購 前 請 詳 閱  -->
   <OrderRules></OrderRules>
+  <VueLoading :active="isLoading" />
 </template>
 
 <script>
@@ -267,7 +234,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(cartStore, ['getCarts', 'updateCart', 'deleteCart', 'getDeliverData']),
+    ...mapActions(cartStore, ['getCarts', 'updateCart', 'deleteCart', 'getDeliverData', 'deleteAllCarts']),
 
     sendCoupon(coupon) {
       const sendCouponUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/coupon`
@@ -297,12 +264,12 @@ export default {
           console.log(err)
         })
     },
+    //優惠券內容顯示(有兩種不同優惠券格式，所以要另外判斷)
     showCoupon(coupon) {
-      // console.log(coupon)
       if (coupon?.percent == 100) {
         return `消費滿 NT$ ${coupon?.min_buy_price_by_price}，享 ${coupon?.discount_price} 折扣`
       } else {
-        return `消費滿 NT$ ${coupon?.min_buy_price_by_price}，享
+        return `消費滿 NT$ ${coupon?.min_buy_price_by_discount}，享
             ${coupon?.percent / 10} 折`
       }
     },
@@ -368,7 +335,7 @@ export default {
   },
 
   computed: {
-    ...mapState(cartStore, ['carts', 'total']),
+    ...mapState(cartStore, ['carts', 'total', 'isLoading']),
     rawTotal() {
       let total = 0
       this.carts.forEach((item) => {
@@ -387,5 +354,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss"></style>
