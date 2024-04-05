@@ -96,6 +96,7 @@
       </tr>
     </tbody>
   </table>
+  <VueLoading :active="isLoading" />
 </template>
 
 <script>
@@ -103,6 +104,7 @@ const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default {
   data() {
     return {
+      isLoading: false,
       userEmail: '',
       userOrders: []
     }
@@ -128,10 +130,12 @@ export default {
     },
 
     getOrders() {
+      this.isLoading = true
       const getOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/orders`
       this.$http
         .get(getOrdersUrl)
         .then((res) => {
+          this.isLoading = false
           res.data.orders.forEach((item) => {
             if (item.user.email == this.userEmail) {
               this.userOrders.push(item)

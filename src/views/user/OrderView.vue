@@ -340,6 +340,7 @@
       </div>
     </div>
   </div>
+  <VueLoading :active="isLoading" />
 </template>
 
 <script>
@@ -476,7 +477,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(cartStore, ['carts', 'deliverData', 'total'])
+    ...mapState(cartStore, ['carts', 'deliverData', 'total', 'isLoading'])
   },
   watch: {
     recipientAsOrderData(value) {
