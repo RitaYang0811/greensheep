@@ -51,6 +51,7 @@
       </button>
     </div>
   </vform>
+  <VueLoading :active="isLoading" />
 </template>
 
 <script>
@@ -61,6 +62,7 @@ import Swal from 'sweetalert2'
 export default {
   data() {
     return {
+      isLoading: false,
       user: {
         email: '',
         password: '',
@@ -75,10 +77,11 @@ export default {
 
   methods: {
     getUser() {
-
+      this.isLoading = true
       const url = 'https://greensheep-json-server.onrender.com/users'
       this.$http.get(url)
         .then((res) => {
+          this.isLoading = false
           res.data.forEach((item) => {
             if (item.id == loginUserId) {
               this.user = item
@@ -97,10 +100,10 @@ export default {
         location: this.user.location,
         phone: this.user.phone
       }
-
+      this.isLoading = true
       this.$http.patch(patchUrl, data)
         .then(() => {
-
+          this.isLoading = false
           Swal.fire({
             position: 'top-end',
             icon: 'success',
