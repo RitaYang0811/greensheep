@@ -298,7 +298,7 @@ import Modal from 'bootstrap/js/dist/modal'
 import Email from '@/utils/smtp'
 import { googleTokenLogin } from 'vue3-google-login'
 import axios from 'axios'
-import Verification from '@/components/VerificationComponent.vue'
+import Verification from '@/components/VerifiCation.vue'
 import Swal from 'sweetalert2'
 
 // json-server網址
