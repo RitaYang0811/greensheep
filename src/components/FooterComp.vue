@@ -64,7 +64,7 @@
               <li class="me-4">
                 <a href="https://lin.ee/bYROr08" target="_blank">
                   <!-- line svg -->
-                  <img src="./icons/line-icon-footer.svg" alt="" />
+                  <img src="./icons/line-icon-footer.svg" alt="line-icon" />
                 </a>
               </li>
               <li class="me-4">
@@ -73,7 +73,7 @@
                   target="_blank"
                 >
                   <!-- fb svg -->
-                  <img src="./icons/fb-icon-footer.svg" alt="" />
+                  <img src="./icons/fb-icon-footer.svg" alt="fb-icon" />
                 </a>
               </li>
               <li>
@@ -82,7 +82,7 @@
                   target="_blank"
                 >
                   <!-- ig svg -->
-                  <img src="./icons/ig-icon-footer.svg" alt="" />
+                  <img src="./icons/ig-icon-footer.svg" alt="ig-icon" />
                 </a>
               </li>
             </ul>

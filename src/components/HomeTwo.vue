@@ -15,7 +15,7 @@
             <img
               src="../assets/images/img-item-1.png"
               class="card-img img-fluid opacity-75"
-              alt=""
+              alt="pendant"
             />
             <div class="card-img-overlay d-flex flex-column-reverse align-items-start">
               <h5 class="card-title display-4 p-3">PENDANT</h5>
@@ -34,7 +34,7 @@
             <img
               src="../assets/images/img-item-2.png"
               class="card-img img-fluid opacity-75"
-              alt="..."
+              alt="ring"
             />
             <div class="card-img-overlay d-flex flex-column-reverse align-items-start">
               <h5 class="card-title display-4 p-3">RING</h5>
@@ -53,7 +53,7 @@
             <img
               src="../assets/images/img-item-3.png"
               class="card-img img-fluid opacity-75"
-              alt="..."
+              alt="EARRINGS"
             />
             <div class="card-img-overlay d-flex flex-column-reverse align-items-start">
               <h5 class="card-title display-4 p-3">EARRINGS</h5>
@@ -72,7 +72,7 @@
             <img
               src="../assets/images/img-item-4.png"
               class="card-img img-fluid opacity-75"
-              alt="..."
+              alt="BRACELET"
             />
             <div class="card-img-overlay d-flex flex-column-reverse align-items-start">
               <h5 class="card-title display-4 p-3">BRACELET</h5>
@@ -90,9 +90,9 @@
     <div
       class="craft-content d-flex justify-content-lg-between position-relative flex-lg-nowrap flex-wrap"
     >
-      <img src="../assets/images/img-introduce.png" alt="" class="img-fluid" />
+      <img src="../assets/images/img-introduce.png" alt="introduce" class="img-fluid" />
       <div class="position-relative ms-auto mt-lg-0 mt-22">
-        <img src="../assets/images/image-15.png" alt="" class="img-fluid" />
+        <img src="../assets/images/image-15.png" alt="image" class="img-fluid" />
         <!-- 桌機版定位:@greensheep_jewelry -->
         <p
           class="text-primary position-absolute display-7 text-vertical top-60 end-2 d-lg-block d-none"
@@ -160,7 +160,7 @@
         </div>
       </div>
       <div class="position-absolute top-93 start-n2 d-lg-block d-none">
-        <img src="../assets/images/Worlds Best Artistry.png" alt="" />
+        <img src="../assets/images/Worlds Best Artistry.png" alt="best art" />
       </div>
     </div>
   </div>
@@ -295,7 +295,7 @@
       <div class="d-flex justify-content-between list-unstyled py-2" style="min-width: 992px">
         <RouterLink to="/products/detail/-NsVL3yywAfe5aYKsTVv">
           <div class="card text-white border-0 bg-primary bg-gradient h-border">
-            <img src="../assets/images/img-prod-1.png" class="card-img opacity-75" alt="" />
+            <img src="../assets/images/img-prod-1.png" class="card-img opacity-75" alt="products" />
             <div
               class="card-img-overlay d-flex flex-column justify-content-end p-5 align-items-lg-start"
             >
@@ -308,7 +308,7 @@
 
         <RouterLink to="/products/detail/-NsV1p_2gXiVpBHy2xu6">
           <div class="card text-white border-0 bg-primary bg-gradient h-border">
-            <img src="../assets/images/img-prod-2.png" class="card-img opacity-75" alt="" />
+            <img src="../assets/images/img-prod-2.png" class="card-img opacity-75" alt="products" />
             <div
               class="card-img-overlay d-flex flex-column justify-content-end p-5 align-items-lg-start"
             >
@@ -324,7 +324,7 @@
 
         <RouterLink to="/products/detail/-NsUsi2n1gdOSF0I798e">
           <div class="card text-white border-0 bg-primary bg-gradient h-border">
-            <img src="../assets/images/img-prod-3.png" class="card-img opacity-75" alt="" />
+            <img src="../assets/images/img-prod-3.png" class="card-img opacity-75" alt="products" />
             <div
               class="card-img-overlay d-flex flex-column justify-content-end p-5 align-items-lg-start"
             >

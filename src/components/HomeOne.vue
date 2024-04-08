@@ -1,12 +1,12 @@
 <template>
   <div class="main-banner">
-    <img src="@/assets/images/mainBanner.png" alt="" class="d-none d-lg-block" />
+    <img src="@/assets/images/mainBanner.png" alt="mainBanner" class="d-none d-lg-block" />
   </div>
 
   <div class="main-banner">
     <img
       src="@/assets/images/mainBannerSm.png"
-      alt=""
+      alt="mainBanner"
       class="d-block d-lg-none w-100 object-fit-cover"
     />
   </div>

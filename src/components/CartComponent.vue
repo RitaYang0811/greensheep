@@ -42,7 +42,7 @@
                     <img
                       :src="cart.product.imageUrl"
                       class="img-fluid object-fit-cover rounded-2 w-100 h-100"
-                      alt="..."
+                      :alt="cart.product.title"
                     />
                   </div>
                   <div class="col-md-7 d-flex align-items-center">

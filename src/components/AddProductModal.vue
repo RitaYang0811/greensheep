@@ -32,7 +32,7 @@
                       <img
                         v-if="tempProduct.imageUrl"
                         :src="tempProduct.imageUrl"
-                        alt=""
+                        :alt="tempProduct.title"
                         class="object-fit-cover"
                         style="height: 200px; width: 100%"
                       />
@@ -53,7 +53,7 @@
                       <img
                         v-if="tempProduct.imageUrl2"
                         :src="tempProduct.imageUrl2"
-                        alt=""
+                        :alt="tempProduct.title"
                         class="object-fit-cover"
                         style="height: 200px; width: 100%"
                       />
@@ -80,7 +80,7 @@
                 >
                   <template v-slot:item="{ element, index }">
                     <div class="col position-relative">
-                      <img :src="element" alt="" class="add-images object-fit-cover" />
+                      <img :src="element" alt="photos" class="add-images object-fit-cover" />
                       <button
                         @click="deleteImage(index)"
                         class="btn rounded-circle btn-sm btn-light position-absolute top-0 end-0 z-3"

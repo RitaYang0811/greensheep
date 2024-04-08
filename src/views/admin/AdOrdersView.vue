@@ -349,7 +349,7 @@
                           <img
                             :src="product.product.imageUrl"
                             class="img-fluid object-fit-cover"
-                            alt="..."
+                            :alt="product.product.title"
                           />
                         </div>
                       </div>
