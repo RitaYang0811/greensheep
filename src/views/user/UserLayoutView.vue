@@ -1,10 +1,10 @@
 <template>
-  <HeaderComp></HeaderComp>
-  <CartComponent></CartComponent>
+  <HeaderComp />
+  <CartComponent />
   <div class="main">
     <RouterView />
   </div>
-  <FooterComp></FooterComp>
+  <FooterComp />
 </template>
 
 <script>
