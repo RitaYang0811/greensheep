@@ -456,7 +456,6 @@ export default {
     this.getRecommendProducts(this.$route.params.id)
     this.likeInit(this.$route.params.id)
     this.isLoading = false
-    console.log(this.isLike)
   },
   beforeRouteUpdate(to) {
     this.getProductInfo(to.params.id)

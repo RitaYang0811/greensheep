@@ -361,7 +361,6 @@ export default {
 
     searchProducts(event) {
       this.closeSearchOffCanvas()
-      console.log('searchProducts', this.searchWord)
       if (this.searchWord.trim() !== '') {
         this.$router.push({ path: '/products', query: { keyword: this.searchWord.trim() } })
         this.searchWord = ''

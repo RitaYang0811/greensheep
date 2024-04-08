@@ -239,7 +239,6 @@ export default {
     ...mapActions(articleStore, ['getArticles']),
     initArticle() {
       this.pinnedArticle = this.articles.slice(0, 3)
-      console.log(this.pinnedArticle)
     }
   },
   computed: {

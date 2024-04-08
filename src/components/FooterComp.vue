@@ -104,7 +104,8 @@
   </footer>
 </template>
 
-<script lang="js">
+<script>
+import Swal from 'sweetalert2'
 export default {
   data() {
     return {}
@@ -116,8 +117,15 @@ export default {
     // 登出
     isLogout() {
       localStorage.removeItem('userInfo')
-      alert('已登出會員')
-      this.$router.push({ name: 'MemberLogin' })
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: '會員已登出',
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000
+      })
+      location.reload()
     }
   }
 }

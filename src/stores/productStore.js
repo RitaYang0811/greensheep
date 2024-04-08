@@ -55,19 +55,15 @@ export default defineStore('productStore', {
     getSort(status) {
       if (status === 'priceH2L') {
         this.showTitle = '價格 - 由高到低'
-        //console.log('1')
         return this.products.sort((a, b) => b.price - a.price)
       } else if (status === 'priceL2H') {
         this.showTitle = '價格 - 由低到高'
-        //console.log('2')
         return this.products.sort((a, b) => a.price - b.price)
       } else if (status === 'timeN2O') {
         this.showTitle = '上架時間 - 由新到舊'
-        //console.log('3')
         return this.products.sort((a, b) => b.createTime - a.createTime)
       } else if (status === 'timeO2N') {
         this.showTitle = '上架時間 - 由舊到新'
-        //console.log('4')
         return this.products.sort((a, b) => a.createTime - b.createTime)
       }
     },
@@ -93,8 +89,6 @@ export default defineStore('productStore', {
         //將總商品依照每頁12筆成為展示商品
         this.currentProducts = this.categoryProducts.slice((page - 1) * 12, page * 12)
         this.loadingStatus.loadingFilterProducts = false
-
-        console.log('全部商品', this.currentProducts, this.categoryProducts, this.showTitle)
       } else {
         this.getSort(status)
         //將axios 取得的所有商品篩選分類後成為總商品
@@ -110,7 +104,6 @@ export default defineStore('productStore', {
       const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/product/${id}`
       try {
         const res = await axios.get(url)
-        console.log(res.data)
         this.productInfo = res.data.product
       } catch (err) {
         console.error(err)

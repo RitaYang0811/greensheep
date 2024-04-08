@@ -20,7 +20,6 @@ export default defineStore('likeStore', {
         .get(`${serverUrl}/favorites?userId=${user.id}`)
         .then((res) => {
           if (res.data.length) {
-            console.log(res)
             this.likedProducts = res.data.map((item) => item.productId.toString())
 
             this.isLike = this.likedProducts.includes(id)
@@ -62,7 +61,6 @@ export default defineStore('likeStore', {
             this.likedProducts.splice(index, 1) // 從索引位置刪除一個元素
           }
           this.isLike = this.likedProducts.includes(productId.toString())
-          console.log('移除最愛', this.likedProducts)
         })
       } else {
         // 加入最愛
@@ -80,7 +78,6 @@ export default defineStore('likeStore', {
             // this.isLike = true
             this.likedProducts.push(productId)
             this.isLike = this.likedProducts.includes(productId.toString())
-            console.log('加入收藏', this.likedProducts)
           })
           .catch((err) => {
             console.log(err)

@@ -402,7 +402,6 @@ export default {
     },
     async onSubmit() {
       this.policyRule('註冊')
-      console.log(await this.checkAccounts(this.user.email))
       if (await this.checkAccounts(this.user.email)) {
         Swal.fire({
           icon: 'warning',

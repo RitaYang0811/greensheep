@@ -468,18 +468,15 @@ export default {
         .post(apiUrl, formData)
         .then((res) => {
           if (status === 'main1') {
-            console.log(res.data.imageUrl)
             this.tempProduct.imageUrl = res.data.imageUrl
           } else if (status === 'main2') {
-            console.log(res.data.imageUrl)
             this.tempProduct.imageUrl2 = res.data.imageUrl
           } else if (status === 'album') {
-            console.log(res.data.imageUrl)
             this.tempProduct.imagesUrl.push(res.data.imageUrl)
           }
         })
         .catch((err) => {
-          console.log(err)
+          alert(err)
         })
     }
   },
