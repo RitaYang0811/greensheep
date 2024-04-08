@@ -35,7 +35,7 @@
                   @click="sendCode"
                 >
                   <div class="button-img-box me-1">
-                    <img src="@/assets/images/GreenSheep.once" alt="圖像" />
+                    <img src="@/assets/images/GreenSheep.png" alt="圖像" />
                   </div>
 
                   <p>發送驗證碼</p>
