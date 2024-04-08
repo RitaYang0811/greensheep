@@ -371,11 +371,11 @@
 
             <label for="private" class="form-check-label fs-6 ms-2"
               >本人同意網站
-              <a href="#" class="text-decoration-underline" @click.prevent="openModal('條款')"
+              <a class="text-decoration-underline" @click.prevent="openModal('條款')"
                 >網站服務條款</a
               >
               及
-              <a href="#" class="text-decoration-underline" @click.prevent="openModal('政策')"
+              <a class="text-decoration-underline" @click.prevent="openModal('政策')"
                 >隱私權政策</a
               ></label
             >

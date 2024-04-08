@@ -2,7 +2,9 @@
   <div class="ad-coupon px-lg-10 pt-3 pt-lg-10 text-start">
     <h1 class="fs-3 mb-4 fw-bold">優惠管理</h1>
     <!-- tab -->
-    <ul class="nav flex-nowrap text-nowrap overflow-x-scroll overflow-x-sm-auto border-bottom border-primary mb-4">
+    <ul
+      class="nav flex-nowrap text-nowrap overflow-x-scroll overflow-x-sm-auto border-bottom border-primary mb-4"
+    >
       <li class="nav-item">
         <a
           class="nav-link px-6 py-4"
@@ -37,17 +39,19 @@
         <a
           class="nav-link px-6 py-4"
           :class="{ active: currentTab === '已失效' }"
-          href="#"
           @click.prevent="changeTab('已失效')"
         >
           已失效
         </a>
       </li>
     </ul>
-    <a href="#" class="btn btn-primary mb-4" @click.prevent="openModal('new')">新增優惠券</a>
+    <a class="btn btn-primary mb-4" @click.prevent="openModal('new')">新增優惠券</a>
     <!-- PC coupons -->
     <div class="table-container table-responsive d-none d-lg-block">
-      <table v-if="!loadingStatus.loadingGetCoupons && currentPageCoupons.length" class="table align-middle text-nowrap mb-4">
+      <table
+        v-if="!loadingStatus.loadingGetCoupons && currentPageCoupons.length"
+        class="table align-middle text-nowrap mb-4"
+      >
         <thead class="table-head position-relative">
           <tr>
             <th style="width: 15%">優惠碼</th>
@@ -63,10 +67,7 @@
           <tr v-for="coupon in currentPageCoupons" :key="coupon.id">
             <td>
               {{ coupon.code }}
-              <CopyText
-                :copyContent="coupon.code"
-                :type="'優惠碼'"
-              />
+              <CopyText :copyContent="coupon.code" :type="'優惠碼'" />
             </td>
             <td class="py-5">
               <p class="fw-bold mb-4">{{ coupon.title }}</p>
@@ -144,17 +145,15 @@
             </td>
             <td>
               <a
-                href="#"             
                 :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }"
                 @click.prevent="openModal('edit', coupon.id)"
               >
-              <i class="bi bi-pencil-fill text-dark fs-6"></i>
+                <i class="bi bi-pencil-fill text-dark fs-6"></i>
               </a>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <a
-                  href="#"               
                   :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }"
                   @click.prevent="deleteCoupon(coupon.id)"
                 >
@@ -173,14 +172,14 @@
         </tbody>
       </table>
       <template v-else-if="!loadingStatus.loadingGetCoupons">
-        <div class="d-flex justify-content-center align-items-center" style="height: 360px;">
+        <div class="d-flex justify-content-center align-items-center" style="height: 360px">
           <p class="fs-5">尚無優惠券資料</p>
         </div>
       </template>
     </div>
 
     <!-- mobile coupons -->
-    <ul class="row list-unstyled text-dark d-lg-none" style="row-gap: 12px;">
+    <ul class="row list-unstyled text-dark d-lg-none" style="row-gap: 12px">
       <li class="col-12" v-for="coupon in currentPageCoupons" :key="coupon.id">
         <div class="border border-primary rounded overflow-hidden">
           <div class="row g-0">
@@ -188,10 +187,7 @@
               <div class="bg-primary d-flex justify-content-between align-items-center px-2 py-2">
                 <div class="bg-primary text-white fw-bold">
                   {{ coupon.code }}
-                  <CopyText
-                    :copyContent="coupon.code"
-                    :type="'優惠碼'"
-                  />
+                  <CopyText :copyContent="coupon.code" :type="'優惠碼'" />
                 </div>
                 <div class="text-end bg-white rounded-pill px-2 py-1 fs-8">
                   <template v-if="currentTab === '所有優惠券'">
@@ -277,11 +273,10 @@
             <div class="col-3">
               <div class="d-flex justify-content-between justify-content-sm-evenly pe-4 py-2">
                 <a
-                  href="#"               
                   :class="{ 'disabled-link': loadingStatus.loadingDelCoupon }"
                   @click.prevent="openModal('edit', coupon.id)"
                 >
-                <i class="bi bi-pencil-fill text-dark fs-6"></i>
+                  <i class="bi bi-pencil-fill text-dark fs-6"></i>
                 </a>
                 <a
                   href="#"
@@ -318,7 +313,9 @@
           number-buttons-class="fs-8"
           active-page-class="active"
           :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
-          :nextButtonClass="currentPage === Math.ceil(coupons.length / 10) ? 'disabled' : 'next-button'"
+          :nextButtonClass="
+            currentPage === Math.ceil(coupons.length / 10) ? 'disabled' : 'next-button'
+          "
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -340,7 +337,9 @@
           number-buttons-class="fs-8"
           active-page-class="active"
           :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
-          :nextButtonClass="currentPage === Math.ceil(validCoupons.length / 10) ? 'disabled' : 'next-button'"
+          :nextButtonClass="
+            currentPage === Math.ceil(validCoupons.length / 10) ? 'disabled' : 'next-button'
+          "
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -362,7 +361,9 @@
           number-buttons-class="fs-8"
           active-page-class="active"
           :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
-          :nextButtonClass="currentPage === Math.ceil(notYetValidCoupons.length / 10) ? 'disabled' : 'next-button'"
+          :nextButtonClass="
+            currentPage === Math.ceil(notYetValidCoupons.length / 10) ? 'disabled' : 'next-button'
+          "
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -384,7 +385,9 @@
           number-buttons-class="fs-8"
           active-page-class="active"
           :backButtonClass="currentPage === 1 ? 'disabled' : 'back-button'"
-          :nextButtonClass="currentPage === Math.ceil(invalidCoupons.length / 10) ? 'disabled' : 'next-button'"
+          :nextButtonClass="
+            currentPage === Math.ceil(invalidCoupons.length / 10) ? 'disabled' : 'next-button'
+          "
         >
           <template #prev-button>
             <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -423,7 +426,7 @@ import AdCouponModal from '@/components/AdCouponModal.vue'
 import CopyText from '@/components/CopyText.vue'
 import { unixToDate } from '@/utils/unixToDate.js'
 import { dateToUnix } from '@/utils/dateToUnix.js'
-import { toastSuccess, toastError } from "@/utils/sweetalertToast.js"
+import { toastSuccess, toastError } from '@/utils/sweetalertToast.js'
 import { scrollToTop } from '@/utils/scrollToTop.js'
 
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
@@ -448,25 +451,25 @@ export default {
         loadingGetCoupons: false,
         loadingGetCoupon: false,
         loadingDelCoupon: ''
-      },
+      }
     }
   },
   components: {
-    AdCouponModal, CopyText
+    AdCouponModal,
+    CopyText
   },
   methods: {
     // 取得全部優惠券資料
     async getCoupons() {
       try {
         this.loadingStatus.loadingGetCoupons = true
-        
+
         // 清空資料
         this.coupons = []
         this.validCoupons = []
         this.invalidCoupons = []
         this.notYetValidCoupons = []
         this.currentPageCoupons = []
-
 
         // 第一次 get 優惠券回傳的頁碼資料
         let currentPageNum
@@ -491,7 +494,6 @@ export default {
         this.filterCoupons()
         // 依當前 tab 取得該 tab 的當前頁資料
         this.changePage(this.currentPage)
-
       } catch (err) {
         toastError(err.response.data.message)
       } finally {
@@ -600,7 +602,8 @@ export default {
           .finally(() => {
             this.loadingStatus.loadingGetCoupon = false
           })
-      } else if (!this.isNew) { // 編輯優惠券
+      } else if (!this.isNew) {
+        // 編輯優惠券
         const id = couponData.id
         const url = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupon/${id}`
 

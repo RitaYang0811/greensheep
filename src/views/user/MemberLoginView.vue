@@ -12,7 +12,11 @@
           <!-- google或line 帳號登入 -->
           <ul class="list-unstyled">
             <li class="py-3">
-              <button class="g-login-btn g-login-btn--google ji-mb-10" @click="accessTokenLogin">
+              <button
+                type="button"
+                class="g-login-btn g-login-btn--google ji-mb-10"
+                @click="accessTokenLogin"
+              >
                 <span class="g-login-btnIcon"
                   ><img src="@/assets/images/google.svg" alt="line圖片"
                 /></span>
@@ -20,7 +24,11 @@
               </button>
             </li>
             <li class="py-3">
-              <button class="g-login-btn g-login-btn--line mt-3" @click="lineLoginEvent">
+              <button
+                type="button"
+                class="g-login-btn g-login-btn--line mt-3"
+                @click="lineLoginEvent"
+              >
                 <span class="g-login-btnIcon"
                   ><img src="@/assets/images/line-image.png" alt="line圖片"
                 /></span>
