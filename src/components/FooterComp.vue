@@ -97,7 +97,9 @@
           <p class="display-lg-8 display-9">
             Copyright ©2023 綠羊 Green Sheep.All rights reserved.
           </p>
-          <p class="display-lg-8 mb-lg-0 display-9 mb-4">greensheepjewelry@gmail.com</p>
+          <a href="mailto:greensheepjewelry@gmail.com" class="display-lg-8 mb-lg-0 display-9 mb-4"
+            >greensheepjewelry@gmail.com</a
+          >
         </div>
       </div>
     </div>
