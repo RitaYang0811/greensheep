@@ -27,80 +27,55 @@
     </div>
 
     <!-- 購物車內容 -->
-    <div class="">
-      <table class="table align-middle border-primary">
-        <thead>
-          <tr>
-            <th scope="col" class="text-primary fw-medium">商品資訊</th>
-            <th scope="col" class="text-primary fw-medium">數量</th>
-            <th scope="col" class="text-primary fw-medium">價格</th>
-            <th scope="col" class="text-primary fw-medium"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="cart in carts" :key="cart.id">
-            <th scope="row" class="py-4">
-              <div class="card border-0" style="max-width: 540px">
-                <div class="row g-0 align-items-center">
-                  <div class="col-md-4">
-                    <div class="ratio ratio-1x1">
-                      <img
-                        :src="cart.product.imageUrl"
-                        class="img-fluid object-fit-cover"
-                        alt="product-image"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="fs-6 card-title text-primary fw-medium">
-                        {{ cart.product.title }}
-                      </h5>
-                      <small class="text-start fw-normal">{{ cart.product.category }}</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </th>
-            <td class="py-4">
-              <div class="d-flex justify-content-center">
-                <button
-                  type="button"
-                  class="btn btn-link text-primary"
-                  @click.prevent="cart.qty++"
-                  @click="updateCart(cart)"
-                >
-                  <i class="bi bi-plus-circle fs-3"></i>
-                </button>
-                <input type="number" class="p-2 w-25" min="1" v-model="cart.qty" disabled />
-                <button
-                  type="button"
-                  class="btn btn-link text-primary"
-                  @click.prevent="cart.qty--"
-                  @click="updateCart(cart)"
-                  :disabled="cart.qty <= 1"
-                >
-                  <i class="bi bi-dash-circle fs-3"></i>
-                </button>
-              </div>
-            </td>
-            <td class="py-4 text-primary">
-              <small class="text-center">單價：NT$ {{ cart.product.price }}</small>
-              <p class="text-center fw-medium">總價：NT$ {{ parseInt(cart.total) }}</p>
-            </td>
-            <td class="py-4">
-              <button type="button" class="btn btn-primary" @click="deleteCart(cart.id)">
-                刪除
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <ul class="cart-table list-unstyled border-lg-bottom border-primary">
+      <li class="cart-thead">
+        <ol class="list-unstyled cart-tr">
+          <li class="text-primary fw-medium"></li>
+          <li class="text-primary fw-medium">商品資訊</li>
+          <li class="text-primary fw-medium">數量</li>
+          <li class="text-primary fw-medium">單價</li>
+          <li class="text-primary fw-medium">價格</li>
+        </ol>
+      </li>
+
+      <li v-for="cart in carts" :key="cart.id" class="cart-tbody">
+        <ol class="list-unstyled cart-tr">
+          <li class="w-md-10">
+            <img
+              :src="cart.product.imageUrl"
+              class="cart-img img-fluid object-fit-cover"
+              alt="product-image"
+            />
+          </li>
+          <li class="w-md-30">
+            <h5 class="fs-6 card-title text-primary fw-medium">
+              {{ cart.product.title }}
+            </h5>
+          </li>
+          <li class="w-md-30">
+            <div class="d-flex justify-content-center">
+              <input
+                type="number"
+                class="p-lg-2 w-20 text-center"
+                min="1"
+                v-model="cart.qty"
+                disabled
+              />
+            </div>
+          </li>
+          <li data-title="單價" class="cart-price text-primary w-md-15">
+            <small class="text-center">NT$ {{ cart.product.price }}</small>
+          </li>
+          <li c data-title="價格" class="cart-price text-primary w-md-15">
+            <p class="text-center fw-medium d-inline-block">NT$ {{ parseInt(cart.total) }}</p>
+          </li>
+        </ol>
+      </li>
       <h2 class="fs-5 font-notosans mt-6">
-        合計：NT${{ carts[0]?.coupon ? total - carts[0]?.coupon?.discount_price : total }}<br />
-        （共{{ carts.length }}件）
+        合計：NT ${{ carts[0]?.coupon ? total - carts[0]?.coupon?.discount_price : total }}<br />
+        （共 {{ carts.length }} 件）
       </h2>
-    </div>
+    </ul>
   </div>
 
   <!-- 顧客資料、訂單資料 -->
@@ -485,7 +460,7 @@ const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 export default {
   data() {
     return {
-      agree: true,
+      agree: false,
       recipientAsOrderData: false,
       recipient: {
         name: '',
@@ -563,7 +538,7 @@ export default {
         return
       }
       if (this.showStore()) {
-        this.recipient.address = `${this.orderDeliverData.deliver} XX店`
+        this.recipient.address = `${this.orderDeliverData.deliver} ...店`
       }
       this.orderData.user.name = this.recipient.name
       this.orderData.user.tel = this.recipient.tel
@@ -628,3 +603,63 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.cart {
+  &-img {
+    width: 100px;
+    height: 100px;
+  }
+  &-table {
+    display: block;
+    margin: 1em auto;
+    border-collapse: collapse;
+  }
+  &-thead {
+    display: table-header-group;
+    border-bottom: 1px solid #566b5a;
+  }
+  &-tr {
+    display: table-row;
+  }
+  &-tbody {
+    width: 100%;
+    display: table-row-group;
+  }
+  &-thead li,
+  &-tr li {
+    display: table-cell;
+    padding: 5px;
+  }
+  &-thead li {
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .cart {
+    &-thead {
+      display: none;
+    }
+    &-tr {
+      display: block;
+      padding: 12px;
+      border: #566b5a 1px solid;
+      margin-bottom: 16px;
+    }
+    &-tr li {
+      display: inline-block;
+      width: 100%;
+      border: none;
+    }
+    &-price:before {
+      content: attr(data-title);
+      display: inline-block;
+      width: auto;
+      font-weight: 700;
+      color: #566b5a;
+      padding-right: 16px;
+    }
+  }
+}
+</style>

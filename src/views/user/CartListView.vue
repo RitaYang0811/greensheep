@@ -26,44 +26,36 @@
       </div>
     </div>
 
-    <h1 class="fs-4 fs-lg-2 py-20 text-center fw-bold">購物車</h1>
+    <h1 class="fs-4 fs-lg-2 py-10 text-center fw-bold">購物車</h1>
     <Loading v-model:active="isLoading"></Loading>
     <!-- 商品列表 -->
-    <table class="table align-middle border-primary">
-      <thead>
-        <tr>
-          <th scope="col" class="text-primary fw-medium">商品資訊</th>
-          <th scope="col" class="text-primary fw-medium">數量</th>
-          <th scope="col" class="text-primary fw-medium">價格</th>
-          <th scope="col" class="text-primary fw-medium"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="cart in carts" :key="cart.id">
-          <th scope="row" class="py-4">
-            <div class="card border-0" style="max-width: 540px">
-              <div class="row g-0 align-items-center">
-                <div class="col-md-4">
-                  <div class="ratio ratio-1x1">
-                    <img
-                      :src="cart.product.imageUrl"
-                      class="img-fluid object-fit-cover"
-                      alt="product-image"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="fs-6 card-title text-primary fw-medium">
-                      {{ cart.product.title }}
-                    </h5>
-                    <small class="text-start fw-normal">{{ cart.product.category }}</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </th>
-          <td class="py-4">
+    <ul class="cart-table list-unstyled border-lg-bottom border-primary">
+      <li class="cart-thead">
+        <ol class="list-unstyled cart-tr">
+          <li class="text-primary fw-medium"></li>
+          <li class="text-primary fw-medium">商品資訊</li>
+          <li class="text-primary fw-medium">數量</li>
+          <li class="text-primary fw-medium">單價</li>
+          <li class="text-primary fw-medium">價格</li>
+          <li class="text-primary fw-medium"></li>
+        </ol>
+      </li>
+
+      <li v-for="cart in carts" :key="cart.id" class="cart-tbody">
+        <ol class="list-unstyled cart-tr">
+          <li class="w-md-10">
+            <img
+              :src="cart.product.imageUrl"
+              class="cart-img img-fluid object-fit-cover"
+              alt="product-image"
+            />
+          </li>
+          <li class="w-md-30">
+            <h5 class="fs-6 card-title text-primary fw-medium">
+              {{ cart.product.title }}
+            </h5>
+          </li>
+          <li class="w-md-30">
             <div class="d-flex justify-content-center">
               <button
                 type="button"
@@ -91,36 +83,44 @@
                 <i class="bi bi-plus-circle fs-3"></i>
               </button>
             </div>
-          </td>
-          <td class="py-4 text-primary">
-            <small class="text-center">單價：NT$ {{ cart.product.price }}</small>
-            <p class="text-center fw-medium">總價：NT$ {{ parseInt(cart.total) }}</p>
-          </td>
-          <td class="py-4">
-            <button type="button" class="btn btn-primary" @click="deleteCart(cart.id)">刪除</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="d-flex my-4 mx-2">
-      <button type="button" class="btn btn-danger" @click="deleteAllCarts">刪除全部商品</button>
+          </li>
+          <li data-title="單價" class="cart-price text-primary w-md-15">
+            <small class="text-center">NT$ {{ cart.product.price }}</small>
+          </li>
+          <li c data-title="價格" class="cart-price text-primary w-md-15">
+            <p class="text-center fw-medium d-inline-block">NT$ {{ parseInt(cart.total) }}</p>
+          </li>
+          <li class="w-md-10">
+            <a @click="deleteCart(cart.id)">
+              <i class="bi bi-trash text-grey66"></i>
+            </a>
+          </li>
+        </ol>
+      </li>
+      <h2 class="fs-5 font-notosans mt-6">
+        合計：NT ${{ carts[0]?.coupon ? total - carts[0]?.coupon?.discount_price : total }}<br />
+        （共 {{ carts.length }} 件）
+      </h2>
+    </ul>
+    <div class="d-flex my-2 justify-content-center justify-content-lg-end">
+      <button type="button" class="btn btn-light text-primary" @click="deleteAllCarts">
+        刪除全部商品
+      </button>
     </div>
   </div>
 
-  <!-- 免運 -->
+  <!-- 優惠 -->
   <div v-if="carts[0]?.coupon?.title" class="container pt-10">
-    <div class="">
-      <div class="row" v-if="carts[0]?.coupon">
-        <div class="col-md-2 text-primary fw-medium mb-2">已使用優惠</div>
-        <div class="col-md-10 text-center text-md-start">
-          <span
-            class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4"
-            >{{ carts[0]?.coupon?.title }}</span
-          >
-          <span class="fs-7 text-primary">
-            {{ showCoupon(carts[0]?.coupon) }}
-          </span>
-        </div>
+    <div class="row" v-if="carts[0]?.coupon">
+      <div class="col-md-2 text-primary fw-medium mb-2">已使用優惠</div>
+      <div class="col-md-10 text-center text-md-start">
+        <span
+          class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4"
+          >{{ carts[0]?.coupon?.title }}</span
+        >
+        <span class="fs-7 text-primary">
+          {{ showCoupon(carts[0]?.coupon) }}
+        </span>
       </div>
     </div>
   </div>
@@ -215,7 +215,7 @@
   </div>
 
   <!--  訂 購 前 請 詳 閱  -->
-  <OrderRules></OrderRules>
+  <OrderRules />
   <VueLoading :active="isLoading" />
 </template>
 
@@ -392,3 +392,63 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.cart {
+  &-img {
+    width: 100px;
+    height: 100px;
+  }
+  &-table {
+    display: block;
+    margin: 1em auto;
+    border-collapse: collapse;
+  }
+  &-thead {
+    display: table-header-group;
+    border-bottom: 1px solid #566b5a;
+  }
+  &-tr {
+    display: table-row;
+  }
+  &-tbody {
+    width: 100%;
+    display: table-row-group;
+  }
+  &-thead li,
+  &-tr li {
+    display: table-cell;
+    padding: 5px;
+  }
+  &-thead li {
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .cart {
+    &-thead {
+      display: none;
+    }
+    &-tr {
+      display: block;
+      padding: 12px;
+      border: #566b5a 1px solid;
+      margin-bottom: 5px;
+    }
+    &-tr li {
+      display: inline-block;
+      width: 100%;
+      border: none;
+    }
+    &-price:before {
+      content: attr(data-title);
+      display: inline-block;
+      width: auto;
+      font-weight: 700;
+      color: #566b5a;
+      padding-right: 16px;
+    }
+  }
+}
+</style>

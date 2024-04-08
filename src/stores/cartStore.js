@@ -9,7 +9,7 @@ export default defineStore('cartStore', {
     carts: [],
     cart: {},
     deliverData: {},
-    isLoading: false,
+    isLoading: false
   }),
   actions: {
     addToCart(id, qty = 1) {
@@ -72,7 +72,7 @@ export default defineStore('cartStore', {
         })
         .catch((err) => {
           console.log(err)
-        })  
+        })
     },
     //刪除購物車中單筆資料
     deleteCart(id) {
@@ -82,7 +82,7 @@ export default defineStore('cartStore', {
         title: '是否刪除該商品?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#d33',
+        confirmButtonColor: '#9ea9a0',
         cancelButtonColor: '#566b5a',
         cancelButtonText: '  否  ',
         confirmButtonText: '  是  '
@@ -100,7 +100,7 @@ export default defineStore('cartStore', {
                 showConfirmButton: false,
                 toast: true,
                 timer: 1500
-              })              
+              })
               this.getCarts()
             })
             .catch((err) => {
@@ -110,38 +110,47 @@ export default defineStore('cartStore', {
       })
     },
     //刪除所有購物車內容
-    deleteAllCarts(){
-      const deleteAllCartsUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/carts`
-      Swal.fire({
-        title: '是否刪除購物車全部商品?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#566b5a',
-        cancelButtonText: '  否  ',
-        confirmButtonText: '  是  '
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.isLoading = true
-          axios
-            .delete(deleteAllCartsUrl)
-            .then(() => {
-              this.isLoading = false
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: '所有商品刪除成功',
-                showConfirmButton: false,
-                toast: true,
-                timer: 1500
+    deleteAllCarts() {
+      if (this.carts.length === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: '購物車內沒有商品',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else {
+        const deleteAllCartsUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/carts`
+        Swal.fire({
+          title: '你要刪除購物車的全部商品?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#9ea9a0',
+          cancelButtonColor: '#566b5a',
+          cancelButtonText: '  取消刪除  ',
+          confirmButtonText: '  確定刪除  '
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.isLoading = true
+            axios
+              .delete(deleteAllCartsUrl)
+              .then(() => {
+                this.isLoading = false
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: '所有商品刪除成功',
+                  showConfirmButton: false,
+                  toast: true,
+                  timer: 1500
+                })
+                this.getCarts()
               })
-              this.getCarts()
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        }
-      })
+              .catch((err) => {
+                console.log(err)
+              })
+          }
+        })
+      }
     },
     getDeliverData(data) {
       this.deliverData = { ...data }

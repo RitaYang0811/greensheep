@@ -22,12 +22,12 @@
       <div class="">
         <h3 class="text-center mb-5 fw-bold">購物車</h3>
         <div class="fs-4 text-primary mt-10" v-if="!carts.length">
-          <p>目前購物車沒有商品</p>
+          <p class="mb-2">目前購物車沒有商品</p>
           <RouterLink
             to="/products/全部商品%20ALL"
             @click="closeOffcanvas"
-            class="mt-2 link-secondary"
-            >趕緊去購物吧！</RouterLink
+            class="mt-2 link-primary fw-medium cursor-pointer"
+            >點我去購物！</RouterLink
           >
         </div>
         <div class="overflow-y-auto" v-else>
@@ -86,7 +86,7 @@
                     class="col-md-1 d-flex align-items-center justify-content-center"
                     @click.prevent="deleteCart(cart.id)"
                   >
-                    <a href="" class="text-danger fs-4"><i class="bi bi-trash"></i> </a>
+                    <a href="" class="text-grey66 fs-4"><i class="bi bi-trash"></i> </a>
                   </div>
                 </div>
               </div>
