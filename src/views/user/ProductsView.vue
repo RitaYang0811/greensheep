@@ -171,7 +171,11 @@
                       @click.prevent="isLogin(product.id)"
                     >
                       <!-- 愛心 -->
-                      <i class="bi bi-heart fs-5" :id="product.id" ref="favIcon"></i>
+                      <i
+                        class="bi fs-5"
+                        :id="product.id"
+                        :class="likedProducts.includes(product.id) ? 'bi-heart-fill' : 'bi-heart'"
+                      ></i>
                     </button>
                     <button
                       type="button"
@@ -249,7 +253,13 @@
                             @click.prevent="isLogin(item.id)"
                           >
                             <!-- 愛心 -->
-                            <i class="bi bi-heart fs-5" :id="item.id" ref="favIcon"></i>
+                            <i
+                              class="bi fs-5"
+                              :id="item.id"
+                              :class="[
+                                likedProducts.includes(item.id) ? 'bi-heart-fill' : 'bi-heart'
+                              ]"
+                            ></i>
                           </button>
                           <button
                             href="#"
@@ -340,9 +350,7 @@ export default {
       //當前顯示分頁
       currentProductsPage: 1,
       //當前顯示關鍵字
-      currentSearchWord: '',
-      // 所有產品id
-      productsIdArr: []
+      currentSearchWord: ''
     }
   },
   components: {
@@ -360,7 +368,7 @@ export default {
       'isLoading',
       'loadingStatus'
     ]),
-    ...mapState(likeStore, ['isLike'])
+    ...mapState(likeStore, ['isLike', 'likedProducts'])
   },
 
   watch: {
@@ -404,6 +412,7 @@ export default {
         this.isList = true
       }
     },
+
     //排列順序切換
     sort(status) {
       this.isShow = false
@@ -419,9 +428,6 @@ export default {
   },
   async mounted() {
     await this.fetchData()
-    this.products.forEach((item) => {
-      this.productsIdArr.push(item.id)
-    })
     this.likeInit()
   }
 }
