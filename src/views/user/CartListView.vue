@@ -304,7 +304,7 @@ export default {
     },
     //優惠券內容顯示(有兩種不同優惠券格式，所以要另外判斷)
     showCoupon(coupon) {
-      if (coupon?.percent == 100) {
+      if (coupon?.percent === 100) {
         return `消費滿 NT$ ${coupon?.min_buy_price_by_price}，享 ${coupon?.discount_price} 折扣`
       } else {
         return `消費滿 NT$ ${coupon?.min_buy_price_by_discount}，享
@@ -313,7 +313,7 @@ export default {
     },
 
     goCheckout() {
-      if (this.carts.length == 0) {
+      if (this.carts.length === 0) {
         Swal.fire({
           title: '購物車是空的',
           confirmButtonColor: '#566B5A',
@@ -321,7 +321,7 @@ export default {
         })
         return
       }
-      if (this.deliverChoose.location.length == 0) {
+      if (this.deliverChoose.location.length === 0) {
         Swal.fire({
           title: '收件地點必填',
           confirmButtonColor: '#566B5A',
@@ -329,7 +329,7 @@ export default {
         })
         return
       }
-      if (this.deliverChoose.deliver.length == 0) {
+      if (this.deliverChoose.deliver.length === 0) {
         Swal.fire({
           title: '配送方式必填',
           confirmButtonColor: '#566B5A',
@@ -337,7 +337,7 @@ export default {
         })
         return
       }
-      if (this.deliverChoose.payWay.length == 0) {
+      if (this.deliverChoose.payWay.length === 0) {
         Swal.fire({
           title: '付款方式必填',
           confirmButtonColor: '#566B5A',
@@ -359,7 +359,7 @@ export default {
       this.deliverChoose.deliver = '' //洗掉紀錄，讓選擇location時deliver都能回到預設值。
       this.deliverChoose.payWay = '' //洗掉紀錄，讓選擇location時payWay都能回到預設值。
       this.select.forEach((item) => {
-        if (item.location == location) {
+        if (item.location === location) {
           item.deliver.forEach((item2) => {
             this.delivers.push(item2)
           })

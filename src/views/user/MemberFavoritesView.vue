@@ -84,7 +84,7 @@ export default {
         .then((res) => {
           this.isLoading = false
           res.data.forEach((item) => {
-            if (item.userId == loginUserId) {
+            if (item.userId === loginUserId) {
               this.myFavoritesId.push(item)
             }
           })
@@ -105,7 +105,7 @@ export default {
           this.isLoading = false
           res.data.products.forEach((item) => {
             this.myFavoritesId.forEach((item2) => {
-              if (item.id == item2.productId) {
+              if (item.id === item2.productId) {
                 this.myFavoriteProducts.push(item)
               }
             })
@@ -118,7 +118,7 @@ export default {
     //刪除最愛功能
     deleteFavoriteProduct(id) {
       this.myFavoritesId.forEach((item) => {
-        if (item.productId == id) {
+        if (item.productId === id) {
           this.deleteId = item.id
         }
       })

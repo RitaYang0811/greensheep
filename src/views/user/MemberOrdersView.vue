@@ -33,23 +33,40 @@
           </a>
         </td>
         <!-- Modal -->
-        <div class="modal fade " :id="order.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div
+          class="modal fade"
+          :id="order.id"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header bg-primary">
-                <h1 class="modal-title fs-5  text-light" id="exampleModalLabel">訂單編號：{{ order?.create_at }}
+                <h1 class="modal-title fs-5 text-light" id="exampleModalLabel">
+                  訂單編號：{{ order?.create_at }}
                 </h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
               </div>
               <div class="modal-body">
                 <div :id="order.id" class="accordion-collapse collapse show" ref="collape">
                   <div class="accordion-body p-1">
                     <!-- 單筆產品(商品渲染處) -->
                     <!-- products為陣列格式，用Object.values來拆開 -->
-                    <div class="d-flex align-items-center justify-content-between my-1"
-                      v-for="product in Object.values(order.products)" :key="product.id">
+                    <div
+                      class="d-flex align-items-center justify-content-between my-1"
+                      v-for="product in Object.values(order.products)"
+                      :key="product.id"
+                    >
                       <div class="ms-3 d-flex align-items-center">
-                        <span class="fw-medium text-grey66 fs-8 m-2"> {{ product.product.category }} / </span>
+                        <span class="fw-medium text-grey66 fs-8 m-2">
+                          {{ product.product.category }} /
+                        </span>
                         <h3 class="fs-6 fw-medium text-dark">
                           {{ product.product.title }}
                         </h3>
@@ -67,9 +84,13 @@
                           {{ Object.values(order.products)[0]?.coupon?.code }}
                         </span>
                       </p>
-                      <p class="text-primary fw-medium">總金額：NT$
-                        {{ Object.values(order.products)[0]?.coupon?.discount_price ? parseInt(order.total) -
-        Object.values(order.products)[0]?.coupon?.discount_price : parseInt(order.total)
+                      <p class="text-primary fw-medium">
+                        總金額：NT$
+                        {{
+                          Object.values(order.products)[0]?.coupon?.discount_price
+                            ? parseInt(order.total) -
+                              Object.values(order.products)[0]?.coupon?.discount_price
+                            : parseInt(order.total)
                         }}
                       </p>
                     </div>
@@ -119,7 +140,7 @@ export default {
         .get(url)
         .then((res) => {
           res.data.forEach((item) => {
-            if (item.id == loginUserId) {
+            if (item.id === loginUserId) {
               this.userEmail = item.email
             }
           })
@@ -137,7 +158,7 @@ export default {
         .then((res) => {
           this.isLoading = false
           res.data.orders.forEach((item) => {
-            if (item.user.email == this.userEmail) {
+            if (item.user.email === this.userEmail) {
               this.userOrders.push(item)
             }
           })

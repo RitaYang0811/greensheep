@@ -514,39 +514,39 @@ export default {
     ...mapActions(cartStore, ['getCarts', 'updateCart', 'deleteCart']),
     //選擇寄送時出現地址
     showAddress() {
-      if (this.orderDeliverData.deliver == '中華郵政') {
+      if (this.orderDeliverData.deliver === '中華郵政') {
         return true
       }
-      if (this.orderDeliverData.deliver == '黑貓宅急便') {
+      if (this.orderDeliverData.deliver === '黑貓宅急便') {
         return true
       }
-      if (this.orderDeliverData.deliver == '宅配通') {
+      if (this.orderDeliverData.deliver === '宅配通') {
         return true
       }
-      if (this.orderDeliverData.deliver == 'UPS') {
+      if (this.orderDeliverData.deliver === 'UPS') {
         return true
       }
-      if (this.orderDeliverData.deliver == 'DHL') {
+      if (this.orderDeliverData.deliver === 'DHL') {
         return true
       }
     },
     //選擇便利店時出現選店
     showStore() {
-      if (this.orderDeliverData.deliver == '7-11取貨') {
+      if (this.orderDeliverData.deliver === '7-11取貨') {
         return true
       }
-      if (this.orderDeliverData.deliver == '全家取貨') {
+      if (this.orderDeliverData.deliver === '全家取貨') {
         return true
       }
-      if (this.orderDeliverData.deliver == 'OK取貨') {
+      if (this.orderDeliverData.deliver === 'OK取貨') {
         return true
       }
-      if (this.orderDeliverData.deliver == '萊爾富取貨') {
+      if (this.orderDeliverData.deliver === '萊爾富取貨') {
         return true
       }
     },
     showCreditCard() {
-      if (this.orderDeliverData.payWay == '信用卡') {
+      if (this.orderDeliverData.payWay === '信用卡') {
         return false
       } else {
         return true
@@ -554,7 +554,7 @@ export default {
     },
 
     sendOrder() {
-      if (this.carts.length == 0) {
+      if (this.carts.length === 0) {
         Swal.fire({
           title: '購物車是空的',
           confirmButtonColor: '#566B5A',
@@ -589,7 +589,7 @@ export default {
           .get(getUserUrl)
           .then((res) => {
             res.data.forEach((item) => {
-              if (item.id == loginUserId) {
+              if (item.id === loginUserId) {
                 this.orderData.user.name = item.nickName
                 this.orderData.user.email = item.email
                 this.orderData.user.tel = item.phone
