@@ -92,12 +92,12 @@
           </v-form>
           <div class="mb-3 d-flex justify-content-between">
             <p class="mt-2 text-start text-primary">
-              <router-link to="/memberForget">忘記密碼</router-link>
+              <RouterLink to="/memberForget">忘記密碼</RouterLink>
             </p>
             <p class="mt-2 text-end">
               還沒有帳號嗎？前往
-              <router-link to="/memberSignUp" class="text-decoration-underline text-primary fw-bold"
-                >註冊</router-link
+              <RouterLink to="/memberSignUp" class="text-decoration-underline text-primary fw-bold"
+                >註冊</RouterLink
               >
             </p>
           </div>

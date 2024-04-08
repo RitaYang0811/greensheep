@@ -5,8 +5,8 @@
     </p>
     <p>
       或是可以直接
-      <router-link to="/admin/home" class="link-underline-primary fw-bold text-dark">
-        點我 </router-link
+      <RouterLink to="/admin/home" class="link-underline-primary fw-bold text-dark">
+        點我 </RouterLink
       >跳轉
     </p>
   </div>

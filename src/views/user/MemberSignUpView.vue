@@ -193,10 +193,10 @@
           ></Verification>
           <!-- 回到登入 -->
           <p class="mt-2 text-end">
-            已經有帳號了嗎？前往<router-link
+            已經有帳號了嗎？前往<RouterLink
               to="/memberLogin"
               class="text-decoration-underline text-primary fw-bold"
-              >登入</router-link
+              >登入</RouterLink
             >
           </p>
         </div>

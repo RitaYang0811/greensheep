@@ -146,8 +146,8 @@
             </v-form>
             <div class="mb-3 d-flex justify-content-end">
               <p class="mt-1">
-                返回<router-link to="/MemberLogin" class="text-decoration-underline text-primary"
-                  >登入</router-link
+                返回<RouterLink to="/MemberLogin" class="text-decoration-underline text-primary"
+                  >登入</RouterLink
                 >
               </p>
             </div>

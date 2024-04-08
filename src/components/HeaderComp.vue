@@ -14,8 +14,8 @@
         <div class="container">
           <!-- logo -->
           <h1 class="logo mb-0 me-lg-8">
-            <router-link to="/" class="navbar-brand"
-              >綠羊珠寶 Green Sheep handmade jewelry</router-link
+            <RouterLink to="/" class="navbar-brand"
+              >綠羊珠寶 Green Sheep handmade jewelry</RouterLink
             >
           </h1>
 

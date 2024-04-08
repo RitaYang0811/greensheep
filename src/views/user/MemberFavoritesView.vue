@@ -1,14 +1,23 @@
 <template>
-
   <h1 class="fs-3 fs-lg-2 text-start mb-6 fw-bold">我的收藏</h1>
   <!-- 商品頁面 -->
   <div class="d-flex flex-wrap row row-cols-2 row-cols-md-4">
-    <div class="col d-flex flex-column product-item mb-6" v-for="product in myFavoriteProducts" :key="product.id">
+    <div
+      class="col d-flex flex-column product-item mb-6"
+      v-for="product in myFavoriteProducts"
+      :key="product.id"
+    >
       <!-- 點擊圖片可以連結到產品詳細頁面 -->
-      <router-link :to="`/products/detail/${product.id}`" class="position-relative"
-        style="width: 100%; padding-top: 100%">
-        <img :src="product.imageUrl" class="card-img-top position-absolute top-0 start-0 object-fit-cover h-100" />
-      </router-link>
+      <RouterLink
+        :to="`/products/detail/${product.id}`"
+        class="position-relative"
+        style="width: 100%; padding-top: 100%"
+      >
+        <img
+          :src="product.imageUrl"
+          class="card-img-top position-absolute top-0 start-0 object-fit-cover h-100"
+        />
+      </RouterLink>
       <div class="card-body text-start d-flex flex-column justify-content-between p-1 flex-grow-1">
         <h5 class="card-title display-8 text-dark pt-2">
           <div class="mb-2">{{ product.title }}</div>
@@ -17,7 +26,13 @@
         <p class="card-text display-8 text-primary py-2">NT${{ product.price }}</p>
       </div>
       <div class="card-footer">
-        <button class="btn btn-primary w-100" type="button" @click="deleteFavoriteProduct(product.id)">移除最愛</button>
+        <button
+          class="btn btn-primary w-100"
+          type="button"
+          @click="deleteFavoriteProduct(product.id)"
+        >
+          移除最愛
+        </button>
       </div>
     </div>
   </div>
@@ -34,7 +49,7 @@ export default {
       isLoading: false,
       myFavoritesId: [],
       myFavoriteProducts: [],
-      deleteId: '',
+      deleteId: ''
     }
   },
   methods: {
@@ -119,7 +134,8 @@ export default {
         if (result.isConfirmed) {
           this.isLoading = true
           const deletefavoriteUrl = `https://greensheep-json-server.onrender.com/favorites/${this.deleteId}`
-          this.$http.delete(deletefavoriteUrl)
+          this.$http
+            .delete(deletefavoriteUrl)
             .then(() => {
               this.isLoading = false
               this.getFavorites()
@@ -137,7 +153,7 @@ export default {
             })
         }
       })
-    },
+    }
   },
   mounted() {
     this.checkLogin()
