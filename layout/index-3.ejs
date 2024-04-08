@@ -16,11 +16,7 @@
         src="../assets/images/img_diy_font.png"
         alt="img_diy_font"
       />
-      <img
-        id="dynamic-image"
-        src="../assets/images/point.png"
-        alt="Popup Image"
-      />
+      <img id="dynamic-image" src="../assets/images/point.png" alt="Popup Image" />
       <img
         id="testImg"
         class="position-absolute position-absolute top-60 start-21 translate-middle zindex-sticky"
@@ -32,35 +28,32 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 
       <script>
-        var dynamicImage = document.getElementById("dynamic-image");
-        var popoverElement = document.getElementById("base-image");
-        var popover;
+        var dynamicImage = document.getElementById('dynamic-image')
+        var popoverElement = document.getElementById('base-image')
+        var popover
 
         function handleImageClick(event) {
           // Hide the dynamic image and destroy existing popover if any
-          dynamicImage.style.display = "none";
+          dynamicImage.style.display = 'none'
           if (popover) {
-            popover.dispose();
+            popover.dispose()
           }
 
-          var x = event.offsetX - dynamicImage.width / 2;
-          var y = event.offsetY - dynamicImage.height / 2;
-          var xOffset = 450;
-          var yOffset = 120;
+          var x = event.offsetX - dynamicImage.width / 2
+          var y = event.offsetY - dynamicImage.height / 2
+          var xOffset = 450
+          var yOffset = 120
 
           // Adjust position to ensure the dynamic image does not go outside the container.
-          x =
-            Math.min(Math.max(0, x), this.width - dynamicImage.width) + xOffset;
-          y =
-            Math.min(Math.max(0, y), this.height - dynamicImage.height) +
-            yOffset;
+          x = Math.min(Math.max(0, x), this.width - dynamicImage.width) + xOffset
+          y = Math.min(Math.max(0, y), this.height - dynamicImage.height) + yOffset
 
-          dynamicImage.style.left = x + "px";
-          dynamicImage.style.top = y + "px";
-          dynamicImage.style.display = "block";
+          dynamicImage.style.left = x + 'px'
+          dynamicImage.style.top = y + 'px'
+          dynamicImage.style.display = 'block'
 
           popover = new bootstrap.Popover(dynamicImage, {
-            title: "選擇寶石",
+            title: '選擇寶石',
             html: true, // Enable HTML content
             content: `
                        <div class="d-flex">
@@ -69,13 +62,13 @@
                            <img src="../assets/images/stoneBox2.png" alt="Image 3">
                        </div>
                    `,
-            placement: "top",
-          });
+            placement: 'top'
+          })
 
-          popover.show();
+          popover.show()
         }
 
-        popoverElement.addEventListener("click", handleImageClick);
+        popoverElement.addEventListener('click', handleImageClick)
       </script>
 
       <div
@@ -87,11 +80,7 @@
         <p class="text-light mb-4 fs-8">Create Your Unique Elegance</p>
         <p class="text-decolight mb-4">Step 1：選擇專屬寶石</p>
         <p class="text-decolight mb-4">Step 2：輸入你想說的話</p>
-        <a
-          href="#"
-          class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary"
-          >Start Now</a
-        >
+        <a href="#" class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary">Start Now</a>
       </div>
 
       <div
@@ -103,17 +92,11 @@
         <p class="text-light mb-4 fs-8">Create Your Unique Elegance</p>
         <p class="text-decolight mb-4">Step 1：選擇專屬寶石</p>
         <p class="text-decolight mb-4">Step 2：輸入你想說的話</p>
-        <a
-          href="#"
-          class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary"
-          >Start Now</a
-        >
+        <a href="#" class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary">Start Now</a>
       </div>
     </div>
     <!--平板版 客製化頁面-->
-    <div
-      class="col-12 bg-image position-relative box d-none d-lg-block d-xl-none"
-    >
+    <div class="col-12 bg-image position-relative box d-none d-lg-block d-xl-none">
       <!--<img class="position-absolute top-60 start-50 translate-middle zindex-dropdown" src="../assets/images/img_diy_center.png" alt="img_diy_center">-->
 
       <img
@@ -129,11 +112,7 @@
         src="../assets/images/img_diy_font.png"
         alt="img_diy_font"
       />
-      <img
-        id="dynamic-image"
-        src="../assets/images/point.png"
-        alt="Popup Image"
-      />
+      <img id="dynamic-image" src="../assets/images/point.png" alt="Popup Image" />
       <img
         style="width: 30%"
         id="testImg"
@@ -152,11 +131,7 @@
         <p class="text-light mb-4 fs-8">Create Your Unique Elegance</p>
         <p class="text-decolight mb-4">Step 1：選擇專屬寶石</p>
         <p class="text-decolight mb-4">Step 2：輸入你想說的話</p>
-        <a
-          href="#"
-          class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary"
-          >Start Now</a
-        >
+        <a href="#" class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary">Start Now</a>
       </div>
     </div>
     <!--手機板 客製化頁面 尚未完成-->
@@ -169,16 +144,10 @@
         <h5 class="text-white fs-6 mb-1">開始客製屬於您的產品</h5>
         <h3 class="text-white fs-1 mb-4">CUSTOMIZE YOUR STYLE</h3>
         <p class="text-light mb-1 fs-7">2 個步驟創作你的專屬心意</p>
-        <p class="text-light mb-4 fs-8 font-noto-serif">
-          Create Your Unique Elegance
-        </p>
+        <p class="text-light mb-4 fs-8 font-noto-serif">Create Your Unique Elegance</p>
         <p class="text-decolight mb-4">Step 1：選擇專屬寶石</p>
         <p class="text-decolight mb-4">Step 2：輸入你想說的話</p>
-        <a
-          href="#"
-          class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary"
-          >Start Now</a
-        >
+        <a href="#" class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary">Start Now</a>
       </div>
       <img
         style="width: 184px; top: 52%; left: 30%"
@@ -194,11 +163,7 @@
         src="../assets/images/img_diy_center.png"
         alt="Click Me"
       />
-      <img
-        id="dynamic-image"
-        src="../assets/images/point.png"
-        alt="Popup Image"
-      />
+      <img id="dynamic-image" src="../assets/images/point.png" alt="Popup Image" />
     </div>
   </div>
 </div>
@@ -207,33 +172,31 @@
 
 <div class="container py-10 px-6">
   <p class="text-primary fs-6 mb-1 fw-bold">為什麼選擇我們</p>
-  <h3 class="fs-lg-2 fs-1 mb-12 text-primary">
-    WHY GREEN SHEEP HANDMADE JEWELRY?
-  </h3>
+  <h3 class="fs-lg-2 fs-1 mb-12 text-primary">WHY GREEN SHEEP HANDMADE JEWELRY?</h3>
   <ul class="col-12 d-flex flex-wrap list-unstyled">
     <li class="col-lg-3 col-6 pe-2 pb-4">
-      <img class="mb-3" src="/assets/images/diamond.png" alt="" />
+      <img class="mb-3" src="/assets/images/diamond.png" alt="diamond" />
       <p class="text-dark mb-3">最高品質保證</p>
       <p class="text-grey9F fs-8 lh-lg">
         品牌堅持以最高品質來製作每一件作品，所有作品均選用天然寶石與優質的金屬材料，確保每一件作品都散發絕佳光彩。
       </p>
     </li>
     <li class="col-lg-3 col-6 pe-2">
-      <img class="mb-3" src="/assets/images/car.png" alt="" />
+      <img class="mb-3" src="/assets/images/car.png" alt="car" />
       <p class="text-dark mb-3">全球配送</p>
       <p class="text-grey9F fs-8 lh-lg">
         我們樂於將綠羊作品傳遞至世界各地，不論您身在何處，我們提供全球配送服務，確保您能夠輕鬆地有我們的珠寶飾品。
       </p>
     </li>
     <li class="col-lg-3 col-6 pe-2">
-      <img class="mb-3" src="/assets/images/return.png" alt="" />
+      <img class="mb-3" src="/assets/images/return.png" alt="return" />
       <p class="text-dark mb-3">完善退換貨機制</p>
       <p class="text-grey9F fs-8 lh-lg">
         我們尊重每一位客戶的選擇，提供完善退換貨機制，若您對購買的作品(客製商品除外)有任何疑慮或不滿意，請隨時與我們聯繫，我們將竭誠為您解決。
       </p>
     </li>
     <li class="col-lg-3 col-6 pe-2">
-      <img class="mb-3" src="/assets/images/drew.png" alt="" />
+      <img class="mb-3" src="/assets/images/drew.png" alt="drew" />
       <p class="text-dark mb-3">原創設計手工製作</p>
       <p class="text-grey9F fs-8 lh-lg">
         綠羊品牌的每一件作品都是由專業的設計師原創設計，並由台灣資深金工師傅手工製作。這使得每一件作品都散發著原創的獨特風格，讓您感受到我們的用心與品質保證。
@@ -243,9 +206,7 @@
 </div>
 
 <!-- 品牌故事區 -->
-<div
-  class="bg-image2 mt-9 text-white py-24 position-relative d-none d-lg-inline-block"
->
+<div class="bg-image2 mt-9 text-white py-24 position-relative d-none d-lg-inline-block">
   <h3 class="fs-2 mt-21 mb-10 text-white">EMBRACE YOUR INNER GREEN SHEEP</h3>
   <img
     style="top: 45%; left: 28.7%"
@@ -259,9 +220,7 @@
   </p>
 </div>
 
-<div
-  class="bg-image2-mobile mt-9 text-white py-24 position-relative d-inline-block d-lg-none"
->
+<div class="bg-image2-mobile mt-9 text-white py-24 position-relative d-inline-block d-lg-none">
   <h3 class="fs-1 mt-5 mb-10 text-white">EMBRACE YOUR INNER GREEN SHEEP</h3>
   <img
     style="top: 41%; left: 16%"
