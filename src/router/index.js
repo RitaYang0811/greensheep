@@ -38,6 +38,7 @@ const router = createRouter({
           name: 'UserProductDetail',
           component: () => import('../views/user/ProductDetailView.vue')
         },
+
         {
           path: 'lineNotify',
           component: () => import('../views/user/lineNotify.vue')
