@@ -154,12 +154,12 @@
                   <!-- v-else 打折 -->
                   <div v-else class="mt-3 mb-1">
                     <span class="card-text display-8 text-primary my-2 me-2"
-                      >NT$ {{ product.origin_price }}</span
+                      >NT$ {{ product.price }}</span
                     >
                     <br /><span
                       class="card-text display-8 text-grey9F text-decoration-line-through"
                     >
-                      NT$ {{ product.price }}
+                      NT$ {{ product.origin_price }}
                     </span>
                   </div>
 
@@ -235,13 +235,13 @@
                           >
 
                           <span class="d-inline-block card-text fs-7 text-dark mb-2"
-                            >NT$ {{ item.origin_price }}</span
+                            >NT$ {{ item.price }}</span
                           >
 
                           <br /><span
                             class="d-inline-block card-text display-8 text-grey9F text-decoration-line-through"
                           >
-                            NT$ {{ item.price }}
+                            NT$ {{ item.origin_price }}
                           </span>
                         </td>
 

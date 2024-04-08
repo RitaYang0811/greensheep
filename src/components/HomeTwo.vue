@@ -183,7 +183,7 @@
       <div class="col-lg-3">
         <RouterLink to="/products/detail/-NsVL3yywAfe5aYKsTVv">
           <div
-            class="card text-white border-0 bg-primary bg-gradient h-border position-relative"
+            class="card border-0 bg-gradient h-border position-relative"
             data-aos="fade-up"
             data-aos-duration="1200"
             data-aos-delay="200"
@@ -205,44 +205,39 @@
             <div
               class="card-img-overlay d-flex flex-column justify-content-end p-5 align-items-lg-start"
             >
-              <h5 class="card-title fs-6 mb-2 text-dark">波光粼粼</h5>
-              <p class="card-text text-deco fs-7 mb-2 fw-bold">NT$ 4,500</p>
-              <p class="card-text fs-8 font-noto-serif text-dark">耳環 / 925純銀 / 海水藍寶</p>
+              <h5 class="card-title fs-6 mb-2 text-primary">波光粼粼</h5>
+              <p class="card-text text-dark fs-7 mb-2 fw-bold">NT$ 4,500</p>
             </div>
           </div>
         </RouterLink>
       </div>
       <div class="col-lg-3">
-        <RouterLink to="/products/detail/-NsV1p_2gXiVpBHy2xu6">
+        <RouterLink to="/products/detail/-NsV_Qdfr0Qw-4JYuvyL">
           <div
-            class="card text-white border-0 bg-primary bg-gradient h-border"
+            class="card border-0 bg-gradient h-border"
             data-aos="fade-up"
             data-aos-duration="1200"
             data-aos-delay="400"
           >
             <div class="h-border position-relative" style="width: 100%; padding-top: 135%">
               <img
-                src="../assets/images/img-prod-2.png"
+                src="../assets/images/product-flower1.jpg"
                 class="card-img-top show position-absolute top-0 start-0 object-fit-cover opacity-75"
                 style="width: 100%; height: 100%"
-                alt="天使之愛十字架｜925純銀"
+                alt="梅花梅花幾月開 "
               />
               <img
-                src="../assets/images/product-3.jpg"
+                src="../assets/images/product-flower2.jpg"
                 class="card-img-top change position-absolute top-0 start-0 object-fit-cover"
                 style="width: 100%; height: 100%"
-                alt="天使之愛十字架｜925純銀"
+                alt="梅花梅花幾月開 "
               />
             </div>
             <div
               class="card-img-overlay d-flex flex-column justify-content-end p-5 align-items-lg-start"
             >
-              <h5 class="card-title fs-6 mb-2">天使之愛十字架</h5>
-              <p class="card-text text-deco fs-7 mb-2 fw-bold">
-                NT$ 1,980
-                <span class="text-decoration-line-through text-white fs-7 mb-2">2,200</span>
-              </p>
-              <p class="card-text fs-8 font-noto-serif">項鍊 / 925純銀</p>
+              <h5 class="card-title fs-6 mb-2 text-primary">梅花梅花幾月開</h5>
+              <p class="card-text text-dark fs-7 mb-2 fw-bold">NT$ 1,280</p>
             </div>
           </div>
         </RouterLink>
@@ -250,7 +245,7 @@
       <div class="col-lg-3">
         <RouterLink to="/products/detail/-NsUsi2n1gdOSF0I798e">
           <div
-            class="card text-white border-0 bg-primary bg-gradient h-border"
+            class="card border-0 bg-gradient h-border"
             data-aos="fade-up"
             data-aos-duration="1200"
             data-aos-delay="500"
@@ -262,7 +257,7 @@
                 style="width: 100%; height: 100%"
               />
               <img
-                src="../assets/images/product-4-2.jpg"
+                src="../assets/images/product-4.jpg"
                 class="card-img-top change position-absolute top-0 start-0 object-fit-cover"
                 style="width: 100%; height: 100%"
               />
@@ -270,14 +265,11 @@
             <div
               class="card-img-overlay d-flex flex-column justify-content-end p-5 align-items-lg-start"
             >
-              <h5 class="card-title mb-2 text-dark">永恆婚約對戒</h5>
-              <p class="card-text text-deco mb-2 fw-bold">NT$ 38,880</p>
-              <div>
-                <span class="color-choose color-gold me-1"></span
+              <h5 class="card-title mb-2 text-primary">星空之約白金對戒</h5>
+              <p class="card-text text-dark mb-2 fw-bold">
+                NT$ 88,880<span class="color-choose color-gold ms-3 mx-1"></span
                 ><span class="color-choose color-silver"></span>
-              </div>
-
-              <p class="card-text fs-8 font-noto-serif text-dark">戒指 / 18K金 / 鑽石</p>
+              </p>
             </div>
           </div>
         </RouterLink>
@@ -300,7 +292,7 @@
               class="card-img-overlay d-flex flex-column justify-content-end p-5 align-items-lg-start"
             >
               <h5 class="card-title fs-6 mb-2 text-dark">波光粼粼</h5>
-              <p class="card-text text-warning fs-7 mb-2 fw-bold">NT$ 4,500</p>
+              <p class="card-text text-dark fs-7 mb-2 fw-bold">NT$ 4,500</p>
               <p class="card-text fs-8 font-noto-serif text-dark">耳環 / 925純銀 / 海水藍寶</p>
             </div>
           </div>
@@ -313,10 +305,7 @@
               class="card-img-overlay d-flex flex-column justify-content-end p-5 align-items-lg-start"
             >
               <h5 class="card-title fs-6 mb-2 text-dark">天使之愛十字架</h5>
-              <p class="card-text text-warning fs-7 mb-2 fw-bold">
-                NT$ 1,980
-                <span class="text-decoration-line-through fs-7 mb-2 fw-bold text-dark">2,200</span>
-              </p>
+              <p class="card-text text-dark fs-7 mb-2 fw-bold">NT$ 1,980</p>
               <p class="card-text fs-8 font-noto-serif text-dark">項鍊 / 925純銀</p>
             </div>
           </div>
@@ -328,8 +317,8 @@
             <div
               class="card-img-overlay d-flex flex-column justify-content-end p-5 align-items-lg-start"
             >
-              <h5 class="card-title mb-2 text-dark">永恆婚約對戒</h5>
-              <p class="card-text text-warning mb-2 fw-bold">NT$ 38,880</p>
+              <h5 class="card-title mb-2 text-dark">星空之約白金對戒</h5>
+              <p class="card-text text-dark mb-2 fw-bold">NT$ 88,880</p>
               <div>
                 <span class="color-choose color-gold me-1"></span
                 ><span class="color-choose color-silver"></span>

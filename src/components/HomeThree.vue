@@ -32,7 +32,7 @@
                 <p class="text-decolight mb-4 ls-2">Step 2：輸入你想說的話</p>
               </div>
               <RouterLink
-                to="/products/全部商品 ALL"
+                to="/products/客製設計%20CUSTOMIZED"
                 class="fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary ls-2"
                 data-aos="fade-left"
                 data-aos-duration="1200"

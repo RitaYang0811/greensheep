@@ -4,52 +4,51 @@
   <div class="container-lg py-10 py-lg-16">
     <div class="py-lg-10 d-lg-flex test-one">
       <!-- article top&left -->
-      <a href="#">
-        <div class="d-flex justify-content-center text-white mb-6 me-lg-6">
-          <div class="lt-card-img-box white-border">
-            <img src="../assets/images/img-person.png" class="lt-card-img" alt="文章圖片" />
-            <div class="d-flex flex-column justify-content-end align-items-start ps-9 pb-9">
-              <p class="position-absolute"># News from GreenSheep</p>
-            </div>
+
+      <div class="d-flex justify-content-center text-white mb-6 me-lg-6">
+        <div class="lt-card-img-box white-border">
+          <img src="../assets/images/img-person.png" class="lt-card-img" alt="文章圖片" />
+          <div class="d-flex flex-column justify-content-end align-items-start ps-9 pb-9">
+            <p class="position-absolute"># News from GreenSheep</p>
           </div>
         </div>
-      </a>
+      </div>
 
       <!-- article bottom&right -->
       <ul class="list-unstyled">
         <div class="row justify-content-center gx-4 mb-4 mb-lg-6">
           <!-- 第一個 -->
           <li class="article-br col-6">
-            <a href="#">
+            <RouterLink to="/articles/-NsapKpr3a4oeIp8VD3d">
               <!-- :src="pinnedArticle[0].image" -->
               <div class="card border-0 text-white">
                 <img src="../assets/images/img-article-1.png" class="card-img" alt="文章圖片" />
                 <div
                   class="card-img-overlay d-flex flex-column justify-content-end px-4 pb-4 px-lg-5 pb-lg-5"
                 >
-                  <p class="card-text text-start">一件作品是怎麼誕生的呢？</p>
+                  <p class="card-text text-start">珠寶背後的故事：打開珠寶盒的奇幻世界</p>
                 </div>
               </div>
-            </a>
+            </RouterLink>
           </li>
           <!-- 第二個 -->
           <li class="article-br col-6">
-            <a href="#">
+            <RouterLink to="/articles/-NsEamklWofTAq5VVgLV">
               <div class="card border-0 text-white">
                 <img src="../assets/images/img-article-2.png" class="card-img" alt="文章圖片" />
                 <div
                   class="card-img-overlay d-flex flex-column justify-content-end px-4 pb-4 px-lg-5 pb-lg-5"
                 >
-                  <p class="card-text text-start">誕生石幫你傳達專屬心意</p>
+                  <p class="card-text text-start">探索珠寶背後的神秘力量！</p>
                 </div>
               </div>
-            </a>
+            </RouterLink>
           </li>
         </div>
         <div class="row gx-4">
           <!-- 第三個 -->
           <li class="article-br col-6">
-            <a href="#">
+            <RouterLink to="/articles/-NsE_soLJU6GxiS8uBnl">
               <div class="card border-0 text-white">
                 <img src="../assets/images/img-article-3.png" class="card-img" alt="文章圖片" />
                 <div
@@ -58,11 +57,11 @@
                   <p class="card-text text-start">讓珠寶成為你的能量與活力</p>
                 </div>
               </div>
-            </a>
+            </RouterLink>
           </li>
           <!-- 第四個 -->
           <li class="col-6">
-            <a href="../pages/5-1.blog.html">
+            <RouterLink to="/articles">
               <div
                 class="d-flex justify-content-center align-items-center position-relative more-content"
               >
@@ -81,13 +80,13 @@
                   />
                   <p class="text-primary more-content-text">更多文章</p>
                 </div>
-                <a
-                  href="../pages/5-1.blog.html"
+                <RouterLink
+                  to="/articles"
                   class="position-absolute fs-8 py-2 px-3 text-start custom-btn custom-btn-secondary"
-                  >Discover More</a
+                  >Discover More</RouterLink
                 >
               </div>
-            </a>
+            </RouterLink>
           </li>
         </div>
       </ul>
@@ -104,7 +103,7 @@
       <!-- 客戶評價 -->
       <ul class="row list-unstyled py-5 mb-6 py-lg-10">
         <li class="mb-4 col-md-3 mb-lg-0">
-          <a href="#">
+          <RouterLink to="/products/detail/-NuyUXYNGf3zWupcJLAh">
             <div class="custom-card">
               <div class="custom-img-box">
                 <img src="../assets/images/img-evaluate-1.png" alt="客戶評價圖片" />
@@ -124,15 +123,15 @@
                 </p>
                 <div class="d-flex mb-2">
                   <p class="me-2 pe-2 text-start text-dark grey-border">耳環</p>
-                  <p class="text-start text-dark">貓貓是神</p>
+                  <p class="text-start text-dark">貓咪黑白配</p>
                 </div>
                 <p class="text-start text-dark">Rita Yang</p>
               </div>
             </div>
-          </a>
+          </RouterLink>
         </li>
         <li class="mb-4 col-md-3 mb-lg-0">
-          <a href="#">
+          <RouterLink to="/products/detail/-NsVMjmDh6a1TkDxzAM5">
             <div class="custom-card">
               <div class="custom-img-box">
                 <img src="../assets/images/img-evaluate-2.png" alt="客戶評價圖片" />
@@ -151,15 +150,15 @@
                 </p>
                 <div class="d-flex mb-2">
                   <p class="me-2 pe-2 text-start text-dark grey-border">項鍊</p>
-                  <p class="text-start text-dark">拿鐵拉花純銀項鍊</p>
+                  <p class="text-start text-dark">拉花慢葉純銀項鍊</p>
                 </div>
                 <p class="text-start text-dark">仙貝</p>
               </div>
             </div>
-          </a>
+          </RouterLink>
         </li>
         <li class="mb-4 col-md-3 mb-lg-0">
-          <a href="#">
+          <RouterLink to="/products/detail/-NsUpSH3NLnSe9lbHSNl">
             <div class="custom-card">
               <div class="custom-img-box">
                 <img src="../assets/images/img-evaluate-3.png" alt="客戶評價圖片" />
@@ -177,15 +176,15 @@
                   第一次看到像海洋的石頭，作品靈巧生動非常值得收藏！
                 </p>
                 <div class="d-flex mb-2">
-                  <p class="text-start text-dark">蔚藍海洋｜Freedom海洋石純銀項鍊</p>
+                  <p class="text-start text-dark">蔚藍|拉利瑪海紋石純銀項鍊</p>
                 </div>
                 <p class="text-start text-dark">柯基</p>
               </div>
             </div>
-          </a>
+          </RouterLink>
         </li>
         <li class="col-md-3">
-          <a href="#">
+          <RouterLink to="/products/detail/-NsVL3yywAfe5aYKsTVv">
             <div class="custom-card">
               <div class="custom-img-box">
                 <img src="../assets/images/img-evaluate-4.png" alt="客戶評價圖片" />
@@ -209,7 +208,7 @@
                 <p class="text-start text-dark">Uli</p>
               </div>
             </div>
-          </a>
+          </RouterLink>
         </li>
       </ul>
       <!-- 結尾logo -->
