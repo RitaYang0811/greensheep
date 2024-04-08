@@ -186,11 +186,11 @@
             </button>
           </v-form>
           <!-- 驗證碼輸入 -->
-          <verification
+          <Verification
             v-if="securityState"
             :verification-code="codeUpdate"
             :userInfo="user"
-          ></verification>
+          ></Verification>
           <!-- 回到登入 -->
           <p class="mt-2 text-end">
             已經有帳號了嗎？前往<router-link
@@ -295,17 +295,17 @@
 
 <script>
 import Modal from 'bootstrap/js/dist/modal'
-import Email from '../../utils/smtp'
+import Email from '@/utils/smtp'
 import { googleTokenLogin } from 'vue3-google-login'
 import axios from 'axios'
-import verification from '../../components/verificationComponent.vue'
+import Verification from '@/components/VerificationComponent.vue'
 import Swal from 'sweetalert2'
 
 // json-server網址
 const serverUrl = 'https://greensheep-json-server.onrender.com'
 
 export default {
-  components: { verification },
+  components: { Verification: Verification },
   data() {
     return {
       user: {},
