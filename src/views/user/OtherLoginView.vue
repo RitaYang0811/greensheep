@@ -60,7 +60,7 @@
             class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
           >
             <div class="button-img-box me-1">
-              <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+              <img src="@/assets/images/GreenSheep.png" alt="圖像" />
             </div>
             <p>完成註冊</p>
           </button>

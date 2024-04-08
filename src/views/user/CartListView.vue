@@ -4,29 +4,27 @@
     <div>
       <div class="p-10 d-flex justify-content-center" style="z-index: 10">
         <div class="">
-          <div class="btn btn-outline-primary border-2 rounded-circle bg-primary pe-none"><i
-              class="bi bi-check-lg fs-2 text-light"></i>
+          <div class="btn btn-outline-primary border-2 rounded-circle bg-primary pe-none">
+            <i class="bi bi-check-lg fs-2 text-light"></i>
           </div>
           <p class="mt-3 fs-6 text-primary">確認購買明細</p>
         </div>
-        <div class="mt-5 bg-light border border-greyD4" style="height: 8px; width: 35%">
-        </div>
+        <div class="mt-5 bg-light border border-greyD4" style="height: 8px; width: 35%"></div>
         <div class="opacity-50">
-          <div class="btn btn-outline-primary border-2 rounded-circle pe-none"><i
-              class="bi bi-check-lg fs-2 text-primary"></i>
+          <div class="btn btn-outline-primary border-2 rounded-circle pe-none">
+            <i class="bi bi-check-lg fs-2 text-primary"></i>
           </div>
           <p class="mt-3 fs-6 text-primary">付款資料填寫</p>
         </div>
         <div class="mt-5 bg-light border border-greyD4" style="height: 8px; width: 35%"></div>
         <div class="opacity-50">
-          <div class="btn btn-outline-primary border-2 rounded-circle pe-none"><i
-              class="bi bi-check-lg fs-2 text-primary"></i>
+          <div class="btn btn-outline-primary border-2 rounded-circle pe-none">
+            <i class="bi bi-check-lg fs-2 text-primary"></i>
           </div>
           <p class="mt-3 fs-6 text-primary">訂單完成</p>
         </div>
       </div>
     </div>
-
 
     <h1 class="fs-4 fs-lg-2 py-20 text-center fw-bold">購物車</h1>
     <Loading v-model:active="isLoading"></Loading>
@@ -47,7 +45,11 @@
               <div class="row g-0 align-items-center">
                 <div class="col-md-4">
                   <div class="ratio ratio-1x1">
-                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover" alt="product-image" />
+                    <img
+                      :src="cart.product.imageUrl"
+                      class="img-fluid object-fit-cover"
+                      alt="product-image"
+                    />
                   </div>
                 </div>
                 <div class="col-md-8">
@@ -63,14 +65,29 @@
           </th>
           <td class="py-4">
             <div class="d-flex justify-content-center">
-              <button type="button" class="btn btn-link text-primary" @click.prevent="cart.qty--"
-                @click="updateCart(cart)" :disabled="cart.qty <= 1">
+              <button
+                type="button"
+                class="btn btn-link text-primary"
+                @click.prevent="cart.qty--"
+                @click="updateCart(cart)"
+                :disabled="cart.qty <= 1"
+              >
                 <i class="bi bi-dash-circle fs-3"></i>
               </button>
-              <input type="number" class="p-lg-2 w-20 text-center" min="1" v-model="cart.qty" disabled />
+              <input
+                type="number"
+                class="p-lg-2 w-20 text-center"
+                min="1"
+                v-model="cart.qty"
+                disabled
+              />
 
-              <button type="button" class="btn btn-link text-primary" @click.prevent="cart.qty++"
-                @click="updateCart(cart)">
+              <button
+                type="button"
+                class="btn btn-link text-primary"
+                @click.prevent="cart.qty++"
+                @click="updateCart(cart)"
+              >
                 <i class="bi bi-plus-circle fs-3"></i>
               </button>
             </div>
@@ -88,7 +105,6 @@
     <div class="d-flex my-4 mx-2">
       <button type="button" class="btn btn-danger" @click="deleteAllCarts">刪除全部商品</button>
     </div>
-
   </div>
 
   <!-- 免運 -->
@@ -97,8 +113,10 @@
       <div class="row" v-if="carts[0]?.coupon">
         <div class="col-md-2 text-primary fw-medium mb-2">已使用優惠</div>
         <div class="col-md-10 text-center text-md-start">
-          <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4">{{
-      carts[0]?.coupon?.title }}</span>
+          <span
+            class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4"
+            >{{ carts[0]?.coupon?.title }}</span
+          >
           <span class="fs-7 text-primary">
             {{ showCoupon(carts[0]?.coupon) }}
           </span>
@@ -113,8 +131,18 @@
 
       <div class="col-md-10">
         <form class="text-md-start text-center">
-          <input type="text" class="teat-start p-2 w-50" placeholder="請輸入優惠代碼" v-model="coupon" />
-          <button type="button" class="btn btn-primary p-3" @click="sendCoupon(coupon)" :disabled="!coupon">
+          <input
+            type="text"
+            class="teat-start p-2 w-50"
+            placeholder="請輸入優惠代碼"
+            v-model="coupon"
+          />
+          <button
+            type="button"
+            class="btn btn-primary p-3"
+            @click="sendCoupon(coupon)"
+            :disabled="!coupon"
+          >
             送出優惠券
           </button>
         </form>
@@ -168,13 +196,17 @@
             <p class="fw-bold">
               NT$
               {{
-      carts[0]?.coupon
-        ? parseInt(total) - carts[0]?.coupon?.discount_price
-        : parseInt(total)
-    }}
+                carts[0]?.coupon
+                  ? parseInt(total) - carts[0]?.coupon?.discount_price
+                  : parseInt(total)
+              }}
             </p>
           </div>
-          <button type="button" class="btn btn-primary p-5 fs-5 w-100 text-white" @click="goCheckout">
+          <button
+            type="button"
+            class="btn btn-primary p-5 fs-5 w-100 text-white"
+            @click="goCheckout"
+          >
             前往結帳
           </button>
         </div>
@@ -195,7 +227,7 @@ import cartStore from '@/stores/cartStore'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 
-import OrderRules from '../../components/OrderRules.vue'
+import OrderRules from '@/components/OrderRules.vue'
 import Swal from 'sweetalert2'
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
@@ -234,7 +266,13 @@ export default {
   },
 
   methods: {
-    ...mapActions(cartStore, ['getCarts', 'updateCart', 'deleteCart', 'getDeliverData', 'deleteAllCarts']),
+    ...mapActions(cartStore, [
+      'getCarts',
+      'updateCart',
+      'deleteCart',
+      'getDeliverData',
+      'deleteAllCarts'
+    ]),
 
     sendCoupon(coupon) {
       const sendCouponUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/coupon`

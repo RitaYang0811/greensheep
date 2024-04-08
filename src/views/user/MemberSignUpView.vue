@@ -14,7 +14,7 @@
             <li class="py-3">
               <button class="g-login-btn g-login-btn--google ji-mb-10" @click="accessTokenLogin">
                 <span class="g-login-btnIcon"
-                  ><img src="../../assets/images/google.svg" alt="line圖片"
+                  ><img src="@/assets/images/google.svg" alt="line圖片"
                 /></span>
                 <span class="g-login-btnText">Google登入</span>
               </button>
@@ -22,7 +22,7 @@
             <li class="py-3">
               <button class="g-login-btn g-login-btn--line mt-3" @click="lineLoginEvent">
                 <span class="g-login-btnIcon"
-                  ><img src="../../assets/images/line-image.png" alt="line圖片"
+                  ><img src="@/assets/images/line-image.png" alt="line圖片"
                 /></span>
                 <span class="g-login-btnText">LINE登入</span>
               </button>
@@ -180,7 +180,7 @@
               class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
             >
               <div class="button-img-box me-1">
-                <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+                <img src="@/assets/images/GreenSheep.png" alt="圖像" />
               </div>
               <p>立即註冊</p>
             </button>
