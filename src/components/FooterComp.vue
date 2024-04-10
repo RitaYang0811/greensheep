@@ -42,7 +42,12 @@
                 >
               </li>
               <li>
-                <a target="_blank" class="fs-8 text-white mx-3" @click.prevent="isLogout">登出 </a>
+                <a
+                  target="_blank"
+                  class="fs-8 text-white mx-3 cursor-pointer"
+                  @click.prevent="isLogout"
+                  >登出
+                </a>
               </li>
             </div>
           </ul>

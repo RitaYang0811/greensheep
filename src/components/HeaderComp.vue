@@ -129,7 +129,10 @@
               </form>
 
               <!-- 會員中心 -->
-              <a class="me-2 d-none d-lg-block flex-grow-1" @click.prevent="isLogin()">
+              <a
+                class="me-2 d-none d-lg-block flex-grow-1 cursor-pointer"
+                @click.prevent="isLogin()"
+              >
                 <img
                   class="header-white-icon p-xxl-2 p-xl-0"
                   src="../assets/images/ic-person-white.svg"
