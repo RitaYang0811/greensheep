@@ -37,21 +37,13 @@
     >
       猜你也喜歡
     </h2>
-    <ul class="row row-cols-2 row-cols-md-4 g-4 mb-20 ps-0 list-unstyled">
-        <!-- 放相同分類隨機商品 -->
+    <ul class="row row-cols-2 row-cols-md-4 g-4 mb-20 ps-0">
         <li
           class="col list-unstyled h-100 column"
-          v-for="(product, index) in recommendProducts"
+          v-for="product in recommendProducts"
           :key="product.id"
         >
-          <RouterLink
-            :to="`/products/${product.id}`"
-            class="d-flex flex-column product-item"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-            :data-aos-delay="index * 200"
-            data-aos-once="true"
-          >
+          <RouterLink :to="{ path: `/products/detail/${product.id}` }" class="card border-0">
             <div class="h-border position-relative" style="width: 100%; padding-top: 100%">
               <span
                 v-if="product.discount !== 10"
@@ -60,12 +52,10 @@
               >
               <img
                 :src="product.imageUrl"
-                :alt="product.title"
                 class="show position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
               />
               <img
                 :src="product.imageUrl2"
-                :alt="product.title"
                 class="change position-absolute top-0 start-0 w-100 h-100 object-fit-cover"
               />
             </div>
@@ -88,10 +78,7 @@
                   NT$ {{ product.price }}
                 </span>
               </div>
-
-              <!-- 加入購物車 -->
               <button
-                type="button"
                 class="custom-btn custom-btn-toGreen text-center w-100 border-1"
                 @click.prevent="addToCart(product.id)"
               >
@@ -100,7 +87,7 @@
             </div>
           </RouterLink>
         </li>
-    </ul>
+      </ul>
   </div>
   <VueLoading :active="isLoading" />
 </template>
