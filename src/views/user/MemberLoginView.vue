@@ -12,17 +12,25 @@
           <!-- google或line 帳號登入 -->
           <ul class="list-unstyled">
             <li class="py-3">
-              <button class="g-login-btn g-login-btn--google ji-mb-10" @click="accessTokenLogin">
+              <button
+                type="button"
+                class="g-login-btn g-login-btn--google ji-mb-10"
+                @click="accessTokenLogin"
+              >
                 <span class="g-login-btnIcon"
-                  ><img src="../../assets/images/google.svg" alt="line圖片"
+                  ><img src="@/assets/images/google.svg" alt="line圖片"
                 /></span>
                 <span class="g-login-btnText">Google登入</span>
               </button>
             </li>
             <li class="py-3">
-              <button class="g-login-btn g-login-btn--line mt-3" @click="lineLoginEvent">
+              <button
+                type="button"
+                class="g-login-btn g-login-btn--line mt-3"
+                @click="lineLoginEvent"
+              >
                 <span class="g-login-btnIcon"
-                  ><img src="../../assets/images/line-image.png" alt="line圖片"
+                  ><img src="@/assets/images/line-image.png" alt="line圖片"
                 /></span>
                 <span class="g-login-btnText">LINE登入</span>
               </button>
@@ -85,19 +93,19 @@
               class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
             >
               <div class="button-img-box me-1">
-                <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+                <img src="@/assets/images/GreenSheep.png" alt="圖像" />
               </div>
               <p>立即登入</p>
             </button>
           </v-form>
           <div class="mb-3 d-flex justify-content-between">
             <p class="mt-2 text-start text-primary">
-              <router-link to="/memberForget">忘記密碼</router-link>
+              <RouterLink to="/memberForget">忘記密碼</RouterLink>
             </p>
             <p class="mt-2 text-end">
               還沒有帳號嗎？前往
-              <router-link to="/memberSignUp" class="text-decoration-underline text-primary fw-bold"
-                >註冊</router-link
+              <RouterLink to="/memberSignUp" class="text-decoration-underline text-primary fw-bold"
+                >註冊</RouterLink
               >
             </p>
           </div>

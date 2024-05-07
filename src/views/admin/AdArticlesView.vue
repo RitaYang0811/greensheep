@@ -50,7 +50,6 @@
         <template v-if="currentTab === '公開文章'">
           <a
             v-if="!isSelectPinnedArticle"
-            href="#"
             class="btn btn-primary"
             :class="{ disabled: loadingStatus.loadingItem }"
             @click.prevent="isSelectPinnedArticle = true"
@@ -58,11 +57,8 @@
             置頂文章管理
           </a>
           <template v-else>
-            <a href="#" class="btn btn-primary" @click.prevent="updatePinnedArticle"
-              >儲存置頂文章</a
-            >
+            <a class="btn btn-primary" @click.prevent="updatePinnedArticle">儲存置頂文章</a>
             <a
-              href="#"
               class="btn btn-danger"
               @click.prevent="
                 (selectedPinnedArticle = [...pinnedArticles]), (isSelectPinnedArticle = false)
@@ -254,7 +250,7 @@
       </ul>
     </template>
     <template v-else-if="!loadingStatus.loadingItem">
-      <div class="d-flex justify-content-center align-items-center" style="height: 360px;">
+      <div class="d-flex justify-content-center align-items-center" style="height: 360px">
         <p class="fs-5">尚無文章資料</p>
       </div>
     </template>
@@ -275,7 +271,9 @@
         number-buttons-class="fs-8"
         active-page-class="active"
         :backButtonClass="articlesCurrentPage === 1 ? 'disabled' : 'back-button'"
-        :nextButtonClass="articlesCurrentPage === Math.ceil(searchArticles.length / 10) ? 'disabled' : 'next-button'"
+        :nextButtonClass="
+          articlesCurrentPage === Math.ceil(searchArticles.length / 10) ? 'disabled' : 'next-button'
+        "
       >
         <template #prev-button>
           <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -384,7 +382,7 @@ export default {
   },
   watch: {
     pinnedArticles() {
-      this.selectedPinnedArticle = [ ...this.pinnedArticles ]
+      this.selectedPinnedArticle = [...this.pinnedArticles]
     },
     keyword() {
       this.articlesCurrentPage = 1

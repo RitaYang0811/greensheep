@@ -36,7 +36,6 @@ export default defineStore('lineNotifyStore', {
           }
         })
         .then((response) => {
-          console.log(response)
           const { data } = response
           this.accessToken = data.access_token
           localStorage.setItem('accessToken', this.accessToken)
@@ -44,7 +43,6 @@ export default defineStore('lineNotifyStore', {
           if (data.status === 200) {
             this.sendLineNotification(data.access_token)
           }
-          console.log('token', this.accessToken)
         })
         .catch((error) => {
           console.error(error)
@@ -63,9 +61,9 @@ export default defineStore('lineNotifyStore', {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         })
-        .then((response) => {
-          console.log(response.data)
-        })
+        // .then((response) => {
+        //   console.log(response.data)
+        // })
         .catch((error) => {
           console.error(error)
         })
@@ -83,9 +81,9 @@ export default defineStore('lineNotifyStore', {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         })
-        .then((response) => {
-          console.log(response.data)
-        })
+        // .then((response) => {
+        //   console.log(response.data)
+        // })
         .catch((error) => {
           console.error(error)
         })

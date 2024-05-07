@@ -86,6 +86,7 @@
           >
             <span class="mb-1 fw-medium">{{ gem.gemMonth }}</span
             ><span class="mb-3 flex-grow-1">{{ gem.gemChName }}</span>
+
             <img
               :src="gem.gemUrl"
               :alt="gem.gemChName"

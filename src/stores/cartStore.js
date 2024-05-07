@@ -8,7 +8,8 @@ export default defineStore('cartStore', {
   state: () => ({
     carts: [],
     cart: {},
-    deliverData: {}
+    deliverData: {},
+    isLoading: false
   }),
   actions: {
     addToCart(id, qty = 1) {
@@ -33,7 +34,6 @@ export default defineStore('cartStore', {
           console.log(err)
         })
     },
-
     //取得購物車資料
     getCarts() {
       const getCartUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart`
@@ -55,11 +55,12 @@ export default defineStore('cartStore', {
           qty: cart.qty
         }
       }
-      setTimeout(() => {
-        axios
+      this.isLoading = true
+      axios
         .put(updateCartUrl, cartData)
         .then(() => {
           this.getCarts()
+          this.isLoading = false
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -72,28 +73,26 @@ export default defineStore('cartStore', {
         .catch((err) => {
           console.log(err)
         })
-  
-      }, 1500)
-    
     },
     //刪除購物車中單筆資料
     deleteCart(id) {
-      this.isLoading = true
       const deleteCartUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart/${id}`
       //加入sweetalert
       Swal.fire({
         title: '是否刪除該商品?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#d33',
+        confirmButtonColor: '#9ea9a0',
         cancelButtonColor: '#566b5a',
         cancelButtonText: '  否  ',
         confirmButtonText: '  是  '
       }).then((result) => {
         if (result.isConfirmed) {
+          this.isLoading = true
           axios
             .delete(deleteCartUrl)
             .then(() => {
+              this.isLoading = false
               Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -111,36 +110,47 @@ export default defineStore('cartStore', {
       })
     },
     //刪除所有購物車內容
-    deleteAllCarts(){
-      const deleteAllCartsUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/carts`
-      Swal.fire({
-        title: '是否刪除購物車全部商品?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#566b5a',
-        cancelButtonText: '  否  ',
-        confirmButtonText: '  是  '
-      }).then((result) => {
-        if (result.isConfirmed) {
-          axios
-            .delete(deleteAllCartsUrl)
-            .then(() => {
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: '所有商品刪除成功',
-                showConfirmButton: false,
-                toast: true,
-                timer: 1500
+    deleteAllCarts() {
+      if (this.carts.length === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: '購物車內沒有商品',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else {
+        const deleteAllCartsUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/carts`
+        Swal.fire({
+          title: '你要刪除購物車的全部商品?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#9ea9a0',
+          cancelButtonColor: '#566b5a',
+          cancelButtonText: '  取消刪除  ',
+          confirmButtonText: '  確定刪除  '
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.isLoading = true
+            axios
+              .delete(deleteAllCartsUrl)
+              .then(() => {
+                this.isLoading = false
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: '所有商品刪除成功',
+                  showConfirmButton: false,
+                  toast: true,
+                  timer: 1500
+                })
+                this.getCarts()
               })
-              this.getCarts()
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        }
-      })
+              .catch((err) => {
+                console.log(err)
+              })
+          }
+        })
+      }
     },
     getDeliverData(data) {
       this.deliverData = { ...data }

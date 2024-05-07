@@ -4,105 +4,123 @@
     <div>
       <div class="p-10 d-flex justify-content-center" style="z-index: 10">
         <div class="">
-          <div class="btn btn-outline-primary border-2 rounded-circle bg-primary pe-none"><i
-              class="bi bi-check-lg fs-2 text-light"></i>
+          <div class="btn btn-outline-primary border-2 rounded-circle bg-primary pe-none">
+            <i class="bi bi-check-lg fs-2 text-light"></i>
           </div>
           <p class="mt-3 fs-6 text-primary">確認購買明細</p>
         </div>
-        <div class="mt-5 bg-light border border-greyD4" style="height: 8px; width: 35%">
-        </div>
+        <div class="mt-5 bg-light border border-greyD4" style="height: 8px; width: 35%"></div>
         <div class="opacity-50">
-          <div class="btn btn-outline-primary border-2 rounded-circle pe-none"><i
-              class="bi bi-check-lg fs-2 text-primary"></i>
+          <div class="btn btn-outline-primary border-2 rounded-circle pe-none">
+            <i class="bi bi-check-lg fs-2 text-primary"></i>
           </div>
           <p class="mt-3 fs-6 text-primary">付款資料填寫</p>
         </div>
         <div class="mt-5 bg-light border border-greyD4" style="height: 8px; width: 35%"></div>
         <div class="opacity-50">
-          <div class="btn btn-outline-primary border-2 rounded-circle pe-none"><i
-              class="bi bi-check-lg fs-2 text-primary"></i>
+          <div class="btn btn-outline-primary border-2 rounded-circle pe-none">
+            <i class="bi bi-check-lg fs-2 text-primary"></i>
           </div>
           <p class="mt-3 fs-6 text-primary">訂單完成</p>
         </div>
       </div>
     </div>
 
-
-    <h1 class="fs-4 fs-lg-2 py-20 text-center fw-bold">購物車</h1>
+    <h1 class="fs-4 fs-lg-2 py-10 text-center fw-bold">購物車</h1>
     <Loading v-model:active="isLoading"></Loading>
     <!-- 商品列表 -->
-    <table class="table align-middle border-primary">
-      <thead>
-        <tr>
-          <th scope="col" class="text-primary fw-medium">商品資訊</th>
-          <th scope="col" class="text-primary fw-medium">數量</th>
-          <th scope="col" class="text-primary fw-medium">價格</th>
-          <th scope="col" class="text-primary fw-medium"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="cart in carts" :key="cart.id">
-          <th scope="row" class="py-4">
-            <div class="card border-0" style="max-width: 540px">
-              <div class="row g-0 align-items-center">
-                <div class="col-md-4">
-                  <div class="ratio ratio-1x1">
-                    <img :src="cart.product.imageUrl" class="img-fluid object-fit-cover" alt="product-image" />
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="fs-6 card-title text-primary fw-medium">
-                      {{ cart.product.title }}
-                    </h5>
-                    <small class="text-start fw-normal">{{ cart.product.category }}</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </th>
-          <td class="py-4">
+    <ul class="cart-table list-unstyled border-lg-bottom border-primary">
+      <li class="cart-thead">
+        <ol class="list-unstyled cart-tr">
+          <li class="text-primary fw-medium"></li>
+          <li class="text-primary fw-medium">商品資訊</li>
+          <li class="text-primary fw-medium">數量</li>
+          <li class="text-primary fw-medium">單價</li>
+          <li class="text-primary fw-medium">價格</li>
+          <li class="text-primary fw-medium"></li>
+        </ol>
+      </li>
+
+      <li v-for="cart in carts" :key="cart.id" class="cart-tbody">
+        <ol class="list-unstyled cart-tr">
+          <li class="w-md-10">
+            <img
+              :src="cart.product.imageUrl"
+              class="cart-img img-fluid object-fit-cover"
+              alt="product-image"
+            />
+          </li>
+          <li class="w-md-30">
+            <h5 class="fs-6 card-title text-primary fw-medium">
+              {{ cart.product.title }}
+            </h5>
+          </li>
+          <li class="w-md-30">
             <div class="d-flex justify-content-center">
-              <button type="button" class="btn btn-link text-primary" @click.prevent="cart.qty--"
-                @click="updateCart(cart)" :disabled="cart.qty <= 1">
+              <button
+                type="button"
+                class="btn btn-link text-primary"
+                @click.prevent="cart.qty--"
+                @click="updateCart(cart)"
+                :disabled="cart.qty <= 1"
+              >
                 <i class="bi bi-dash-circle fs-3"></i>
               </button>
-              <input type="number" class="p-lg-2 w-20 text-center" min="1" v-model="cart.qty" disabled />
+              <input
+                type="number"
+                class="p-lg-2 w-20 text-center"
+                min="1"
+                v-model="cart.qty"
+                disabled
+              />
 
-              <button type="button" class="btn btn-link text-primary" @click.prevent="cart.qty++"
-                @click="updateCart(cart)">
+              <button
+                type="button"
+                class="btn btn-link text-primary"
+                @click.prevent="cart.qty++"
+                @click="updateCart(cart)"
+              >
                 <i class="bi bi-plus-circle fs-3"></i>
               </button>
             </div>
-          </td>
-          <td class="py-4 text-primary">
-            <small class="text-center">單價：NT$ {{ cart.product.price }}</small>
-            <p class="text-center fw-medium">總價：NT$ {{ parseInt(cart.total) }}</p>
-          </td>
-          <td class="py-4">
-            <button type="button" class="btn btn-primary" @click="deleteCart(cart.id)">刪除</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="d-flex my-4 mx-2">
-      <button type="button" class="btn btn-danger" @click="deleteAllCarts">刪除全部商品</button>
+          </li>
+          <li data-title="單價" class="cart-price text-primary w-md-15">
+            <small class="text-center">NT$ {{ cart.product.price }}</small>
+          </li>
+          <li c data-title="價格" class="cart-price text-primary w-md-15">
+            <p class="text-center fw-medium d-inline-block">NT$ {{ parseInt(cart.total) }}</p>
+          </li>
+          <li class="w-md-10">
+            <a @click="deleteCart(cart.id)">
+              <i class="bi bi-trash text-grey66"></i>
+            </a>
+          </li>
+        </ol>
+      </li>
+      <h2 class="fs-5 font-notosans mt-6">
+        合計：NT ${{ carts[0]?.coupon ? total - carts[0]?.coupon?.discount_price : total }}<br />
+        （共 {{ carts.length }} 件）
+      </h2>
+    </ul>
+    <div class="d-flex my-2 justify-content-center justify-content-lg-end">
+      <button type="button" class="btn btn-light text-primary" @click="deleteAllCarts">
+        刪除全部商品
+      </button>
     </div>
-
   </div>
 
-  <!-- 免運 -->
+  <!-- 優惠 -->
   <div v-if="carts[0]?.coupon?.title" class="container pt-10">
-    <div class="">
-      <div class="row" v-if="carts[0]?.coupon">
-        <div class="col-md-2 text-primary fw-medium mb-2">已使用優惠</div>
-        <div class="col-md-10 text-center text-md-start">
-          <span class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4">{{
-      carts[0]?.coupon?.title }}</span>
-          <span class="fs-7 text-primary">
-            {{ showCoupon(carts[0]?.coupon) }}
-          </span>
-        </div>
+    <div class="row" v-if="carts[0]?.coupon">
+      <div class="col-md-2 text-primary fw-medium mb-2">已使用優惠</div>
+      <div class="col-md-10 text-center text-md-start">
+        <span
+          class="rounded-pill border border-1 border-secondary text-secondary fs-9 px-4 py-1 me-4"
+          >{{ carts[0]?.coupon?.title }}</span
+        >
+        <span class="fs-7 text-primary">
+          {{ showCoupon(carts[0]?.coupon) }}
+        </span>
       </div>
     </div>
   </div>
@@ -113,8 +131,18 @@
 
       <div class="col-md-10">
         <form class="text-md-start text-center">
-          <input type="text" class="teat-start p-2 w-50" placeholder="請輸入優惠代碼" v-model="coupon" />
-          <button type="button" class="btn btn-primary p-3" @click="sendCoupon(coupon)" :disabled="!coupon">
+          <input
+            type="text"
+            class="teat-start p-2 w-50"
+            placeholder="請輸入優惠代碼"
+            v-model="coupon"
+          />
+          <button
+            type="button"
+            class="btn btn-primary p-3"
+            @click="sendCoupon(coupon)"
+            :disabled="!coupon"
+          >
             送出優惠券
           </button>
         </form>
@@ -165,17 +193,20 @@
           <div class="border border-primary border-1 mb-5"></div>
           <div class="d-flex justify-content-between mb-5">
             <p class="">合計：</p>
-            {{ carts[0]?.coupon?.discount_price }}
             <p class="fw-bold">
               NT$
               {{
-      carts[0]?.coupon
-        ? parseInt(total) - carts[0]?.coupon?.discount_price
-        : parseInt(total)
-    }}
+                carts[0]?.coupon
+                  ? parseInt(total) - carts[0]?.coupon?.discount_price
+                  : parseInt(total)
+              }}
             </p>
           </div>
-          <button type="button" class="btn btn-primary p-5 fs-5 w-100 text-white" @click="goCheckout">
+          <button
+            type="button"
+            class="btn btn-primary p-5 fs-5 w-100 text-white"
+            @click="goCheckout"
+          >
             前往結帳
           </button>
         </div>
@@ -184,7 +215,8 @@
   </div>
 
   <!--  訂 購 前 請 詳 閱  -->
-  <OrderRules></OrderRules>
+  <OrderRules />
+  <VueLoading :active="isLoading" />
 </template>
 
 <script>
@@ -195,7 +227,7 @@ import cartStore from '@/stores/cartStore'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 
-import OrderRules from '../../components/OrderRules.vue'
+import OrderRules from '@/components/OrderRules.vue'
 import Swal from 'sweetalert2'
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env
 
@@ -234,7 +266,13 @@ export default {
   },
 
   methods: {
-    ...mapActions(cartStore, ['getCarts', 'updateCart', 'deleteCart', 'getDeliverData', 'deleteAllCarts']),
+    ...mapActions(cartStore, [
+      'getCarts',
+      'updateCart',
+      'deleteCart',
+      'getDeliverData',
+      'deleteAllCarts'
+    ]),
 
     sendCoupon(coupon) {
       const sendCouponUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/coupon`
@@ -266,16 +304,16 @@ export default {
     },
     //優惠券內容顯示(有兩種不同優惠券格式，所以要另外判斷)
     showCoupon(coupon) {
-      if (coupon?.percent == 100) {
+      if (coupon?.percent === 100) {
         return `消費滿 NT$ ${coupon?.min_buy_price_by_price}，享 ${coupon?.discount_price} 折扣`
       } else {
-        return `消費滿 NT$ ${coupon?.min_buy_price_by_price}，享
+        return `消費滿 NT$ ${coupon?.min_buy_price_by_discount}，享
             ${coupon?.percent / 10} 折`
       }
     },
 
     goCheckout() {
-      if (this.carts.length == 0) {
+      if (this.carts.length === 0) {
         Swal.fire({
           title: '購物車是空的',
           confirmButtonColor: '#566B5A',
@@ -283,7 +321,7 @@ export default {
         })
         return
       }
-      if (this.deliverChoose.location.length == 0) {
+      if (this.deliverChoose.location.length === 0) {
         Swal.fire({
           title: '收件地點必填',
           confirmButtonColor: '#566B5A',
@@ -291,7 +329,7 @@ export default {
         })
         return
       }
-      if (this.deliverChoose.deliver.length == 0) {
+      if (this.deliverChoose.deliver.length === 0) {
         Swal.fire({
           title: '配送方式必填',
           confirmButtonColor: '#566B5A',
@@ -299,7 +337,7 @@ export default {
         })
         return
       }
-      if (this.deliverChoose.payWay.length == 0) {
+      if (this.deliverChoose.payWay.length === 0) {
         Swal.fire({
           title: '付款方式必填',
           confirmButtonColor: '#566B5A',
@@ -321,7 +359,7 @@ export default {
       this.deliverChoose.deliver = '' //洗掉紀錄，讓選擇location時deliver都能回到預設值。
       this.deliverChoose.payWay = '' //洗掉紀錄，讓選擇location時payWay都能回到預設值。
       this.select.forEach((item) => {
-        if (item.location == location) {
+        if (item.location === location) {
           item.deliver.forEach((item2) => {
             this.delivers.push(item2)
           })
@@ -335,7 +373,7 @@ export default {
   },
 
   computed: {
-    ...mapState(cartStore, ['carts', 'total']),
+    ...mapState(cartStore, ['carts', 'total', 'isLoading']),
     rawTotal() {
       let total = 0
       this.carts.forEach((item) => {
@@ -354,3 +392,63 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.cart {
+  &-img {
+    width: 100px;
+    height: 100px;
+  }
+  &-table {
+    display: block;
+    margin: 1em auto;
+    border-collapse: collapse;
+  }
+  &-thead {
+    display: table-header-group;
+    border-bottom: 1px solid #566b5a;
+  }
+  &-tr {
+    display: table-row;
+  }
+  &-tbody {
+    width: 100%;
+    display: table-row-group;
+  }
+  &-thead li,
+  &-tr li {
+    display: table-cell;
+    padding: 5px;
+  }
+  &-thead li {
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .cart {
+    &-thead {
+      display: none;
+    }
+    &-tr {
+      display: block;
+      padding: 12px;
+      border: #566b5a 1px solid;
+      margin-bottom: 5px;
+    }
+    &-tr li {
+      display: inline-block;
+      width: 100%;
+      border: none;
+    }
+    &-price:before {
+      content: attr(data-title);
+      display: inline-block;
+      width: auto;
+      font-weight: 700;
+      color: #566b5a;
+      padding-right: 16px;
+    }
+  }
+}
+</style>

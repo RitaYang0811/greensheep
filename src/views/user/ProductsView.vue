@@ -154,12 +154,12 @@
                   <!-- v-else 打折 -->
                   <div v-else class="mt-3 mb-1">
                     <span class="card-text display-8 text-primary my-2 me-2"
-                      >NT$ {{ product.origin_price }}</span
+                      >NT$ {{ product.price }}</span
                     >
                     <br /><span
                       class="card-text display-8 text-grey9F text-decoration-line-through"
                     >
-                      NT$ {{ product.price }}
+                      NT$ {{ product.origin_price }}
                     </span>
                   </div>
 
@@ -171,7 +171,11 @@
                       @click.prevent="isLogin(product.id)"
                     >
                       <!-- 愛心 -->
-                      <i class="bi bi-heart fs-5" :id="product.id" ref="favIcon"></i>
+                      <i
+                        class="bi fs-5"
+                        :id="product.id"
+                        :class="likedProducts.includes(product.id) ? 'bi-heart-fill' : 'bi-heart'"
+                      ></i>
                     </button>
                     <button
                       type="button"
@@ -231,13 +235,13 @@
                           >
 
                           <span class="d-inline-block card-text fs-7 text-dark mb-2"
-                            >NT$ {{ item.origin_price }}</span
+                            >NT$ {{ item.price }}</span
                           >
 
                           <br /><span
                             class="d-inline-block card-text display-8 text-grey9F text-decoration-line-through"
                           >
-                            NT$ {{ item.price }}
+                            NT$ {{ item.origin_price }}
                           </span>
                         </td>
 
@@ -249,7 +253,13 @@
                             @click.prevent="isLogin(item.id)"
                           >
                             <!-- 愛心 -->
-                            <i class="bi bi-heart fs-5" :id="item.id" ref="favIcon"></i>
+                            <i
+                              class="bi fs-5"
+                              :id="item.id"
+                              :class="[
+                                likedProducts.includes(item.id) ? 'bi-heart-fill' : 'bi-heart'
+                              ]"
+                            ></i>
                           </button>
                           <button
                             href="#"
@@ -289,6 +299,12 @@
             paginate-buttons-class="page-link"
             number-buttons-class="fs-8"
             active-page-class="active"
+            :backButtonClass="currentProductsPage === 1 ? 'disabled' : 'back-button'"
+            :nextButtonClass="
+              currentProductsPage === Math.ceil(this.categoryProducts.length / 12)
+                ? 'disabled'
+                : 'next-button'
+            "
           >
             <template #prev-button>
               <span class="material-icons fs-8 p-1"> navigate_before </span>
@@ -340,9 +356,7 @@ export default {
       //當前顯示分頁
       currentProductsPage: 1,
       //當前顯示關鍵字
-      currentSearchWord: '',
-      // 所有產品id
-      productsIdArr: []
+      currentSearchWord: ''
     }
   },
   components: {
@@ -360,7 +374,7 @@ export default {
       'isLoading',
       'loadingStatus'
     ]),
-    ...mapState(likeStore, ['isLike'])
+    ...mapState(likeStore, ['isLike', 'likedProducts'])
   },
 
   watch: {
@@ -404,6 +418,7 @@ export default {
         this.isList = true
       }
     },
+
     //排列順序切換
     sort(status) {
       this.isShow = false
@@ -419,9 +434,6 @@ export default {
   },
   async mounted() {
     await this.fetchData()
-    this.products.forEach((item) => {
-      this.productsIdArr.push(item.id)
-    })
     this.likeInit()
   }
 }

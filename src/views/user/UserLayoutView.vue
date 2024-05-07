@@ -1,6 +1,6 @@
 <template>
   <HeaderComp />
-  <CartComponent></CartComponent>
+  <CartComponent />
   <div class="main">
     <RouterView />
   </div>

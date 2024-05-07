@@ -2,7 +2,7 @@
   <nav aria-label="Page navigation ">
     <ul class="cus-pagination list-unstyled mb-20 mb-lg-25">
       <li class="page-item text-center" :class="{ disabled: pagination.current_page === 1 }">
-        <a class="page-link" href="#" aria-label="Previous">
+        <a class="page-link" aria-label="Previous">
           <span class="material-icons fs-8 p-1"> navigate_before </span>
         </a>
       </li>
@@ -13,11 +13,11 @@
         :key="index"
         :class="{ active: p === pagination.current_page }"
       >
-        <a class="page-link" href="#" @click.prevent="updatePage(p)">{{ p }}</a>
+        <a class="page-link" @click.prevent="updatePage(p)">{{ p }}</a>
       </li>
 
       <li class="page-item text-center" :class="{ disabled: pagination.has_next === false }">
-        <a class="page-link" href="#" aria-label="Next">
+        <a class="page-link" aria-label="Next">
           <span class="material-icons fs-8 p-1"> navigate_next </span>
         </a>
       </li>

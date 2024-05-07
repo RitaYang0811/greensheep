@@ -14,8 +14,8 @@
         <div class="container">
           <!-- logo -->
           <h1 class="logo mb-0 me-lg-8">
-            <router-link to="/" class="navbar-brand"
-              >綠羊珠寶 Green Sheep handmade jewelry</router-link
+            <RouterLink to="/" class="navbar-brand"
+              >綠羊珠寶 Green Sheep handmade jewelry</RouterLink
             >
           </h1>
 
@@ -129,7 +129,10 @@
               </form>
 
               <!-- 會員中心 -->
-              <a href="#" class="me-2 d-none d-lg-block flex-grow-1" @click.prevent="isLogin()">
+              <a
+                class="me-2 d-none d-lg-block flex-grow-1 cursor-pointer"
+                @click.prevent="isLogin()"
+              >
                 <img
                   class="header-white-icon p-xxl-2 p-xl-0"
                   src="../assets/images/ic-person-white.svg"
@@ -276,7 +279,7 @@
                 <RouterLink to="/faq" class="text-center fw-medium">常見問題 </RouterLink>
               </li>
               <li class="border-bottom py-5 text-white fs-6" @click="closeMenuOffCanvas()">
-                <a href="#" class="text-center fw-medium" @click.prevent="isLogin()">登入/註冊</a>
+                <a class="text-center fw-medium" @click.prevent="isLogin()">登入/註冊</a>
               </li>
             </ul>
           </div>
@@ -361,7 +364,6 @@ export default {
 
     searchProducts(event) {
       this.closeSearchOffCanvas()
-      console.log('searchProducts', this.searchWord)
       if (this.searchWord.trim() !== '') {
         this.$router.push({ path: '/products', query: { keyword: this.searchWord.trim() } })
         this.searchWord = ''

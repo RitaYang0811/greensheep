@@ -84,12 +84,10 @@ export default defineStore('orderStore', {
         confirmButtonText: '  是  '
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log('delete')
           data.is_deleted = true
           axios
             .put(updateOrdersUrl, { data })
-            .then((res) => {
-              console.log(res)
+            .then(() => {
               location.reload()
             })
             .catch((err) => {
@@ -97,18 +95,14 @@ export default defineStore('orderStore', {
             })
         }
       })
-      console.log(data)
     },
     recoverDelete(data) {
       const updateOrdersUrl = `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${data.id}`
       data.is_deleted = false
       axios
         .put(updateOrdersUrl, { data })
-        .then((res) => {
-          console.log(res)
+        .then(() => {
           location.reload()
-          // this.getAllOrders();
-          console.log('Rocover Delete')
         })
         .catch((err) => {
           console.log(err)
@@ -149,7 +143,6 @@ export default defineStore('orderStore', {
         confirmButtonText: '  是  '
       }).then((result) => {
         if (result.isConfirmed) {
-          // console.log("刪除全部訂單")
           axios
             .delete(deleteAllOrdersUrl)
             .then(() => {

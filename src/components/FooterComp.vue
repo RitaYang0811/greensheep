@@ -11,41 +11,41 @@
               <li>
                 <RouterLink
                   to="/products/全部商品%20ALL"
-                  class="fs-8 text-white me-lg-6"
+                  class="fs-8 text-white mx-3"
                   @click="scrollToTop"
                   >全部商品</RouterLink
                 >
               </li>
-              <!-- <li>
+              <li>
                 <RouterLink
-                  to="/products/客製設計%20CUSTOMIZED`"
-                  class="fs-8 text-white me-lg-6 mx-lg-0 mx-12"
+                  to="/products/客製設計%20CUSTOMIZED"
+                  class="fs-8 text-white mx-3"
                   @click="scrollToTop"
                   >客製設計</RouterLink
                 >
-              </li> -->
-              <li>
-                <RouterLink
-                  to="/articles"
-                  class="fs-8 text-white me-lg-6 mx-lg-0 mx-12"
-                  @click="scrollToTop"
-                  >專欄文章</RouterLink
-                >
               </li>
               <li>
-                <RouterLink to="/story" class="fs-8 text-white me-lg-6" @click="scrollToTop"
-                  >關於品牌</RouterLink
+                <RouterLink to="/articles" class="fs-8 text-white mx-3" @click="scrollToTop"
+                  >專欄文章</RouterLink
                 >
               </li>
             </div>
             <div class="d-flex align-items-lg-center">
               <li>
-                <RouterLink to="/faq" class="fs-8 text-white me-12 me-lg-6" @click="scrollToTop"
+                <RouterLink to="/story" class="fs-8 text-white mx-3" @click="scrollToTop"
+                  >關於品牌</RouterLink
+                >
+              </li>
+              <li>
+                <RouterLink to="/faq" class="fs-8 text-white mx-3" @click="scrollToTop"
                   >常見問題</RouterLink
                 >
               </li>
               <li>
-                <a href="#" target="_blank" class="fs-8 text-white" @click.prevent="isLogout"
+                <a
+                  target="_blank"
+                  class="fs-8 text-white mx-3 cursor-pointer"
+                  @click.prevent="isLogout"
                   >登出
                 </a>
               </li>
@@ -67,7 +67,7 @@
               <li class="me-4">
                 <a href="https://lin.ee/bYROr08" target="_blank">
                   <!-- line svg -->
-                  <img src="./icons/line-icon-footer.svg" alt="" />
+                  <img src="./icons/line-icon-footer.svg" alt="line-icon" />
                 </a>
               </li>
               <li class="me-4">
@@ -76,7 +76,7 @@
                   target="_blank"
                 >
                   <!-- fb svg -->
-                  <img src="./icons/fb-icon-footer.svg" alt="" />
+                  <img src="./icons/fb-icon-footer.svg" alt="fb-icon" />
                 </a>
               </li>
               <li>
@@ -85,7 +85,7 @@
                   target="_blank"
                 >
                   <!-- ig svg -->
-                  <img src="./icons/ig-icon-footer.svg" alt="" />
+                  <img src="./icons/ig-icon-footer.svg" alt="ig-icon" />
                 </a>
               </li>
             </ul>
@@ -100,14 +100,17 @@
           <p class="display-lg-8 display-9">
             Copyright ©2023 綠羊 Green Sheep.All rights reserved.
           </p>
-          <p class="display-lg-8 mb-lg-0 display-9 mb-4">greensheepjewelry@gmail.com</p>
+          <a href="mailto:greensheepjewelry@gmail.com" class="display-lg-8 mb-lg-0 display-9 mb-4"
+            >greensheepjewelry@gmail.com</a
+          >
         </div>
       </div>
     </div>
   </footer>
 </template>
 
-<script lang="js">
+<script>
+import Swal from 'sweetalert2'
 export default {
   data() {
     return {}
@@ -119,8 +122,17 @@ export default {
     // 登出
     isLogout() {
       localStorage.removeItem('userInfo')
-      alert('已登出會員')
-      this.$router.push({ name: 'MemberLogin' })
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: '會員已登出',
+        showConfirmButton: false,
+        toast: true,
+        timer: 2000
+      })
+      setTimeout(() => {
+        this.$router.push({ name: 'UserHome' })
+      }, 1000)
     }
   }
 }

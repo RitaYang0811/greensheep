@@ -288,7 +288,6 @@ export default {
       this.isShow = false
       if (status === 'new') {
         this.showTitle = '最近更新'
-        console.log('sortNew', status, this.isShow)
         return this.allProducts.sort((a, b) => b.updateTime - a.updateTime)
       } else if (status === 'priceH2L') {
         this.showTitle = '價格 - 由高到低'
@@ -306,7 +305,6 @@ export default {
     },
     //確認編輯
     confirmUpdate(isNew) {
-      console.log('confirmUpdate', isNew, this.tempProduct)
       const apiUrl = isNew
         ? `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/product`
         : `${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/product/${this.tempProduct.id}`
@@ -314,22 +312,17 @@ export default {
       if (isNew) {
         const createTime = Date.now()
         this.tempProduct.createTime = createTime
-
-        console.log('建立的商品', this.tempProduct)
       } else {
         const updateTime = Date.now()
         this.tempProduct.updateTime = updateTime
-        console.log('已編輯的商品', this.tempProduct)
       }
       axiosMethod(apiUrl, {
         data: this.tempProduct
       })
-        .then((res) => {
-          console.log(res.data)
+        .then(() => {
           this.getProducts(this.currentTab, this.currentPage)
           this.$refs.addModal.close()
           this.tempProduct = { imagesUrl: [], gifts: [] }
-          console.log('this.tempProduct ', this.tempProduct)
           Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -367,7 +360,6 @@ export default {
     //點擊分頁
     updatePage(page) {
       this.currentPage = page
-      console.log('點分頁', this.currentTab, page)
       this.getProducts(this.currentTab, page)
     }
   },

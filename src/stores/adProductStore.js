@@ -38,7 +38,7 @@ export default defineStore('adProductStore', {
 
               break
 
-            case '未上架/草稿':
+            case '未上架':
               this.allProducts = res.data.products.filter(
                 (product) => product.is_enabled === false || product.is_enabled === ''
               )

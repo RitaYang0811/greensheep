@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 // json-server網址
 const serverUrl = 'https://greensheep-json-server.onrender.com'
 export default {
@@ -44,11 +45,21 @@ export default {
   methods: {
     checkCode() {
       if (this.securityInput === this.verificationCode) {
-        alert('驗證成功')
+        Swal.fire({
+          icon: 'success',
+          title: '驗證碼輸入成功!',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.onSubmit()
         return
       }
-      alert('驗證碼輸入錯誤')
+      Swal.fire({
+        icon: 'warning',
+        title: '驗證碼輸入錯誤!',
+        showConfirmButton: false,
+        timer: 1500
+      })
     },
     onSubmit() {
       this.user = {
@@ -64,8 +75,13 @@ export default {
       this.$http
         .post(`${serverUrl}/users`, this.user)
         .then(() => {
-          alert('註冊成功囉!')
-          this.$router.push({ name: 'MemberLogin' })
+          Swal.fire({
+            icon: 'success',
+            title: '恭喜註冊成功成為綠羊會員!',
+            showConfirmButton: false,
+            timer: 2000
+          }),
+            this.$router.push({ name: 'MemberLogin' })
         })
         .catch((err) => {
           console.log(err)
@@ -74,4 +90,3 @@ export default {
   }
 }
 </script>
-./verifiCation.vue

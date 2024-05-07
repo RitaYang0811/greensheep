@@ -5,20 +5,27 @@ const serverUrl = 'https://greensheep-json-server.onrender.com'
 
 export default defineStore('likeStore', {
   state: () => ({
-    isLike: false
+    isLike: false,
+    likedProducts: []
   }),
   actions: {
     // 收藏初始化
     async likeInit(id) {
       const user = JSON.parse(localStorage.getItem('userInfo'))
       if (user === null) {
+        this.isLike = false
         return false
       }
       await axios
-        .get(`${serverUrl}/favorites?userId=${user.id}&&productId=${id}`)
+        .get(`${serverUrl}/favorites?userId=${user.id}`)
         .then((res) => {
           if (res.data.length) {
-            this.isLike = true
+            this.likedProducts = res.data.map((item) => item.productId.toString())
+
+            this.isLike = this.likedProducts.includes(id)
+          } else {
+            this.likedProducts = []
+            this.isLike = false
           }
         })
         .catch((err) => {
@@ -48,7 +55,12 @@ export default defineStore('likeStore', {
             toast: true,
             timer: 1500
           })
-          this.isLike = false
+          // this.isLike = false
+          const index = this.likedProducts.findIndex((product) => product === productId)
+          if (index > -1) {
+            this.likedProducts.splice(index, 1) // 從索引位置刪除一個元素
+          }
+          this.isLike = this.likedProducts.includes(productId.toString())
         })
       } else {
         // 加入最愛
@@ -63,7 +75,9 @@ export default defineStore('likeStore', {
               toast: true,
               timer: 1500
             })
-            this.isLike = true
+            // this.isLike = true
+            this.likedProducts.push(productId)
+            this.isLike = this.likedProducts.includes(productId.toString())
           })
           .catch((err) => {
             console.log(err)
@@ -80,8 +94,10 @@ export default defineStore('likeStore', {
           showConfirmButton: false,
           timer: 1500
         })
+        this.$router.push({ name: 'MemberLogin' })
         return false
       }
+
       await axios
         .get(`${serverUrl}/600/users/${user.id}`, {
           headers: {

@@ -12,17 +12,25 @@
           <!-- google或line 帳號登入 -->
           <ul class="list-unstyled">
             <li class="py-3">
-              <button class="g-login-btn g-login-btn--google ji-mb-10" @click="accessTokenLogin">
+              <button
+                type="button"
+                class="g-login-btn g-login-btn--google ji-mb-10"
+                @click="accessTokenLogin"
+              >
                 <span class="g-login-btnIcon"
-                  ><img src="../../assets/images/google.svg" alt="line圖片"
+                  ><img src="@/assets/images/google.svg" alt="line圖片"
                 /></span>
                 <span class="g-login-btnText">Google登入</span>
               </button>
             </li>
             <li class="py-3">
-              <button class="g-login-btn g-login-btn--line mt-3" @click="lineLoginEvent">
+              <button
+                type="button"
+                class="g-login-btn g-login-btn--line mt-3"
+                @click="lineLoginEvent"
+              >
                 <span class="g-login-btnIcon"
-                  ><img src="../../assets/images/line-image.png" alt="line圖片"
+                  ><img src="@/assets/images/line-image.png" alt="line圖片"
                 /></span>
                 <span class="g-login-btnText">LINE登入</span>
               </button>
@@ -163,11 +171,11 @@
               <div class="text-start">
                 <label class="form-check-label">
                   本人同意
-                  <a href="#" class="text-decoration-underline" @click.prevent="openModal('條款')"
+                  <a class="text-decoration-underline" @click.prevent="openModal('條款')"
                     >網站服務條款</a
                   >
                   及
-                  <a href="#" class="text-decoration-underline" @click.prevent="openModal('政策')"
+                  <a class="text-decoration-underline" @click.prevent="openModal('政策')"
                     >隱私權政策</a
                   ></label
                 >
@@ -180,23 +188,23 @@
               class="d-flex justify-content-center align-items-center btn btn-primary sub-button"
             >
               <div class="button-img-box me-1">
-                <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+                <img src="@/assets/images/GreenSheep.png" alt="圖像" />
               </div>
               <p>立即註冊</p>
             </button>
           </v-form>
           <!-- 驗證碼輸入 -->
-          <verification
+          <Verification
             v-if="securityState"
             :verification-code="codeUpdate"
             :userInfo="user"
-          ></verification>
+          ></Verification>
           <!-- 回到登入 -->
           <p class="mt-2 text-end">
-            已經有帳號了嗎？前往<router-link
+            已經有帳號了嗎？前往<RouterLink
               to="/memberLogin"
               class="text-decoration-underline text-primary fw-bold"
-              >登入</router-link
+              >登入</RouterLink
             >
           </p>
         </div>
@@ -295,18 +303,18 @@
 
 <script>
 import Modal from 'bootstrap/js/dist/modal'
-import Email from '../../utils/smtp'
+import Email from '@/utils/smtp'
 import { googleTokenLogin } from 'vue3-google-login'
-import verification from '@/components/VerificationComponent.vue'
 
 import axios from 'axios'
+import Verification from '@/components/VerifiCation.vue'
 import Swal from 'sweetalert2'
 
 // json-server網址
 const serverUrl = 'https://greensheep-json-server.onrender.com'
 
 export default {
-  components: { verification },
+  components: { Verification: Verification },
   data() {
     return {
       user: {},
@@ -403,7 +411,6 @@ export default {
     },
     async onSubmit() {
       this.policyRule('註冊')
-      console.log(await this.checkAccounts(this.user.email))
       if (await this.checkAccounts(this.user.email)) {
         Swal.fire({
           icon: 'warning',

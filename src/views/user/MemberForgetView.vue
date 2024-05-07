@@ -35,7 +35,7 @@
                   @click="sendCode"
                 >
                   <div class="button-img-box me-1">
-                    <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+                    <img src="@/assets/images/GreenSheep.png" alt="圖像" />
                   </div>
 
                   <p>發送驗證碼</p>
@@ -65,7 +65,7 @@
                   @click="checkCode"
                 >
                   <div class="button-img-box me-1">
-                    <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+                    <img src="@/assets/images/GreenSheep.png" alt="圖像" />
                   </div>
 
                   <p>送出驗證碼</p>
@@ -137,7 +137,7 @@
                   @click="onSubmit"
                 >
                   <div class="button-img-box me-1">
-                    <img src="../../assets/images/GreenSheep.png" alt="圖像" />
+                    <img src="@/assets/images/GreenSheep.png" alt="圖像" />
                   </div>
 
                   <p>重設密碼</p>
@@ -146,8 +146,8 @@
             </v-form>
             <div class="mb-3 d-flex justify-content-end">
               <p class="mt-1">
-                返回<router-link to="/MemberLogin" class="text-decoration-underline text-primary"
-                  >登入</router-link
+                返回<RouterLink to="/MemberLogin" class="text-decoration-underline text-primary"
+                  >登入</RouterLink
                 >
               </p>
             </div>
@@ -159,7 +159,7 @@
 </template>
 
 <script>
-import Email from '../../utils/smtp'
+import Email from '@/utils/smtp'
 
 // json-server網址
 const serverUrl = 'https://greensheep-json-server.onrender.com'
