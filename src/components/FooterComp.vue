@@ -130,7 +130,9 @@ export default {
         toast: true,
         timer: 2000
       })
-      location.reload()
+      setTimeout(() => {
+        this.$router.push({ name: 'UserHome' })
+      }, 1000)
     }
   }
 }
