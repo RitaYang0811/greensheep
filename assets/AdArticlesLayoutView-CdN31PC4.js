@@ -1,1 +1,0 @@
-import{_ as t,c as o,d as c,o as s,j as r}from"./index-CpizAgXM.js";const n={},a={class:"px-lg-10 pt-3 pt-lg-10 text-start"};function _(i,l){const e=r("RouterView");return s(),o("div",a,[c(e)])}const d=t(n,[["render",_]]);export{d as default};
