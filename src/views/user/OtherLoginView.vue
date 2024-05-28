@@ -125,7 +125,7 @@ export default {
         .post(`${serverUrl}/users`, this.user)
         .then(() => {
           Swal.fire({
-            icon: 'warning',
+            icon: 'success',
             title: '註冊成功囉!',
             showConfirmButton: false,
             timer: 2000
