@@ -37,7 +37,7 @@ export default defineStore('likeStore', {
     async addToLike(productId) {
       const likeProduct = {
         productId: `${productId}`,
-        userId: `${JSON.parse(localStorage.getItem('userInfo')).id}`
+        userId: Number(JSON.parse(localStorage.getItem('userInfo')).id)
       }
 
       // 確認有沒有加入過
